@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CIH Grant Opportunities Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="page">
+    <div class="topbar">
+
+      <div id="keywordCards" class="keyword-cards"></div>
+
+      <div class="title-row">
+        <h1>CIH Grant Opportunities Tracker</h1>
+        <button id="adminPlus" class="icon-btn" title="Add grant">＋</button>
+      </div>
+
+      <div class="controls">
+        <div class="controls-row">
+          <input id="q" class="control" type="search" placeholder="Search…" />
+          <select id="funderType" class="control"></select>
+          <select id="eligibility" class="control"></select>
+          <select id="keywords" class="control" multiple></select>
+          <select id="limitations" class="control" multiple></select>
+          <button id="clearFilters" class="btn">Clear</button>
+        </div>
+
+        <div class="controls-row">
+          <select id="sortBy" class="control">
+            <option value="deadlineAsc">Next deadline (soonest)</option>
+            <option value="deadlineDesc">Next deadline (latest)</option>
+            <option value="amountDesc">Amount (high → low)</option>
+            <option value="titleAsc">Title (A → Z)</option>
+          </select>
+          <span id="resultCount" class="meta"></span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="page">
+    <div id="list" class="grant-list"></div>
+  </main>
+
+  <!-- Admin modal -->
+  <dialog id="adminDialog">
+    <form method="dialog" id="adminForm">
+      <h2>Add Grant</h2>
+
+      <label>Title<input id="a_title" class="control" required></label>
+      <label>Funder Type<select id="a_funderType" class="control"></select></label>
+      <label>Eligibility<select id="a_eligibility" class="control"></select></label>
+      <label>Amount (USD)<input id="a_amount" class="control" type="number"></label>
+      <label>Deadlines (comma-separated YYYY-MM-DD)
+        <input id="a_deadlines" class="control" required>
+      </label>
+      <label>RFA Link<input id="a_link" class="control" required></label>
+      <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
+      <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
+      <label>Limitations<select id="a_limitations" class="control" multiple></select></label>
+
+      <div class="dialog-actions">
+        <button id="saveBtn" class="btn primary" type="button">Save</button>
+        <button class="btn" value="cancel">Cancel</button>
+      </div>
+
+      <p id="adminStatus" class="status"></p>
+    </form>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
