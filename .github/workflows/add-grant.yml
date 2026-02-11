@@ -35,7 +35,7 @@ jobs:
           
           if (mode === 'edit') {
             const editIndex = payload.editIndex;
-            if (typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
+            if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
               // Remove editIndex from payload before saving (it's metadata, not grant data)
               const { editIndex: _removed, ...grant } = payload;
               grants[editIndex] = grant;
