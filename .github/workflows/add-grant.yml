@@ -1,0 +1,38 @@
+name: Add grant
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Append grant
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const grant = JSON.parse(process.env.PAYLOAD);
+          const path = 'data/grants.json';
+          const grants = JSON.parse(fs.readFileSync(path, 'utf8'));
+          grants.unshift(grant);
+          fs.writeFileSync(path, JSON.stringify(grants, null, 2));
+          EOF
+        env:
+          PAYLOAD: ${{ github.event.inputs.payload }}
+
+      - name: Commit
+        run: |
+          git config user.name "cih-grants-bot"
+          git config user.email "cih-grants-bot@users.noreply.github.com"
+          git add data/grants.json
+          git commit -m "Add grant: $(echo '${{ github.event.inputs.payload }}' | jq -r .title)"
+          git push
