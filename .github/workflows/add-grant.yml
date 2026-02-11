@@ -5,7 +5,11 @@ on:
     inputs:
       mode:
         required: true
+        type: choice
         description: 'Operation mode: add or edit'
+        options:
+          - add
+          - edit
       payload:
         required: true
         description: 'Grant data as JSON string'
@@ -41,7 +45,9 @@ jobs:
             }
           } else {
             // mode === 'add'
-            grants.unshift(payload);
+            // Remove editIndex if present (shouldn't be, but defensive)
+            const { editIndex: _, ...grant } = payload;
+            grants.unshift(grant);
           }
           
           fs.writeFileSync(path, JSON.stringify(grants, null, 2));
