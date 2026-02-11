@@ -3,8 +3,12 @@ name: Add grant
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        required: true
+        description: 'Operation mode: add or edit'
       payload:
         required: true
+        description: 'Grant data as JSON string'
 
 permissions:
   contents: write
@@ -16,17 +20,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Append grant
+      - name: Add or edit grant
         run: |
           node <<'EOF'
           const fs = require('fs');
-          const grant = JSON.parse(process.env.PAYLOAD);
+          const payload = JSON.parse(process.env.PAYLOAD);
+          const mode = process.env.MODE;
           const path = 'data/grants.json';
           const grants = JSON.parse(fs.readFileSync(path, 'utf8'));
-          grants.unshift(grant);
+          
+          if (mode === 'edit') {
+            const editIndex = payload.editIndex;
+            if (editIndex !== undefined && editIndex >= 0 && editIndex < grants.length) {
+              // Remove editIndex from payload before saving
+              const { editIndex: _, ...grant } = payload;
+              grants[editIndex] = grant;
+            } else {
+              console.error('Invalid editIndex:', editIndex);
+              process.exit(1);
+            }
+          } else {
+            // mode === 'add'
+            grants.unshift(payload);
+          }
+          
           fs.writeFileSync(path, JSON.stringify(grants, null, 2));
           EOF
         env:
+          MODE: ${{ github.event.inputs.mode }}
           PAYLOAD: ${{ github.event.inputs.payload }}
 
       - name: Commit
@@ -34,5 +55,14 @@ jobs:
           git config user.name "cih-grants-bot"
           git config user.email "cih-grants-bot@users.noreply.github.com"
           git add data/grants.json
-          git commit -m "Add grant: $(echo '${{ github.event.inputs.payload }}' | jq -r .title)"
+          
+          TITLE=$(echo '${{ github.event.inputs.payload }}' | jq -r .title)
+          MODE="${{ github.event.inputs.mode }}"
+          
+          if [ "$MODE" = "edit" ]; then
+            git commit -m "Edit grant: $TITLE"
+          else
+            git commit -m "Add grant: $TITLE"
+          fi
+          
           git push
