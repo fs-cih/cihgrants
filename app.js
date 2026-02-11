@@ -1,7 +1,19 @@
 const TODAY = new Date().toISOString().slice(0, 10);
+const ACCESS_CODE = "1q2w3e4r";
+const US_STATES = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+  "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+  "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+  "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York",
+  "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+  "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+  "West Virginia", "Wisconsin", "Wyoming"
+];
+const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
 
 let grants = [];
 let vocab = {};
+let editIndex = null;
 
 const els = {
   list: document.getElementById("list"),
@@ -15,7 +27,9 @@ const els = {
   clearFilters: document.getElementById("clearFilters"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
+  adminDialogTitle: document.getElementById("adminDialogTitle"),
   saveBtn: document.getElementById("saveBtn"),
+  cancelBtn: document.getElementById("cancelBtn"),
   adminStatus: document.getElementById("adminStatus")
 };
 
@@ -39,6 +53,8 @@ function initFilters() {
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
   fillMulti(document.getElementById("a_limitations"), vocab.limitations || []);
+  fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
+  fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
   document.getElementById("a_addedDate").value = TODAY;
 }
@@ -58,6 +74,9 @@ function bindEvents() {
     els.sortBy.value = CIH_CONFIG.defaultSort || "deadlineAsc";
     apply();
   };
+
+  els.adminPlus.onclick = () => openAdminDialog();
+  els.cancelBtn.onclick = () => closeAdminDialog();
 }
 
 function fillSelect(el, arr, first) {
@@ -79,6 +98,10 @@ function selectedValues(selectEl) {
 
 function nextDeadline(g) {
   return (g.deadlines || []).filter(d => d >= TODAY).sort()[0] || null;
+}
+
+function upcomingDeadlines(g) {
+  return (g.deadlines || []).filter(d => d >= TODAY).sort();
 }
 
 function isNewGrant(g) {
@@ -156,13 +179,28 @@ function render(list) {
   list.forEach(g => els.list.append(renderGrant(g)));
 }
 
+function deadlineMarkup(g) {
+  const deadlines = upcomingDeadlines(g);
+  if (!deadlines.length) {
+    return `<p class="meta-row"><strong>Deadline:</strong> —</p>`;
+  }
+  if (deadlines.length === 1) {
+    return `<p class="meta-row"><strong>Deadline:</strong> ${formatDate(deadlines[0])}</p>`;
+  }
+  return `
+    <p class="meta-row"><strong>Next Deadline:</strong> ${formatDate(deadlines[0])}</p>
+    <p class="meta-row"><strong>Additional Deadlines:</strong> ${deadlines.slice(1).map(formatDate).join(", ")}</p>
+  `;
+}
+
 function renderGrant(g) {
   const div = document.createElement("article");
   div.className = "grant";
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
-  const preview = (g.description || "").slice(0, previewLimit);
-  const rest = (g.description || "").slice(previewLimit);
+  const fullDescription = g.description || "";
+  const preview = fullDescription.slice(0, previewLimit);
+  const rest = fullDescription.slice(previewLimit);
 
   const keywords = [...(g.keywords || [])];
   if (isNewGrant(g)) {
@@ -178,44 +216,136 @@ function renderGrant(g) {
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
-    <p class="meta-row"><strong>Next deadline:</strong> ${formatDate(nextDeadline(g))}</p>
+    ${deadlineMarkup(g)}
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
-    <p class="desc-preview">${preview}${rest ? "…" : ""}</p>
-    ${rest ? `<p class="desc-full">${rest}</p><button class="toggle">▼ Expand</button>` : ""}
+    ${g.geography ? `<p class="meta-row"><strong>Geography Restriction:</strong> ${g.geography}</p>` : ""}
+    ${g.piRestriction && g.piRestriction !== "None" ? `<p class="meta-row"><strong>PI Restriction:</strong> ${g.piRestriction}</p>` : ""}
+    <p class="desc-preview">${preview}${rest ? `<span class="desc-rest">${rest}</span>` : ""}</p>
+    ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
+    <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
   `;
+
+  const editBtn = div.querySelector(".edit-btn");
+  editBtn.onclick = () => {
+    const index = grants.findIndex(candidate => candidate === g);
+    openAdminDialog(g, index);
+  };
 
   if (rest) {
     const btn = div.querySelector(".toggle");
-    const full = div.querySelector(".desc-full");
+    const restSpan = div.querySelector(".desc-rest");
     btn.onclick = () => {
-      const open = full.style.display === "block";
-      full.style.display = open ? "none" : "block";
+      const open = restSpan.style.display === "inline";
+      restSpan.style.display = open ? "none" : "inline";
       btn.textContent = open ? "▼ Expand" : "▲ Collapse";
     };
   }
   return div;
 }
 
-els.adminPlus.onclick = () => els.adminDialog.showModal();
+function resetAdminForm() {
+  document.getElementById("a_code").value = "";
+  document.getElementById("a_title").value = "";
+  document.getElementById("a_funderType").value = "";
+  document.getElementById("a_eligibility").value = "";
+  document.getElementById("a_amount").value = "";
+  document.getElementById("a_amountIdc").value = "";
+  document.getElementById("a_duration").value = "";
+  document.getElementById("a_addedDate").value = TODAY;
+  document.getElementById("a_deadlines").value = "";
+  document.getElementById("a_geography").value = "None";
+  document.getElementById("a_piRestriction").value = "None";
+  document.getElementById("a_link").value = "";
+  document.getElementById("a_description").value = "";
+  [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
+  [...document.getElementById("a_limitations").options].forEach(o => { o.selected = false; });
+}
+
+function openAdminDialog(grant = null, index = null) {
+  els.adminStatus.textContent = "";
+  editIndex = index;
+  if (!grant) {
+    els.adminDialogTitle.textContent = "Add Grant";
+    resetAdminForm();
+    els.adminDialog.showModal();
+    return;
+  }
+
+  els.adminDialogTitle.textContent = "Edit Grant";
+  document.getElementById("a_code").value = "";
+  document.getElementById("a_title").value = grant.title || "";
+  document.getElementById("a_funderType").value = grant.funderType || "";
+  document.getElementById("a_eligibility").value = grant.eligibility || "";
+  document.getElementById("a_amount").value = grant.amount || "";
+  document.getElementById("a_amountIdc").value = grant.amountIdc || "";
+  document.getElementById("a_duration").value = grant.duration || "";
+  document.getElementById("a_addedDate").value = grant.addedDate || TODAY;
+  document.getElementById("a_deadlines").value = (grant.deadlines || []).join(", ");
+  document.getElementById("a_geography").value = grant.geography || "None";
+  document.getElementById("a_piRestriction").value = grant.piRestriction || "None";
+  document.getElementById("a_link").value = grant.link || "";
+  document.getElementById("a_description").value = grant.description || "";
+  [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
+  [...document.getElementById("a_limitations").options].forEach(o => { o.selected = (grant.limitations || []).includes(o.value); });
+  els.adminDialog.showModal();
+}
+
+function closeAdminDialog() {
+  els.adminDialog.close("cancel");
+  els.adminStatus.textContent = "";
+  editIndex = null;
+}
 
 els.saveBtn.onclick = async () => {
+  if (document.getElementById("a_code").value !== ACCESS_CODE) {
+    els.adminStatus.textContent = "Invalid code.";
+    return;
+  }
+
+  const title = document.getElementById("a_title").value.trim();
+  const deadlines = document.getElementById("a_deadlines").value
+    .split(",")
+    .map(s => s.trim())
+    .filter(Boolean);
+  const link = document.getElementById("a_link").value.trim();
+
+  if (!title || !deadlines.length || !link) {
+    els.adminStatus.textContent = "Title, deadlines, and link are required.";
+    return;
+  }
+
   const grant = {
-    title: document.getElementById("a_title").value,
+    title,
     funderType: document.getElementById("a_funderType").value,
     eligibility: document.getElementById("a_eligibility").value,
     amount: Number(document.getElementById("a_amount").value || 0),
     amountIdc: document.getElementById("a_amountIdc").value,
     duration: document.getElementById("a_duration").value,
     addedDate: document.getElementById("a_addedDate").value || TODAY,
-    deadlines: document.getElementById("a_deadlines").value.split(",").map(s => s.trim()),
-    link: document.getElementById("a_link").value,
+    deadlines,
+    geography: document.getElementById("a_geography").value,
+    piRestriction: document.getElementById("a_piRestriction").value,
+    link,
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
     limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
   };
+
+  const payload = { ...grant };
+  if (payload.geography === "None") {
+    delete payload.geography;
+  }
+  if (payload.piRestriction === "None") {
+    delete payload.piRestriction;
+  }
+
+  const mode = editIndex === null ? "add" : "edit";
+  if (editIndex !== null) {
+    payload.editIndex = editIndex;
+  }
 
   els.adminStatus.textContent = "Submitting…";
 
@@ -224,7 +354,13 @@ els.saveBtn.onclick = async () => {
     {
       method: "POST",
       headers: { "Accept": "application/vnd.github+json" },
-      body: JSON.stringify({ ref: CIH_CONFIG.githubBranch, inputs: { payload: JSON.stringify(grant) } })
+      body: JSON.stringify({
+        ref: CIH_CONFIG.githubBranch,
+        inputs: {
+          mode,
+          payload: JSON.stringify(payload)
+        }
+      })
     }
   );
 
