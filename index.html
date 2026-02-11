@@ -49,7 +49,9 @@
 
   <dialog id="adminDialog">
     <form method="dialog" id="adminForm">
-      <h2>Add Grant</h2>
+      <h2 id="adminDialogTitle">Add Grant</h2>
+
+      <label>Code<input id="a_code" class="control" placeholder="Enter access code"></label>
 
       <label>Title<input id="a_title" class="control" required></label>
       <label>Funder Type<select id="a_funderType" class="control"></select></label>
@@ -61,6 +63,8 @@
       <label>Deadlines (comma-separated YYYY-MM-DD)
         <input id="a_deadlines" class="control" required>
       </label>
+      <label>Geography Restriction<select id="a_geography" class="control"></select></label>
+      <label>PI Restriction<select id="a_piRestriction" class="control"></select></label>
       <label>RFA Link<input id="a_link" class="control" required></label>
       <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
       <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
@@ -68,7 +72,7 @@
 
       <div class="dialog-actions">
         <button id="saveBtn" class="btn primary" type="button">Save</button>
-        <button class="btn" value="cancel">Cancel</button>
+        <button id="cancelBtn" class="btn" type="button">Cancel</button>
       </div>
 
       <p id="adminStatus" class="status"></p>
