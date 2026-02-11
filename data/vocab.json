@@ -1,0 +1,25 @@
+{
+  "funderTypes": [
+    "JHU internal",
+    "Foundation",
+    "Federal government",
+    "State government"
+  ],
+  "eligibility": [
+    "CIH eligible (direct)",
+    "Eligible via partner",
+    "Partner-only"
+  ],
+  "keywords": [
+    "behavioral health",
+    "maternal & child health",
+    "infectious disease",
+    "education",
+    "policy"
+  ],
+  "limitations": [
+    "Geography-limited",
+    "PI restrictions",
+    "Limited submissions"
+  ]
+}
