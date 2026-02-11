@@ -1,0 +1,106 @@
+:root {
+  --bg: #F3F0E5;
+  --card: #ffffff;
+  --border: #e1dccb;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+}
+
+.page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyword-cards {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.controls {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.control {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+}
+
+.btn.primary {
+  background: black;
+  color: white;
+}
+
+.grant-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grant {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.desc-preview {
+  color: #444;
+}
+
+.desc-full {
+  display: none;
+  color: #444;
+}
+
+.toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.icon-btn {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
