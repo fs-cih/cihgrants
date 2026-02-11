@@ -375,18 +375,28 @@ els.saveBtn.onclick = async () => {
 async function saveGrant(mode, payload) {
   const owner = CIH_CONFIG.githubOwner;
   const repo = CIH_CONFIG.githubRepo;
+  const branch = CIH_CONFIG.githubBranch || "main";
+  const token = (CIH_CONFIG.githubToken || "").trim();
 
   if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
-    return;
+    throw new Error("GitHub repository is not configured. Set githubOwner and githubRepo in config.js.");
+  }
+
+  if (!token) {
+    throw new Error("GitHub token is missing. Set githubToken in config.js (PAT with Actions + Contents read/write).");
   }
 
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-grant.yml/dispatches`,
     {
       method: "POST",
-      headers: { "Accept": "application/vnd.github+json" },
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        ref: CIH_CONFIG.githubBranch,
+        ref: branch,
         inputs: {
           mode,
           payload: JSON.stringify(payload)
