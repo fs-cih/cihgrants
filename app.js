@@ -199,8 +199,9 @@ function renderGrant(g) {
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullDescription = g.description || "";
-  const preview = fullDescription.slice(0, previewLimit);
-  const rest = fullDescription.slice(previewLimit);
+  const hasOverflow = fullDescription.length > previewLimit;
+  const preview = hasOverflow ? fullDescription.slice(0, previewLimit).trimEnd() : fullDescription;
+  const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
   const keywords = [...(g.keywords || [])];
   if (isNewGrant(g)) {
@@ -222,7 +223,7 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
     ${g.geography ? `<p class="meta-row"><strong>Geography Restriction:</strong> ${g.geography}</p>` : ""}
     ${g.piRestriction && g.piRestriction !== "None" ? `<p class="meta-row"><strong>PI Restriction:</strong> ${g.piRestriction}</p>` : ""}
-    <p class="desc-preview">${preview}${rest ? `<span class="desc-rest">${rest}</span>` : ""}</p>
+    <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
     <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
@@ -238,8 +239,12 @@ function renderGrant(g) {
     const btn = div.querySelector(".toggle");
     const restSpan = div.querySelector(".desc-rest");
     btn.onclick = () => {
+      const ellipsis = div.querySelector(".ellipsis");
       const open = restSpan.style.display === "inline";
       restSpan.style.display = open ? "none" : "inline";
+      if (ellipsis) {
+        ellipsis.style.display = open ? "inline" : "none";
+      }
       btn.textContent = open ? "▼ Expand" : "▲ Collapse";
     };
   }
@@ -334,23 +339,49 @@ els.saveBtn.onclick = async () => {
     limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
   };
 
-  const payload = { ...grant };
-  if (payload.geography === "None") {
-    delete payload.geography;
+  const localGrant = { ...grant };
+  if (localGrant.geography === "None") {
+    delete localGrant.geography;
   }
-  if (payload.piRestriction === "None") {
-    delete payload.piRestriction;
+  if (localGrant.piRestriction === "None") {
+    delete localGrant.piRestriction;
   }
 
+  const payload = { ...localGrant };
   const mode = editIndex === null ? "add" : "edit";
   if (editIndex !== null) {
     payload.editIndex = editIndex;
   }
 
-  els.adminStatus.textContent = "Submitting…";
+  els.adminStatus.textContent = "Saving…";
 
-  await fetch(
-    `https://api.github.com/repos/${CIH_CONFIG.githubOwner}/${CIH_CONFIG.githubRepo}/actions/workflows/add-grant.yml/dispatches`,
+  try {
+    await saveGrant(mode, payload);
+
+    if (editIndex === null) {
+      grants.push(localGrant);
+    } else {
+      grants[editIndex] = localGrant;
+    }
+
+    apply();
+    closeAdminDialog();
+  } catch (error) {
+    console.error(error);
+    els.adminStatus.textContent = `Save failed: ${error.message}`;
+  }
+};
+
+async function saveGrant(mode, payload) {
+  const owner = CIH_CONFIG.githubOwner;
+  const repo = CIH_CONFIG.githubRepo;
+
+  if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
+    return;
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-grant.yml/dispatches`,
     {
       method: "POST",
       headers: { "Accept": "application/vnd.github+json" },
@@ -364,7 +395,10 @@ els.saveBtn.onclick = async () => {
     }
   );
 
-  els.adminStatus.textContent = "Submitted. Grant will appear shortly.";
-};
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`);
+  }
+}
 
 loadData();
