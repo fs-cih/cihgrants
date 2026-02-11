@@ -4,40 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CIH Grant Opportunities Tracker</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="files.css" />
 </head>
 <body>
   <header class="page">
     <div class="topbar">
-
-      <div id="keywordCards" class="keyword-cards"></div>
-
       <div class="title-row">
-        <h1>CIH Grant Opportunities Tracker</h1>
-        <button id="adminPlus" class="icon-btn" title="Add grant">＋</button>
+        <div>
+          <h1>CIH Grant Opportunities Tracker</h1>
+          <p class="subtitle">Search, filter, and sort current opportunities in one place.</p>
+        </div>
+        <button id="adminPlus" class="icon-btn" title="Add grant" aria-label="Add grant">＋</button>
       </div>
 
-      <div class="controls">
+      <section class="controls" aria-label="Filter and sort grants">
+        <h2>Filter &amp; Sort</h2>
+
         <div class="controls-row">
-          <input id="q" class="control" type="search" placeholder="Search…" />
+          <input id="q" class="control control-grow" type="search" placeholder="Search title, description, or keywords…" />
           <select id="funderType" class="control"></select>
           <select id="eligibility" class="control"></select>
-          <select id="keywords" class="control" multiple></select>
-          <select id="limitations" class="control" multiple></select>
           <button id="clearFilters" class="btn">Clear</button>
         </div>
 
         <div class="controls-row">
+          <select id="keywords" class="control" multiple></select>
+          <select id="limitations" class="control" multiple></select>
           <select id="sortBy" class="control">
             <option value="deadlineAsc">Next deadline (soonest)</option>
             <option value="deadlineDesc">Next deadline (latest)</option>
             <option value="amountDesc">Amount (high → low)</option>
             <option value="titleAsc">Title (A → Z)</option>
           </select>
-          <span id="resultCount" class="meta"></span>
         </div>
-      </div>
 
+        <span id="resultCount" class="meta"></span>
+      </section>
     </div>
   </header>
 
@@ -45,7 +47,6 @@
     <div id="list" class="grant-list"></div>
   </main>
 
-  <!-- Admin modal -->
   <dialog id="adminDialog">
     <form method="dialog" id="adminForm">
       <h2>Add Grant</h2>
@@ -53,7 +54,10 @@
       <label>Title<input id="a_title" class="control" required></label>
       <label>Funder Type<select id="a_funderType" class="control"></select></label>
       <label>Eligibility<select id="a_eligibility" class="control"></select></label>
-      <label>Amount (USD)<input id="a_amount" class="control" type="number"></label>
+      <label>Amount (USD)<input id="a_amount" class="control" type="number" min="0"></label>
+      <label>Amount Tracking<select id="a_amountIdc" class="control"></select></label>
+      <label>Duration<input id="a_duration" class="control" placeholder="e.g., 2 years"></label>
+      <label>Added Date<input id="a_addedDate" class="control" type="date"></label>
       <label>Deadlines (comma-separated YYYY-MM-DD)
         <input id="a_deadlines" class="control" required>
       </label>

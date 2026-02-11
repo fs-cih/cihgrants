@@ -1,106 +1,236 @@
 :root {
-  --bg: #F3F0E5;
+  --bg: #f3f0e5;
   --card: #ffffff;
-  --border: #e1dccb;
+  --card-soft: #f7f7f9;
+  --border: #d7d2c3;
+  --text: #1d2a39;
+  --muted: #5b6573;
+  --brand: #9d3a2b;
+  --new: #2f9e44;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--text);
   background: var(--bg);
 }
 
 .page {
-  max-width: 1100px;
+  max-width: 1160px;
   margin: auto;
-  padding: 20px;
+  padding: 28px 20px;
+}
+
+h1 {
+  margin: 0;
+  color: var(--brand);
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  color: var(--text);
+  font-size: 1.1rem;
 }
 
 .title-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.keyword-cards {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.kcard {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 13px;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .controls {
-  background: var(--card);
+  background: var(--card-soft);
   border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 12px;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 3px 12px rgba(34, 39, 46, 0.06);
+}
+
+.controls h2 {
+  margin: 0;
+  color: var(--brand);
+  font-size: 1.7rem;
+  border-bottom: 3px solid #d9dbe0;
+  padding-bottom: 10px;
 }
 
 .controls-row {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 .control {
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  min-width: 180px;
+}
+
+.control-grow {
+  flex: 1;
+  min-width: 280px;
 }
 
 .btn {
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 9px 14px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: white;
+  color: var(--text);
+  cursor: pointer;
 }
 
 .btn.primary {
-  background: black;
+  background: #1f2937;
   color: white;
 }
 
+.meta {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .grant-list {
-  margin-top: 16px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .grant {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px;
 }
 
-.desc-preview {
-  color: #444;
+.grant-top,
+.tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kcard,
+.meta-tag {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  background: #f6f8fb;
+  color: #334155;
+}
+
+.kcard-new {
+  background: var(--new);
+  border-color: var(--new);
+  color: white;
+}
+
+.grant h3 {
+  margin: 10px 0;
+  font-size: 1.15rem;
+}
+
+.grant h3 a {
+  color: #13213b;
+  text-decoration: none;
+}
+
+.grant h3 a:hover {
+  text-decoration: underline;
+}
+
+.meta-row {
+  margin: 6px 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.desc-preview,
+.desc-full {
+  color: #3f4956;
+  line-height: 1.5;
 }
 
 .desc-full {
   display: none;
-  color: #444;
+  margin-top: 0;
 }
 
 .toggle {
+  margin: 6px 0 10px;
   background: none;
   border: none;
   cursor: pointer;
-  color: #666;
+  color: #39495e;
+  font-weight: 700;
+  padding: 0;
 }
 
 .icon-btn {
-  font-size: 22px;
-  background: none;
-  border: none;
+  font-size: 24px;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--brand);
   cursor: pointer;
+}
+
+#adminDialog {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: min(720px, 92vw);
+}
+
+#adminForm {
+  display: grid;
+  gap: 10px;
+}
+
+#adminForm label {
+  display: grid;
+  gap: 6px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.status {
+  color: var(--muted);
+  min-height: 20px;
+}
+
+@media (max-width: 700px) {
+  .controls h2 {
+    font-size: 1.3rem;
+  }
+
+  .control {
+    width: 100%;
+  }
 }
