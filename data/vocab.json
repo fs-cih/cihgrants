@@ -6,11 +6,14 @@
     "State government"
   ],
   "eligibility": [
+    "JHU is eligible",
     "CIH eligible (direct)",
     "Eligible via partner",
     "Partner-only"
   ],
   "keywords": [
+    "native health",
+    "clinical research",
     "behavioral health",
     "maternal & child health",
     "infectious disease",
@@ -18,8 +21,14 @@
     "policy"
   ],
   "limitations": [
+    "Clinical Trial Not Allowed",
     "Geography-limited",
     "PI restrictions",
     "Limited submissions"
+  ],
+  "amountIdcOptions": [
+    "Including IDC",
+    "Excluding IDC",
+    "Not specified"
   ]
 }
