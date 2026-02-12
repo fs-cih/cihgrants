@@ -1,5 +1,26 @@
 [
   {
+    "title": "Screening, Brief Intervention and Referral to Treatment or Prevention (SBIRT/P) for alcohol, tobacco, and other drugs (ATOD) use and misuse in adult populations that experience health disparities (R01 - Clinical Trial Required)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-26-001.html",
+    "description": "The Office of Disease Prevention (ODP) and participating National Institutes of Health (NIH) Institutes, Centers, and Offices (ICOs) are issuing this NOFO seeking applications to test innovative approaches to implementing SBIRT/P for alcohol, tobacco, and other drugs (ATOD) use and misuse in adult NIH designated populations that experience health disparities. SBIRT/P, (a term used for purposes of this funding announcement), involves screening individuals for risk of ATOD use and misuse, briefly intervening with a conversation about harmful substance use, and referring individuals for treatment or preventive services, as needed.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "id": "grant_1770913422919_30_12es8175s",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05",
+      "2027-02-05"
+    ]
+  },
+  {
     "title": "Investigator Initiated Clinical Trials of Complementary and Integrative Interventions Delivered Remotely or via mHealth (R01 Clinical Trial Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
