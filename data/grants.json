@@ -647,6 +647,7 @@
   {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
@@ -658,7 +659,6 @@
     "keywords": [
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770908790740_18_z0mkj5kiu",
     "deadlines": [
       "2026-06-16",
