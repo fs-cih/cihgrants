@@ -1,5 +1,27 @@
 [
   {
+    "title": "Tobacco Regulatory Science Small Grant Program for New Investigators (R03 Clinical Trial Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 75000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "1 year",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/rfa-files/RFA-OD-25-008.html",
+    "description": "This Notice of Funding Opportunity (NOFO) aims to support new biomedical, behavioral, and social science investigators who are in the early stages of establishing independent careers in tobacco regulatory research. The R03 grant mechanism supports different types of projects, including pilot and feasibility studies, secondary analysis of existing data, small, self-contained research projects, development of research methodology, and development of new research technology. Applicants are encouraged to conduct projects that ultimately have the potential to inform regulations on tobacco product manufacturing, distribution, and marketing. Research projects must address one or more High-Priority Research Topic(s) related to the regulatory authority of the Food and Drug Administration (FDA) Center for Tobacco Products (CTP) as mandated by the Family Smoking Prevention and Tobacco Control Act (FSPTCA), Public Law 111-31.",
+    "keywords": [
+      "Tobacco Control"
+    ],
+    "flagForPi": [
+      "Jordyn"
+    ],
+    "id": "grant_1770906215942_6_umh2id7kj",
+    "deadlines": [
+      "2026-07-14"
+    ]
+  },
+  {
     "title": "Stephen I. Katz Early Stage Investigator Research Project Grant (R01 Basic Experimental Studies with Human Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
