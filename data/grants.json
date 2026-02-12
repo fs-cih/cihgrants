@@ -241,6 +241,7 @@
   {
     "title": "Cancer Prevention and Control Clinical Trials Grant Program (R01 Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
