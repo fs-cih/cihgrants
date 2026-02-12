@@ -336,9 +336,9 @@ function apply() {
 
   // Sort: Pinned grants first (when no filters), then new grants, then by deadline proximity, then recurring, then always open
   filtered.sort((a, b) => {
-    // Nesting overrides pin - nested grants are not shown as cards, so this doesn't apply here
+    // Note: Nested grants are already filtered out, so we don't need to check for nesting here
     
-    // If no filters are active, pinned grants come first
+    // If no filters are active, pinned grants (that are not nested) come first
     if (!hasActiveFilters) {
       const aPinned = a.pin === true;
       const bPinned = b.pin === true;
@@ -607,16 +607,34 @@ function resetAdminForm() {
   updateFederalAgencyField();
 }
 
+// Helper function to check if a grant is a descendant of another grant
+function isDescendantOf(grantId, potentialAncestorId) {
+  if (!grantId || !potentialAncestorId) return false;
+  
+  const grant = grants.find(g => g.id === grantId);
+  if (!grant || !grant.parentGrantId) return false;
+  
+  // Direct parent match
+  if (grant.parentGrantId === potentialAncestorId) return true;
+  
+  // Check parent's parent recursively
+  return isDescendantOf(grant.parentGrantId, potentialAncestorId);
+}
+
 function populateParentGrantSelect(currentGrantId = null) {
   const select = document.getElementById("a_parentGrantId");
   select.innerHTML = '<option value="">None (standalone grant)</option>';
   
-  // Only show grants that are not nested themselves and have active deadlines
-  // Exclude the current grant being edited to prevent self-nesting
+  // Only show grants that are:
+  // 1. Not nested themselves
+  // 2. Have active deadlines
+  // 3. Not the current grant (prevent self-nesting)
+  // 4. Not descendants of the current grant (prevent circular dependencies)
   const availableGrants = grants.filter(g => 
     !g.parentGrantId && 
     hasActiveDeadline(g) && 
-    g.id !== currentGrantId
+    g.id !== currentGrantId &&
+    !isDescendantOf(g.id, currentGrantId)
   );
   
   // Sort by title for easier selection
@@ -775,14 +793,16 @@ els.saveBtn.onclick = async () => {
   const pinValue = document.querySelector('input[name="pin"]:checked').value;
   if (pinValue === "yes") {
     grant.pin = true;
+  } else {
+    grant.pin = false;
   }
   
   // Add parent grant ID if selected
   const parentGrantId = document.getElementById("a_parentGrantId").value;
   if (parentGrantId) {
     grant.parentGrantId = parentGrantId;
-    // Nesting overrides pin
-    delete grant.pin;
+    // Nesting overrides pin (but we preserve the pin value)
+    // The pin won't be applied while nested, but will be preserved if un-nested later
   }
 
   if (grant.funderType !== "Federal") {
