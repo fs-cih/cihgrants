@@ -47,9 +47,10 @@ async function loadData(options = {}) {
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   
   // Ensure all grants have unique IDs for proper edit tracking
+  const timestamp = Date.now();
   grants.forEach((g, index) => {
     if (!g.id) {
-      g.id = `grant_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`;
+      g.id = generateGrantId(timestamp, index);
     }
   });
   
@@ -58,6 +59,10 @@ async function loadData(options = {}) {
     bindEvents();
   }
   apply();
+}
+
+function generateGrantId(timestamp, index) {
+  return `grant_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
 function initFilters() {
@@ -592,7 +597,7 @@ els.saveBtn.onclick = async () => {
   if (editIndex !== null && grants[editIndex]) {
     grant.id = grants[editIndex].id;
   } else {
-    grant.id = `grant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    grant.id = generateGrantId(Date.now(), grants.length);
   }
   
   // Add deadline information based on type
