@@ -503,6 +503,7 @@
   {
     "title": "Pilot Health Services and Economic Research on the Treatment of Drug, Alcohol, and Tobacco Use Disorders (R34 Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 450000,
     "amountDetail": "over total award period",
@@ -515,7 +516,6 @@
       "Substance Use",
       "Tobacco Control"
     ],
-    "flagForPi": [],
     "id": "grant_1770909556716_24_kb4cp0zpu",
     "deadlines": [
       "2026-06-16",
