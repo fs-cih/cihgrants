@@ -9,6 +9,12 @@ const US_STATES = [
   "West Virginia", "Wisconsin", "Wyoming"
 ];
 const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
+const PAT_PERMISSION_HELP = `
+Your Personal Access Token (PAT) needs additional permissions:
+• For Classic PATs: Enable both 'repo' and 'workflow' scopes
+• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
+
+Please create a new token at: https://github.com/settings/tokens`;
 
 let grants = [];
 let vocab = {};
@@ -249,13 +255,6 @@ function renderGrant(g) {
   }
   return div;
 }
-
-const PAT_PERMISSION_HELP = `
-Your Personal Access Token (PAT) needs additional permissions:
-• For Classic PATs: Enable both 'repo' and 'workflow' scopes
-• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
-
-Please create a new token at: https://github.com/settings/tokens`;
 
 function resetAdminForm() {
   document.getElementById("a_token").value = "";
