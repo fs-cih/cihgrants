@@ -20,6 +20,12 @@ const PAT_INVALID_HELP = `
 
 Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
 
+// Fields that should be highlighted if they contain apostrophes
+const APOSTROPHE_CHECK_FIELDS = [
+  'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
+  'a_link', 'a_description'
+];
+
 let grants = [];
 let vocab = {};
 let editIndex = null;
@@ -165,6 +171,14 @@ function bindEvents() {
   // Handle deadline type radio buttons
   document.querySelectorAll('input[name="deadlineType"]').forEach(radio => {
     radio.addEventListener('change', updateDeadlineFields);
+  });
+  
+  // Set up apostrophe highlighting for admin form fields
+  APOSTROPHE_CHECK_FIELDS.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener('input', highlightApostropheFields);
+    }
   });
 }
 
@@ -472,22 +486,7 @@ function openAdminDialog(grant = null, index = null) {
     els.adminDialogTitle.textContent = "Add Grant";
     els.deleteBtn.hidden = true;
     resetAdminForm();
-    
-    // Set up apostrophe highlighting
-    const fields = [
-      'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
-      'a_link', 'a_description'
-    ];
-    fields.forEach(fieldId => {
-      const field = document.getElementById(fieldId);
-      if (field) {
-        field.addEventListener('input', highlightApostropheFields);
-      }
-    });
-    
-    // Initial highlight check
     highlightApostropheFields();
-    
     els.adminDialog.showModal();
     return;
   }
@@ -526,21 +525,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
   
-  // Set up apostrophe highlighting
-  const fields = [
-    'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
-    'a_link', 'a_description'
-  ];
-  fields.forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (field) {
-      field.addEventListener('input', highlightApostropheFields);
-    }
-  });
-  
-  // Initial highlight check
   highlightApostropheFields();
-  
   els.adminDialog.showModal();
 }
 
@@ -551,12 +536,7 @@ function closeAdminDialog() {
 }
 
 function highlightApostropheFields() {
-  const fields = [
-    'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
-    'a_link', 'a_description'
-  ];
-  
-  fields.forEach(fieldId => {
+  APOSTROPHE_CHECK_FIELDS.forEach(fieldId => {
     const field = document.getElementById(fieldId);
     if (field) {
       const value = field.value || '';
