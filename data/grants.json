@@ -66,7 +66,9 @@
     "addedDate": "2026-02-12",
     "link": "https://grants.nih.gov/grants/guide/rfa-files/RFA-DK-26-315.html",
     "description": "To promote extramural biomedical research that improves the understanding of disease management and leads to improved preventions, diagnosis, and treatment of diabetes, digestive, and kidney diseases. Programmatic areas within the National Institute of Diabetes and Digestive and Kidney Diseases include diabetes, digestive, endocrine, hematologic, liver, metabolic, nephrologic, nutrition, obesity, and urologic diseases.",
-    "keywords": [],
+    "keywords": [
+      "Diabetes"
+    ],
     "flagForPi": [
       "Don",
       "Melissa"
