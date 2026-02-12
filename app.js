@@ -85,29 +85,28 @@ function initFilters() {
     eligibilityContainer.appendChild(label);
   });
 
-  // Principal Investigator dropdown (multiple select)
-  fillMulti(els.flagForPi, vocab.flagForPi || []);
+  // Principal Investigator dropdown (single select)
+  fillSelect(els.flagForPi, vocab.flagForPi || [], "-- Select PI --");
 
-  // Create Keyword checkboxes in 4 columns
-  const keywordContainer = document.getElementById("keywordCheckboxes");
+  // Create Keyword pills in alphabetical order
+  const keywordContainer = document.getElementById("keywordPills");
   keywordContainer.innerHTML = "";
-  (vocab.keywords || []).forEach(keyword => {
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "keyword";
-    checkbox.value = keyword;
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(keyword));
-    keywordContainer.appendChild(label);
+  const sortedKeywords = [...(vocab.keywords || [])].sort();
+  sortedKeywords.forEach(keyword => {
+    const pill = document.createElement("span");
+    pill.className = "keyword-pill";
+    pill.textContent = keyword;
+    pill.dataset.keyword = keyword;
+    keywordContainer.appendChild(pill);
   });
 
   // Admin dialog selects
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
-  fillSelect(document.getElementById("a_eligibility"), vocab.eligibility || []);
+  // Eligibility is hardcoded to "Prime" and "Secondary" per requirements (task #7)
+  fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
-  fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
+  fillSelect(document.getElementById("a_flagForPi"), vocab.flagForPi || [], "-- Select PI --");
   fillMulti(document.getElementById("a_limitations"), vocab.limitations || []);
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
@@ -134,9 +133,12 @@ function bindEvents() {
   els.flagForPi.addEventListener("input", apply);
   els.flagForPi.addEventListener("change", apply);
 
-  // Keyword checkboxes
-  document.querySelectorAll('input[name="keyword"]').forEach(cb => {
-    cb.addEventListener("change", apply);
+  // Keyword pills
+  document.querySelectorAll('.keyword-pill').forEach(pill => {
+    pill.addEventListener("click", () => {
+      pill.classList.toggle("selected");
+      apply();
+    });
   });
 
   els.clearFilters.onclick = () => {
@@ -145,8 +147,8 @@ function bindEvents() {
     document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
       cb.checked = (cb.value === "Prime");
     });
-    [...els.flagForPi.options].forEach(o => { o.selected = false; });
-    document.querySelectorAll('input[name="keyword"]').forEach(cb => { cb.checked = false; });
+    els.flagForPi.value = "";
+    document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     apply();
   };
 
@@ -222,11 +224,11 @@ function apply() {
   const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
     .map(cb => cb.value);
   
-  const byFlagForPi = selectedValues(els.flagForPi);
+  const byFlagForPi = els.flagForPi.value ? [els.flagForPi.value] : [];
   
-  // Get checked keywords
-  const byKeywords = Array.from(document.querySelectorAll('input[name="keyword"]:checked'))
-    .map(cb => cb.value);
+  // Get selected keywords from pills
+  const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
+    .map(pill => pill.dataset.keyword);
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
@@ -345,7 +347,7 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = false; });
+  document.getElementById("a_flagForPi").value = "";
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = false; });
 }
 
@@ -376,7 +378,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = (grant.flagForPi || []).includes(o.value); });
+  document.getElementById("a_flagForPi").value = (grant.flagForPi || [])[0] || "";
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = (grant.limitations || []).includes(o.value); });
   els.adminDialog.showModal();
 }
@@ -420,7 +422,7 @@ els.saveBtn.onclick = async () => {
     link,
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
-    flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value),
+    flagForPi: document.getElementById("a_flagForPi").value ? [document.getElementById("a_flagForPi").value] : [],
     limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
   };
 

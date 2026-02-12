@@ -44,21 +44,21 @@
           <div class="filter-row">
             <label class="filter-label">Principal Investigator:</label>
             <div class="filter-control">
-              <select id="flagForPi" class="control" multiple></select>
+              <select id="flagForPi" class="control"></select>
             </div>
           </div>
 
           <div class="filter-row">
             <label class="filter-label filter-label-top">Keywords:</label>
             <div class="filter-control">
-              <div id="keywordCheckboxes" class="checkbox-grid"></div>
+              <div id="keywordPills" class="keyword-pills"></div>
             </div>
           </div>
 
           <div class="filter-row">
             <div class="filter-label"></div>
             <div class="filter-control">
-              <button id="clearFilters" class="btn">Clear</button>
+              <button id="clearFilters" class="btn btn-small">Clear</button>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
     <div id="list" class="grant-list"></div>
   </main>
 
-  <div class="version">Version 1.5</div>
+  <div class="version">Version 1.6</div>
 
   <dialog id="adminDialog">
     <form method="dialog" id="adminForm">
@@ -101,7 +101,7 @@
       <label>RFA Link<input id="a_link" class="control" required></label>
       <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
       <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
-      <label>Flag for PI<select id="a_flagForPi" class="control" multiple></select></label>
+      <label>Flag for PI<select id="a_flagForPi" class="control"></select></label>
       <label>Limitations<select id="a_limitations" class="control" multiple></select></label>
 
       <div class="dialog-actions">
