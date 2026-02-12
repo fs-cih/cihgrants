@@ -389,13 +389,18 @@ function apply() {
 function render(list) {
   els.list.innerHTML = "";
   
+  // Pre-compute nested grant counts for better performance
+  const nestedCountMap = new Map();
+  grants.forEach(ng => {
+    if (ng.parentGrantId && hasActiveDeadline(ng)) {
+      nestedCountMap.set(ng.parentGrantId, (nestedCountMap.get(ng.parentGrantId) || 0) + 1);
+    }
+  });
+  
   // Count total opportunities including nested grants
   let totalCount = list.length;
   list.forEach(g => {
-    const nestedCount = grants.filter(ng => 
-      ng.parentGrantId === g.id && hasActiveDeadline(ng)
-    ).length;
-    totalCount += nestedCount;
+    totalCount += (nestedCountMap.get(g.id) || 0);
   });
   
   els.resultCount.textContent = `${totalCount} opportunit${totalCount === 1 ? "y" : "ies"}`;

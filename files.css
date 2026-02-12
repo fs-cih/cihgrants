@@ -231,15 +231,17 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 16px;
   z-index: 1;
-  font-weight: bold;
 }
 
-.pin-indicator::before {
-  content: "📍";
-  filter: brightness(0) invert(1);
+.pin-indicator::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin-bottom: 2px;
 }
 
 .grant-top,
