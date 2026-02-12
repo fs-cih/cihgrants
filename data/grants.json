@@ -552,6 +552,7 @@
   {
     "title": "Leveraging Network Infrastructure to Conduct Innovative Research for Women, Children, Pregnant and Lactating Women, and Persons with Disabilities (UG3/UH3 - Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 6250000,
     "amountDetail": "over total award period",
@@ -563,7 +564,6 @@
     "keywords": [
       "Maternal Health"
     ],
-    "flagForPi": [],
     "id": "grant_1770909215758_22_pfhd7xxto",
     "deadlines": [
       "2026-07-15",
