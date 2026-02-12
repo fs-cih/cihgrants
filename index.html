@@ -45,13 +45,6 @@
           </div>
 
           <div class="filter-row">
-            <label class="filter-label">Flagged for PI:</label>
-            <div class="filter-control">
-              <select id="flagForPi" class="control"></select>
-            </div>
-          </div>
-
-          <div class="filter-row">
             <label class="filter-label filter-label-top">Keywords:</label>
             <div class="filter-control">
               <div id="keywordPills" class="keyword-pills"></div>
@@ -59,9 +52,9 @@
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px;">
-          <button id="clearFilters" class="btn btn-small">Clear</button>
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 12px;">
           <span id="resultCount" class="meta"></span>
+          <button id="clearFilters" class="btn btn-small">Clear</button>
         </div>
       </section>
     </div>
@@ -71,7 +64,7 @@
     <div id="list" class="grant-list"></div>
   </main>
 
-  <div class="version">Version 1.7</div>
+  <div class="version">Version 1.8</div>
 
   <dialog id="adminDialog">
     <form method="dialog" id="adminForm">
@@ -122,7 +115,6 @@
       <label>RFA Link<input id="a_link" class="control" required></label>
       <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
       <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
-      <label>Flag for PI<select id="a_flagForPi" class="control" multiple></select></label>
 
       <div class="dialog-actions">
         <button id="saveBtn" class="btn primary" type="button">Save</button>
