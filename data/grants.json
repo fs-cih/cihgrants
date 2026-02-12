@@ -47,30 +47,5 @@
       "2027-07-08",
       "2028-07-07"
     ]
-  },
-  {
-    "id": "grant_1738449600000_2",
-    "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
-    "funderType": "Federal",
-    "eligibility": "Secondary",
-    "amount": 225000,
-    "amountIdc": "Excluding IDC",
-    "duration": "2 years",
-    "addedDate": "2026-02-01",
-    "deadlines": [
-      "2026-07-08",
-      "2027-07-08",
-      "2028-07-07"
-    ],
-    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-441.html",
-    "description": "The purpose of the Native American Research Centers for Health (NARCH) Planning Grants program is to support federally-recognized American Indian/Alaska Native Tribes, Tribal colleges and universities, Tribal health programs, or Tribal organizations (collectively, federally-recognized Tribes and Tribal entities) to plan and conduct preparatory work for developing competitive NARCH applications.",
-    "keywords": [
-      "Behavioral Health",
-      "Capacity-Building"
-    ],
-    "flagForPi": [
-      "Francene",
-      "Novalene"
-    ]
   }
 ]
