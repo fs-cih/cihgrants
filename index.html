@@ -17,7 +17,7 @@
       </div>
 
       <section class="controls" aria-label="Filter and sort grants">
-        <h2>Filter &amp; Sort</h2>
+        <h2>Filter Results</h2>
 
         <div class="filter-grid">
           <div class="filter-row">
@@ -72,7 +72,7 @@
     <div id="list" class="grant-list"></div>
   </main>
 
-  <div class="version">Version 1.6</div>
+  <div class="version">Version 1.7</div>
 
   <dialog id="adminDialog">
     <form method="dialog" id="adminForm">
@@ -101,13 +101,12 @@
       <label>RFA Link<input id="a_link" class="control" required></label>
       <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
       <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
-      <label>Flag for PI<select id="a_flagForPi" class="control"></select></label>
-      <label>Limitations<select id="a_limitations" class="control" multiple></select></label>
+      <label>Flag for PI<select id="a_flagForPi" class="control" multiple></select></label>
 
       <div class="dialog-actions">
-        <button id="deleteBtn" class="btn danger" type="button" hidden>Delete</button>
         <button id="saveBtn" class="btn primary" type="button">Save</button>
         <button id="cancelBtn" class="btn" type="button">Cancel</button>
+        <button id="deleteBtn" class="btn danger" type="button" hidden>Delete</button>
       </div>
 
       <p id="adminStatus" class="status"></p>

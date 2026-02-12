@@ -76,10 +76,7 @@ function initFilters() {
     checkbox.type = "checkbox";
     checkbox.name = "eligibility";
     checkbox.value = type;
-    // Prime is selected by default
-    if (type === "Prime") {
-      checkbox.checked = true;
-    }
+    // Neither is selected by default
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(type));
     eligibilityContainer.appendChild(label);
@@ -106,8 +103,7 @@ function initFilters() {
   fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
-  fillSelect(document.getElementById("a_flagForPi"), vocab.flagForPi || [], "-- Select PI --");
-  fillMulti(document.getElementById("a_limitations"), vocab.limitations || []);
+  fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
@@ -145,7 +141,7 @@ function bindEvents() {
     els.q.value = "";
     document.querySelectorAll('input[name="funderType"]').forEach(cb => { cb.checked = false; });
     document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
-      cb.checked = (cb.value === "Prime");
+      cb.checked = false;
     });
     els.flagForPi.value = "";
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
@@ -197,8 +193,8 @@ function formatDate(value) {
   }
   return new Date(`${value}T00:00:00`).toLocaleDateString(CIH_CONFIG.locale || "en-US", {
     year: "numeric",
-    month: "short",
-    day: "numeric"
+    month: "2-digit",
+    day: "2-digit"
   });
 }
 
@@ -283,13 +279,22 @@ function renderGrant(g) {
   const preview = hasOverflow ? fullDescription.slice(0, previewLimit).trimEnd() : fullDescription;
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
-  const keywords = [...(g.keywords || [])];
+  const keywords = [];
   if (isNewGrant(g)) {
-    keywords.unshift("New");
+    keywords.push({ text: "New", className: "kcard-new" });
   }
+  if (g.piRestriction && g.piRestriction !== "None") {
+    keywords.push({ text: `PI: ${g.piRestriction}`, className: "kcard-pi-restriction" });
+  }
+  if (g.geography && g.geography !== "None") {
+    keywords.push({ text: g.geography, className: "kcard-state" });
+  }
+  (g.keywords || []).forEach(kw => {
+    keywords.push({ text: kw, className: "" });
+  });
 
   const keywordPills = keywords
-    .map((kw, idx) => `<span class="kcard ${idx === 0 && kw === "New" ? "kcard-new" : ""}">${kw}</span>`)
+    .map(kw => `<span class="kcard ${kw.className}">${kw.text}</span>`)
     .join("");
 
   const limitations = (g.limitations || []).map(l => `<span class="meta-tag">${l}</span>`).join("");
@@ -301,8 +306,6 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
-    ${g.geography ? `<p class="meta-row"><strong>Geography Restriction:</strong> ${g.geography}</p>` : ""}
-    ${g.piRestriction && g.piRestriction !== "None" ? `<p class="meta-row"><strong>PI Restriction:</strong> ${g.piRestriction}</p>` : ""}
     ${(g.flagForPi || []).length ? `<p class="meta-row"><strong>Flag for PI:</strong> ${(g.flagForPi || []).join(", ")}</p>` : ""}
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
@@ -347,8 +350,7 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
-  document.getElementById("a_flagForPi").value = "";
-  [...document.getElementById("a_limitations").options].forEach(o => { o.selected = false; });
+  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = false; });
 }
 
 function openAdminDialog(grant = null, index = null) {
@@ -378,8 +380,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
-  document.getElementById("a_flagForPi").value = (grant.flagForPi || [])[0] || "";
-  [...document.getElementById("a_limitations").options].forEach(o => { o.selected = (grant.limitations || []).includes(o.value); });
+  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = (grant.flagForPi || []).includes(o.value); });
   els.adminDialog.showModal();
 }
 
@@ -422,8 +423,7 @@ els.saveBtn.onclick = async () => {
     link,
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
-    flagForPi: document.getElementById("a_flagForPi").value ? [document.getElementById("a_flagForPi").value] : [],
-    limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
+    flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value)
   };
 
   const localGrant = { ...grant };
