@@ -106,6 +106,7 @@
   {
     "title": "NLM Information Resource Grants to Reduce Health Disparities and Promote Health for All (G08 Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 200000,
     "amountDetail": "per year",
