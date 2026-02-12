@@ -1,5 +1,24 @@
 [
   {
+    "title": "Ethical, Legal and Social Implications (ELSI) Exploratory/Developmental Research Grant (R21 Clinical Trial Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 275000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "3 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-369.html",
+    "description": "This Notice of Funding Opportunity (NOFO) invites Exploratory/Developmental Research Grant (R21) applications that propose to study the ethical, legal and social implications (ELSI) of human genetic or genomic research. Applications may propose studies using either single or mixed methods, that break new ground, extend previous discoveries in new directions, or develop preliminary data in preparation for larger studies. Approaches may include but are not limited to empirical qualitative and quantitative methods, and conceptual, legal, and normative analyses. Applied research designed to address ELSI issues in genetics and genomics will also be considered responsive. Direct engagement with communities and other stakeholders is encouraged, but not required.",
+    "keywords": [],
+    "flagForPi": [],
+    "id": "grant_1770906585689_9_vuxe7qhvm",
+    "deadlines": [
+      "2026-06-18",
+      "2026-10-20"
+    ]
+  },
+  {
     "title": "Intervention Research to Improve Native American Health (R01 Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
