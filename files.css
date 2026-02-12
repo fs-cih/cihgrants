@@ -224,24 +224,16 @@ h1 {
   position: absolute;
   top: 16px;
   left: 16px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
   background: #000000;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
-}
-
-.pin-indicator::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: white;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  margin-bottom: 2px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .grant-top,
@@ -518,10 +510,39 @@ h1 {
   margin-bottom: 4px;
 }
 
+.nested-grant-pills {
+  margin-top: 6px;
+}
+
+.rfa-pill {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 1px solid #c4b5fd;
+  background: #c4b5fd;
+  color: #1d2a39;
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+.rfa-pill:hover {
+  background: #a78bfa;
+  border-color: #a78bfa;
+}
+
 .nested-grant-expanded {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid var(--border);
+  position: relative;
+}
+
+.nested-grant-expanded .card-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .nested-grant-expanded .grant-top {
