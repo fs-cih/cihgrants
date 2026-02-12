@@ -39,9 +39,16 @@ const APOSTROPHE_CHECK_FIELDS = [
   'a_link', 'a_description'
 ];
 
+const APOSTROPHE_CHECK_FIELDS_PROSPECTS = [
+  'p_funder', 'p_link', 'p_notes'
+];
+
 let grants = [];
+let prospects = [];
 let vocab = {};
 let editIndex = null;
+let prospectEditIndex = null;
+let currentView = 'grants'; // 'grants' or 'prospects'
 
 const els = {
   list: document.getElementById("list"),
@@ -54,7 +61,16 @@ const els = {
   saveBtn: document.getElementById("saveBtn"),
   deleteBtn: document.getElementById("deleteBtn"),
   cancelBtn: document.getElementById("cancelBtn"),
-  adminStatus: document.getElementById("adminStatus")
+  adminStatus: document.getElementById("adminStatus"),
+  prospectDialog: document.getElementById("prospectDialog"),
+  prospectDialogTitle: document.getElementById("prospectDialogTitle"),
+  prospectSaveBtn: document.getElementById("prospectSaveBtn"),
+  prospectDeleteBtn: document.getElementById("prospectDeleteBtn"),
+  prospectCancelBtn: document.getElementById("prospectCancelBtn"),
+  prospectStatus: document.getElementById("prospectStatus"),
+  toggleGrants: document.getElementById("toggleGrants"),
+  toggleProspects: document.getElementById("toggleProspects"),
+  downloadBtn: document.getElementById("downloadBtn")
 };
 
 async function loadData(options = {}) {
@@ -62,12 +78,20 @@ async function loadData(options = {}) {
   const suffix = `?t=${Date.now()}`;
   vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
+  prospects = await fetch(`data/prospects.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   
   // Ensure all grants have unique IDs for proper edit tracking
   const timestamp = Date.now();
   grants.forEach((g, index) => {
     if (!g.id) {
       g.id = generateGrantId(timestamp, index);
+    }
+  });
+  
+  // Ensure all prospects have unique IDs for proper edit tracking
+  prospects.forEach((p, index) => {
+    if (!p.id) {
+      p.id = generateProspectId(timestamp, index);
     }
   });
   
@@ -80,6 +104,10 @@ async function loadData(options = {}) {
 
 function generateGrantId(timestamp, index) {
   return `grant_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
+}
+
+function generateProspectId(timestamp, index) {
+  return `prospect_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
 function initFilters() {
@@ -136,6 +164,12 @@ function initFilters() {
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
+  // Prospect dialog selects
+  fillSelect(document.getElementById("p_funderType"), vocab.funderTypes || []);
+  fillMulti(document.getElementById("p_keywords"), vocab.keywords || []);
+  fillSelect(document.getElementById("p_geography"), ["None", ...US_STATES]);
+  fillSelect(document.getElementById("p_piRestriction"), PI_RESTRICTIONS);
+
   document.getElementById("a_addedDate").value = TODAY;
   updateFederalAgencyField();
 }
@@ -173,9 +207,28 @@ function bindEvents() {
     apply();
   };
 
-  els.adminPlus.onclick = () => openAdminDialog();
+  els.adminPlus.onclick = () => {
+    if (currentView === 'grants') {
+      openAdminDialog();
+    } else {
+      openProspectDialog();
+    }
+  };
   els.cancelBtn.onclick = () => closeAdminDialog();
   els.deleteBtn.onclick = () => deleteCurrentGrant();
+  
+  // Prospect dialog handlers
+  els.prospectCancelBtn.onclick = () => closeProspectDialog();
+  els.prospectDeleteBtn.onclick = () => deleteCurrentProspect();
+  
+  // Toggle handlers
+  els.toggleGrants.onclick = () => switchView('grants');
+  els.toggleProspects.onclick = () => switchView('prospects');
+  
+  // Download button (placeholder)
+  els.downloadBtn.onclick = () => {
+    console.log('Download button clicked (placeholder)');
+  };
   
   // Handle deadline type radio buttons
   document.querySelectorAll('input[name="deadlineType"]').forEach(radio => {
@@ -189,6 +242,14 @@ function bindEvents() {
     const field = document.getElementById(fieldId);
     if (field) {
       field.addEventListener('input', highlightApostropheFields);
+    }
+  });
+  
+  // Set up apostrophe highlighting for prospect form fields
+  APOSTROPHE_CHECK_FIELDS_PROSPECTS.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener('input', highlightApostropheFieldsProspects);
     }
   });
 }
@@ -245,6 +306,10 @@ function fillMulti(el, arr) {
 
 function selectedValues(selectEl) {
   return [...selectEl.selectedOptions].map(o => o.value);
+}
+
+function pluralize(count, singular, plural) {
+  return count === 1 ? singular : (plural || `${singular}s`);
 }
 
 // Check if a grant has an active deadline (either upcoming dates, always open, or recurring)
@@ -400,6 +465,23 @@ function apply() {
   render(filtered, byKeywords);
 }
 
+function switchView(view) {
+  currentView = view;
+  const toggleContainer = document.querySelector('.toggle-container');
+  
+  if (view === 'prospects') {
+    toggleContainer.classList.add('prospects');
+    els.toggleGrants.classList.remove('active');
+    els.toggleProspects.classList.add('active');
+    renderProspects();
+  } else {
+    toggleContainer.classList.remove('prospects');
+    els.toggleGrants.classList.add('active');
+    els.toggleProspects.classList.remove('active');
+    apply();
+  }
+}
+
 function render(list, selectedKeywords = []) {
   els.list.innerHTML = "";
   
@@ -417,8 +499,99 @@ function render(list, selectedKeywords = []) {
     totalCount += (nestedCountMap.get(g.id) || 0);
   });
   
-  els.resultCount.textContent = `${totalCount} opportunit${totalCount === 1 ? "y" : "ies"}`;
+  els.resultCount.textContent = `${totalCount} ${pluralize(totalCount, 'opportunity', 'opportunities')}`;
   list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
+}
+
+function renderProspects() {
+  els.list.innerHTML = "";
+  
+  // Sort prospects alphabetically by funder name, with pinned ones first
+  const sorted = [...prospects].sort((a, b) => {
+    const aPinned = a.pin === true;
+    const bPinned = b.pin === true;
+    if (aPinned && !bPinned) return -1;
+    if (!aPinned && bPinned) return 1;
+    return (a.funder || "").localeCompare(b.funder || "");
+  });
+  
+  els.resultCount.textContent = `${sorted.length} ${pluralize(sorted.length, 'prospect')}`;
+  sorted.forEach(p => els.list.append(renderProspect(p)));
+}
+
+function renderProspect(p) {
+  const div = document.createElement("article");
+  div.className = "grant"; // Reuse grant card styling
+  
+  const keywords = [];
+  // Add pin indicator as first pill if pinned
+  if (p.pin) {
+    keywords.push({ text: "Pinned", className: "pin-indicator" });
+  }
+  if (p.piRestriction && p.piRestriction !== "None") {
+    keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
+  }
+  if (p.geography && p.geography !== "None") {
+    keywords.push({ text: p.geography, className: "kcard-state" });
+  }
+  (p.keywords || []).forEach(kw => {
+    keywords.push({ text: kw, className: "" });
+  });
+  
+  const keywordPills = keywords
+    .map(kw => {
+      if (kw.className === "pin-indicator") {
+        return `<span class="${kw.className}">${kw.text}</span>`;
+      }
+      return `<span class="kcard ${kw.className}">${kw.text}</span>`;
+    })
+    .join("");
+  
+  const hasNotes = p.notes && p.notes.trim().length > 0;
+  const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
+  const fullNotes = p.notes || "";
+  const hasOverflow = fullNotes.length > previewLimit;
+  const preview = hasOverflow ? fullNotes.slice(0, previewLimit).trimEnd() : fullNotes;
+  const rest = hasOverflow ? fullNotes.slice(previewLimit) : "";
+  
+  div.innerHTML = `
+    <div class="grant-top">${keywordPills}</div>
+    <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
+    ${p.funderType ? `<p class="meta-row"><strong>Funder Type:</strong> ${p.funderType}</p>` : ""}
+    ${hasNotes ? `<p class="meta-row desc-preview"><strong>Notes:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>` : ""}
+    ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
+    <div class="card-actions">
+      <button class="btn btn-small edit-prospect">Edit</button>
+    </div>
+  `;
+  
+  // Handle expand/collapse
+  if (rest) {
+    const toggleBtn = div.querySelector(".toggle");
+    const descPreview = div.querySelector(".desc-preview");
+    const descRest = div.querySelector(".desc-rest");
+    const ellipsis = div.querySelector(".ellipsis");
+    
+    toggleBtn.addEventListener("click", () => {
+      const isExpanded = descRest.style.display === "inline";
+      if (isExpanded) {
+        descRest.style.display = "none";
+        ellipsis.style.display = "inline";
+        toggleBtn.textContent = "▼ Expand";
+      } else {
+        descRest.style.display = "inline";
+        ellipsis.style.display = "none";
+        toggleBtn.textContent = "▲ Collapse";
+      }
+    });
+  }
+  
+  // Handle edit
+  div.querySelector(".edit-prospect").addEventListener("click", () => {
+    openProspectDialog(prospects.indexOf(p));
+  });
+  
+  return div;
 }
 
 function deadlineMarkup(g) {
@@ -859,6 +1032,63 @@ function highlightApostropheFields() {
   });
 }
 
+function highlightApostropheFieldsProspects() {
+  APOSTROPHE_CHECK_FIELDS_PROSPECTS.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      const value = field.value || '';
+      if (value.includes("'")) {
+        field.style.backgroundColor = '#ffcccc';
+      } else {
+        field.style.backgroundColor = '';
+      }
+    }
+  });
+}
+
+function openProspectDialog(index = null) {
+  prospectEditIndex = index;
+  els.prospectStatus.textContent = "";
+  
+  if (index !== null && prospects[index]) {
+    els.prospectDialogTitle.textContent = "Edit Prospect";
+    els.prospectDeleteBtn.hidden = false;
+    populateProspectDialog(prospects[index]);
+  } else {
+    els.prospectDialogTitle.textContent = "Add Prospect";
+    els.prospectDeleteBtn.hidden = true;
+    populateProspectDialog();
+  }
+}
+
+function populateProspectDialog(prospect = {}) {
+  document.getElementById("p_token").value = "";
+  
+  const pinValue = prospect.pin ? "yes" : "no";
+  if (pinValue === "yes") {
+    document.getElementById("p_pin_yes").checked = true;
+  } else {
+    document.getElementById("p_pin_no").checked = true;
+  }
+  
+  document.getElementById("p_funder").value = prospect.funder || "";
+  document.getElementById("p_funderType").value = prospect.funderType || "";
+  document.getElementById("p_geography").value = prospect.geography || "None";
+  document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
+  document.getElementById("p_link").value = prospect.link || "";
+  [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
+  document.getElementById("p_notes").value = prospect.notes || "";
+  
+  highlightApostropheFieldsProspects();
+  els.prospectDialog.showModal();
+}
+
+function closeProspectDialog() {
+  els.prospectDialog.close("cancel");
+  els.prospectStatus.textContent = "";
+  prospectEditIndex = null;
+}
+
 els.saveBtn.onclick = async () => {
   const token = document.getElementById("a_token").value.trim();
   if (!token) {
@@ -1018,6 +1248,109 @@ async function deleteCurrentGrant() {
   }
 }
 
+els.prospectSaveBtn.onclick = async () => {
+  const token = document.getElementById("p_token").value.trim();
+  if (!token) {
+    els.prospectStatus.textContent = "GitHub token is required.";
+    return;
+  }
+
+  const funder = document.getElementById("p_funder").value.trim();
+  const link = document.getElementById("p_link").value.trim();
+  
+  if (!funder || !link) {
+    els.prospectStatus.textContent = "Funder and link are required.";
+    return;
+  }
+
+  const prospect = {
+    funder,
+    funderType: document.getElementById("p_funderType").value,
+    geography: document.getElementById("p_geography").value,
+    piRestriction: document.getElementById("p_piRestriction").value,
+    link,
+    keywords: [...document.getElementById("p_keywords").selectedOptions].map(o => o.value),
+    notes: document.getElementById("p_notes").value
+  };
+
+  // Add pin field
+  const pinValue = document.querySelector('input[name="p_pin"]:checked').value;
+  if (pinValue === "yes") {
+    prospect.pin = true;
+  } else {
+    prospect.pin = false;
+  }
+  
+  // Preserve ID when editing, generate new one when adding
+  if (prospectEditIndex !== null && prospects[prospectEditIndex]) {
+    prospect.id = prospects[prospectEditIndex].id;
+  } else {
+    prospect.id = generateProspectId(Date.now(), prospects.length);
+  }
+
+  const localProspect = { ...prospect };
+  if (localProspect.geography === "None") {
+    delete localProspect.geography;
+  }
+  if (localProspect.piRestriction === "None") {
+    delete localProspect.piRestriction;
+  }
+
+  const payload = { ...localProspect };
+  const mode = prospectEditIndex === null ? "add" : "edit";
+  if (prospectEditIndex !== null) {
+    payload.editIndex = prospectEditIndex;
+  }
+  payload.id = localProspect.id;
+
+  els.prospectStatus.textContent = "Saving…";
+
+  try {
+    await saveProspect(mode, payload, token);
+
+    if (prospectEditIndex === null) {
+      prospects.push(localProspect);
+    } else {
+      prospects[prospectEditIndex] = localProspect;
+    }
+
+    renderProspects();
+    closeProspectDialog();
+  } catch (error) {
+    console.error(error);
+    els.prospectStatus.textContent = `Save failed: ${error.message}`;
+  }
+};
+
+async function deleteCurrentProspect() {
+  if (prospectEditIndex === null) {
+    return;
+  }
+
+  const token = document.getElementById("p_token").value.trim();
+  if (!token) {
+    els.prospectStatus.textContent = "GitHub token is required.";
+    return;
+  }
+
+  const shouldDelete = window.confirm("Delete this prospect entry permanently?");
+  if (!shouldDelete) {
+    return;
+  }
+
+  els.prospectStatus.textContent = "Deleting…";
+
+  try {
+    await saveProspect("delete", { editIndex: prospectEditIndex, id: prospects[prospectEditIndex]?.id, funder: prospects[prospectEditIndex]?.funder }, token);
+    prospects.splice(prospectEditIndex, 1);
+    renderProspects();
+    closeProspectDialog();
+  } catch (error) {
+    console.error(error);
+    els.prospectStatus.textContent = `Delete failed: ${error.message}`;
+  }
+}
+
 async function saveGrant(mode, payload, tokenInput) {
   const owner = CIH_CONFIG.githubOwner;
   const repo = CIH_CONFIG.githubRepo;
@@ -1034,6 +1367,63 @@ async function saveGrant(mode, payload, tokenInput) {
 
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-grant.yml/dispatches`,
+    {
+      method: "POST",
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ref: branch,
+        inputs: {
+          mode,
+          payload: JSON.stringify(payload)
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
+    
+    // Provide helpful guidance for common authentication errors
+    if (response.status === 403) {
+      let needsPermissionHelp = false;
+      try {
+        const errorData = JSON.parse(errorText);
+        needsPermissionHelp = errorData.message && errorData.message.includes("Resource not accessible by personal access token");
+      } catch (e) {
+        needsPermissionHelp = errorText.includes("Resource not accessible by personal access token");
+      }
+      if (needsPermissionHelp) {
+        errorMessage += PAT_PERMISSION_HELP;
+      }
+    } else if (response.status === 401) {
+      errorMessage += PAT_INVALID_HELP;
+    }
+    
+    throw new Error(errorMessage);
+  }
+}
+
+async function saveProspect(mode, payload, tokenInput) {
+  const owner = CIH_CONFIG.githubOwner;
+  const repo = CIH_CONFIG.githubRepo;
+  const branch = CIH_CONFIG.githubBranch || "main";
+  const token = (tokenInput || "").trim();
+
+  if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
+    throw new Error("GitHub repository is not configured. Set githubOwner and githubRepo in config.js.");
+  }
+
+  if (!token) {
+    throw new Error("GitHub token is missing. Enter a PAT in the prospect dialog.");
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-prospect.yml/dispatches`,
     {
       method: "POST",
       headers: {

@@ -389,6 +389,70 @@ h1 {
   cursor: pointer;
 }
 
+.icon-btn-circle {
+  font-size: 24px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--brand);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.icon-btn-circle:hover {
+  background: #f3f0e5;
+}
+
+/* Toggle slider styles */
+.toggle-container {
+  position: relative;
+  display: inline-flex;
+  background: var(--card-soft);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px;
+  height: 38px;
+}
+
+.toggle-btn {
+  position: relative;
+  z-index: 2;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-radius: 18px;
+}
+
+.toggle-btn.active {
+  color: white;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  height: calc(100% - 4px);
+  background: #631500;
+  border-radius: 18px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.toggle-container.prospects .toggle-slider {
+  transform: translateX(calc(100% + 2px));
+}
+
 #adminDialog {
   border: 1px solid var(--border);
   border-radius: 12px;
