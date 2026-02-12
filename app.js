@@ -308,6 +308,10 @@ function selectedValues(selectEl) {
   return [...selectEl.selectedOptions].map(o => o.value);
 }
 
+function pluralize(count, singular, plural) {
+  return count === 1 ? singular : (plural || `${singular}s`);
+}
+
 // Check if a grant has an active deadline (either upcoming dates, always open, or recurring)
 function hasActiveDeadline(g) {
   // Open and recurring deadlines are always "active"
@@ -495,7 +499,7 @@ function render(list, selectedKeywords = []) {
     totalCount += (nestedCountMap.get(g.id) || 0);
   });
   
-  els.resultCount.textContent = `${totalCount} opportunit${totalCount === 1 ? "y" : "ies"}`;
+  els.resultCount.textContent = `${totalCount} ${pluralize(totalCount, 'opportunity', 'opportunities')}`;
   list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
 }
 
@@ -511,7 +515,7 @@ function renderProspects() {
     return (a.funder || "").localeCompare(b.funder || "");
   });
   
-  els.resultCount.textContent = `${sorted.length} prospect${sorted.length === 1 ? "" : "s"}`;
+  els.resultCount.textContent = `${sorted.length} ${pluralize(sorted.length, 'prospect')}`;
   sorted.forEach(p => els.list.append(renderProspect(p)));
 }
 
@@ -1337,7 +1341,7 @@ async function deleteCurrentProspect() {
   els.prospectStatus.textContent = "Deleting…";
 
   try {
-    await saveProspect("delete", { editIndex: prospectEditIndex, id: prospects[prospectEditIndex]?.id }, token);
+    await saveProspect("delete", { editIndex: prospectEditIndex, id: prospects[prospectEditIndex]?.id, funder: prospects[prospectEditIndex]?.funder }, token);
     prospects.splice(prospectEditIndex, 1);
     renderProspects();
     closeProspectDialog();

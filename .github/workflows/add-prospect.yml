@@ -95,7 +95,7 @@ jobs:
           if [ "$MODE" = "edit" ]; then
             git commit -m "Edit prospect: $FUNDER"
           elif [ "$MODE" = "delete" ]; then
-            git commit -m "Delete prospect at index: $(echo '${{ github.event.inputs.payload }}' | jq -r .editIndex)"
+            git commit -m "Delete prospect: $FUNDER"
           else
             git commit -m "Add prospect: $FUNDER"
           fi
