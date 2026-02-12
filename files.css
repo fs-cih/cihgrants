@@ -65,7 +65,7 @@ h1 {
 
 .filter-row {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 4fr;
   gap: 16px;
   align-items: start;
 }
@@ -355,12 +355,13 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  height: 24px;
+  min-width: 28px;
+  min-height: 28px;
+  aspect-ratio: 1;
   border-radius: 50%;
   font-size: 11px;
   font-weight: 700;
-  padding: 2px 6px;
+  padding: 4px;
   margin-left: 6px;
 }
 
