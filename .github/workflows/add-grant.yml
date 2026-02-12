@@ -38,22 +38,36 @@ jobs:
           const path = 'data/grants.json';
           const grants = JSON.parse(fs.readFileSync(path, 'utf8'));
           
-          if (mode === 'edit') {
+          const findIndexForPayload = () => {
+            if (payload.id) {
+              const indexById = grants.findIndex(grant => grant.id === payload.id);
+              if (indexById !== -1) {
+                return indexById;
+              }
+            }
             const editIndex = payload.editIndex;
             if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
+              return editIndex;
+            }
+            return -1;
+          };
+
+          if (mode === 'edit') {
+            const targetIndex = findIndexForPayload();
+            if (targetIndex !== -1) {
               // Remove editIndex from payload before saving (it's metadata, not grant data)
               const { editIndex: _removed, ...grant } = payload;
-              grants[editIndex] = grant;
+              grants[targetIndex] = grant;
             } else {
-              console.error('Invalid editIndex:', editIndex);
+              console.error('Could not find grant to edit using id/editIndex:', payload.id, payload.editIndex);
               process.exit(1);
             }
           } else if (mode === 'delete') {
-            const editIndex = payload.editIndex;
-            if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
-              grants.splice(editIndex, 1);
+            const targetIndex = findIndexForPayload();
+            if (targetIndex !== -1) {
+              grants.splice(targetIndex, 1);
             } else {
-              console.error('Invalid editIndex:', editIndex);
+              console.error('Could not find grant to delete using id/editIndex:', payload.id, payload.editIndex);
               process.exit(1);
             }
           } else {
