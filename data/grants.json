@@ -854,6 +854,7 @@
   {
     "title": "Intervention Research to Improve Native American Health (R01 - Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -865,7 +866,6 @@
     "keywords": [
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770906460872_8_f9dh64y6u",
     "deadlines": [
       "2026-10-21"
