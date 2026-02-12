@@ -351,6 +351,34 @@ h1 {
   justify-content: flex-end;
 }
 
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  margin-left: 6px;
+}
+
+.deadline-badge-maroon {
+  background: #5c0f0f;
+  color: white;
+}
+
+.deadline-badge-mustard {
+  background: #d4a017;
+  color: #1d2a39;
+}
+
+.deadline-badge-green {
+  background: #1e5631;
+  color: white;
+}
+
 @media (max-width: 700px) {
   .controls h2 {
     font-size: 1.1rem;

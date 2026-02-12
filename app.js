@@ -30,6 +30,7 @@ const els = {
   flagForPi: document.getElementById("flagForPi"),
   resultCount: document.getElementById("resultCount"),
   clearFilters: document.getElementById("clearFilters"),
+  refreshBtn: document.getElementById("refreshBtn"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
   adminDialogTitle: document.getElementById("adminDialogTitle"),
@@ -44,11 +45,24 @@ async function loadData(options = {}) {
   const suffix = `?t=${Date.now()}`;
   vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
+  
+  // Ensure all grants have unique IDs for proper edit tracking
+  const timestamp = Date.now();
+  grants.forEach((g, index) => {
+    if (!g.id) {
+      g.id = generateGrantId(timestamp, index);
+    }
+  });
+  
   initFilters();
   if (!options.skipBindEvents) {
     bindEvents();
   }
   apply();
+}
+
+function generateGrantId(timestamp, index) {
+  return `grant_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
 function initFilters() {
@@ -149,6 +163,11 @@ function bindEvents() {
     apply();
   };
 
+  els.refreshBtn.onclick = async () => {
+    // Force reload data from server with cache-busting
+    await loadData({ skipBindEvents: true });
+  };
+
   els.adminPlus.onclick = () => openAdminDialog();
   els.cancelBtn.onclick = () => closeAdminDialog();
   els.deleteBtn.onclick = () => deleteCurrentGrant();
@@ -228,6 +247,11 @@ function isNewGrant(g) {
   return days >= 0 && days <= (CIH_CONFIG.newGrantWindowDays || 30);
 }
 
+function daysBetween(from, to) {
+  const ms = new Date(to).getTime() - new Date(from).getTime();
+  return Math.ceil(ms / (1000 * 60 * 60 * 24));
+}
+
 function formatDate(value) {
   if (!value) {
     return "—";
@@ -290,7 +314,7 @@ function apply() {
       return hay.includes(q);
     });
 
-  // Sort: New grants first, then alphabetically by title
+  // Sort: New grants first, then grants by deadline proximity, then recurring, then always open
   filtered.sort((a, b) => {
     const aIsNew = isNewGrant(a);
     const bIsNew = isNewGrant(b);
@@ -299,7 +323,33 @@ function apply() {
     if (aIsNew && !bIsNew) return -1;
     if (!aIsNew && bIsNew) return 1;
     
-    // Within same category, sort alphabetically by title
+    // Within same new/not-new category, sort by deadline type
+    const aNextDeadline = nextDeadline(a);
+    const bNextDeadline = nextDeadline(b);
+    
+    // Both have future deadlines - sort by days until deadline
+    if (aNextDeadline && bNextDeadline) {
+      const aDays = daysBetween(TODAY, aNextDeadline);
+      const bDays = daysBetween(TODAY, bNextDeadline);
+      if (aDays !== bDays) {
+        return aDays - bDays;
+      }
+      // If same days, sort alphabetically
+      return (a.title || "").localeCompare(b.title || "");
+    }
+    
+    // One has future deadline, one doesn't
+    if (aNextDeadline && !bNextDeadline) return -1;
+    if (!aNextDeadline && bNextDeadline) return 1;
+    
+    // Neither has future deadline - recurring comes before always open
+    const aIsRecurring = !!a.deadlineRecurring;
+    const bIsRecurring = !!b.deadlineRecurring;
+    
+    if (aIsRecurring && !bIsRecurring) return -1;
+    if (!aIsRecurring && bIsRecurring) return 1;
+    
+    // Both same type (recurring or open), sort alphabetically
     return (a.title || "").localeCompare(b.title || "");
   });
 
@@ -328,12 +378,25 @@ function deadlineMarkup(g) {
   if (!deadlines.length) {
     return `<p class="meta-row"><strong>Deadline:</strong> —</p>`;
   }
+  
+  // Helper to create day badge
+  const dayBadge = (date) => {
+    const days = daysBetween(TODAY, date);
+    let badgeClass = 'deadline-badge-green';
+    if (days <= 10) {
+      badgeClass = 'deadline-badge-maroon';
+    } else if (days <= 30) {
+      badgeClass = 'deadline-badge-mustard';
+    }
+    return `<span class="deadline-badge ${badgeClass}">${days}</span>`;
+  };
+  
   if (deadlines.length === 1) {
-    return `<p class="meta-row"><strong>Deadline:</strong> ${formatDate(deadlines[0])}</p>`;
+    return `<p class="meta-row"><strong>Deadline:</strong> ${formatDate(deadlines[0])} ${dayBadge(deadlines[0])}</p>`;
   }
   return `
-    <p class="meta-row"><strong>Next Deadline:</strong> ${formatDate(deadlines[0])}</p>
-    <p class="meta-row"><strong>Additional Deadlines:</strong> ${deadlines.slice(1).map(formatDate).join(", ")}</p>
+    <p class="meta-row"><strong>Next Deadline:</strong> ${formatDate(deadlines[0])} ${dayBadge(deadlines[0])}</p>
+    <p class="meta-row"><strong>Additional Deadlines:</strong> ${deadlines.slice(1).map(d => `${formatDate(d)} ${dayBadge(d)}`).join(", ")}</p>
   `;
 }
 
@@ -383,7 +446,7 @@ function renderGrant(g) {
 
   const editBtn = div.querySelector(".edit-btn");
   editBtn.onclick = () => {
-    const index = grants.findIndex(candidate => candidate === g);
+    const index = grants.findIndex(candidate => candidate.id === g.id);
     openAdminDialog(g, index);
   };
 
@@ -529,6 +592,13 @@ els.saveBtn.onclick = async () => {
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
     flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value)
   };
+  
+  // Preserve ID when editing, generate new one when adding
+  if (editIndex !== null && grants[editIndex]) {
+    grant.id = grants[editIndex].id;
+  } else {
+    grant.id = generateGrantId(Date.now(), grants.length);
+  }
   
   // Add deadline information based on type
   if (deadlineType === 'deadline') {
