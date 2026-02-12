@@ -26,7 +26,6 @@
     "flagForPi": []
   },
   {
-    "id": "grant_1738449600000_1",
     "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "eligibility": "Secondary",
@@ -41,7 +40,11 @@
       "Behavioral Health",
       "Capacity-Building"
     ],
-    "flagForPi": [],
+    "flagForPi": [
+      "Francene",
+      "Novalene"
+    ],
+    "id": "grant_1738449600000_1",
     "deadlines": [
       "2026-07-08",
       "2027-07-08",
