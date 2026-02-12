@@ -1,5 +1,29 @@
 [
   {
+    "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Clinical Trial Required)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 275000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "2 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-306.html",
+    "description": "The NIH Exploratory/Developmental Grant supports exploratory and developmental research projects by providing support for the early and conceptual stages of these projects. These studies may involve considerable risk but may lead to a breakthrough in a particular area, or to the development of novel techniques, agents, methodologies, models, or applications that could have a major impact on a field of biomedical, behavioral, or clinical research. This Parent Notice of Funding Opportunity requires that at least 1 clinical trial be proposed. The proposed project must be related to the programmatic interests of one or more of the participating NIH Institutes and Centers (ICs) based on their scientific missions.",
+    "keywords": [
+      "General Research"
+    ],
+    "flagForPi": [],
+    "id": "grant_1770908790740_18_z0mkj5kiu",
+    "deadlines": [
+      "2026-06-16",
+      "2026-10-16",
+      "2027-02-16",
+      "2027-06-16",
+      "2027-10-16"
+    ]
+  },
+  {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
