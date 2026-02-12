@@ -102,10 +102,10 @@ function initFilters() {
 
   // Admin dialog selects
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
-  fillSelect(document.getElementById("a_eligibility"), vocab.eligibility || []);
+  fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
-  fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
+  fillSelect(document.getElementById("a_flagForPi"), vocab.flagForPi || [], "-- Select PI --");
   fillMulti(document.getElementById("a_limitations"), vocab.limitations || []);
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
@@ -347,7 +347,7 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = false; });
+  document.getElementById("a_flagForPi").value = "";
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = false; });
 }
 
@@ -378,7 +378,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = (grant.flagForPi || []).includes(o.value); });
+  document.getElementById("a_flagForPi").value = (grant.flagForPi || [])[0] || "";
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = (grant.limitations || []).includes(o.value); });
   els.adminDialog.showModal();
 }
@@ -422,7 +422,7 @@ els.saveBtn.onclick = async () => {
     link,
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
-    flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value),
+    flagForPi: document.getElementById("a_flagForPi").value ? [document.getElementById("a_flagForPi").value] : [],
     limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
   };
 
