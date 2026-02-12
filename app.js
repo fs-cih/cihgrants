@@ -450,6 +450,14 @@ function deadlineMarkup(g) {
   `;
 }
 
+function rfaPillHtml(grant) {
+  // Only show RFA pill if deadline is open
+  if (!grant.deadlineOpen) {
+    return '';
+  }
+  return `<a href="${grant.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>`;
+}
+
 function renderGrant(g) {
   const div = document.createElement("article");
   div.className = "grant";
@@ -519,7 +527,8 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
-    ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p><div class="nested-grants"></div>' : ''}
+    ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
+    ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
     <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
   `;
@@ -553,11 +562,10 @@ function renderGrant(g) {
       nestedItem.dataset.expanded = "false";
       
       // Initial collapsed view - just title
-      const rfaPillCollapsed = ng.deadlineOpen ? `<a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>` : '';
       nestedItem.innerHTML = `
         <div class="nested-grant-title">${ng.title}</div>
         <div class="nested-grant-pills">
-          ${rfaPillCollapsed}
+          ${rfaPillHtml(ng)}
         </div>
       `;
       
@@ -566,11 +574,10 @@ function renderGrant(g) {
         
         if (isExpanded) {
           // Collapse: show only title
-          const rfaPillCollapsed = ng.deadlineOpen ? `<a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>` : '';
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-pills">
-              ${rfaPillCollapsed}
+              ${rfaPillHtml(ng)}
             </div>
           `;
           nestedItem.dataset.expanded = "false";
@@ -621,14 +628,11 @@ function renderGrant(g) {
           const nestedPreview = nestedHasOverflow ? nestedFullDescription.slice(0, nestedPreviewLimit).trimEnd() : nestedFullDescription;
           const nestedRest = nestedHasOverflow ? nestedFullDescription.slice(nestedPreviewLimit) : "";
           
-          // Only show RFA pill if deadline is open
-          const rfaPillExpanded = ng.deadlineOpen ? `<a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>` : '';
-          
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-expanded">
               <div class="grant-top">
-                ${rfaPillExpanded}
+                ${rfaPillHtml(ng)}
                 ${nestedKeywordPills}
               </div>
               ${nestedFunderTypeMarkup}
