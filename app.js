@@ -9,6 +9,19 @@ const US_STATES = [
   "West Virginia", "Wisconsin", "Wyoming"
 ];
 const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
+const FEDERAL_AGENCIES = [
+  "ACF",
+  "BIA",
+  "CDC",
+  "CMS",
+  "DOJ",
+  "HHS Other",
+  "HRSA",
+  "IHS",
+  "NIH",
+  "Other Federal",
+  "SAMHSA"
+];
 const PAT_PERMISSION_HELP = `
 
 Your Personal Access Token (PAT) needs additional permissions:
@@ -115,6 +128,7 @@ function initFilters() {
 
   // Admin dialog selects
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
+  fillSelect(document.getElementById("a_federalAgency"), FEDERAL_AGENCIES, "Select agency");
   // Eligibility is hardcoded to "Prime" and "Secondary" per requirements (task #7)
   fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountDetail"), ["per year", "over total award period"]);
@@ -124,6 +138,7 @@ function initFilters() {
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
   document.getElementById("a_addedDate").value = TODAY;
+  updateFederalAgencyField();
 }
 
 function bindEvents() {
@@ -172,6 +187,8 @@ function bindEvents() {
   document.querySelectorAll('input[name="deadlineType"]').forEach(radio => {
     radio.addEventListener('change', updateDeadlineFields);
   });
+
+  document.getElementById("a_funderType").addEventListener("change", updateFederalAgencyField);
   
   // Set up apostrophe highlighting for admin form fields
   APOSTROPHE_CHECK_FIELDS.forEach(fieldId => {
@@ -204,6 +221,18 @@ function updateDeadlineFields() {
     deadlinesInput.required = false;
     recurringLabel.style.display = '';
     recurringInput.required = true;
+  }
+}
+
+function updateFederalAgencyField() {
+  const funderType = document.getElementById("a_funderType").value;
+  const agencyLabel = document.getElementById("a_federalAgency_label");
+  const agencySelect = document.getElementById("a_federalAgency");
+  const isFederal = funderType === "Federal";
+  agencyLabel.style.display = isFederal ? "" : "none";
+  agencySelect.required = isFederal;
+  if (!isFederal) {
+    agencySelect.value = "";
   }
 }
 
@@ -404,6 +433,12 @@ function renderGrant(g) {
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
   const keywords = [];
+  if (g.funderType) {
+    keywords.push({ text: g.funderType, className: "kcard-funder-type" });
+  }
+  if (g.funderType === "Federal" && g.federalAgency) {
+    keywords.push({ text: g.federalAgency, className: "kcard-federal-agency" });
+  }
   if (isNewGrant(g)) {
     keywords.push({ text: "New", className: "kcard-new" });
   }
@@ -429,7 +464,7 @@ function renderGrant(g) {
     ${deadlineMarkup(g)}
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
-    <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
+    <p class="meta-row"><strong>Eligibility:</strong> <span class="eligibility-pill ${g.eligibility === "Secondary" ? "eligibility-pill-secondary" : ""}">${g.eligibility || "Not specified"}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
@@ -463,6 +498,7 @@ function resetAdminForm() {
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
+  document.getElementById("a_federalAgency").value = "";
   document.getElementById("a_amount").value = "";
   document.getElementById("a_amountDetail").value = "";
   document.getElementById("a_amountIdc").value = "";
@@ -477,6 +513,7 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
+  updateFederalAgencyField();
 }
 
 function openAdminDialog(grant = null, index = null) {
@@ -496,6 +533,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_token").value = "";
   document.getElementById("a_title").value = grant.title || "";
   document.getElementById("a_funderType").value = grant.funderType || "";
+  document.getElementById("a_federalAgency").value = grant.federalAgency || "";
   document.getElementById("a_eligibility").value = grant.eligibility || "";
   document.getElementById("a_amount").value = grant.amount || "";
   document.getElementById("a_amountDetail").value = grant.amountDetail || "";
@@ -524,6 +562,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
+  updateFederalAgencyField();
   
   highlightApostropheFields();
   els.adminDialog.showModal();
@@ -565,6 +604,11 @@ els.saveBtn.onclick = async () => {
     els.adminStatus.textContent = "Title and link are required.";
     return;
   }
+
+  if (document.getElementById("a_funderType").value === "Federal" && !document.getElementById("a_federalAgency").value) {
+    els.adminStatus.textContent = "Federal agency is required when funder type is Federal.";
+    return;
+  }
   
   if (deadlineType === 'deadline') {
     const deadlines = document.getElementById("a_deadlines").value
@@ -586,6 +630,7 @@ els.saveBtn.onclick = async () => {
   const grant = {
     title,
     funderType: document.getElementById("a_funderType").value,
+    federalAgency: document.getElementById("a_federalAgency").value,
     eligibility: document.getElementById("a_eligibility").value,
     amount: Number(document.getElementById("a_amount").value || 0),
     amountDetail: document.getElementById("a_amountDetail").value,
@@ -598,6 +643,10 @@ els.saveBtn.onclick = async () => {
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value)
   };
+
+  if (grant.funderType !== "Federal") {
+    delete grant.federalAgency;
+  }
   
   // Preserve ID when editing, generate new one when adding
   if (editIndex !== null && grants[editIndex]) {
@@ -631,6 +680,7 @@ els.saveBtn.onclick = async () => {
   if (editIndex !== null) {
     payload.editIndex = editIndex;
   }
+  payload.id = localGrant.id;
 
   els.adminStatus.textContent = "Saving…";
 
@@ -671,7 +721,7 @@ async function deleteCurrentGrant() {
   els.adminStatus.textContent = "Deleting…";
 
   try {
-    await saveGrant("delete", { editIndex }, token);
+    await saveGrant("delete", { editIndex, id: grants[editIndex]?.id }, token);
     grants.splice(editIndex, 1);
     apply();
     closeAdminDialog();

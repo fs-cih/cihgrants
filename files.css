@@ -256,6 +256,36 @@ h1 {
   color: #1d2a39;
 }
 
+.kcard-funder-type {
+  background: #dbeafe;
+  border-color: #dbeafe;
+  color: #1d2a39;
+}
+
+.kcard-federal-agency {
+  background: #e0f2fe;
+  border-color: #bae6fd;
+  color: #1d2a39;
+}
+
+.eligibility-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  background: #f6f8fb;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.eligibility-pill-secondary {
+  background: #d4a017;
+  border-color: #d4a017;
+  color: #1d2a39;
+}
+
+
 .grant h3 {
   margin: 10px 0;
   font-size: 1.15rem;
