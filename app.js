@@ -1,5 +1,4 @@
 const TODAY = new Date().toISOString().slice(0, 10);
-const ACCESS_CODE = "1q2w3e4r";
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
@@ -252,7 +251,7 @@ function renderGrant(g) {
 }
 
 function resetAdminForm() {
-  document.getElementById("a_code").value = "";
+  document.getElementById("a_token").value = "";
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
@@ -280,7 +279,7 @@ function openAdminDialog(grant = null, index = null) {
   }
 
   els.adminDialogTitle.textContent = "Edit Grant";
-  document.getElementById("a_code").value = "";
+  document.getElementById("a_token").value = "";
   document.getElementById("a_title").value = grant.title || "";
   document.getElementById("a_funderType").value = grant.funderType || "";
   document.getElementById("a_eligibility").value = grant.eligibility || "";
@@ -305,8 +304,9 @@ function closeAdminDialog() {
 }
 
 els.saveBtn.onclick = async () => {
-  if (document.getElementById("a_code").value !== ACCESS_CODE) {
-    els.adminStatus.textContent = "Invalid code.";
+  const token = document.getElementById("a_token").value.trim();
+  if (!token) {
+    els.adminStatus.textContent = "GitHub token is required.";
     return;
   }
 
@@ -356,7 +356,7 @@ els.saveBtn.onclick = async () => {
   els.adminStatus.textContent = "Saving…";
 
   try {
-    await saveGrant(mode, payload);
+    await saveGrant(mode, payload, token);
 
     if (editIndex === null) {
       grants.push(localGrant);
@@ -372,18 +372,18 @@ els.saveBtn.onclick = async () => {
   }
 };
 
-async function saveGrant(mode, payload) {
+async function saveGrant(mode, payload, tokenInput) {
   const owner = CIH_CONFIG.githubOwner;
   const repo = CIH_CONFIG.githubRepo;
   const branch = CIH_CONFIG.githubBranch || "main";
-  const token = (CIH_CONFIG.githubToken || "").trim();
+  const token = (tokenInput || "").trim();
 
   if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
     throw new Error("GitHub repository is not configured. Set githubOwner and githubRepo in config.js.");
   }
 
   if (!token) {
-    throw new Error("GitHub token is missing. Set githubToken in config.js (PAT with Actions + Contents read/write).");
+    throw new Error("GitHub token is missing. Enter a PAT in the admin dialog.");
   }
 
   const response = await fetch(
