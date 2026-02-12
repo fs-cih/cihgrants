@@ -48,7 +48,6 @@ const els = {
   q: document.getElementById("q"),
   resultCount: document.getElementById("resultCount"),
   clearFilters: document.getElementById("clearFilters"),
-  refreshBtn: document.getElementById("refreshBtn"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
   adminDialogTitle: document.getElementById("adminDialogTitle"),
@@ -172,11 +171,6 @@ function bindEvents() {
     });
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     apply();
-  };
-
-  els.refreshBtn.onclick = async () => {
-    // Force reload data from server with cache-busting
-    await loadData({ skipBindEvents: true });
   };
 
   els.adminPlus.onclick = () => openAdminDialog();
@@ -469,16 +463,14 @@ function renderGrant(g) {
   let eligibilityClass = "";
   if (g.eligibility === "Secondary") {
     eligibilityClass = "eligibility-secondary";
-  } else if (g.eligibility === "Prime") {
-    eligibilityClass = "eligibility-primary";
   }
   const eligibilityText = g.eligibility || "Not specified";
 
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
-    ${deadlineMarkup(g)}
     ${funderTypeMarkup}
+    ${deadlineMarkup(g)}
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
