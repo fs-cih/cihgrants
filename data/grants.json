@@ -509,6 +509,7 @@
   {
     "title": "Pilot Hybrid Effectiveness-Implementation Trials for Mental Health Interventions (R01 – Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 750000,
     "amountDetail": "over total award period",
@@ -520,7 +521,6 @@
     "keywords": [
       "Mental Health"
     ],
-    "flagForPi": [],
     "id": "grant_1770911131027_29_1oivysmmr",
     "deadlines": [
       "2026-06-15",
