@@ -148,6 +148,7 @@
   {
     "title": "Dissemination and Implementation Research in Health (R01 Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -157,7 +158,8 @@
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-144.html",
     "description": "The purpose of this Notice of Funding Opportunity (NOFO) is to support studies that will identify, develop, and/or test strategies for overcoming barriers to the adoption, adaptation, integration, sustainability, scale-up, and spread of evidence-based interventions, practices, programs, tools, treatments, guidelines, and policies (hereafter referred to as evidence-based interventions). Studies that promote the dissemination and implementation of evidence-based interventions among relevant communities are encouraged. Conversely, there is a benefit in understanding circumstances that create a need to stop or reduce (de-implement) the use of practices that are ineffective, unproven, low-value, or harmful. In addition, studies to advance dissemination and implementation research methods and measures are encouraged. Applications that focus on re-implementation of evidence-based health services that may be disrupted amidst disasters remain relevant.",
     "keywords": [
-      "General Research"
+      "General Research",
+      "Translation & Implementation"
     ],
     "id": "grant_1770915564631_39_hqog7hb59",
     "deadlines": [
