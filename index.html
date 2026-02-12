@@ -42,7 +42,7 @@
           </div>
 
           <div class="filter-row">
-            <label class="filter-label">Principal Investigator:</label>
+            <label class="filter-label">Flagged for PI:</label>
             <div class="filter-control">
               <select id="flagForPi" class="control"></select>
             </div>
@@ -90,11 +90,33 @@
       <label>Funder Type<select id="a_funderType" class="control"></select></label>
       <label>Eligibility<select id="a_eligibility" class="control"></select></label>
       <label>Amount (USD)<input id="a_amount" class="control" type="number" min="0"></label>
+      <label>Amount Detail<select id="a_amountDetail" class="control"></select></label>
       <label>Amount Tracking<select id="a_amountIdc" class="control"></select></label>
       <label>Duration<input id="a_duration" class="control" placeholder="e.g., 2 years"></label>
       <label>Added Date<input id="a_addedDate" class="control" type="date"></label>
-      <label>Deadlines (comma-separated YYYY-MM-DD)
+      
+      <label>Deadline Type
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="deadlineType" value="deadline" id="a_deadlineType_deadline" checked>
+            <span>Deadline</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="deadlineType" value="open" id="a_deadlineType_open">
+            <span>Open</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="deadlineType" value="recurring" id="a_deadlineType_recurring">
+            <span>Recurring</span>
+          </label>
+        </div>
+      </label>
+      
+      <label id="a_deadlines_label">Deadlines (comma-separated YYYY-MM-DD)
         <input id="a_deadlines" class="control" required>
+      </label>
+      <label id="a_deadlineRecurring_label" style="display: none;">Recurring Deadline Description
+        <input id="a_deadlineRecurring" class="control" placeholder="e.g., First Monday of each month">
       </label>
       <label>Geography Restriction<select id="a_geography" class="control"></select></label>
       <label>PI Restriction<select id="a_piRestriction" class="control"></select></label>

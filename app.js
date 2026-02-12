@@ -101,6 +101,7 @@ function initFilters() {
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
   // Eligibility is hardcoded to "Prime" and "Secondary" per requirements (task #7)
   fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
+  fillSelect(document.getElementById("a_amountDetail"), ["per year", "over total award period"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
   fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
@@ -151,6 +152,36 @@ function bindEvents() {
   els.adminPlus.onclick = () => openAdminDialog();
   els.cancelBtn.onclick = () => closeAdminDialog();
   els.deleteBtn.onclick = () => deleteCurrentGrant();
+  
+  // Handle deadline type radio buttons
+  document.querySelectorAll('input[name="deadlineType"]').forEach(radio => {
+    radio.addEventListener('change', updateDeadlineFields);
+  });
+}
+
+function updateDeadlineFields() {
+  const deadlineType = document.querySelector('input[name="deadlineType"]:checked').value;
+  const deadlinesLabel = document.getElementById('a_deadlines_label');
+  const deadlinesInput = document.getElementById('a_deadlines');
+  const recurringLabel = document.getElementById('a_deadlineRecurring_label');
+  const recurringInput = document.getElementById('a_deadlineRecurring');
+  
+  if (deadlineType === 'deadline') {
+    deadlinesLabel.style.display = '';
+    deadlinesInput.required = true;
+    recurringLabel.style.display = 'none';
+    recurringInput.required = false;
+  } else if (deadlineType === 'open') {
+    deadlinesLabel.style.display = 'none';
+    deadlinesInput.required = false;
+    recurringLabel.style.display = 'none';
+    recurringInput.required = false;
+  } else if (deadlineType === 'recurring') {
+    deadlinesLabel.style.display = 'none';
+    deadlinesInput.required = false;
+    recurringLabel.style.display = '';
+    recurringInput.required = true;
+  }
 }
 
 function fillSelect(el, arr, first) {
@@ -168,6 +199,16 @@ function fillMulti(el, arr) {
 
 function selectedValues(selectEl) {
   return [...selectEl.selectedOptions].map(o => o.value);
+}
+
+// Check if a grant has an active deadline (either upcoming dates, always open, or recurring)
+function hasActiveDeadline(g) {
+  // Open and recurring deadlines are always "active"
+  if (g.deadlineOpen || g.deadlineRecurring) {
+    return true;
+  }
+  // Regular deadlines: check if there are any future dates
+  return (g.deadlines || []).filter(d => d >= TODAY).length > 0;
 }
 
 function nextDeadline(g) {
@@ -228,10 +269,18 @@ function apply() {
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
-    .filter(g => nextDeadline(g))
+    .filter(g => hasActiveDeadline(g))
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
-    .filter(g => !byFlagForPi.length || byFlagForPi.every(name => (g.flagForPi || []).includes(name)))
+    .filter(g => {
+      // When a PI is selected, show grants flagged for that PI OR grants with no PI assigned
+      if (!byFlagForPi.length) {
+        return true;
+      }
+      const hasPi = byFlagForPi.every(name => (g.flagForPi || []).includes(name));
+      const hasNoPi = !g.flagForPi || g.flagForPi.length === 0;
+      return hasPi || hasNoPi;
+    })
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
     .filter(g => {
       if (!q) {
@@ -241,9 +290,17 @@ function apply() {
       return hay.includes(q);
     });
 
-  // Sort by deadline ascending (default)
+  // Sort: New grants first, then alphabetically by title
   filtered.sort((a, b) => {
-    return (nextDeadline(a) || "9999-99-99").localeCompare(nextDeadline(b) || "9999-99-99");
+    const aIsNew = isNewGrant(a);
+    const bIsNew = isNewGrant(b);
+    
+    // New grants come first
+    if (aIsNew && !bIsNew) return -1;
+    if (!aIsNew && bIsNew) return 1;
+    
+    // Within same category, sort alphabetically by title
+    return (a.title || "").localeCompare(b.title || "");
   });
 
   render(filtered);
@@ -256,6 +313,17 @@ function render(list) {
 }
 
 function deadlineMarkup(g) {
+  // Handle open deadlines
+  if (g.deadlineOpen) {
+    return `<p class="meta-row"><strong>Deadline:</strong> Always Open</p>`;
+  }
+  
+  // Handle recurring deadlines
+  if (g.deadlineRecurring) {
+    return `<p class="meta-row"><strong>Deadline:</strong> ${g.deadlineRecurring}</p>`;
+  }
+  
+  // Handle regular deadlines
   const deadlines = upcomingDeadlines(g);
   if (!deadlines.length) {
     return `<p class="meta-row"><strong>Deadline:</strong> —</p>`;
@@ -284,7 +352,7 @@ function renderGrant(g) {
     keywords.push({ text: "New", className: "kcard-new" });
   }
   if (g.piRestriction && g.piRestriction !== "None") {
-    keywords.push({ text: `PI: ${g.piRestriction}`, className: "kcard-pi-restriction" });
+    keywords.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
   }
   if (g.geography && g.geography !== "None") {
     keywords.push({ text: g.geography, className: "kcard-state" });
@@ -303,7 +371,7 @@ function renderGrant(g) {
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
     ${deadlineMarkup(g)}
-    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
+    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
     ${(g.flagForPi || []).length ? `<p class="meta-row"><strong>Flag for PI:</strong> ${(g.flagForPi || []).join(", ")}</p>` : ""}
@@ -341,10 +409,14 @@ function resetAdminForm() {
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
   document.getElementById("a_amount").value = "";
+  document.getElementById("a_amountDetail").value = "";
   document.getElementById("a_amountIdc").value = "";
   document.getElementById("a_duration").value = "";
   document.getElementById("a_addedDate").value = TODAY;
+  document.getElementById("a_deadlineType_deadline").checked = true;
   document.getElementById("a_deadlines").value = "";
+  document.getElementById("a_deadlineRecurring").value = "";
+  updateDeadlineFields();
   document.getElementById("a_geography").value = "None";
   document.getElementById("a_piRestriction").value = "None";
   document.getElementById("a_link").value = "";
@@ -371,10 +443,27 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_funderType").value = grant.funderType || "";
   document.getElementById("a_eligibility").value = grant.eligibility || "";
   document.getElementById("a_amount").value = grant.amount || "";
+  document.getElementById("a_amountDetail").value = grant.amountDetail || "";
   document.getElementById("a_amountIdc").value = grant.amountIdc || "";
   document.getElementById("a_duration").value = grant.duration || "";
   document.getElementById("a_addedDate").value = grant.addedDate || TODAY;
-  document.getElementById("a_deadlines").value = (grant.deadlines || []).join(", ");
+  
+  // Set deadline type and fields
+  if (grant.deadlineOpen) {
+    document.getElementById("a_deadlineType_open").checked = true;
+    document.getElementById("a_deadlines").value = "";
+    document.getElementById("a_deadlineRecurring").value = "";
+  } else if (grant.deadlineRecurring) {
+    document.getElementById("a_deadlineType_recurring").checked = true;
+    document.getElementById("a_deadlines").value = "";
+    document.getElementById("a_deadlineRecurring").value = grant.deadlineRecurring;
+  } else {
+    document.getElementById("a_deadlineType_deadline").checked = true;
+    document.getElementById("a_deadlines").value = (grant.deadlines || []).join(", ");
+    document.getElementById("a_deadlineRecurring").value = "";
+  }
+  updateDeadlineFields();
+  
   document.getElementById("a_geography").value = grant.geography || "None";
   document.getElementById("a_piRestriction").value = grant.piRestriction || "None";
   document.getElementById("a_link").value = grant.link || "";
@@ -398,15 +487,30 @@ els.saveBtn.onclick = async () => {
   }
 
   const title = document.getElementById("a_title").value.trim();
-  const deadlines = document.getElementById("a_deadlines").value
-    .split(",")
-    .map(s => s.trim())
-    .filter(Boolean);
   const link = document.getElementById("a_link").value.trim();
-
-  if (!title || !deadlines.length || !link) {
-    els.adminStatus.textContent = "Title, deadlines, and link are required.";
+  const deadlineType = document.querySelector('input[name="deadlineType"]:checked').value;
+  
+  // Validate based on deadline type
+  if (!title || !link) {
+    els.adminStatus.textContent = "Title and link are required.";
     return;
+  }
+  
+  if (deadlineType === 'deadline') {
+    const deadlines = document.getElementById("a_deadlines").value
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
+    if (!deadlines.length) {
+      els.adminStatus.textContent = "At least one deadline is required.";
+      return;
+    }
+  } else if (deadlineType === 'recurring') {
+    const recurringText = document.getElementById("a_deadlineRecurring").value.trim();
+    if (!recurringText) {
+      els.adminStatus.textContent = "Recurring deadline description is required.";
+      return;
+    }
   }
 
   const grant = {
@@ -414,10 +518,10 @@ els.saveBtn.onclick = async () => {
     funderType: document.getElementById("a_funderType").value,
     eligibility: document.getElementById("a_eligibility").value,
     amount: Number(document.getElementById("a_amount").value || 0),
+    amountDetail: document.getElementById("a_amountDetail").value,
     amountIdc: document.getElementById("a_amountIdc").value,
     duration: document.getElementById("a_duration").value,
     addedDate: document.getElementById("a_addedDate").value || TODAY,
-    deadlines,
     geography: document.getElementById("a_geography").value,
     piRestriction: document.getElementById("a_piRestriction").value,
     link,
@@ -425,6 +529,18 @@ els.saveBtn.onclick = async () => {
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
     flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value)
   };
+  
+  // Add deadline information based on type
+  if (deadlineType === 'deadline') {
+    grant.deadlines = document.getElementById("a_deadlines").value
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
+  } else if (deadlineType === 'open') {
+    grant.deadlineOpen = true;
+  } else if (deadlineType === 'recurring') {
+    grant.deadlineRecurring = document.getElementById("a_deadlineRecurring").value.trim();
+  }
 
   const localGrant = { ...grant };
   if (localGrant.geography === "None") {
