@@ -299,6 +299,7 @@
   {
     "title": "NCI Pathway to Independence Award (K99/R00 – Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 249000,
     "amountDetail": "per year",
