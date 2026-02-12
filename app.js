@@ -330,7 +330,7 @@ function apply() {
     })
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
-    .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
+    .filter(g => !byKeywords.length || byKeywords.some(k => (g.keywords || []).includes(k)))
     .filter(g => {
       if (!q) {
         return true;
@@ -342,6 +342,15 @@ function apply() {
   // Sort: Pinned grants first (when no filters), then new grants, then by deadline proximity, then recurring, then always open
   filtered.sort((a, b) => {
     // Note: Nested grants are already filtered out, so we don't need to check for nesting here
+    
+    // If keyword filters are active, sort by number of matching keywords first
+    if (byKeywords.length > 0) {
+      const aMatches = byKeywords.filter(k => (a.keywords || []).includes(k)).length;
+      const bMatches = byKeywords.filter(k => (b.keywords || []).includes(k)).length;
+      if (aMatches !== bMatches) {
+        return bMatches - aMatches; // More matches first
+      }
+    }
     
     // If no filters are active, pinned grants (that are not nested) come first
     if (!hasActiveFilters) {
@@ -388,10 +397,10 @@ function apply() {
     return (a.title || "").localeCompare(b.title || "");
   });
 
-  render(filtered);
+  render(filtered, byKeywords);
 }
 
-function render(list) {
+function render(list, selectedKeywords = []) {
   els.list.innerHTML = "";
   
   // Pre-compute nested grant counts for better performance
@@ -409,7 +418,7 @@ function render(list) {
   });
   
   els.resultCount.textContent = `${totalCount} opportunit${totalCount === 1 ? "y" : "ies"}`;
-  list.forEach(g => els.list.append(renderGrant(g)));
+  list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
 }
 
 function deadlineMarkup(g) {
@@ -460,7 +469,7 @@ function rfaPillHtml(grant, alwaysShow = false) {
   return `<a href="${grant.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>`;
 }
 
-function renderGrant(g) {
+function renderGrant(g, selectedKeywords = []) {
   const div = document.createElement("article");
   div.className = "grant";
 
@@ -486,11 +495,19 @@ function renderGrant(g) {
     keywords.push({ text: g.geography, className: "kcard-state" });
   }
   (g.keywords || []).forEach(kw => {
-    keywords.push({ text: kw, className: "" });
+    // Check if this keyword matches any selected keyword
+    const isMatched = selectedKeywords.includes(kw);
+    keywords.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
   });
 
   const keywordPills = keywords
-    .map(kw => `<span class="kcard ${kw.className}">${kw.text}</span>`)
+    .map(kw => {
+      // For pin-indicator, don't add kcard class
+      if (kw.className === "pin-indicator") {
+        return `<span class="${kw.className}">${kw.text}</span>`;
+      }
+      return `<span class="kcard ${kw.className}">${kw.text}</span>`;
+    })
     .join("");
 
   const limitations = (g.limitations || []).map(l => `<span class="meta-tag">${l}</span>`).join("");
@@ -596,7 +613,9 @@ function renderGrant(g) {
             nestedKeywords.push({ text: ng.geography, className: "kcard-state" });
           }
           (ng.keywords || []).forEach(kw => {
-            nestedKeywords.push({ text: kw, className: "" });
+            // Check if this keyword matches any selected keyword
+            const isMatched = selectedKeywords.includes(kw);
+            nestedKeywords.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
           });
           
           const nestedKeywordPills = nestedKeywords
