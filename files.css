@@ -262,7 +262,7 @@ h1 {
 }
 
 .grant h3 a {
-  color: #13213b;
+  color: #0969da;
   text-decoration: none;
 }
 
@@ -280,7 +280,7 @@ h1 {
 
 .desc-preview,
 .desc-full {
-  color: #3f4956;
+  color: var(--text);
   line-height: 1.5;
 }
 

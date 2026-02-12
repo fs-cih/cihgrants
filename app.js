@@ -241,9 +241,17 @@ function apply() {
       return hay.includes(q);
     });
 
-  // Sort by deadline ascending (default)
+  // Sort: New grants first, then alphabetically by title
   filtered.sort((a, b) => {
-    return (nextDeadline(a) || "9999-99-99").localeCompare(nextDeadline(b) || "9999-99-99");
+    const aIsNew = isNewGrant(a);
+    const bIsNew = isNewGrant(b);
+    
+    // New grants come first
+    if (aIsNew && !bIsNew) return -1;
+    if (!aIsNew && bIsNew) return 1;
+    
+    // Within same category, sort alphabetically by title
+    return (a.title || "").localeCompare(b.title || "");
   });
 
   render(filtered);
@@ -284,7 +292,7 @@ function renderGrant(g) {
     keywords.push({ text: "New", className: "kcard-new" });
   }
   if (g.piRestriction && g.piRestriction !== "None") {
-    keywords.push({ text: `PI: ${g.piRestriction}`, className: "kcard-pi-restriction" });
+    keywords.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
   }
   if (g.geography && g.geography !== "None") {
     keywords.push({ text: g.geography, className: "kcard-state" });
