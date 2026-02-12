@@ -619,7 +619,13 @@ function renderGrant(g, selectedKeywords = []) {
           });
           
           const nestedKeywordPills = nestedKeywords
-            .map(kw => `<span class="kcard ${kw.className}">${kw.text}</span>`)
+            .map(kw => {
+              // For pin-indicator, don't add kcard class (consistency with parent grants)
+              if (kw.className === "pin-indicator") {
+                return `<span class="${kw.className}">${kw.text}</span>`;
+              }
+              return `<span class="kcard ${kw.className}">${kw.text}</span>`;
+            })
             .join("");
           
           // Build funder type display
