@@ -387,38 +387,6 @@
     ]
   },
   {
-    "title": "Stephen I. Katz Early Stage Investigator Research Project Grant (R01 - Basic Experimental Studies with Human Required)",
-    "funderType": "Federal",
-    "eligibility": "Prime",
-    "amount": 500000,
-    "amountDetail": "per year",
-    "amountIdc": "Excluding IDC",
-    "duration": "5 years",
-    "addedDate": "2026-02-12",
-    "piRestriction": "Early Stage Investigator",
-    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-323.html",
-    "description": "The Stephen I. Katz Early Stage Investigator Research Project Grant supports an innovative project that represents a change in research direction for an early stage investigator (ESI) and for which no preliminary data exist. Applications submitted to this Notice of Funding Opportunity (NOFO) must not include preliminary data. Applications must include a separate attachment describing the change in research direction.The proposed project must be related to the programmatic interests of one or more of the participating NIH Institutes and Centers (ICs) based on their scientific missions.",
-    "keywords": [
-      "General Research"
-    ],
-    "flagForPi": [
-      "Dane",
-      "Felix",
-      "Jordyn",
-      "Val"
-    ],
-    "id": "grant_1770906117374_5_37gqe037n",
-    "deadlines": [
-      "2026-05-27",
-      "2026-09-28",
-      "2027-01-26",
-      "2027-05-26",
-      "2027-09-28",
-      "2028-01-26",
-      "2028-05-26"
-    ]
-  },
-  {
     "title": "Tobacco Regulatory Science Small Grant Program for New Investigators (R03 - Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
