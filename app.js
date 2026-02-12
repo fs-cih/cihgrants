@@ -388,7 +388,17 @@ function apply() {
 
 function render(list) {
   els.list.innerHTML = "";
-  els.resultCount.textContent = `${list.length} opportunit${list.length === 1 ? "y" : "ies"}`;
+  
+  // Count total opportunities including nested grants
+  let totalCount = list.length;
+  list.forEach(g => {
+    const nestedCount = grants.filter(ng => 
+      ng.parentGrantId === g.id && hasActiveDeadline(ng)
+    ).length;
+    totalCount += nestedCount;
+  });
+  
+  els.resultCount.textContent = `${totalCount} opportunit${totalCount === 1 ? "y" : "ies"}`;
   list.forEach(g => els.list.append(renderGrant(g)));
 }
 
@@ -438,7 +448,7 @@ function renderGrant(g) {
   }
 
   // Add pin indicator if pinned
-  const pinIndicator = g.pin ? `<div class="pin-indicator">📌</div>` : "";
+  const pinIndicator = g.pin ? `<div class="pin-indicator"></div>` : "";
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullDescription = g.description || "";
@@ -565,13 +575,64 @@ function renderGrant(g) {
             .map(kw => `<span class="kcard ${kw.className}">${kw.text}</span>`)
             .join("");
           
+          // Build funder type display
+          let nestedFunderTypeMarkup = "";
+          if (ng.funderType) {
+            if (ng.funderType === "Federal" && ng.federalAgency) {
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> Federal <span class="agency-pill">${ng.federalAgency}</span></p>`;
+            } else {
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${ng.funderType}</p>`;
+            }
+          }
+          
+          // Build eligibility display
+          let nestedEligibilityClass = "";
+          if (ng.eligibility === "Secondary") {
+            nestedEligibilityClass = "eligibility-secondary";
+          }
+          const nestedEligibilityText = ng.eligibility || "Not specified";
+          
+          // Build limitations
+          const nestedLimitations = (ng.limitations || []).map(l => `<span class="meta-tag">${l}</span>`).join("");
+          
+          // Handle description preview
+          const nestedPreviewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
+          const nestedFullDescription = ng.description || "";
+          const nestedHasOverflow = nestedFullDescription.length > nestedPreviewLimit;
+          const nestedPreview = nestedHasOverflow ? nestedFullDescription.slice(0, nestedPreviewLimit).trimEnd() : nestedFullDescription;
+          const nestedRest = nestedHasOverflow ? nestedFullDescription.slice(nestedPreviewLimit) : "";
+          
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-expanded">
               <div class="grant-top">${nestedKeywordPills}</div>
+              ${nestedFunderTypeMarkup}
+              ${deadlineMarkup(ng)}
+              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${ng.amountDetail}` : ""} <span class="muted">(${ng.amountIdc || "Not specified"})</span></p>
+              <p class="meta-row"><strong>Duration:</strong> ${ng.duration || "Not specified"}</p>
+              <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${nestedEligibilityText}</span></p>
+              <p class="meta-row desc-preview"><strong>Description:</strong> ${nestedPreview}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${nestedRest}</span>` : ""}</p>
+              ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
+              ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
             </div>
           `;
           nestedItem.dataset.expanded = "true";
+          
+          // Add expand/collapse functionality for description
+          if (nestedRest) {
+            const btn = nestedItem.querySelector(".toggle");
+            const restSpan = nestedItem.querySelector(".desc-rest");
+            btn.onclick = (e) => {
+              e.stopPropagation(); // Prevent collapsing the nested grant
+              const ellipsis = nestedItem.querySelector(".ellipsis");
+              const open = restSpan.style.display === "inline";
+              restSpan.style.display = open ? "none" : "inline";
+              if (ellipsis) {
+                ellipsis.style.display = open ? "inline" : "none";
+              }
+              btn.textContent = open ? "▼ Expand" : "▲ Collapse";
+            };
+          }
         }
       };
       

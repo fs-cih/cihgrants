@@ -232,8 +232,14 @@ h1 {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 12px;
+  font-size: 16px;
   z-index: 1;
+  font-weight: bold;
+}
+
+.pin-indicator::before {
+  content: "📍";
+  filter: brightness(0) invert(1);
 }
 
 .grant-top,
