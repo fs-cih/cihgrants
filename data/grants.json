@@ -66,6 +66,7 @@
   {
     "title": "Tribal Institutional Review Board Establishment and Enhancement (TIRBEE) (R24 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Secondary",
     "amount": 350000,
     "amountDetail": "per year",
