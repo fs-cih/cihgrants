@@ -40,7 +40,7 @@ const els = {
 };
 
 async function loadData(options = {}) {
-  const bustCache = Boolean(options.bustCache);
+  // Always cache-bust to ensure users see the most current data (per requirement #3)
   const suffix = `?t=${Date.now()}`;
   vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
@@ -228,6 +228,7 @@ function apply() {
   const byKeywords = Array.from(document.querySelectorAll('input[name="keyword"]:checked'))
     .map(cb => cb.value);
 
+  // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
     .filter(g => nextDeadline(g))
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
