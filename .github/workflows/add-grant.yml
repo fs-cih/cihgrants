@@ -100,4 +100,5 @@ jobs:
             git commit -m "Add grant: $TITLE"
           fi
           
+          git pull --rebase origin main
           git push
