@@ -1,5 +1,28 @@
 [
   {
+    "title": "Cancer Prevention and Control Clinical Trials Planning Grant Program (R34 Clinical Trials Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 600000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "3 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-104.html",
+    "description": "Through this notice of funding opportunity (NOFO), the National Cancer Institute (NCI) intends to facilitate well planned clinical trials across the cancer prevention and control spectrum aimed at improving prevention/ interception, cancer-related health behaviors, screening, early detection, healthcare delivery, management of treatment-related symptoms, supportive care, and the long-term outcomes of cancer survivors. Although the scientific literature or preliminary data may provide the rationale for conducting a clinical trial, investigators often lack critical information about the study population, accrual challenges, intervention, outcome/ endpoints, data/statistical challenges or operational risks necessary to finalize the trial protocol completely. These information gaps can result in multiple protocol changes before and after trial start-up, leading to the need for additional time and expenses that may prevent study completion. Further, the suitability and feasibility of new trial designs, which minimize infrastructure and reduce costs may need to be tested in the context of a particular intervention, at-risk group, symptom or venue. Preparatory studies may fill information gaps and address unknowns this can include a pilot/feasibility clinical trial if necessary, improving trial design and rigor.",
+    "keywords": [
+      "Cancer"
+    ],
+    "id": "grant_1770915178943_37_4chw3vjwp",
+    "deadlines": [
+      "2026-06-25",
+      "2026-10-25",
+      "2027-02-25",
+      "2027-06-25",
+      "2027-10-25"
+    ]
+  },
+  {
     "title": "Exploratory Grants in Cancer Control (R21 Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
