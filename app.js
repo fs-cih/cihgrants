@@ -251,7 +251,6 @@ function renderGrant(g) {
 }
 
 const PAT_PERMISSION_HELP = `
-
 Your Personal Access Token (PAT) needs additional permissions:
 • For Classic PATs: Enable both 'repo' and 'workflow' scopes
 • For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
@@ -431,7 +430,6 @@ async function saveGrant(mode, payload, tokenInput) {
       }
     } else if (response.status === 401) {
       errorMessage += `
-
 Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
     }
     
