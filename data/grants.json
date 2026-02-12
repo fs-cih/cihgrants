@@ -627,6 +627,7 @@
   {
     "title": "NIDCD Research Grants for Translating Basic Research into Clinical Practice (R01 Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -637,9 +638,6 @@
     "description": "This Notice of Funding Opportunity (NOFO) provides an avenue for basic scientists, clinicians, and clinical scientists to jointly initiate and conduct research projects that translate basic research findings into clinical practice for better human health. The scope of this NOFO includes a range of activities that will impact the diagnosis, treatment, and prevention of disorders within NIDCD’s scientific mission. Connection to the clinical condition must be clearly established and the outcomes of the proposed work must have the potential for practical clinical impact in the near term. Given the emphasis on translation to clinical practice, early engagement with end users (e.g., practicing clinicians, patients) in real-world environments in which these approaches will be employed is expected.",
     "keywords": [
       "Speech & Language"
-    ],
-    "flagForPi": [
-      "Josh"
     ],
     "id": "grant_1770909082796_21_z91ja5aaw",
     "deadlines": [
