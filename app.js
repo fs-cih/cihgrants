@@ -450,9 +450,11 @@ function deadlineMarkup(g) {
   `;
 }
 
-function rfaPillHtml(grant) {
-  // Only show RFA pill if deadline is open
-  if (!grant.deadlineOpen) {
+function rfaPillHtml(grant, alwaysShow = false) {
+  // Show RFA pill if deadline is open OR if alwaysShow is true (for nested grants)
+  // Note: For nested grants, we always show the RFA pill to provide direct access to the RFA document,
+  // regardless of deadline status. The "Open RFA" text refers to opening the RFA document, not the deadline status.
+  if (!grant.deadlineOpen && !alwaysShow) {
     return '';
   }
   return `<a href="${grant.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>`;
@@ -565,7 +567,7 @@ function renderGrant(g) {
       nestedItem.innerHTML = `
         <div class="nested-grant-title">${ng.title}</div>
         <div class="nested-grant-pills">
-          ${rfaPillHtml(ng)}
+          ${rfaPillHtml(ng, true)}
         </div>
       `;
       
@@ -577,7 +579,7 @@ function renderGrant(g) {
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-pills">
-              ${rfaPillHtml(ng)}
+              ${rfaPillHtml(ng, true)}
             </div>
           `;
           nestedItem.dataset.expanded = "false";
@@ -632,7 +634,7 @@ function renderGrant(g) {
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-expanded">
               <div class="grant-top">
-                ${rfaPillHtml(ng)}
+                ${rfaPillHtml(ng, true)}
                 ${nestedKeywordPills}
               </div>
               ${nestedFunderTypeMarkup}
