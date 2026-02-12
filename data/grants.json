@@ -48,25 +48,6 @@
     ]
   },
   {
-    "title": "Test",
-    "funderType": "Foundation",
-    "eligibility": "Prime",
-    "amount": 100000,
-    "amountIdc": "Including IDC",
-    "duration": "1 year",
-    "addedDate": "2026-02-12",
-    "deadlines": [
-      "2027-01-01"
-    ],
-    "link": "https://www.google.com",
-    "description": "Test",
-    "keywords": [],
-    "flagForPi": [
-      "Chris"
-    ],
-    "limitations": []
-  },
-  {
     "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "eligibility": "Secondary",
