@@ -250,6 +250,11 @@ function renderGrant(g) {
   return div;
 }
 
+const PAT_PERMISSION_HELP = "\n\nYour Personal Access Token (PAT) needs additional permissions:\n" +
+  "• For Classic PATs: Enable both 'repo' and 'workflow' scopes\n" +
+  "• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission\n\n" +
+  "Please create a new token at: https://github.com/settings/tokens";
+
 function resetAdminForm() {
   document.getElementById("a_token").value = "";
   document.getElementById("a_title").value = "";
@@ -408,11 +413,6 @@ async function saveGrant(mode, payload, tokenInput) {
   if (!response.ok) {
     const errorText = await response.text();
     let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
-    
-    const PAT_PERMISSION_HELP = "\n\nYour Personal Access Token (PAT) needs additional permissions:\n" +
-      "• For Classic PATs: Enable both 'repo' and 'workflow' scopes\n" +
-      "• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission\n\n" +
-      "Please create a new token at: https://github.com/settings/tokens";
     
     // Provide helpful guidance for common authentication errors
     if (response.status === 403) {
