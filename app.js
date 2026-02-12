@@ -202,10 +202,18 @@ function selectedValues(selectEl) {
 }
 
 function nextDeadline(g) {
+  // Open and recurring deadlines are always "active"
+  if (g.deadlineOpen || g.deadlineRecurring) {
+    return true; // Return truthy value to pass filtering
+  }
   return (g.deadlines || []).filter(d => d >= TODAY).sort()[0] || null;
 }
 
 function upcomingDeadlines(g) {
+  // Open and recurring deadlines don't have specific upcoming dates
+  if (g.deadlineOpen || g.deadlineRecurring) {
+    return [];
+  }
   return (g.deadlines || []).filter(d => d >= TODAY).sort();
 }
 
@@ -528,10 +536,10 @@ els.saveBtn.onclick = async () => {
       .filter(Boolean);
   } else if (deadlineType === 'open') {
     grant.deadlineOpen = true;
-    grant.deadlines = ["9999-12-31"]; // Far future date for filtering purposes
+    // Don't add deadlines array for open grants
   } else if (deadlineType === 'recurring') {
     grant.deadlineRecurring = document.getElementById("a_deadlineRecurring").value.trim();
-    grant.deadlines = ["9999-12-31"]; // Far future date for filtering purposes
+    // Don't add deadlines array for recurring grants
   }
 
   const localGrant = { ...grant };
