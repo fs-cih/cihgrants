@@ -1,5 +1,25 @@
 [
   {
+    "title": "Cancer Prevention and Control Clinical Trials Grant Program (R01 Clinical Trial Required)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-167.html",
+    "description": "Through this notice of funding opportunity (NOFO), the National Cancer Institute (NCI) invites applications for support of investigator-initiated clinical trials related to the programmatic interests of the NCI Division of Cancer Prevention and/or the NCI Division of Cancer Control and Population Sciences that have the potential to reduce the burden of cancer through improvements in early detection, screening, prevention and interception, healthcare delivery, quality of life, and/or survivorship related to cancer; with such attributes, the proposed studies should also have the potential to improve clinical practice and/or public health. Applications submitted to this NOFO must include studies that meet the National Institutes of Health (NIH) definition of a clinical trial (see NOT-OD-15-015 for details) and provide specific clinical trial information as described in this NOFO and the application instructions. This NOFO does not and will not support clinical trials for studies of cancer diagnosis and/or oncologic therapy in patients.",
+    "keywords": [
+      "Cancer"
+    ],
+    "id": "grant_1770914864635_35_yfsgh2ah8",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05"
+    ]
+  },
+  {
     "title": "Basic Research in Cancer Health Disparities (R01 Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "eligibility": "Prime",
