@@ -27,15 +27,9 @@ let editIndex = null;
 const els = {
   list: document.getElementById("list"),
   q: document.getElementById("q"),
-  funderType: document.getElementById("funderType"),
-  eligibility: document.getElementById("eligibility"),
   flagForPi: document.getElementById("flagForPi"),
-  keywords: document.getElementById("keywords"),
-  limitations: document.getElementById("limitations"),
-  sortBy: document.getElementById("sortBy"),
   resultCount: document.getElementById("resultCount"),
   clearFilters: document.getElementById("clearFilters"),
-  refreshData: document.getElementById("refreshData"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
   adminDialogTitle: document.getElementById("adminDialogTitle"),
@@ -47,24 +41,68 @@ const els = {
 
 async function loadData(options = {}) {
   const bustCache = Boolean(options.bustCache);
-  const suffix = bustCache ? `?t=${Date.now()}` : "";
+  const suffix = `?t=${Date.now()}`;
   vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   initFilters();
   if (!options.skipBindEvents) {
     bindEvents();
   }
-  els.sortBy.value = CIH_CONFIG.defaultSort || "deadlineAsc";
   apply();
 }
 
 function initFilters() {
-  fillSelect(els.funderType, vocab.funderTypes || [], "All funders");
-  fillSelect(els.eligibility, vocab.eligibility || [], "All eligibility");
-  fillMulti(els.flagForPi, vocab.flagForPi || []);
-  fillMulti(els.keywords, vocab.keywords || []);
-  fillMulti(els.limitations, vocab.limitations || []);
+  // Create Funder Type checkboxes
+  const funderTypeContainer = document.getElementById("funderTypeCheckboxes");
+  funderTypeContainer.innerHTML = "";
+  (vocab.funderTypes || []).forEach(type => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "funderType";
+    checkbox.value = type;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(type));
+    funderTypeContainer.appendChild(label);
+  });
 
+  // Create Eligibility checkboxes (Prime and Secondary only)
+  const eligibilityContainer = document.getElementById("eligibilityCheckboxes");
+  eligibilityContainer.innerHTML = "";
+  const eligibilityOptions = ["Prime", "Secondary"];
+  eligibilityOptions.forEach((type, index) => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "eligibility";
+    checkbox.value = type;
+    // Prime is selected by default
+    if (type === "Prime") {
+      checkbox.checked = true;
+    }
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(type));
+    eligibilityContainer.appendChild(label);
+  });
+
+  // Principal Investigator dropdown (multiple select)
+  fillMulti(els.flagForPi, vocab.flagForPi || []);
+
+  // Create Keyword checkboxes in 4 columns
+  const keywordContainer = document.getElementById("keywordCheckboxes");
+  keywordContainer.innerHTML = "";
+  (vocab.keywords || []).forEach(keyword => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "keyword";
+    checkbox.value = keyword;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(keyword));
+    keywordContainer.appendChild(label);
+  });
+
+  // Admin dialog selects
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
   fillSelect(document.getElementById("a_eligibility"), vocab.eligibility || []);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
@@ -78,24 +116,41 @@ function initFilters() {
 }
 
 function bindEvents() {
-  [els.q, els.funderType, els.eligibility, els.flagForPi, els.keywords, els.limitations, els.sortBy].forEach(el => {
-    el.addEventListener("input", apply);
-    el.addEventListener("change", apply);
+  // Search input
+  els.q.addEventListener("input", apply);
+  els.q.addEventListener("change", apply);
+
+  // Funder Type checkboxes
+  document.querySelectorAll('input[name="funderType"]').forEach(cb => {
+    cb.addEventListener("change", apply);
+  });
+
+  // Eligibility checkboxes
+  document.querySelectorAll('input[name="eligibility"]').forEach(cb => {
+    cb.addEventListener("change", apply);
+  });
+
+  // Principal Investigator select
+  els.flagForPi.addEventListener("input", apply);
+  els.flagForPi.addEventListener("change", apply);
+
+  // Keyword checkboxes
+  document.querySelectorAll('input[name="keyword"]').forEach(cb => {
+    cb.addEventListener("change", apply);
   });
 
   els.clearFilters.onclick = () => {
     els.q.value = "";
-    els.funderType.value = "";
-    els.eligibility.value = "";
+    document.querySelectorAll('input[name="funderType"]').forEach(cb => { cb.checked = false; });
+    document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
+      cb.checked = (cb.value === "Prime");
+    });
     [...els.flagForPi.options].forEach(o => { o.selected = false; });
-    [...els.keywords.options].forEach(o => { o.selected = false; });
-    [...els.limitations.options].forEach(o => { o.selected = false; });
-    els.sortBy.value = CIH_CONFIG.defaultSort || "deadlineAsc";
+    document.querySelectorAll('input[name="keyword"]').forEach(cb => { cb.checked = false; });
     apply();
   };
 
   els.adminPlus.onclick = () => openAdminDialog();
-  els.refreshData.onclick = () => refreshData();
   els.cancelBtn.onclick = () => closeAdminDialog();
   els.deleteBtn.onclick = () => deleteCurrentGrant();
 }
@@ -158,19 +213,27 @@ function formatAmount(value) {
 
 function apply() {
   const q = els.q.value.trim().toLowerCase();
-  const byFunder = els.funderType.value;
-  const byEligibility = els.eligibility.value;
+  
+  // Get checked funder types
+  const byFunder = Array.from(document.querySelectorAll('input[name="funderType"]:checked'))
+    .map(cb => cb.value);
+  
+  // Get checked eligibility
+  const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
+    .map(cb => cb.value);
+  
   const byFlagForPi = selectedValues(els.flagForPi);
-  const byKeywords = selectedValues(els.keywords);
-  const byLimitations = selectedValues(els.limitations);
+  
+  // Get checked keywords
+  const byKeywords = Array.from(document.querySelectorAll('input[name="keyword"]:checked'))
+    .map(cb => cb.value);
 
   let filtered = grants
     .filter(g => nextDeadline(g))
-    .filter(g => !byFunder || g.funderType === byFunder)
-    .filter(g => !byEligibility || g.eligibility === byEligibility)
+    .filter(g => !byFunder.length || byFunder.includes(g.funderType))
+    .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
     .filter(g => !byFlagForPi.length || byFlagForPi.every(name => (g.flagForPi || []).includes(name)))
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
-    .filter(g => !byLimitations.length || byLimitations.every(l => (g.limitations || []).includes(l)))
     .filter(g => {
       if (!q) {
         return true;
@@ -179,18 +242,9 @@ function apply() {
       return hay.includes(q);
     });
 
+  // Sort by deadline ascending (default)
   filtered.sort((a, b) => {
-    switch (els.sortBy.value) {
-      case "deadlineDesc":
-        return (nextDeadline(b) || "").localeCompare(nextDeadline(a) || "");
-      case "amountDesc":
-        return (b.amount || 0) - (a.amount || 0);
-      case "titleAsc":
-        return a.title.localeCompare(b.title);
-      case "deadlineAsc":
-      default:
-        return (nextDeadline(a) || "9999-99-99").localeCompare(nextDeadline(b) || "9999-99-99");
-    }
+    return (nextDeadline(a) || "9999-99-99").localeCompare(nextDeadline(b) || "9999-99-99");
   });
 
   render(filtered);
@@ -429,22 +483,6 @@ async function deleteCurrentGrant() {
   } catch (error) {
     console.error(error);
     els.adminStatus.textContent = `Delete failed: ${error.message}`;
-  }
-}
-
-async function refreshData() {
-  els.refreshData.disabled = true;
-  const originalLabel = els.refreshData.textContent;
-  els.refreshData.textContent = "Refreshing…";
-
-  try {
-    await loadData({ bustCache: true, skipBindEvents: true });
-  } catch (error) {
-    console.error(error);
-    els.adminStatus.textContent = `Refresh failed: ${error.message}`;
-  } finally {
-    els.refreshData.textContent = originalLabel;
-    els.refreshData.disabled = false;
   }
 }
 
