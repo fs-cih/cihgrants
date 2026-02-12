@@ -322,7 +322,12 @@ function apply() {
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
     .filter(g => hasActiveDeadline(g))
-    .filter(g => !g.parentGrantId) // Only show non-nested grants as cards
+    .filter(g => {
+      // Show grants without parents, or nested grants whose parent is inactive
+      if (!g.parentGrantId) return true;
+      const parent = grants.find(p => p.id === g.parentGrantId);
+      return !parent || !hasActiveDeadline(parent);
+    })
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
@@ -445,15 +450,17 @@ function deadlineMarkup(g) {
   `;
 }
 
+function rfaPillHtml(grant) {
+  // Only show RFA pill if deadline is open
+  if (!grant.deadlineOpen) {
+    return '';
+  }
+  return `<a href="${grant.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>`;
+}
+
 function renderGrant(g) {
   const div = document.createElement("article");
   div.className = "grant";
-  if (g.pin) {
-    div.classList.add("has-pin");
-  }
-
-  // Add pin indicator if pinned
-  const pinIndicator = g.pin ? `<div class="pin-indicator">Pinned</div>` : "";
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullDescription = g.description || "";
@@ -462,6 +469,10 @@ function renderGrant(g) {
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
   const keywords = [];
+  // Add pin indicator as first pill if pinned
+  if (g.pin) {
+    keywords.push({ text: "Pinned", className: "pin-indicator" });
+  }
   // Remove funderType and federalAgency from pills above title
   if (isNewGrant(g)) {
     keywords.push({ text: "New", className: "kcard-new" });
@@ -507,7 +518,6 @@ function renderGrant(g) {
   );
 
   div.innerHTML = `
-    ${pinIndicator}
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
     ${funderTypeMarkup}
@@ -517,6 +527,7 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
+    ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
     ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
     <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
@@ -554,7 +565,7 @@ function renderGrant(g) {
       nestedItem.innerHTML = `
         <div class="nested-grant-title">${ng.title}</div>
         <div class="nested-grant-pills">
-          <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+          ${rfaPillHtml(ng)}
         </div>
       `;
       
@@ -566,7 +577,7 @@ function renderGrant(g) {
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-pills">
-              <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+              ${rfaPillHtml(ng)}
             </div>
           `;
           nestedItem.dataset.expanded = "false";
@@ -621,7 +632,7 @@ function renderGrant(g) {
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-expanded">
               <div class="grant-top">
-                <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+                ${rfaPillHtml(ng)}
                 ${nestedKeywordPills}
               </div>
               ${nestedFunderTypeMarkup}
