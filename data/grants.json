@@ -942,6 +942,7 @@
   {
     "title": "Innovative Pilot Mental Health Services Research Not Involving Clinical Trials (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 450000,
     "amountDetail": "over total award period",
@@ -953,7 +954,6 @@
     "keywords": [
       "Mental Health"
     ],
-    "flagForPi": [],
     "id": "grant_1770907013538_12_qfvg4r96g",
     "deadlines": [
       "2026-06-16",
