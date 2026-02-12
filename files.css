@@ -6,7 +6,7 @@
   --text: #1d2a39;
   --muted: #5b6573;
   --brand: #9d3a2b;
-  --new: #2f9e44;
+  --new: #7c3aed;
 }
 
 * {
@@ -253,6 +253,12 @@ h1 {
 .kcard-new {
   background: var(--new);
   border-color: var(--new);
+  color: white;
+}
+
+.kcard-matched {
+  background: #1e7a3e;
+  border-color: #1e7a3e;
   color: white;
 }
 
