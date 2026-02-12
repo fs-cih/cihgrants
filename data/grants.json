@@ -919,6 +919,7 @@
   {
     "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 225000,
     "amountDetail": "per year",
@@ -931,7 +932,6 @@
       "Capacity-Building",
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770905677166_3_4tha226gg",
     "deadlines": [
       "2026-07-08",
