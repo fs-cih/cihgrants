@@ -206,7 +206,7 @@ h1 {
 }
 
 .grant-list {
-  margin-top: 14px;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -221,19 +221,14 @@ h1 {
 }
 
 .pin-indicator {
-  position: absolute;
-  top: 16px;
-  left: 16px;
+  display: inline-block;
   background: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
   padding: 4px 10px;
   border-radius: 999px;
   color: white;
   font-size: 12px;
   font-weight: 700;
+  margin-right: 6px;
 }
 
 .grant-top,
@@ -520,16 +515,16 @@ h1 {
   font-size: 12px;
   font-weight: 700;
   padding: 4px 10px;
-  border: 1px solid #c4b5fd;
-  background: #c4b5fd;
-  color: #1d2a39;
+  border: 1px solid #3b82f6;
+  background: #3b82f6;
+  color: white;
   text-decoration: none;
   margin-right: 6px;
 }
 
 .rfa-pill:hover {
-  background: #a78bfa;
-  border-color: #a78bfa;
+  background: #1d4ed8;
+  border-color: #1d4ed8;
 }
 
 .nested-grant-expanded {
@@ -547,9 +542,4 @@ h1 {
 
 .nested-grant-expanded .grant-top {
   margin-top: 4px;
-}
-
-/* Adjust grant-top when pin is present */
-.grant.has-pin .grant-top {
-  margin-left: 32px;
 }
