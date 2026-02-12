@@ -19,24 +19,48 @@
       <section class="controls" aria-label="Filter and sort grants">
         <h2>Filter &amp; Sort</h2>
 
-        <div class="controls-row">
-          <input id="q" class="control control-grow" type="search" placeholder="Search title, description, or keywords…" />
-          <select id="funderType" class="control"></select>
-          <select id="eligibility" class="control"></select>
-          <select id="flagForPi" class="control" multiple></select>
-          <button id="refreshData" class="btn" type="button">Refresh</button>
-          <button id="clearFilters" class="btn">Clear</button>
-        </div>
+        <div class="filter-grid">
+          <div class="filter-row">
+            <label class="filter-label">Search:</label>
+            <div class="filter-control">
+              <input id="q" class="control" type="search" placeholder="Search title, description, or keywords…" />
+            </div>
+          </div>
 
-        <div class="controls-row">
-          <select id="keywords" class="control" multiple></select>
-          <select id="limitations" class="control" multiple></select>
-          <select id="sortBy" class="control">
-            <option value="deadlineAsc">Next deadline (soonest)</option>
-            <option value="deadlineDesc">Next deadline (latest)</option>
-            <option value="amountDesc">Amount (high → low)</option>
-            <option value="titleAsc">Title (A → Z)</option>
-          </select>
+          <div class="filter-row">
+            <label class="filter-label">Funder Type:</label>
+            <div class="filter-control">
+              <div id="funderTypeCheckboxes" class="checkbox-group"></div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <label class="filter-label">Eligibility:</label>
+            <div class="filter-control">
+              <div id="eligibilityCheckboxes" class="checkbox-group"></div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <label class="filter-label">Principal Investigator:</label>
+            <div class="filter-control">
+              <select id="flagForPi" class="control" multiple></select>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <label class="filter-label filter-label-top">Keywords:</label>
+            <div class="filter-control">
+              <div id="keywordCheckboxes" class="checkbox-grid"></div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-label"></div>
+            <div class="filter-control">
+              <button id="clearFilters" class="btn">Clear</button>
+            </div>
+          </div>
         </div>
 
         <span id="resultCount" class="meta"></span>
