@@ -2,7 +2,7 @@
   {
     "title": "Test",
     "funderType": "Foundation",
-    "eligibility": "CIH eligible (direct)",
+    "eligibility": "Prime",
     "amount": 100000,
     "amountIdc": "Including IDC",
     "duration": "1 year",
@@ -12,8 +12,9 @@
     ],
     "link": "https://www.google.com",
     "description": "Test",
-    "keywords": [
-      "maternal & child health"
+    "keywords": [],
+    "flagForPi": [
+      "Chris"
     ],
     "limitations": []
   },
