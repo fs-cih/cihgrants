@@ -10,11 +10,15 @@ const US_STATES = [
 ];
 const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
 const PAT_PERMISSION_HELP = `
+
 Your Personal Access Token (PAT) needs additional permissions:
 • For Classic PATs: Enable both 'repo' and 'workflow' scopes
 • For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
 
 Please create a new token at: https://github.com/settings/tokens`;
+const PAT_INVALID_HELP = `
+
+Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
 
 let grants = [];
 let vocab = {};
@@ -428,8 +432,7 @@ async function saveGrant(mode, payload, tokenInput) {
         errorMessage += PAT_PERMISSION_HELP;
       }
     } else if (response.status === 401) {
-      errorMessage += `
-Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
+      errorMessage += PAT_INVALID_HELP;
     }
     
     throw new Error(errorMessage);
