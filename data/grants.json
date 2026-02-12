@@ -29,8 +29,8 @@
     "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "eligibility": "Secondary",
-    "amount": 225000,
-    "amountDetail": "",
+    "amount": 300000,
+    "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "2 years",
     "addedDate": "2026-02-01",
@@ -41,7 +41,6 @@
       "Capacity-Building"
     ],
     "flagForPi": [
-      "Don",
       "Francene",
       "Novalene"
     ],
