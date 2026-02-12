@@ -826,6 +826,7 @@
   {
     "title": "Stephen I. Katz Early Stage Investigator Research Project Grant (R01 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -837,12 +838,6 @@
     "description": "The Stephen I. Katz Early Stage Investigator Research Project Grant supports an innovative project that represents a change in research direction for an early stage investigator (ESI) and for which no preliminary data exist. Applications submitted to this notice of funding opportunity (NOFO) must not include preliminary data. Applications must include a separate attachment describing the change in research direction. The proposed project must be related to the programmatic interests of one or more of the participating NIH Institutes and Centers (ICs) based on their scientific missions.",
     "keywords": [
       "General Research"
-    ],
-    "flagForPi": [
-      "Dane",
-      "Felix",
-      "Jordyn",
-      "Val"
     ],
     "id": "grant_1770905854209_4_81wljo1uf",
     "deadlines": [
