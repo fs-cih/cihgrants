@@ -65,6 +65,7 @@
   {
     "title": "NIH Pathway to Independence Award (Parent K99/R00 – Independent Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 249000,
     "amountDetail": "per year",
