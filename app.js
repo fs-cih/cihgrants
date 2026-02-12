@@ -29,24 +29,31 @@ const els = {
   q: document.getElementById("q"),
   funderType: document.getElementById("funderType"),
   eligibility: document.getElementById("eligibility"),
+  flagForPi: document.getElementById("flagForPi"),
   keywords: document.getElementById("keywords"),
   limitations: document.getElementById("limitations"),
   sortBy: document.getElementById("sortBy"),
   resultCount: document.getElementById("resultCount"),
   clearFilters: document.getElementById("clearFilters"),
+  refreshData: document.getElementById("refreshData"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
   adminDialogTitle: document.getElementById("adminDialogTitle"),
   saveBtn: document.getElementById("saveBtn"),
+  deleteBtn: document.getElementById("deleteBtn"),
   cancelBtn: document.getElementById("cancelBtn"),
   adminStatus: document.getElementById("adminStatus")
 };
 
-async function loadData() {
-  vocab = await fetch("data/vocab.json").then(r => r.json());
-  grants = await fetch("data/grants.json").then(r => r.json());
+async function loadData(options = {}) {
+  const bustCache = Boolean(options.bustCache);
+  const suffix = bustCache ? `?t=${Date.now()}` : "";
+  vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
+  grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   initFilters();
-  bindEvents();
+  if (!options.skipBindEvents) {
+    bindEvents();
+  }
   els.sortBy.value = CIH_CONFIG.defaultSort || "deadlineAsc";
   apply();
 }
@@ -54,6 +61,7 @@ async function loadData() {
 function initFilters() {
   fillSelect(els.funderType, vocab.funderTypes || [], "All funders");
   fillSelect(els.eligibility, vocab.eligibility || [], "All eligibility");
+  fillMulti(els.flagForPi, vocab.flagForPi || []);
   fillMulti(els.keywords, vocab.keywords || []);
   fillMulti(els.limitations, vocab.limitations || []);
 
@@ -61,6 +69,7 @@ function initFilters() {
   fillSelect(document.getElementById("a_eligibility"), vocab.eligibility || []);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
+  fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
   fillMulti(document.getElementById("a_limitations"), vocab.limitations || []);
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
@@ -69,7 +78,7 @@ function initFilters() {
 }
 
 function bindEvents() {
-  [els.q, els.funderType, els.eligibility, els.keywords, els.limitations, els.sortBy].forEach(el => {
+  [els.q, els.funderType, els.eligibility, els.flagForPi, els.keywords, els.limitations, els.sortBy].forEach(el => {
     el.addEventListener("input", apply);
     el.addEventListener("change", apply);
   });
@@ -78,6 +87,7 @@ function bindEvents() {
     els.q.value = "";
     els.funderType.value = "";
     els.eligibility.value = "";
+    [...els.flagForPi.options].forEach(o => { o.selected = false; });
     [...els.keywords.options].forEach(o => { o.selected = false; });
     [...els.limitations.options].forEach(o => { o.selected = false; });
     els.sortBy.value = CIH_CONFIG.defaultSort || "deadlineAsc";
@@ -85,7 +95,9 @@ function bindEvents() {
   };
 
   els.adminPlus.onclick = () => openAdminDialog();
+  els.refreshData.onclick = () => refreshData();
   els.cancelBtn.onclick = () => closeAdminDialog();
+  els.deleteBtn.onclick = () => deleteCurrentGrant();
 }
 
 function fillSelect(el, arr, first) {
@@ -148,6 +160,7 @@ function apply() {
   const q = els.q.value.trim().toLowerCase();
   const byFunder = els.funderType.value;
   const byEligibility = els.eligibility.value;
+  const byFlagForPi = selectedValues(els.flagForPi);
   const byKeywords = selectedValues(els.keywords);
   const byLimitations = selectedValues(els.limitations);
 
@@ -155,6 +168,7 @@ function apply() {
     .filter(g => nextDeadline(g))
     .filter(g => !byFunder || g.funderType === byFunder)
     .filter(g => !byEligibility || g.eligibility === byEligibility)
+    .filter(g => !byFlagForPi.length || byFlagForPi.every(name => (g.flagForPi || []).includes(name)))
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
     .filter(g => !byLimitations.length || byLimitations.every(l => (g.limitations || []).includes(l)))
     .filter(g => {
@@ -232,6 +246,7 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
     ${g.geography ? `<p class="meta-row"><strong>Geography Restriction:</strong> ${g.geography}</p>` : ""}
     ${g.piRestriction && g.piRestriction !== "None" ? `<p class="meta-row"><strong>PI Restriction:</strong> ${g.piRestriction}</p>` : ""}
+    ${(g.flagForPi || []).length ? `<p class="meta-row"><strong>Flag for PI:</strong> ${(g.flagForPi || []).join(", ")}</p>` : ""}
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
@@ -275,6 +290,7 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
+  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = false; });
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = false; });
 }
 
@@ -283,12 +299,14 @@ function openAdminDialog(grant = null, index = null) {
   editIndex = index;
   if (!grant) {
     els.adminDialogTitle.textContent = "Add Grant";
+    els.deleteBtn.hidden = true;
     resetAdminForm();
     els.adminDialog.showModal();
     return;
   }
 
   els.adminDialogTitle.textContent = "Edit Grant";
+  els.deleteBtn.hidden = false;
   document.getElementById("a_token").value = "";
   document.getElementById("a_title").value = grant.title || "";
   document.getElementById("a_funderType").value = grant.funderType || "";
@@ -303,6 +321,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
+  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = (grant.flagForPi || []).includes(o.value); });
   [...document.getElementById("a_limitations").options].forEach(o => { o.selected = (grant.limitations || []).includes(o.value); });
   els.adminDialog.showModal();
 }
@@ -346,6 +365,7 @@ els.saveBtn.onclick = async () => {
     link,
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
+    flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value),
     limitations: [...document.getElementById("a_limitations").selectedOptions].map(o => o.value)
   };
 
@@ -381,6 +401,52 @@ els.saveBtn.onclick = async () => {
     els.adminStatus.textContent = `Save failed: ${error.message}`;
   }
 };
+
+
+async function deleteCurrentGrant() {
+  if (editIndex === null) {
+    return;
+  }
+
+  const token = document.getElementById("a_token").value.trim();
+  if (!token) {
+    els.adminStatus.textContent = "GitHub token is required.";
+    return;
+  }
+
+  const shouldDelete = window.confirm("Delete this grant entry permanently?");
+  if (!shouldDelete) {
+    return;
+  }
+
+  els.adminStatus.textContent = "Deleting…";
+
+  try {
+    await saveGrant("delete", { editIndex }, token);
+    grants.splice(editIndex, 1);
+    apply();
+    closeAdminDialog();
+  } catch (error) {
+    console.error(error);
+    els.adminStatus.textContent = `Delete failed: ${error.message}`;
+  }
+}
+
+async function refreshData() {
+  els.refreshData.disabled = true;
+  const originalLabel = els.refreshData.textContent;
+  els.refreshData.textContent = "Refreshing…";
+
+  try {
+    await loadData({ bustCache: true, skipBindEvents: true });
+  } catch (error) {
+    console.error(error);
+    els.adminStatus.textContent = `Refresh failed: ${error.message}`;
+  } finally {
+    els.refreshData.textContent = originalLabel;
+    els.refreshData.disabled = false;
+  }
+}
 
 async function saveGrant(mode, payload, tokenInput) {
   const owner = CIH_CONFIG.githubOwner;
@@ -439,4 +505,4 @@ async function saveGrant(mode, payload, tokenInput) {
   }
 }
 
-loadData();
+loadData({ skipBindEvents: false });

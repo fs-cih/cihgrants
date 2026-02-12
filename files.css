@@ -91,6 +91,12 @@ h1 {
   color: white;
 }
 
+.btn.danger {
+  background: #b42318;
+  color: white;
+  border-color: #b42318;
+}
+
 .meta {
   display: inline-block;
   margin-top: 12px;
@@ -216,7 +222,7 @@ h1 {
 
 .dialog-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 4px;
 }

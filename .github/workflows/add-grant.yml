@@ -6,10 +6,11 @@ on:
       mode:
         required: true
         type: choice
-        description: 'Operation mode: add or edit'
+        description: 'Operation mode: add, edit, or delete'
         options:
           - add
           - edit
+          - delete
       payload:
         required: true
         description: 'Grant data as JSON string'
@@ -24,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Add or edit grant
+      - name: Add, edit, or delete grant
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -39,6 +40,14 @@ jobs:
               // Remove editIndex from payload before saving (it's metadata, not grant data)
               const { editIndex: _removed, ...grant } = payload;
               grants[editIndex] = grant;
+            } else {
+              console.error('Invalid editIndex:', editIndex);
+              process.exit(1);
+            }
+          } else if (mode === 'delete') {
+            const editIndex = payload.editIndex;
+            if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
+              grants.splice(editIndex, 1);
             } else {
               console.error('Invalid editIndex:', editIndex);
               process.exit(1);
@@ -67,6 +76,8 @@ jobs:
           
           if [ "$MODE" = "edit" ]; then
             git commit -m "Edit grant: $TITLE"
+          elif [ "$MODE" = "delete" ]; then
+            git commit -m "Delete grant at index: $(echo '${{ github.event.inputs.payload }}' | jq -r .editIndex)"
           else
             git commit -m "Add grant: $TITLE"
           fi
