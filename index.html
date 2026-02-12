@@ -13,8 +13,20 @@
         <div>
           <h1>CIH Grant Opportunities Database</h1>
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button id="adminPlus" class="icon-btn" title="Add grant" aria-label="Add grant">＋</button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <div class="toggle-container">
+            <button id="toggleGrants" class="toggle-btn active">Grants</button>
+            <button id="toggleProspects" class="toggle-btn">Prospects</button>
+            <div class="toggle-slider"></div>
+          </div>
+          <button id="downloadBtn" class="icon-btn-circle" title="Download" aria-label="Download">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </button>
+          <button id="adminPlus" class="icon-btn-circle" title="Add" aria-label="Add">＋</button>
         </div>
       </div>
 
@@ -145,6 +157,49 @@
       </div>
 
       <p id="adminStatus" class="status"></p>
+    </form>
+  </dialog>
+
+  <dialog id="prospectDialog">
+    <form method="dialog" id="prospectForm">
+      <h2 id="prospectDialogTitle">Add Prospect</h2>
+
+      <label>GitHub Personal Access Token
+        <input id="p_token" class="control" type="password" autocomplete="off" placeholder="github_pat_...">
+        <small style="display: block; margin-top: 4px; color: #666;">
+          Required scopes: <code>workflow</code> + <code>repo</code> (Classic) or Actions: Read and write (Fine-grained). 
+          <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="color: #0969da;">Create token →</a>
+        </small>
+      </label>
+
+      <label>Pin
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="p_pin" value="no" id="p_pin_no" checked>
+            <span>No</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="p_pin" value="yes" id="p_pin_yes">
+            <span>Yes</span>
+          </label>
+        </div>
+      </label>
+
+      <label>Funder<input id="p_funder" class="control" required></label>
+      <label>Funder Type<select id="p_funderType" class="control"></select></label>
+      <label>Geography Restriction<select id="p_geography" class="control"></select></label>
+      <label>PI Restriction<select id="p_piRestriction" class="control"></select></label>
+      <label>Website Link<input id="p_link" class="control" type="url" required></label>
+      <label>Keywords<select id="p_keywords" class="control" multiple></select></label>
+      <label>Notes<textarea id="p_notes" class="control" rows="5"></textarea></label>
+
+      <div class="dialog-actions">
+        <button id="prospectSaveBtn" class="btn primary" type="button">Save</button>
+        <button id="prospectCancelBtn" class="btn" type="button">Cancel</button>
+        <button id="prospectDeleteBtn" class="btn danger" type="button" hidden>Delete</button>
+      </div>
+
+      <p id="prospectStatus" class="status"></p>
     </form>
   </dialog>
 
