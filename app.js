@@ -453,7 +453,7 @@ function renderGrant(g) {
   }
 
   // Add pin indicator if pinned
-  const pinIndicator = g.pin ? `<div class="pin-indicator"></div>` : "";
+  const pinIndicator = g.pin ? `<div class="pin-indicator">Pinned</div>` : "";
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullDescription = g.description || "";
@@ -551,14 +551,24 @@ function renderGrant(g) {
       nestedItem.dataset.expanded = "false";
       
       // Initial collapsed view - just title
-      nestedItem.innerHTML = `<div class="nested-grant-title">${ng.title}</div>`;
+      nestedItem.innerHTML = `
+        <div class="nested-grant-title">${ng.title}</div>
+        <div style="margin-top: 6px;">
+          <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+        </div>
+      `;
       
       nestedItem.onclick = () => {
         const isExpanded = nestedItem.dataset.expanded === "true";
         
         if (isExpanded) {
           // Collapse: show only title
-          nestedItem.innerHTML = `<div class="nested-grant-title">${ng.title}</div>`;
+          nestedItem.innerHTML = `
+            <div class="nested-grant-title">${ng.title}</div>
+            <div style="margin-top: 6px;">
+              <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+            </div>
+          `;
           nestedItem.dataset.expanded = "false";
         } else {
           // Expand: show full details
@@ -610,7 +620,10 @@ function renderGrant(g) {
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
             <div class="nested-grant-expanded">
-              <div class="grant-top">${nestedKeywordPills}</div>
+              <div class="grant-top">
+                <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
+                ${nestedKeywordPills}
+              </div>
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
               <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${ng.amountDetail}` : ""} <span class="muted">(${ng.amountIdc || "Not specified"})</span></p>
@@ -619,9 +632,18 @@ function renderGrant(g) {
               <p class="meta-row desc-preview"><strong>Description:</strong> ${nestedPreview}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${nestedRest}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
+              <div class="card-actions"><button class="btn edit-nested-btn" type="button">Edit</button></div>
             </div>
           `;
           nestedItem.dataset.expanded = "true";
+          
+          // Add edit button functionality for nested grant
+          const editNestedBtn = nestedItem.querySelector(".edit-nested-btn");
+          editNestedBtn.onclick = (e) => {
+            e.stopPropagation(); // Prevent collapsing the nested grant
+            const index = grants.findIndex(candidate => candidate.id === ng.id);
+            openAdminDialog(ng, index);
+          };
           
           // Add expand/collapse functionality for description
           if (nestedRest) {
