@@ -788,6 +788,7 @@
   {
     "title": "Innovative Mental Health Services Research Not Involving Clinical Trials (R01 - Clinical Trials Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -799,7 +800,6 @@
     "keywords": [
       "Mental Health"
     ],
-    "flagForPi": [],
     "id": "grant_1770907278552_13_vphy5gd8c",
     "deadlines": [
       "2026-06-05",
