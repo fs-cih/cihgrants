@@ -407,7 +407,22 @@ async function saveGrant(mode, payload, tokenInput) {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`);
+    let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
+    
+    // Provide helpful guidance for common authentication errors
+    if (response.status === 403) {
+      const errorData = errorText ? JSON.parse(errorText) : {};
+      if (errorData.message && errorData.message.includes("Resource not accessible by personal access token")) {
+        errorMessage += "\n\nYour Personal Access Token (PAT) needs additional permissions:\n" +
+          "• For Classic PATs: Enable both 'repo' and 'workflow' scopes\n" +
+          "• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission\n\n" +
+          "Please create a new token at: https://github.com/settings/tokens";
+      }
+    } else if (response.status === 401) {
+      errorMessage += "\n\nYour token may be invalid or expired. Please verify it at: https://github.com/settings/tokens";
+    }
+    
+    throw new Error(errorMessage);
   }
 }
 

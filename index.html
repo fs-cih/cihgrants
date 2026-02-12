@@ -52,7 +52,13 @@
     <form method="dialog" id="adminForm">
       <h2 id="adminDialogTitle">Add Grant</h2>
 
-      <label>GitHub Personal Access Token<input id="a_token" class="control" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+      <label>GitHub Personal Access Token
+        <input id="a_token" class="control" type="password" autocomplete="off" placeholder="github_pat_...">
+        <small style="display: block; margin-top: 4px; color: #666;">
+          Required scopes: <code>workflow</code> + <code>repo</code> (Classic) or Actions: Read/Write (Fine-grained). 
+          <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="color: #0969da;">Create token →</a>
+        </small>
+      </label>
 
       <label>Title<input id="a_title" class="control" required></label>
       <label>Funder Type<select id="a_funderType" class="control"></select></label>
