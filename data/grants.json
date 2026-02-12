@@ -362,7 +362,7 @@
     ]
   },
   {
-    "title": "Advancing Research on the Application of Digital Health Technology to the Management of Type 2 Diabetes (R01 - Clinical Trail Required)",
+    "title": "NIH Research Project Grant (Parent R01 - Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
     "amount": 500000,
@@ -370,19 +370,19 @@
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
     "addedDate": "2026-02-12",
-    "link": "https://grants.nih.gov/grants/guide/rfa-files/RFA-DK-26-315.html",
-    "description": "To promote extramural biomedical research that improves the understanding of disease management and leads to improved preventions, diagnosis, and treatment of diabetes, digestive, and kidney diseases. Programmatic areas within the National Institute of Diabetes and Digestive and Kidney Diseases include diabetes, digestive, endocrine, hematologic, liver, metabolic, nephrologic, nutrition, obesity, and urologic diseases.",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-303.html",
+    "description": "This Parent Notice of Funding Opportunity is for basic science experimental studies involving humans, referred to in NOT-OD-18-212 as “prospective basic science studies involving human participants.” These studies fall within the NIH definition of a clinical trial and also meet the definition of basic research. Types of studies that should submit under this NOFO include studies that prospectively assign human participants to conditions (i.e., experimentally manipulate independent variables) and that assess biomedical or behavioral outcomes in humans for the purpose of understanding the fundamental aspects of phenomena without specific application towards processes or products in mind. Studies conducted with specific applications toward processes or products in mind should submit under the appropriate ‘Clinical Trials Required’ or ‘Clinical Trial Optional’ NOFO.",
     "keywords": [
-      "Diabetes"
+      "General Research"
     ],
-    "flagForPi": [
-      "Don",
-      "Jordyn",
-      "Melissa"
-    ],
-    "id": "grant_1770904150474_2_14kky47jm",
+    "flagForPi": [],
+    "id": "grant_1770907615687_14_zqz6c6rwr",
     "deadlines": [
-      "2026-10-06"
+      "2026-06-05",
+      "2026-10-05",
+      "2027-02-05",
+      "2027-06-05",
+      "2027-10-05"
     ]
   }
 ]
