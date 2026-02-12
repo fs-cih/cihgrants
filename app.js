@@ -316,9 +316,13 @@ function apply() {
   const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
     .map(pill => pill.dataset.keyword);
 
+  // Check if any filters are active
+  const hasActiveFilters = q || byFunder.length || byEligibility.length || byKeywords.length;
+
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
     .filter(g => hasActiveDeadline(g))
+    .filter(g => !g.parentGrantId) // Only show non-nested grants as cards
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
@@ -330,8 +334,18 @@ function apply() {
       return hay.includes(q);
     });
 
-  // Sort: New grants first, then grants by deadline proximity, then recurring, then always open
+  // Sort: Pinned grants first (when no filters), then new grants, then by deadline proximity, then recurring, then always open
   filtered.sort((a, b) => {
+    // Note: Nested grants are already filtered out, so we don't need to check for nesting here
+    
+    // If no filters are active, pinned grants (that are not nested) come first
+    if (!hasActiveFilters) {
+      const aPinned = a.pin === true;
+      const bPinned = b.pin === true;
+      if (aPinned && !bPinned) return -1;
+      if (!aPinned && bPinned) return 1;
+    }
+    
     const aIsNew = isNewGrant(a);
     const bIsNew = isNewGrant(b);
     
@@ -419,6 +433,12 @@ function deadlineMarkup(g) {
 function renderGrant(g) {
   const div = document.createElement("article");
   div.className = "grant";
+  if (g.pin) {
+    div.classList.add("has-pin");
+  }
+
+  // Add pin indicator if pinned
+  const pinIndicator = g.pin ? `<div class="pin-indicator">📌</div>` : "";
 
   const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullDescription = g.description || "";
@@ -466,7 +486,13 @@ function renderGrant(g) {
   }
   const eligibilityText = g.eligibility || "Not specified";
 
+  // Get nested grants (only those with active deadlines)
+  const nestedGrants = grants.filter(ng => 
+    ng.parentGrantId === g.id && hasActiveDeadline(ng)
+  );
+
   div.innerHTML = `
+    ${pinIndicator}
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
     ${funderTypeMarkup}
@@ -476,6 +502,7 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
+    ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
     <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
   `;
@@ -499,11 +526,65 @@ function renderGrant(g) {
       btn.textContent = open ? "▼ Expand" : "▲ Collapse";
     };
   }
+
+  // Render nested grants
+  if (nestedGrants.length > 0) {
+    const nestedContainer = div.querySelector(".nested-grants");
+    nestedGrants.forEach(ng => {
+      const nestedItem = document.createElement("div");
+      nestedItem.className = "nested-grant-item";
+      nestedItem.dataset.expanded = "false";
+      
+      // Initial collapsed view - just title
+      nestedItem.innerHTML = `<div class="nested-grant-title">${ng.title}</div>`;
+      
+      nestedItem.onclick = () => {
+        const isExpanded = nestedItem.dataset.expanded === "true";
+        
+        if (isExpanded) {
+          // Collapse: show only title
+          nestedItem.innerHTML = `<div class="nested-grant-title">${ng.title}</div>`;
+          nestedItem.dataset.expanded = "false";
+        } else {
+          // Expand: show full details
+          const nestedKeywords = [];
+          if (isNewGrant(ng)) {
+            nestedKeywords.push({ text: "New", className: "kcard-new" });
+          }
+          if (ng.piRestriction && ng.piRestriction !== "None") {
+            nestedKeywords.push({ text: ng.piRestriction, className: "kcard-pi-restriction" });
+          }
+          if (ng.geography && ng.geography !== "None") {
+            nestedKeywords.push({ text: ng.geography, className: "kcard-state" });
+          }
+          (ng.keywords || []).forEach(kw => {
+            nestedKeywords.push({ text: kw, className: "" });
+          });
+          
+          const nestedKeywordPills = nestedKeywords
+            .map(kw => `<span class="kcard ${kw.className}">${kw.text}</span>`)
+            .join("");
+          
+          nestedItem.innerHTML = `
+            <div class="nested-grant-title">${ng.title}</div>
+            <div class="nested-grant-expanded">
+              <div class="grant-top">${nestedKeywordPills}</div>
+            </div>
+          `;
+          nestedItem.dataset.expanded = "true";
+        }
+      };
+      
+      nestedContainer.appendChild(nestedItem);
+    });
+  }
+
   return div;
 }
 
 function resetAdminForm() {
   document.getElementById("a_token").value = "";
+  document.getElementById("a_pin_no").checked = true;
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
@@ -522,12 +603,58 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
+  document.getElementById("a_parentGrantId").value = "";
   updateFederalAgencyField();
+}
+
+// Helper function to check if a grant is a descendant of another grant
+function isDescendantOf(grantId, potentialAncestorId) {
+  if (!grantId || !potentialAncestorId) return false;
+  
+  const grant = grants.find(g => g.id === grantId);
+  if (!grant || !grant.parentGrantId) return false;
+  
+  // Direct parent match
+  if (grant.parentGrantId === potentialAncestorId) return true;
+  
+  // Check parent's parent recursively
+  return isDescendantOf(grant.parentGrantId, potentialAncestorId);
+}
+
+function populateParentGrantSelect(currentGrantId = null) {
+  const select = document.getElementById("a_parentGrantId");
+  select.innerHTML = '<option value="">None (standalone grant)</option>';
+  
+  // Only show grants that are:
+  // 1. Not nested themselves
+  // 2. Have active deadlines
+  // 3. Not the current grant (prevent self-nesting)
+  // 4. Not descendants of the current grant (prevent circular dependencies)
+  const availableGrants = grants.filter(g => 
+    !g.parentGrantId && 
+    hasActiveDeadline(g) && 
+    g.id !== currentGrantId &&
+    !isDescendantOf(g.id, currentGrantId)
+  );
+  
+  // Sort by title for easier selection
+  availableGrants.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+  
+  availableGrants.forEach(g => {
+    const option = document.createElement("option");
+    option.value = g.id;
+    option.textContent = g.title;
+    select.appendChild(option);
+  });
 }
 
 function openAdminDialog(grant = null, index = null) {
   els.adminStatus.textContent = "";
   editIndex = index;
+  
+  // Populate parent grant select
+  populateParentGrantSelect(grant ? grant.id : null);
+  
   if (!grant) {
     els.adminDialogTitle.textContent = "Add Grant";
     els.deleteBtn.hidden = true;
@@ -540,6 +667,14 @@ function openAdminDialog(grant = null, index = null) {
   els.adminDialogTitle.textContent = "Edit Grant";
   els.deleteBtn.hidden = false;
   document.getElementById("a_token").value = "";
+  
+  // Set pin radio buttons
+  if (grant.pin) {
+    document.getElementById("a_pin_yes").checked = true;
+  } else {
+    document.getElementById("a_pin_no").checked = true;
+  }
+  
   document.getElementById("a_title").value = grant.title || "";
   document.getElementById("a_funderType").value = grant.funderType || "";
   document.getElementById("a_federalAgency").value = grant.federalAgency || "";
@@ -571,6 +706,7 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
+  document.getElementById("a_parentGrantId").value = grant.parentGrantId || "";
   updateFederalAgencyField();
   
   highlightApostropheFields();
@@ -652,6 +788,22 @@ els.saveBtn.onclick = async () => {
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value)
   };
+
+  // Add pin field
+  const pinValue = document.querySelector('input[name="pin"]:checked').value;
+  if (pinValue === "yes") {
+    grant.pin = true;
+  } else {
+    grant.pin = false;
+  }
+  
+  // Add parent grant ID if selected
+  const parentGrantId = document.getElementById("a_parentGrantId").value;
+  if (parentGrantId) {
+    grant.parentGrantId = parentGrantId;
+    // Nesting overrides pin (but we preserve the pin value)
+    // The pin won't be applied while nested, but will be preserved if un-nested later
+  }
 
   if (grant.funderType !== "Federal") {
     delete grant.federalAgency;
