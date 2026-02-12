@@ -223,6 +223,7 @@
   {
     "title": "Exploratory Grants in Cancer Control (R21 Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
