@@ -15,6 +15,10 @@ on:
         required: true
         description: 'Grant data as JSON string'
 
+concurrency:
+  group: grant-modifications
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
