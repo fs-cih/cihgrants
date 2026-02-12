@@ -655,6 +655,7 @@
   {
     "title": "NIH Small Research Grant Program (Parent R03 Clinical Trial Not Allowed)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 50000,
     "amountDetail": "per year",
@@ -666,7 +667,6 @@
     "keywords": [
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770908964831_20_e7ek0q1b0",
     "deadlines": [
       "2026-06-16",
