@@ -1,5 +1,24 @@
 [
   {
+    "title": "Ethical, Legal and Social Implications (ELSI) Small Research Grant (R03 Clinical Trial Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "2 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-370.html",
+    "description": "This Notice of Funding Opportunity (NOFO) invites Small Research Grant (R03) applications that propose to study the ethical, legal and social implications (ELSI) of human genetic or genomic research. These applications should be for small, self-contained research projects, such as those that involve single investigators. Of particular interest are projects that propose normative or conceptual analyses, including focused legal, economic, philosophical, anthropological, or historical analyses of new or emerging issues. This mechanism can also be used for the collection of preliminary data or the secondary analysis of existing data. Applications may propose studies using either single or mixed methods. Applied research designed to address ELSI issues in genetics and genomics will also be considered responsive. Direct engagement with communities and other stakeholders is encouraged, but not required.",
+    "keywords": [],
+    "flagForPi": [],
+    "id": "grant_1770906794652_11_ntz2nec6o",
+    "deadlines": [
+      "2026-06-18",
+      "2026-10-16"
+    ]
+  },
+  {
     "title": "Ethical, Legal and Social Implications (ELSI) Research (R01 Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
