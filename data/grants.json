@@ -671,6 +671,7 @@
   {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
@@ -682,7 +683,6 @@
     "keywords": [
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770908705139_17_lz9h4ix1p",
     "deadlines": [
       "2026-06-16",
