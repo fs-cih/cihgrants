@@ -102,6 +102,7 @@ function initFilters() {
 
   // Admin dialog selects
   fillSelect(document.getElementById("a_funderType"), vocab.funderTypes || []);
+  // Eligibility is hardcoded to "Prime" and "Secondary" per requirements (task #7)
   fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
@@ -146,7 +147,6 @@ function bindEvents() {
     document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
       cb.checked = (cb.value === "Prime");
     });
-    [...els.flagForPi.options].forEach(o => { o.selected = false; });
     els.flagForPi.value = "";
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     apply();
