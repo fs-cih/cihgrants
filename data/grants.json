@@ -1,5 +1,29 @@
 [
   {
+    "title": "NIH Research Project Grant (Parent R01 Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-301.html",
+    "description": "The NIH Research Project Grant supports a discrete, specified, circumscribed project in areas representing the specific interests and competencies of the investigator(s). The proposed project must be related to the programmatic interests of one or more of the participating NIH Institutes and Centers (ICs) based on their scientific missions.",
+    "keywords": [
+      "General Research"
+    ],
+    "flagForPi": [],
+    "id": "grant_1770908535409_16_bzfyhiqq6",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05",
+      "2027-02-05",
+      "2027-06-05",
+      "2027-10-05"
+    ]
+  },
+  {
     "title": "NIH Research Project Grant (Parent R01 - Clinical Trial Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
