@@ -3,7 +3,7 @@ window.CIH_CONFIG = {
   githubRepo: "cihgrants",
   githubBranch: "main",
   // UI behavior
-  newGrantWindowDays: 30,
+  newGrantWindowDays: 29,
   descriptionPreviewChars: 220,
   defaultSort: "deadlineAsc",
 

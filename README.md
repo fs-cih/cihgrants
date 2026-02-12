@@ -1,4 +1,4 @@
-# CIH Grant Opportunities Tracker
+# CIH Grant Opportunities Database
 
 A web-based tool for tracking and managing grant opportunities for the Center for Interdisciplinary Health.
 
