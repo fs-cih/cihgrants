@@ -201,19 +201,21 @@ function selectedValues(selectEl) {
   return [...selectEl.selectedOptions].map(o => o.value);
 }
 
-function nextDeadline(g) {
+// Check if a grant has an active deadline (either upcoming dates, always open, or recurring)
+function hasActiveDeadline(g) {
   // Open and recurring deadlines are always "active"
   if (g.deadlineOpen || g.deadlineRecurring) {
-    return true; // Return truthy value to pass filtering
+    return true;
   }
+  // Regular deadlines: check if there are any future dates
+  return (g.deadlines || []).filter(d => d >= TODAY).length > 0;
+}
+
+function nextDeadline(g) {
   return (g.deadlines || []).filter(d => d >= TODAY).sort()[0] || null;
 }
 
 function upcomingDeadlines(g) {
-  // Open and recurring deadlines don't have specific upcoming dates
-  if (g.deadlineOpen || g.deadlineRecurring) {
-    return [];
-  }
   return (g.deadlines || []).filter(d => d >= TODAY).sort();
 }
 
@@ -267,7 +269,7 @@ function apply() {
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
-    .filter(g => nextDeadline(g))
+    .filter(g => hasActiveDeadline(g))
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
     .filter(g => {
@@ -536,10 +538,8 @@ els.saveBtn.onclick = async () => {
       .filter(Boolean);
   } else if (deadlineType === 'open') {
     grant.deadlineOpen = true;
-    // Don't add deadlines array for open grants
   } else if (deadlineType === 'recurring') {
     grant.deadlineRecurring = document.getElementById("a_deadlineRecurring").value.trim();
-    // Don't add deadlines array for recurring grants
   }
 
   const localGrant = { ...grant };
