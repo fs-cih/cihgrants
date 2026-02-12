@@ -1,5 +1,28 @@
 [
   {
+    "title": "Pilot Health Services and Economic Research on the Treatment of Drug, Alcohol, and Tobacco Use Disorders (R34 Clinical Trial Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 450000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "3 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-100.html",
+    "description": "The purpose of this notice of funding opportunity (NOFO) encourages pilot and preliminary research in preparation for larger-scale services research effectiveness trials. Relevant trials may test a wide range of approaches, including interventions, practices, and policies designed to optimize access to, and the quality, effectiveness, affordability and utilization of tobacco or substance use disorder treatments and related services, as well as services for comorbid medical and mental disorder conditions. Relevant approaches may include both those that are novel, and those that are commonly used in practice but lack an evidence base. This NOFO provides resources for assessing the feasibility, acceptability, and utility of these approaches, in addition to usual trial preparation activities.",
+    "keywords": [
+      "Substance Use",
+      "Tobacco Control"
+    ],
+    "flagForPi": [],
+    "id": "grant_1770909556716_24_kb4cp0zpu",
+    "deadlines": [
+      "2026-06-16",
+      "2026-10-16",
+      "2027-02-16"
+    ]
+  },
+  {
     "title": "Risk and Protective Factors of Family Health and Family Level Interventions (R01 Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
