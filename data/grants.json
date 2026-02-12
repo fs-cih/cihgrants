@@ -519,6 +519,7 @@
   {
     "title": "Accelerating Solutions to Improve Access and Quality of Empirically-Supported Practices for Youth Mental Health (R01 Clinical Trial Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -531,7 +532,6 @@
       "Adolescent Health",
       "Mental Health"
     ],
-    "flagForPi": [],
     "id": "grant_1770909674513_25_pngv98b0u",
     "deadlines": [
       "2026-06-05",
