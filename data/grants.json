@@ -114,22 +114,35 @@
     ]
   },
   {
-    "title": "Ethical, Legal and Social Implications (ELSI) Exploratory/Developmental Research Grant (R21 Clinical Trial Optional)",
+    "title": "Stephen I. Katz Early Stage Investigator Research Project Grant (R01 - Basic Experimental Studies with Human Required)",
     "funderType": "Federal",
     "eligibility": "Prime",
-    "amount": 275000,
+    "amount": 500000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
-    "duration": "3 years",
+    "duration": "5 years",
     "addedDate": "2026-02-12",
-    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-369.html",
-    "description": "This Notice of Funding Opportunity (NOFO) invites Exploratory/Developmental Research Grant (R21) applications that propose to study the ethical, legal and social implications (ELSI) of human genetic or genomic research. Applications may propose studies using either single or mixed methods, that break new ground, extend previous discoveries in new directions, or develop preliminary data in preparation for larger studies. Approaches may include but are not limited to empirical qualitative and quantitative methods, and conceptual, legal, and normative analyses. Applied research designed to address ELSI issues in genetics and genomics will also be considered responsive. Direct engagement with communities and other stakeholders is encouraged, but not required.",
-    "keywords": [],
-    "flagForPi": [],
-    "id": "grant_1770906585689_9_vuxe7qhvm",
+    "piRestriction": "Early Stage Investigator",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-323.html",
+    "description": "The Stephen I. Katz Early Stage Investigator Research Project Grant supports an innovative project that represents a change in research direction for an early stage investigator (ESI) and for which no preliminary data exist. Applications submitted to this Notice of Funding Opportunity (NOFO) must not include preliminary data. Applications must include a separate attachment describing the change in research direction.The proposed project must be related to the programmatic interests of one or more of the participating NIH Institutes and Centers (ICs) based on their scientific missions.",
+    "keywords": [
+      "General Research"
+    ],
+    "flagForPi": [
+      "Dane",
+      "Felix",
+      "Jordyn",
+      "Val"
+    ],
+    "id": "grant_1770906117374_5_37gqe037n",
     "deadlines": [
-      "2026-06-18",
-      "2026-10-20"
+      "2026-05-27",
+      "2026-09-28",
+      "2027-01-26",
+      "2027-05-26",
+      "2027-09-28",
+      "2028-01-26",
+      "2028-05-26"
     ]
   },
   {
