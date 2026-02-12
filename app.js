@@ -452,6 +452,8 @@ function deadlineMarkup(g) {
 
 function rfaPillHtml(grant, alwaysShow = false) {
   // Show RFA pill if deadline is open OR if alwaysShow is true (for nested grants)
+  // Note: For nested grants, we always show the RFA pill to provide direct access to the RFA document,
+  // regardless of deadline status. The "Open RFA" text refers to opening the RFA document, not the deadline status.
   if (!grant.deadlineOpen && !alwaysShow) {
     return '';
   }
