@@ -25,26 +25,25 @@
     "flagForPi": []
   },
   {
-    "title": "Test with State and PI Restriction",
-    "funderType": "Foundation",
-    "eligibility": "Prime",
-    "amount": 150000,
-    "amountIdc": "Including IDC",
-    "duration": "3 years",
-    "addedDate": "2026-02-12",
-    "deadlines": [
-      "2027-03-15"
-    ],
-    "geography": "California",
-    "piRestriction": "Early Stage Investigator",
-    "link": "https://www.example.com",
-    "description": "Test grant with state restriction and PI restriction",
+    "title": "Native American Research Centers for Health (NARCH) Planning Grants (R34 - Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "eligibility": "Secondary",
+    "amount": 225000,
+    "amountDetail": "",
+    "amountIdc": "Excluding IDC",
+    "duration": "2 years",
+    "addedDate": "2026-02-01",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-441.html",
+    "description": "The purpose of the Native American Research Centers for Health (NARCH) Planning Grants program is to support federally-recognized American Indian/Alaska Native Tribes, Tribal colleges and universities, Tribal health programs, or Tribal organizations (collectively, federally-recognized Tribes and Tribal entities) to plan and conduct preparatory work for developing competitive NARCH applications.",
     "keywords": [
-      "General"
+      "Behavioral Health",
+      "Capacity-Building"
     ],
-    "flagForPi": [
-      "Chris",
-      "Emily"
+    "flagForPi": [],
+    "deadlines": [
+      "2026-07-08",
+      "2027-07-08",
+      "2028-07-07"
     ]
   },
   {
