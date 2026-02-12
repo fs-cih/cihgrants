@@ -157,6 +157,7 @@
   {
     "title": "Cancer Prevention and Control Clinical Trials Planning Grant Program (R34 Clinical Trials Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 600000,
     "amountDetail": "over total award period",
