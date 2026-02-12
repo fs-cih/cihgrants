@@ -250,10 +250,13 @@ function renderGrant(g) {
   return div;
 }
 
-const PAT_PERMISSION_HELP = "\n\nYour Personal Access Token (PAT) needs additional permissions:\n" +
-  "• For Classic PATs: Enable both 'repo' and 'workflow' scopes\n" +
-  "• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission\n\n" +
-  "Please create a new token at: https://github.com/settings/tokens";
+const PAT_PERMISSION_HELP = `
+
+Your Personal Access Token (PAT) needs additional permissions:
+• For Classic PATs: Enable both 'repo' and 'workflow' scopes
+• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
+
+Please create a new token at: https://github.com/settings/tokens`;
 
 function resetAdminForm() {
   document.getElementById("a_token").value = "";
@@ -427,7 +430,9 @@ async function saveGrant(mode, payload, tokenInput) {
         errorMessage += PAT_PERMISSION_HELP;
       }
     } else if (response.status === 401) {
-      errorMessage += "\n\nYour token may be invalid or expired. Please verify it at: https://github.com/settings/tokens";
+      errorMessage += `
+
+Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
     }
     
     throw new Error(errorMessage);
