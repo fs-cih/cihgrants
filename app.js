@@ -9,6 +9,16 @@ const US_STATES = [
   "West Virginia", "Wisconsin", "Wyoming"
 ];
 const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
+const PAT_PERMISSION_HELP = `
+
+Your Personal Access Token (PAT) needs additional permissions:
+• For Classic PATs: Enable both 'repo' and 'workflow' scopes
+• For Fine-grained PATs: Grant 'Actions' → 'Read and write' permission
+
+Please create a new token at: https://github.com/settings/tokens`;
+const PAT_INVALID_HELP = `
+
+Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
 
 let grants = [];
 let vocab = {};
@@ -407,7 +417,25 @@ async function saveGrant(mode, payload, tokenInput) {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`);
+    let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
+    
+    // Provide helpful guidance for common authentication errors
+    if (response.status === 403) {
+      let needsPermissionHelp = false;
+      try {
+        const errorData = JSON.parse(errorText);
+        needsPermissionHelp = errorData.message && errorData.message.includes("Resource not accessible by personal access token");
+      } catch (e) {
+        needsPermissionHelp = errorText.includes("Resource not accessible by personal access token");
+      }
+      if (needsPermissionHelp) {
+        errorMessage += PAT_PERMISSION_HELP;
+      }
+    } else if (response.status === 401) {
+      errorMessage += PAT_INVALID_HELP;
+    }
+    
+    throw new Error(errorMessage);
   }
 }
 
