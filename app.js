@@ -466,7 +466,12 @@ function renderGrant(g) {
   }
 
   // Build eligibility display - no pills, Primary is black, Secondary is maroon
-  const eligibilityClass = g.eligibility === "Secondary" ? "eligibility-secondary" : "eligibility-primary";
+  let eligibilityClass = "";
+  if (g.eligibility === "Secondary") {
+    eligibilityClass = "eligibility-secondary";
+  } else if (g.eligibility === "Prime") {
+    eligibilityClass = "eligibility-primary";
+  }
   const eligibilityText = g.eligibility || "Not specified";
 
   div.innerHTML = `
