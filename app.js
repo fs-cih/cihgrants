@@ -396,7 +396,7 @@ function deadlineMarkup(g) {
   }
   return `
     <p class="meta-row"><strong>Next Deadline:</strong> ${formatDate(deadlines[0])} ${dayBadge(deadlines[0])}</p>
-    <p class="meta-row"><strong>Additional Deadlines:</strong> ${deadlines.slice(1).map(d => `${formatDate(d)} ${dayBadge(d)}`).join(", ")}</p>
+    <p class="meta-row"><strong>Additional Deadlines:</strong> ${deadlines.slice(1).map(d => formatDate(d)).join(", ")}</p>
   `;
 }
 
