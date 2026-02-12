@@ -12,7 +12,11 @@
     ],
     "link": "https://www.google.com",
     "description": "Test",
-    "keywords": [],
+    "keywords": [
+      "Behavioral Health",
+      "Capacity-Building",
+      "Food Sovereignty"
+    ],
     "flagForPi": [
       "Chris"
     ],
