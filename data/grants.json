@@ -1016,6 +1016,7 @@
   {
     "title": "Mind and Body Interventions to Restore Whole Person Health via Emotional Well-Being Mechanisms (R61/R33 Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 475000,
     "amountDetail": "",
@@ -1029,7 +1030,6 @@
       "Mental Health",
       "Mind-Body Medicine"
     ],
-    "flagForPi": [],
     "id": "grant_1739366391000_0",
     "deadlines": [
       "2026-03-08",
