@@ -285,6 +285,30 @@ h1 {
   color: #1d2a39;
 }
 
+/* New styles for eligibility without pills */
+.eligibility-primary {
+  color: #000000;
+  font-weight: 600;
+}
+
+.eligibility-secondary {
+  color: #800020; /* Maroon color */
+  font-weight: 600;
+}
+
+/* Small pill for federal agency */
+.agency-pill {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border: 1px solid #bae6fd;
+  background: #e0f2fe;
+  color: #1d2a39;
+  margin-left: 4px;
+}
+
 
 .grant h3 {
   margin: 10px 0;

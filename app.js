@@ -433,12 +433,7 @@ function renderGrant(g) {
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
   const keywords = [];
-  if (g.funderType) {
-    keywords.push({ text: g.funderType, className: "kcard-funder-type" });
-  }
-  if (g.funderType === "Federal" && g.federalAgency) {
-    keywords.push({ text: g.federalAgency, className: "kcard-federal-agency" });
-  }
+  // Remove funderType and federalAgency from pills above title
   if (isNewGrant(g)) {
     keywords.push({ text: "New", className: "kcard-new" });
   }
@@ -458,13 +453,30 @@ function renderGrant(g) {
 
   const limitations = (g.limitations || []).map(l => `<span class="meta-tag">${l}</span>`).join("");
 
+  // Build funder type display
+  let funderTypeMarkup = "";
+  if (g.funderType) {
+    if (g.funderType === "Federal" && g.federalAgency) {
+      // Show "Federal" in regular text with agency in a small pill
+      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> Federal <span class="agency-pill">${g.federalAgency}</span></p>`;
+    } else {
+      // Show funder type as regular text
+      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${g.funderType}</p>`;
+    }
+  }
+
+  // Build eligibility display - no pills, Primary is black, Secondary is maroon
+  const eligibilityClass = g.eligibility === "Secondary" ? "eligibility-secondary" : "eligibility-primary";
+  const eligibilityText = g.eligibility || "Not specified";
+
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
     ${deadlineMarkup(g)}
+    ${funderTypeMarkup}
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
-    <p class="meta-row"><strong>Eligibility:</strong> <span class="eligibility-pill ${g.eligibility === "Secondary" ? "eligibility-pill-secondary" : ""}">${g.eligibility || "Not specified"}</span></p>
+    <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
