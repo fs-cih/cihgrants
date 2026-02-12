@@ -1,5 +1,29 @@
 [
   {
+    "title": "Leveraging Network Infrastructure to Conduct Innovative Research for Women, Children, Pregnant and Lactating Women, and Persons with Disabilities (UG3/UH3 - Clinical Trial Optional)",
+    "funderType": "Federal",
+    "eligibility": "Prime",
+    "amount": 6250000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "7 years",
+    "addedDate": "2026-02-12",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-311.html",
+    "description": "The purpose of this Notice of Funding Opportunity (NOFO) is to leverage NICHD clinical research network infrastructure relevant to infants, children, women, including those who are pregnant and lactating, and persons with disabilities to conduct innovative, multisite, investigator-initiated clinical trials and observational studies. This NOFO will utilize a bi-phasic (UG3/UH3), milestone-driven mechanism consisting of a start-up phase (UG3) and a full enrollment and clinical study implementation phase (UH3). Applications submitted in response to this NOFO must address specific aims and milestones for both the UG3 and UH3 phases. A UG3 project (phase I) that meets its milestones will be administratively considered by NICHD and prioritized for transition to the UH3 award (phase II). This NOFO provides an opportunity to leverage NICHD clinical research network infrastructure as a platform for investigator-initiated innovative hypotheses by any investigator in the extramural community. Applications must be submitted as investigator-initiated, multi-Project Director/Principal Investigator (PD/PI) grant applications in conjunction with the respective NICHD-supported Network Data Coordinating Center (DCC), or equivalent as determined by the NICHD. ",
+    "keywords": [
+      "Maternal Health"
+    ],
+    "flagForPi": [],
+    "id": "grant_1770909215758_22_pfhd7xxto",
+    "deadlines": [
+      "2026-07-15",
+      "2026-11-13",
+      "2027-03-15",
+      "2027-07-15",
+      "2027-11-15"
+    ]
+  },
+  {
     "title": "NIDCD Research Grants for Translating Basic Research into Clinical Practice (R01 Clinical Trial Optional)",
     "funderType": "Federal",
     "eligibility": "Prime",
