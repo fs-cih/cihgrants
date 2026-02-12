@@ -85,21 +85,19 @@ function initFilters() {
     eligibilityContainer.appendChild(label);
   });
 
-  // Principal Investigator dropdown (multiple select)
-  fillMulti(els.flagForPi, vocab.flagForPi || []);
+  // Principal Investigator dropdown (single select)
+  fillSelect(els.flagForPi, vocab.flagForPi || [], "-- Select PI --");
 
-  // Create Keyword checkboxes in 4 columns
-  const keywordContainer = document.getElementById("keywordCheckboxes");
+  // Create Keyword pills in alphabetical order
+  const keywordContainer = document.getElementById("keywordPills");
   keywordContainer.innerHTML = "";
-  (vocab.keywords || []).forEach(keyword => {
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "keyword";
-    checkbox.value = keyword;
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(keyword));
-    keywordContainer.appendChild(label);
+  const sortedKeywords = [...(vocab.keywords || [])].sort();
+  sortedKeywords.forEach(keyword => {
+    const pill = document.createElement("span");
+    pill.className = "keyword-pill";
+    pill.textContent = keyword;
+    pill.dataset.keyword = keyword;
+    keywordContainer.appendChild(pill);
   });
 
   // Admin dialog selects
@@ -134,9 +132,12 @@ function bindEvents() {
   els.flagForPi.addEventListener("input", apply);
   els.flagForPi.addEventListener("change", apply);
 
-  // Keyword checkboxes
-  document.querySelectorAll('input[name="keyword"]').forEach(cb => {
-    cb.addEventListener("change", apply);
+  // Keyword pills
+  document.querySelectorAll('.keyword-pill').forEach(pill => {
+    pill.addEventListener("click", () => {
+      pill.classList.toggle("selected");
+      apply();
+    });
   });
 
   els.clearFilters.onclick = () => {
@@ -146,7 +147,8 @@ function bindEvents() {
       cb.checked = (cb.value === "Prime");
     });
     [...els.flagForPi.options].forEach(o => { o.selected = false; });
-    document.querySelectorAll('input[name="keyword"]').forEach(cb => { cb.checked = false; });
+    els.flagForPi.value = "";
+    document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     apply();
   };
 
@@ -222,11 +224,11 @@ function apply() {
   const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
     .map(cb => cb.value);
   
-  const byFlagForPi = selectedValues(els.flagForPi);
+  const byFlagForPi = els.flagForPi.value ? [els.flagForPi.value] : [];
   
-  // Get checked keywords
-  const byKeywords = Array.from(document.querySelectorAll('input[name="keyword"]:checked'))
-    .map(cb => cb.value);
+  // Get selected keywords from pills
+  const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
+    .map(pill => pill.dataset.keyword);
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants

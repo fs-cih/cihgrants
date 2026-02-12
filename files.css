@@ -89,8 +89,9 @@ h1 {
 
 .checkbox-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .checkbox-group label {
@@ -127,6 +128,36 @@ h1 {
   flex-shrink: 0;
 }
 
+.keyword-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.keyword-pill {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  background: #9ca3af;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.keyword-pill.selected {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+.keyword-pill:hover {
+  opacity: 0.9;
+}
+
 .control {
   padding: 10px 12px;
   border-radius: 10px;
@@ -148,6 +179,11 @@ h1 {
   background: white;
   color: var(--text);
   cursor: pointer;
+}
+
+.btn.btn-small {
+  padding: 6px 12px;
+  font-size: 0.9rem;
 }
 
 .btn.primary {
