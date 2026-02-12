@@ -27,7 +27,6 @@ let editIndex = null;
 const els = {
   list: document.getElementById("list"),
   q: document.getElementById("q"),
-  flagForPi: document.getElementById("flagForPi"),
   resultCount: document.getElementById("resultCount"),
   clearFilters: document.getElementById("clearFilters"),
   refreshBtn: document.getElementById("refreshBtn"),
@@ -96,9 +95,6 @@ function initFilters() {
     eligibilityContainer.appendChild(label);
   });
 
-  // Principal Investigator dropdown (single select)
-  fillSelect(els.flagForPi, vocab.flagForPi || [], "-- Select PI --");
-
   // Create Keyword pills in alphabetical order
   const keywordContainer = document.getElementById("keywordPills");
   keywordContainer.innerHTML = "";
@@ -118,7 +114,6 @@ function initFilters() {
   fillSelect(document.getElementById("a_amountDetail"), ["per year", "over total award period"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
-  fillMulti(document.getElementById("a_flagForPi"), vocab.flagForPi || []);
   fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
@@ -140,10 +135,6 @@ function bindEvents() {
     cb.addEventListener("change", apply);
   });
 
-  // Principal Investigator select
-  els.flagForPi.addEventListener("input", apply);
-  els.flagForPi.addEventListener("change", apply);
-
   // Keyword pills
   document.querySelectorAll('.keyword-pill').forEach(pill => {
     pill.addEventListener("click", () => {
@@ -158,7 +149,6 @@ function bindEvents() {
     document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
       cb.checked = false;
     });
-    els.flagForPi.value = "";
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     apply();
   };
@@ -285,8 +275,6 @@ function apply() {
   const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
     .map(cb => cb.value);
   
-  const byFlagForPi = els.flagForPi.value ? [els.flagForPi.value] : [];
-  
   // Get selected keywords from pills
   const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
     .map(pill => pill.dataset.keyword);
@@ -296,15 +284,6 @@ function apply() {
     .filter(g => hasActiveDeadline(g))
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
-    .filter(g => {
-      // When a PI is selected, show grants flagged for that PI OR grants with no PI assigned
-      if (!byFlagForPi.length) {
-        return true;
-      }
-      const hasPi = byFlagForPi.every(name => (g.flagForPi || []).includes(name));
-      const hasNoPi = !g.flagForPi || g.flagForPi.length === 0;
-      return hasPi || hasNoPi;
-    })
     .filter(g => !byKeywords.length || byKeywords.every(k => (g.keywords || []).includes(k)))
     .filter(g => {
       if (!q) {
@@ -437,7 +416,6 @@ function renderGrant(g) {
     <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amountIdc || "Not specified"})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${g.eligibility || "Not specified"}</p>
-    ${(g.flagForPi || []).length ? `<p class="meta-row"><strong>Flag for PI:</strong> ${(g.flagForPi || []).join(", ")}</p>` : ""}
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
@@ -485,7 +463,6 @@ function resetAdminForm() {
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = false; });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = false; });
 }
 
 function openAdminDialog(grant = null, index = null) {
@@ -495,6 +472,22 @@ function openAdminDialog(grant = null, index = null) {
     els.adminDialogTitle.textContent = "Add Grant";
     els.deleteBtn.hidden = true;
     resetAdminForm();
+    
+    // Set up apostrophe highlighting
+    const fields = [
+      'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
+      'a_link', 'a_description'
+    ];
+    fields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.addEventListener('input', highlightApostropheFields);
+      }
+    });
+    
+    // Initial highlight check
+    highlightApostropheFields();
+    
     els.adminDialog.showModal();
     return;
   }
@@ -532,7 +525,22 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
   [...document.getElementById("a_keywords").options].forEach(o => { o.selected = (grant.keywords || []).includes(o.value); });
-  [...document.getElementById("a_flagForPi").options].forEach(o => { o.selected = (grant.flagForPi || []).includes(o.value); });
+  
+  // Set up apostrophe highlighting
+  const fields = [
+    'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
+    'a_link', 'a_description'
+  ];
+  fields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener('input', highlightApostropheFields);
+    }
+  });
+  
+  // Initial highlight check
+  highlightApostropheFields();
+  
   els.adminDialog.showModal();
 }
 
@@ -540,6 +548,25 @@ function closeAdminDialog() {
   els.adminDialog.close("cancel");
   els.adminStatus.textContent = "";
   editIndex = null;
+}
+
+function highlightApostropheFields() {
+  const fields = [
+    'a_title', 'a_duration', 'a_deadlines', 'a_deadlineRecurring',
+    'a_link', 'a_description'
+  ];
+  
+  fields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      const value = field.value || '';
+      if (value.includes("'")) {
+        field.style.backgroundColor = '#ffcccc';
+      } else {
+        field.style.backgroundColor = '';
+      }
+    }
+  });
 }
 
 els.saveBtn.onclick = async () => {
@@ -589,8 +616,7 @@ els.saveBtn.onclick = async () => {
     piRestriction: document.getElementById("a_piRestriction").value,
     link,
     description: document.getElementById("a_description").value,
-    keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value),
-    flagForPi: [...document.getElementById("a_flagForPi").selectedOptions].map(o => o.value)
+    keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value)
   };
   
   // Preserve ID when editing, generate new one when adding
