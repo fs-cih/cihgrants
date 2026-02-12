@@ -768,6 +768,7 @@
   {
     "title": "NIH Research Project Grant (Parent R01 - Clinical Trial Required)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
@@ -779,7 +780,6 @@
     "keywords": [
       "General Research"
     ],
-    "flagForPi": [],
     "id": "grant_1770908015128_15_x7x7pcpf9",
     "deadlines": [
       "2026-06-05",
