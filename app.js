@@ -553,7 +553,7 @@ function renderGrant(g) {
       // Initial collapsed view - just title
       nestedItem.innerHTML = `
         <div class="nested-grant-title">${ng.title}</div>
-        <div style="margin-top: 6px;">
+        <div class="nested-grant-pills">
           <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
         </div>
       `;
@@ -565,7 +565,7 @@ function renderGrant(g) {
           // Collapse: show only title
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${ng.title}</div>
-            <div style="margin-top: 6px;">
+            <div class="nested-grant-pills">
               <a href="${ng.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>
             </div>
           `;

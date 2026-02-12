@@ -510,6 +510,10 @@ h1 {
   margin-bottom: 4px;
 }
 
+.nested-grant-pills {
+  margin-top: 6px;
+}
+
 .rfa-pill {
   display: inline-block;
   border-radius: 999px;
