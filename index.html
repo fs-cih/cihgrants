@@ -77,6 +77,19 @@
         </small>
       </label>
 
+      <label>Pin
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="pin" value="no" id="a_pin_no" checked>
+            <span>No</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="pin" value="yes" id="a_pin_yes">
+            <span>Yes</span>
+          </label>
+        </div>
+      </label>
+
       <label>Title<input id="a_title" class="control" required></label>
       <label>Funder Type<select id="a_funderType" class="control"></select></label>
       <label id="a_federalAgency_label" style="display: none;">Federal Agency<select id="a_federalAgency" class="control"></select></label>
@@ -115,6 +128,15 @@
       <label>RFA Link<input id="a_link" class="control" required></label>
       <label>Description<textarea id="a_description" class="control" rows="5"></textarea></label>
       <label>Keywords<select id="a_keywords" class="control" multiple></select></label>
+
+      <label>Nest Grant?
+        <select id="a_parentGrantId" class="control">
+          <option value="">None (standalone grant)</option>
+        </select>
+        <small style="display: block; margin-top: 4px; color: #666;">
+          Select a parent grant to nest this grant under it. Nested grants appear within the parent grant card.
+        </small>
+      </label>
 
       <div class="dialog-actions">
         <button id="saveBtn" class="btn primary" type="button">Save</button>
