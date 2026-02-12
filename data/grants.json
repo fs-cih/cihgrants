@@ -127,6 +127,7 @@
   {
     "title": "The Role of Work in Health Disparities in the U.S. (R01 Clinical Trials Optional)",
     "funderType": "Federal",
+    "federalAgency": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
