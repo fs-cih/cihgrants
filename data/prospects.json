@@ -1,5 +1,20 @@
 [
   {
+    "funder": "Robert Wood Johnson Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.rwjf.org/",
+    "keywords": [],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Active Funding Opportunities",
+        "url": "https://www.rwjf.org/en/grants/active-funding-opportunities.html"
+      }
+    ],
+    "id": "prospect_1771007054102_15_tzf4zhtlz"
+  },
+  {
     "funder": "Sompo Foundation",
     "funderType": "Foundation",
     "link": "https://sompofoundation.org/",
