@@ -371,7 +371,7 @@ function updateAgencyNameField() {
   const agencyInput = document.getElementById("a_agencyName");
   const shouldShow = funderType === "Federal" || funderType === "Foundation" || funderType === "State";
   agencyLabel.style.display = shouldShow ? "" : "none";
-  agencyInput.required = false; // Make it optional
+  agencyInput.required = false;
   if (!shouldShow) {
     agencyInput.value = "";
   }
@@ -836,12 +836,12 @@ function renderGrant(g, selectedKeywords = []) {
   }
 
   const formatPills = (pills) => pills
-    .map(kw => {
+    .map(pill => {
       // For pin-indicator, don't add kcard class
-      if (kw.className === "pin-indicator") {
-        return `<span class="${kw.className}">${kw.text}</span>`;
+      if (pill.className === "pin-indicator") {
+        return `<span class="${pill.className}">${pill.text}</span>`;
       }
-      return `<span class="kcard ${kw.className}">${kw.text}</span>`;
+      return `<span class="kcard ${pill.className}">${pill.text}</span>`;
     })
     .join("");
 
@@ -1341,7 +1341,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   }
   
   // Add Letter of Interest field
-  const loiValue = document.querySelector('input[name="loi"]:checked').value;
+  const loiValue = document.querySelector('input[name="loi"]:checked')?.value || 'no';
   if (loiValue === "yes") {
     grant.letterOfInterest = true;
   } else {
