@@ -181,13 +181,13 @@ function initFilters() {
   fillSelect(document.getElementById("a_amountDetail"), ["per year", "over total award period"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
-  fillSelect(document.getElementById("a_geography"), ["None", ...US_STATES]);
+  fillMulti(document.getElementById("a_geography"), US_STATES);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
 
   // Prospect dialog selects
   fillSelect(document.getElementById("p_funderType"), vocab.funderTypes || []);
   fillMulti(document.getElementById("p_keywords"), vocab.keywords || []);
-  fillSelect(document.getElementById("p_geography"), ["None", ...US_STATES]);
+  fillMulti(document.getElementById("p_geography"), US_STATES);
   fillSelect(document.getElementById("p_piRestriction"), PI_RESTRICTIONS);
 
   document.getElementById("a_addedDate").value = TODAY;
@@ -680,8 +680,12 @@ function renderProspect(p) {
   if (p.piRestriction && p.piRestriction !== "None") {
     keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
   }
-  if (p.geography && p.geography !== "None") {
-    keywords.push({ text: p.geography, className: "kcard-state" });
+  if (p.geography && Array.isArray(p.geography) && p.geography.length > 0) {
+    // Sort states alphabetically and add each as a pill
+    const sortedStates = [...p.geography].sort();
+    sortedStates.forEach(state => {
+      keywords.push({ text: state, className: "kcard-state" });
+    });
   }
   (p.keywords || []).forEach(kw => {
     keywords.push({ text: kw, className: "" });
@@ -799,8 +803,12 @@ function renderGrant(g, selectedKeywords = []) {
   if (g.piRestriction && g.piRestriction !== "None") {
     keywords.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
   }
-  if (g.geography && g.geography !== "None") {
-    keywords.push({ text: g.geography, className: "kcard-state" });
+  if (g.geography && Array.isArray(g.geography) && g.geography.length > 0) {
+    // Sort states alphabetically and add each as a pill
+    const sortedStates = [...g.geography].sort();
+    sortedStates.forEach(state => {
+      keywords.push({ text: state, className: "kcard-state" });
+    });
   }
   (g.keywords || []).forEach(kw => {
     // Check if this keyword matches any selected keyword
@@ -917,8 +925,12 @@ function renderGrant(g, selectedKeywords = []) {
           if (ng.piRestriction && ng.piRestriction !== "None") {
             nestedKeywords.push({ text: ng.piRestriction, className: "kcard-pi-restriction" });
           }
-          if (ng.geography && ng.geography !== "None") {
-            nestedKeywords.push({ text: ng.geography, className: "kcard-state" });
+          if (ng.geography && Array.isArray(ng.geography) && ng.geography.length > 0) {
+            // Sort states alphabetically and add each as a pill
+            const sortedStates = [...ng.geography].sort();
+            sortedStates.forEach(state => {
+              nestedKeywords.push({ text: state, className: "kcard-state" });
+            });
           }
           (ng.keywords || []).forEach(kw => {
             // Check if this keyword matches any selected keyword
@@ -1032,7 +1044,7 @@ function resetAdminForm() {
   document.getElementById("a_deadlines").value = "";
   document.getElementById("a_deadlineRecurring").value = "";
   updateDeadlineFields();
-  document.getElementById("a_geography").value = "None";
+  [...document.getElementById("a_geography").options].forEach(o => { o.selected = false; });
   document.getElementById("a_piRestriction").value = "None";
   document.getElementById("a_link").value = "";
   document.getElementById("a_description").value = "";
@@ -1135,7 +1147,7 @@ function openAdminDialog(grant = null, index = null) {
   }
   updateDeadlineFields();
   
-  document.getElementById("a_geography").value = grant.geography || "None";
+  [...document.getElementById("a_geography").options].forEach(o => { o.selected = (grant.geography || []).includes(o.value); });
   document.getElementById("a_piRestriction").value = grant.piRestriction || "None";
   document.getElementById("a_link").value = grant.link || "";
   document.getElementById("a_description").value = grant.description || "";
@@ -1208,7 +1220,7 @@ function populateProspectDialog(prospect = {}) {
   
   document.getElementById("p_funder").value = prospect.funder || "";
   document.getElementById("p_funderType").value = prospect.funderType || "";
-  document.getElementById("p_geography").value = prospect.geography || "None";
+  [...document.getElementById("p_geography").options].forEach(o => { o.selected = (prospect.geography || []).includes(o.value); });
   document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
   
   document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly === true;
@@ -1285,7 +1297,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     amountIdc: document.getElementById("a_amountIdc").value,
     duration: document.getElementById("a_duration").value,
     addedDate: document.getElementById("a_addedDate").value || TODAY,
-    geography: document.getElementById("a_geography").value,
+    geography: [...document.getElementById("a_geography").selectedOptions].map(o => o.value),
     piRestriction: document.getElementById("a_piRestriction").value,
     link,
     description: document.getElementById("a_description").value,
@@ -1332,7 +1344,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   }
 
   const localGrant = { ...grant };
-  if (localGrant.geography === "None") {
+  if (localGrant.geography && localGrant.geography.length === 0) {
     delete localGrant.geography;
   }
   if (localGrant.piRestriction === "None") {
@@ -1415,7 +1427,7 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   const prospect = {
     funder,
     funderType: document.getElementById("p_funderType").value,
-    geography: document.getElementById("p_geography").value,
+    geography: [...document.getElementById("p_geography").selectedOptions].map(o => o.value),
     piRestriction: document.getElementById("p_piRestriction").value,
     link,
     keywords: [...document.getElementById("p_keywords").selectedOptions].map(o => o.value),
@@ -1457,7 +1469,7 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   }
 
   const localProspect = { ...prospect };
-  if (localProspect.geography === "None") {
+  if (localProspect.geography && localProspect.geography.length === 0) {
     delete localProspect.geography;
   }
   if (localProspect.piRestriction === "None") {
@@ -1643,6 +1655,12 @@ function createPillText(items = []) {
   return items.filter(Boolean).join(' • ');
 }
 
+function formatGeographyForPDF(geography) {
+  return Array.isArray(geography) && geography.length > 0 
+    ? [...geography].sort().join(', ') 
+    : '';
+}
+
 function downloadCurrentViewPdf() {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     alert('PDF library failed to load. Please refresh and try again.');
@@ -1736,10 +1754,11 @@ function downloadCurrentViewPdf() {
   if (currentView === 'prospects') {
     const sorted = [...prospects].sort((a, b) => (a.funder || '').localeCompare(b.funder || ''));
     sorted.forEach((p, idx) => {
+      const geographyText = formatGeographyForPDF(p.geography);
       const pills = createPillText([
         p.pin ? 'Pinned' : '',
         p.funderType || '',
-        p.geography || '',
+        geographyText,
         p.piRestriction && p.piRestriction !== 'None' ? p.piRestriction : '',
         ...(p.keywords || [])
       ]);
@@ -1758,11 +1777,12 @@ function downloadCurrentViewPdf() {
   const topLevel = activeGrants.filter(g => !g.parentGrantId).sort((a, b) => (a.title || '').localeCompare(b.title || ''));
 
   topLevel.forEach((g, idx) => {
+    const geographyText = formatGeographyForPDF(g.geography);
     const pills = createPillText([
       g.pin ? 'Pinned' : '',
       g.funderType || '',
       g.eligibility || '',
-      g.geography || '',
+      geographyText,
       g.piRestriction && g.piRestriction !== 'None' ? g.piRestriction : '',
       ...(g.keywords || [])
     ]);
@@ -1786,7 +1806,14 @@ function downloadCurrentViewPdf() {
       .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
 
     children.forEach((child, childIndex) => {
-      const childPills = createPillText([child.funderType || '', child.eligibility || '', ...(child.keywords || [])]);
+      const childGeographyText = formatGeographyForPDF(child.geography);
+      const childPills = createPillText([
+        child.funderType || '', 
+        child.eligibility || '', 
+        childGeographyText,
+        child.piRestriction && child.piRestriction !== 'None' ? child.piRestriction : '',
+        ...(child.keywords || [])
+      ]);
       drawCard({
         title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
         subtitle: child.link || '',
