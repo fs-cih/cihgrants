@@ -1655,6 +1655,12 @@ function createPillText(items = []) {
   return items.filter(Boolean).join(' • ');
 }
 
+function formatGeographyForPDF(geography) {
+  return Array.isArray(geography) && geography.length > 0 
+    ? [...geography].sort().join(', ') 
+    : '';
+}
+
 function downloadCurrentViewPdf() {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     alert('PDF library failed to load. Please refresh and try again.');
@@ -1748,9 +1754,7 @@ function downloadCurrentViewPdf() {
   if (currentView === 'prospects') {
     const sorted = [...prospects].sort((a, b) => (a.funder || '').localeCompare(b.funder || ''));
     sorted.forEach((p, idx) => {
-      const geographyText = Array.isArray(p.geography) && p.geography.length > 0 
-        ? [...p.geography].sort().join(', ') 
-        : '';
+      const geographyText = formatGeographyForPDF(p.geography);
       const pills = createPillText([
         p.pin ? 'Pinned' : '',
         p.funderType || '',
@@ -1773,9 +1777,7 @@ function downloadCurrentViewPdf() {
   const topLevel = activeGrants.filter(g => !g.parentGrantId).sort((a, b) => (a.title || '').localeCompare(b.title || ''));
 
   topLevel.forEach((g, idx) => {
-    const geographyText = Array.isArray(g.geography) && g.geography.length > 0 
-      ? [...g.geography].sort().join(', ') 
-      : '';
+    const geographyText = formatGeographyForPDF(g.geography);
     const pills = createPillText([
       g.pin ? 'Pinned' : '',
       g.funderType || '',
@@ -1804,9 +1806,7 @@ function downloadCurrentViewPdf() {
       .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
 
     children.forEach((child, childIndex) => {
-      const childGeographyText = Array.isArray(child.geography) && child.geography.length > 0 
-        ? [...child.geography].sort().join(', ') 
-        : '';
+      const childGeographyText = formatGeographyForPDF(child.geography);
       const childPills = createPillText([
         child.funderType || '', 
         child.eligibility || '', 
