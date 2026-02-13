@@ -1,5 +1,42 @@
 [
   {
+    "funder": "Michigan Health Endowment Fund",
+    "funderType": "Foundation",
+    "geography": [
+      "Michigan"
+    ],
+    "link": "https://mihealthfund.org/grantmaking",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Capacity-Building",
+      "Early Childhood",
+      "Elders",
+      "Mental Health"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Healthy Aging (2026)",
+        "url": "https://mihealthfund.org/grantmaking/healthy-aging/"
+      },
+      {
+        "text": "Healthy Kids (2026)",
+        "url": "https://mihealthfund.org/grantmaking/healthy-kids"
+      },
+      {
+        "text": "Capacity Building (2026)",
+        "url": "https://mihealthfund.org/grantmaking/capacity-building"
+      },
+      {
+        "text": "Behavioral Health (2026)",
+        "url": "https://mihealthfund.org/grantmaking/behavioral-health-initiative/"
+      }
+    ],
+    "id": "prospect_1771005431197_8_4h5to174m"
+  },
+  {
     "funder": "Saks Fifth Avenue Foundation",
     "funderType": "Foundation",
     "link": "https://www.saksfifthavenue.com/c/content/saks-foundation",
