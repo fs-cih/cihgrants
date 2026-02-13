@@ -453,6 +453,13 @@ function formatAmount(value) {
   }).format(value);
 }
 
+function formatIdcNote(grant) {
+  if (!grant.amount) {
+    return "IDC not specified";
+  }
+  return grant.amountIdc || "Not specified";
+}
+
 function apply() {
   const q = els.q.value.trim().toLowerCase();
   
@@ -857,7 +864,7 @@ function renderGrant(g, selectedKeywords = []) {
     <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
     ${funderTypeMarkup}
     ${deadlineMarkup(g)}
-    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${g.amount ? (g.amountIdc || "Not specified") : "IDC not specified"})</span></p>
+    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${formatIdcNote(g)})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
@@ -984,7 +991,7 @@ function renderGrant(g, selectedKeywords = []) {
               </div>
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
-              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${ng.amountDetail}` : ""} <span class="muted">(${ng.amount ? (ng.amountIdc || "Not specified") : "IDC not specified"})</span></p>
+              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${ng.amountDetail}` : ""} <span class="muted">(${formatIdcNote(ng)})</span></p>
               <p class="meta-row"><strong>Duration:</strong> ${ng.duration || "Not specified"}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${nestedEligibilityText}</span></p>
               <p class="meta-row desc-preview"><strong>Description:</strong> ${nestedPreview}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${nestedRest}</span>` : ""}</p>
