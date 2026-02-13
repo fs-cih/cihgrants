@@ -547,14 +547,11 @@ function render(list, selectedKeywords = []) {
   list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
 }
 
-function renderProspects(filteredProspects = null) {
+function renderProspects(filteredProspects = prospects) {
   els.list.innerHTML = "";
   
-  // Use filtered prospects if provided, otherwise use all prospects
-  const prospectsToRender = filteredProspects !== null ? filteredProspects : prospects;
-  
   // Sort prospects alphabetically by funder name, with pinned ones first
-  const sorted = [...prospectsToRender].sort((a, b) => {
+  const sorted = [...filteredProspects].sort((a, b) => {
     const aPinned = a.pin === true;
     const bPinned = b.pin === true;
     if (aPinned && !bPinned) return -1;
