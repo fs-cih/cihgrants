@@ -175,25 +175,34 @@ function initFilters() {
 }
 
 function bindEvents() {
+  // Helper to call the right apply function based on current view
+  const applyFilters = () => {
+    if (currentView === 'prospects') {
+      applyProspectFilters();
+    } else {
+      apply();
+    }
+  };
+
   // Search input
-  els.q.addEventListener("input", apply);
-  els.q.addEventListener("change", apply);
+  els.q.addEventListener("input", applyFilters);
+  els.q.addEventListener("change", applyFilters);
 
   // Funder Type checkboxes
   document.querySelectorAll('input[name="funderType"]').forEach(cb => {
-    cb.addEventListener("change", apply);
+    cb.addEventListener("change", applyFilters);
   });
 
   // Eligibility checkboxes
   document.querySelectorAll('input[name="eligibility"]').forEach(cb => {
-    cb.addEventListener("change", apply);
+    cb.addEventListener("change", applyFilters);
   });
 
   // Keyword pills
   document.querySelectorAll('.keyword-pill').forEach(pill => {
     pill.addEventListener("click", () => {
       pill.classList.toggle("selected");
-      apply();
+      applyFilters();
     });
   });
 
@@ -204,7 +213,7 @@ function bindEvents() {
       cb.checked = false;
     });
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
-    apply();
+    applyFilters();
   };
 
   els.adminPlus.onclick = () => {
@@ -465,19 +474,54 @@ function apply() {
   render(filtered, byKeywords);
 }
 
+function applyProspectFilters() {
+  const q = els.q.value.trim().toLowerCase();
+  
+  // Get checked funder types
+  const byFunder = Array.from(document.querySelectorAll('input[name="funderType"]:checked'))
+    .map(cb => cb.value);
+  
+  // Get selected keywords from pills
+  const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
+    .map(pill => pill.dataset.keyword);
+
+  // Filter prospects
+  let filtered = prospects
+    .filter(p => !byFunder.length || byFunder.includes(p.funderType))
+    .filter(p => !byKeywords.length || byKeywords.some(k => (p.keywords || []).includes(k)))
+    .filter(p => {
+      if (!q) {
+        return true;
+      }
+      const hay = [p.funder, p.notes, p.funderType, ...(p.keywords || [])].join(" ").toLowerCase();
+      return hay.includes(q);
+    });
+
+  renderProspects(filtered);
+}
+
 function switchView(view) {
   currentView = view;
   const toggleContainer = document.querySelector('.toggle-container');
+  const eligibilityFilterRow = document.getElementById('eligibilityFilterRow');
   
   if (view === 'prospects') {
     toggleContainer.classList.add('prospects');
     els.toggleGrants.classList.remove('active');
     els.toggleProspects.classList.add('active');
-    renderProspects();
+    // Hide eligibility filter for prospects
+    if (eligibilityFilterRow) {
+      eligibilityFilterRow.style.display = 'none';
+    }
+    applyProspectFilters();
   } else {
     toggleContainer.classList.remove('prospects');
     els.toggleGrants.classList.add('active');
     els.toggleProspects.classList.remove('active');
+    // Show eligibility filter for grants
+    if (eligibilityFilterRow) {
+      eligibilityFilterRow.style.display = '';
+    }
     apply();
   }
 }
@@ -503,11 +547,14 @@ function render(list, selectedKeywords = []) {
   list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
 }
 
-function renderProspects() {
+function renderProspects(filteredProspects = null) {
   els.list.innerHTML = "";
   
+  // Use filtered prospects if provided, otherwise use all prospects
+  const prospectsToRender = filteredProspects !== null ? filteredProspects : prospects;
+  
   // Sort prospects alphabetically by funder name, with pinned ones first
-  const sorted = [...prospects].sort((a, b) => {
+  const sorted = [...prospectsToRender].sort((a, b) => {
     const aPinned = a.pin === true;
     const bPinned = b.pin === true;
     if (aPinned && !bPinned) return -1;
@@ -548,43 +595,17 @@ function renderProspect(p) {
     .join("");
   
   const hasNotes = p.notes && p.notes.trim().length > 0;
-  const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
   const fullNotes = p.notes || "";
-  const hasOverflow = fullNotes.length > previewLimit;
-  const preview = hasOverflow ? fullNotes.slice(0, previewLimit).trimEnd() : fullNotes;
-  const rest = hasOverflow ? fullNotes.slice(previewLimit) : "";
   
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
     ${p.funderType ? `<p class="meta-row"><strong>Funder Type:</strong> ${p.funderType}</p>` : ""}
-    ${hasNotes ? `<p class="meta-row desc-preview"><strong>Notes:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>` : ""}
-    ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
+    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${fullNotes}</p>` : ""}
     <div class="card-actions">
       <button class="btn btn-small edit-prospect">Edit</button>
     </div>
   `;
-  
-  // Handle expand/collapse
-  if (rest) {
-    const toggleBtn = div.querySelector(".toggle");
-    const descPreview = div.querySelector(".desc-preview");
-    const descRest = div.querySelector(".desc-rest");
-    const ellipsis = div.querySelector(".ellipsis");
-    
-    toggleBtn.addEventListener("click", () => {
-      const isExpanded = descRest.style.display === "inline";
-      if (isExpanded) {
-        descRest.style.display = "none";
-        ellipsis.style.display = "inline";
-        toggleBtn.textContent = "▼ Expand";
-      } else {
-        descRest.style.display = "inline";
-        ellipsis.style.display = "none";
-        toggleBtn.textContent = "▲ Collapse";
-      }
-    });
-  }
   
   // Handle edit
   div.querySelector(".edit-prospect").addEventListener("click", () => {
