@@ -339,6 +339,12 @@ function updateDeadlineFields() {
   }
 }
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function updateFederalAgencyField() {
   const funderType = document.getElementById("a_funderType").value;
   const agencyLabel = document.getElementById("a_federalAgency_label");
@@ -674,7 +680,7 @@ function renderProspect(p) {
   
   // Build hyperlink pills
   const hyperlinkPills = (p.hyperlinks || [])
-    .map(link => `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" onclick="event.stopPropagation()">${link.text} ↗</a>`)
+    .map(link => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" onclick="event.stopPropagation()">${escapeHtml(link.text)} ↗</a>`)
     .join("");
   
   div.innerHTML = `
@@ -1177,12 +1183,8 @@ function populateProspectDialog(prospect = {}) {
   document.getElementById("p_geography").value = prospect.geography || "None";
   document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
   
-  const invitationOnlyValue = prospect.invitationOnly ? "yes" : "no";
-  if (invitationOnlyValue === "yes") {
-    document.getElementById("p_invitationOnly_yes").checked = true;
-  } else {
-    document.getElementById("p_invitationOnly_no").checked = true;
-  }
+  document.getElementById("p_invitationOnly_yes").checked = !!prospect.invitationOnly;
+  document.getElementById("p_invitationOnly_no").checked = !prospect.invitationOnly;
   
   document.getElementById("p_link").value = prospect.link || "";
   [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
@@ -1402,11 +1404,7 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   
   // Add invitation only field
   const invitationOnlyValue = document.querySelector('input[name="p_invitationOnly"]:checked').value;
-  if (invitationOnlyValue === "yes") {
-    prospect.invitationOnly = true;
-  } else {
-    prospect.invitationOnly = false;
-  }
+  prospect.invitationOnly = invitationOnlyValue === "yes";
   
   // Add hyperlinks
   const hyperlinks = [];
@@ -1419,6 +1417,8 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   }
   if (hyperlinks.length > 0) {
     prospect.hyperlinks = hyperlinks;
+  } else {
+    delete prospect.hyperlinks;
   }
   
   // Preserve ID when editing, generate new one when adding
