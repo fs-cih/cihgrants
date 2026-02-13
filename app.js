@@ -701,7 +701,7 @@ function renderProspect(p) {
   
   // Build hyperlink pills
   const hyperlinkPills = (p.hyperlinks || [])
-    .map((link, index) => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" data-link-index="${index}">${escapeHtml(link.text + ' ↗')}</a>`)
+    .map(link => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill">${escapeHtml(link.text)} ↗</a>`)
     .join("");
   
   div.innerHTML = `
