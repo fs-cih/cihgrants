@@ -99,8 +99,28 @@ jobs:
             git commit -m "Add prospect: $FUNDER"
           fi
           
-          git pull --rebase origin main
-          git push
+          # Use merge instead of rebase to handle concurrent edits more gracefully
+          # Retry up to 3 times with exponential backoff if push fails
+          for i in 1 2 3; do
+            git pull --no-rebase origin main && git push && break || {
+              if [ $i -eq 3 ]; then
+                echo "Failed to push after 3 attempts due to concurrent modifications"
+                exit 1
+              fi
+              echo "Push failed, retrying in $((2**i)) seconds..."
+              sleep $((2**i))
+              git reset --soft HEAD~1
+              git pull --no-rebase origin main
+              git add data/prospects.json
+              if [ "$MODE" = "edit" ]; then
+                git commit -m "Edit prospect: $FUNDER"
+              elif [ "$MODE" = "delete" ]; then
+                git commit -m "Delete prospect: $FUNDER"
+              else
+                git commit -m "Add prospect: $FUNDER"
+              fi
+            }
+          done
         env:
           MODE: ${{ github.event.inputs.mode }}
           PAYLOAD: ${{ github.event.inputs.payload }}
