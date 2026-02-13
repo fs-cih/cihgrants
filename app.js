@@ -701,13 +701,13 @@ function renderProspect(p) {
   
   // Build hyperlink pills
   const hyperlinkPills = (p.hyperlinks || [])
-    .map((link, index) => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" data-link-index="${index}">${escapeHtml(link.text)} ↗</a>`)
+    .map((link, index) => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" data-link-index="${index}">${escapeHtml(link.text + ' ↗')}</a>`)
     .join("");
   
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
-    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${fullNotes}</p>` : ""}
+    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
     ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
     <div class="card-actions">
       <button class="btn btn-small edit-prospect">Edit</button>
