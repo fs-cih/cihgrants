@@ -346,17 +346,24 @@ function escapeHtml(text) {
 }
 
 function sanitizeUrl(url) {
-  // Check for dangerous protocols
-  const dangerousProtocols = ['javascript:', 'data:', 'vbscript:'];
-  const lowerUrl = url.toLowerCase().trim();
+  if (!url) return '#';
   
-  for (const protocol of dangerousProtocols) {
-    if (lowerUrl.startsWith(protocol)) {
-      return '#'; // Return safe fallback
+  // Trim whitespace and decode any encoded characters to prevent bypasses
+  const trimmedUrl = url.trim();
+  
+  try {
+    // Use URL constructor to parse and validate
+    const urlObj = new URL(trimmedUrl, window.location.href);
+    
+    // Only allow http and https protocols
+    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+      return urlObj.href;
     }
+  } catch (e) {
+    // Invalid URL, return safe fallback
   }
   
-  return url;
+  return '#';
 }
 
 function updateFederalAgencyField() {
@@ -694,7 +701,7 @@ function renderProspect(p) {
   
   // Build hyperlink pills
   const hyperlinkPills = (p.hyperlinks || [])
-    .map(link => `<a href="${escapeHtml(sanitizeUrl(link.url))}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" onclick="event.stopPropagation()">${escapeHtml(link.text)} ↗</a>`)
+    .map((link, index) => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" data-link-index="${index}">${escapeHtml(link.text)} ↗</a>`)
     .join("");
   
   div.innerHTML = `
@@ -710,6 +717,13 @@ function renderProspect(p) {
   // Handle edit
   div.querySelector(".edit-prospect").addEventListener("click", () => {
     openProspectDialog(prospects.indexOf(p));
+  });
+  
+  // Handle hyperlink pill clicks to stop propagation
+  div.querySelectorAll(".hyperlink-pill").forEach(pill => {
+    pill.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
   });
   
   return div;
@@ -1197,8 +1211,8 @@ function populateProspectDialog(prospect = {}) {
   document.getElementById("p_geography").value = prospect.geography || "None";
   document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
   
-  document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly || false;
-  document.getElementById("p_invitationOnly_no").checked = !prospect.invitationOnly;
+  document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly === true;
+  document.getElementById("p_invitationOnly_no").checked = prospect.invitationOnly !== true;
   
   document.getElementById("p_link").value = prospect.link || "";
   [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
