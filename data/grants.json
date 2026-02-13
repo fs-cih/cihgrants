@@ -81,8 +81,9 @@
     "deadlineOpen": true
   },
   {
-    "title": "Caplan Foundation for Early Childhood - Request for LOIs",
+    "title": "2026 Call for Proposals",
     "funderType": "Foundation",
+    "agencyName": "Caplan Foundation for Early Childhood",
     "eligibility": "Prime",
     "amount": 0,
     "amountDetail": "",
@@ -96,6 +97,7 @@
       "Maternal Health"
     ],
     "pin": false,
+    "letterOfInterest": true,
     "id": "grant_1770941324450_44_i7epx8hm3",
     "deadlines": [
       "2026-05-31"
