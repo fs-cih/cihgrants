@@ -1,5 +1,23 @@
 [
   {
+    "title": "Gilead - Giving in North America",
+    "funderType": "Foundation",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "",
+    "duration": "",
+    "addedDate": "2026-02-13",
+    "link": "https://www.gilead.com/responsibility/giving-at-gilead/corporate-giving/how-to-apply-for-funding/giving-in-north-america",
+    "description": "While oncology is the most aligned focus area between Gilead and the work of the Center, other topics include HIV, liver disease, and inflammatory and respiratory disease.",
+    "keywords": [
+      "Cancer"
+    ],
+    "pin": false,
+    "id": "grant_1771006384489_46_bdvrgtnm2",
+    "deadlineOpen": true
+  },
+  {
     "title": "Takeda Pharmaceuticals",
     "funderType": "Foundation",
     "eligibility": "Prime",
