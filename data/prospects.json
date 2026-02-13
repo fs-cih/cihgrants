@@ -1,5 +1,38 @@
 [
   {
+    "funder": "Medica Foundation",
+    "funderType": "Federal",
+    "geography": [
+      "Minnesota"
+    ],
+    "link": "https://www.medicafoundation.org/apply-for-a-grant",
+    "keywords": [
+      "Behavioral Health",
+      "Early Childhood"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Behavioral Health",
+        "url": "https://www.medicafoundation.org/apply-for-a-grant/behavioral-health"
+      },
+      {
+        "text": "Early Childhood Health",
+        "url": "https://www.medicafoundation.org/apply-for-a-grant/early-childhood-health"
+      },
+      {
+        "text": "Strategic Initiative",
+        "url": "https://www.medicafoundation.org/apply-for-a-grant/strategic-initiatives"
+      },
+      {
+        "text": "Rural Health",
+        "url": "https://www.medicafoundation.org/apply-for-a-grant/rural-health"
+      }
+    ],
+    "id": "prospect_1771005713816_10_z7vsmh39d"
+  },
+  {
     "funder": "Medline",
     "funderType": "Foundation",
     "link": "https://www.medline.com/about-us/sustainability/community-engagement/grant-guide/",
