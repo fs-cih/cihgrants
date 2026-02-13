@@ -1,5 +1,22 @@
 [
   {
+    "funder": "John T. Vucurevich Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "South Dakota"
+    ],
+    "link": "https://jtvf.org/what-we-do/grant/grant-application-process",
+    "keywords": [
+      "Behavioral Health",
+      "Food Sovereignty",
+      "Healthcare",
+      "Translation & Implementation"
+    ],
+    "notes": "We accept grant applications year-round and do not have a defined grant cycle with specific submission deadlines. If we find you to be eligible and a good fit, our staff will set an application timeline specific to your organization. We look for partners that are dedicated to meeting the basic needs of low-income families in our community in the following areas: Food, Physical and Behavioral Health, Safety, Social Belonging and Culture, and Transportation.",
+    "pin": false,
+    "id": "prospect_1771013674212_20_8qrsa6wub"
+  },
+  {
     "funder": "Patient-Centered Outcomes Research Institute (PCORI)",
     "funderType": "Foundation",
     "link": "https://www.pcori.org/",
