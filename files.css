@@ -431,6 +431,8 @@ h1 {
   cursor: pointer;
   transition: color 0.3s ease;
   border-radius: 18px;
+  min-width: 85px;
+  text-align: center;
 }
 
 .toggle-btn.active {
