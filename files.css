@@ -245,6 +245,17 @@ h1 {
   flex-wrap: wrap;
 }
 
+.grant-pills-row1,
+.grant-pills-row2 {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.grant-pills-row2 {
+  margin-top: 4px;
+}
+
 .kcard,
 .meta-tag {
   display: inline-block;
@@ -273,6 +284,12 @@ h1 {
   background: #f59e0b;
   border-color: #f59e0b;
   color: #1d2a39;
+}
+
+.kcard-loi {
+  background: #D84423;
+  border-color: #D84423;
+  color: white;
 }
 
 .kcard-state {
