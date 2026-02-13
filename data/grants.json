@@ -20,8 +20,9 @@
     ]
   },
   {
-    "title": "PCORI - Engagement Award: Capacity Building - Spring 2026 Cycle (LOI only)",
+    "title": "Engagement Award: Capacity Building - Spring 2026 Cycle (LOI only)",
     "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
     "eligibility": "Prime",
     "amount": 300000,
     "amountDetail": "over total award period",
@@ -34,6 +35,7 @@
       "Capacity-Building"
     ],
     "pin": false,
+    "letterOfInterest": true,
     "id": "grant_1771010700829_47_qruotyo0i",
     "deadlines": [
       "2026-03-30"
