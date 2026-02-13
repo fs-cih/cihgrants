@@ -1,5 +1,31 @@
 [
   {
+    "funder": "Freeport-McMoRan Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Arizona"
+    ],
+    "link": "https://www.freeportinmycommunity.com/nonprofits/freeport-mcmoran-foundation-investments-",
+    "keywords": [
+      "Health Communications",
+      "Public Health",
+      "Translation & Implementation"
+    ],
+    "notes": "There is an established relationship between the foundation and the Whiteriver office. Please make sure to connect with a member of the development team in advance of applying for this opportunity.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Native American Programs",
+        "url": "https://www.freeportinmycommunity.com/pages/native-american-programs"
+      },
+      {
+        "text": "Women's Development Initiatives",
+        "url": "https://www.freeportinmycommunity.com/pages/womens-development-initiatives"
+      }
+    ],
+    "id": "prospect_1771010019082_18_cz7m0qoos"
+  },
+  {
     "funder": "Bush Foundation",
     "funderType": "Foundation",
     "geography": [
