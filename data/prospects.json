@@ -1,5 +1,33 @@
 [
   {
+    "funder": "Bush Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Minnesota",
+      "North Dakota",
+      "South Dakota"
+    ],
+    "link": "https://www.bushfoundation.org/",
+    "keywords": [
+      "Capacity-Building",
+      "Partnership-Building",
+      "Public Health"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Community Innovation Grants",
+        "url": "https://www.bushfoundation.org/opportunities/community-innovation/"
+      },
+      {
+        "text": "Ecosystem Grants (2026)",
+        "url": "https://www.bushfoundation.org/opportunities/ecosystem-grants-organizations/"
+      }
+    ],
+    "id": "prospect_1771007724517_16_0r5jq0s8d"
+  },
+  {
     "funder": "Robert Wood Johnson Foundation",
     "funderType": "Foundation",
     "link": "https://www.rwjf.org/",
