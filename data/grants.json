@@ -1,5 +1,24 @@
 [
   {
+    "title": "Takeda Pharmaceuticals",
+    "funderType": "Foundation",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "",
+    "duration": "",
+    "addedDate": "2026-02-13",
+    "link": "https://forms.benevity.org/08cddd37-a3df-44ab-990d-001f4b8e1775",
+    "description": "",
+    "keywords": [
+      "Disparities",
+      "Food Sovereignty"
+    ],
+    "pin": false,
+    "id": "grant_1771003657932_45_csuswv5n3",
+    "deadlineOpen": true
+  },
+  {
     "title": "Caplan Foundation for Early Childhood - Request for LOIs",
     "funderType": "Foundation",
     "eligibility": "Prime",
