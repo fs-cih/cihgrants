@@ -628,11 +628,7 @@ function renderProspect(p) {
       if (kw.className === "pin-indicator") {
         return `<span class="${kw.className}">${kw.text}</span>`;
       }
-      // Don't add kcard class if className already includes a specific pill style
-      if (kw.className && kw.className !== "") {
-        return `<span class="kcard ${kw.className}">${kw.text}</span>`;
-      }
-      return `<span class="kcard">${kw.text}</span>`;
+      return `<span class="kcard ${kw.className}">${kw.text}</span>`;
     })
     .join("");
   
