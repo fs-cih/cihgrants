@@ -154,7 +154,14 @@ h1 {
   border-color: #1e7a3e;
 }
 
-.keyword-pill:hover {
+.keyword-pill.inactive {
+  background: #d1d5db;
+  border-color: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.keyword-pill:not(.inactive):hover {
   opacity: 0.9;
 }
 
@@ -284,6 +291,12 @@ h1 {
   background: #e0f2fe;
   border-color: #bae6fd;
   color: #1d2a39;
+}
+
+.kcard-invitation-only {
+  background: #800020;
+  border-color: #800020;
+  color: white;
 }
 
 .eligibility-pill {
@@ -595,6 +608,32 @@ h1 {
 }
 
 .rfa-pill:hover {
+  background: #0550ae;
+  border-color: #0550ae;
+}
+
+.hyperlink-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.hyperlink-pill {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border: 1px solid #0969da;
+  background: #0969da;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hyperlink-pill:hover {
   background: #0550ae;
   border-color: #0550ae;
 }

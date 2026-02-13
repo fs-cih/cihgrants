@@ -117,6 +117,7 @@ async function loadData(options = {}) {
     bindEvents();
   }
   apply();
+  updateKeywordPillStates();
   updateToggleSlider();
 }
 
@@ -193,6 +194,32 @@ function initFilters() {
   updateFederalAgencyField();
 }
 
+function updateKeywordPillStates() {
+  // Get active grants (with active deadlines) or all prospects based on current view
+  let activeItems;
+  if (currentView === 'prospects') {
+    activeItems = prospects;
+  } else {
+    activeItems = grants.filter(g => hasActiveDeadline(g));
+  }
+  
+  // Get all keywords used in active items
+  const activeKeywords = new Set();
+  activeItems.forEach(item => {
+    (item.keywords || []).forEach(kw => activeKeywords.add(kw));
+  });
+  
+  // Update each keyword pill
+  document.querySelectorAll('.keyword-pill').forEach(pill => {
+    const keyword = pill.dataset.keyword;
+    if (activeKeywords.has(keyword)) {
+      pill.classList.remove('inactive');
+    } else {
+      pill.classList.add('inactive');
+    }
+  });
+}
+
 function bindEvents() {
   // Helper to call the right apply function based on current view
   const applyFilters = () => {
@@ -220,6 +247,10 @@ function bindEvents() {
   // Keyword pills
   document.querySelectorAll('.keyword-pill').forEach(pill => {
     pill.addEventListener("click", () => {
+      // Don't allow toggling inactive pills
+      if (pill.classList.contains('inactive')) {
+        return;
+      }
       pill.classList.toggle("selected");
       applyFilters();
     });
@@ -306,6 +337,33 @@ function updateDeadlineFields() {
     recurringLabel.style.display = '';
     recurringInput.required = true;
   }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function sanitizeUrl(url) {
+  if (!url) return '#';
+  
+  // Trim whitespace and decode any encoded characters to prevent bypasses
+  const trimmedUrl = url.trim();
+  
+  try {
+    // Use URL constructor to parse and validate
+    const urlObj = new URL(trimmedUrl, window.location.href);
+    
+    // Only allow http and https protocols
+    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+      return urlObj.href;
+    }
+  } catch (e) {
+    // Invalid URL, return safe fallback
+  }
+  
+  return '#';
 }
 
 function updateFederalAgencyField() {
@@ -533,6 +591,7 @@ function switchView(view) {
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = 'none';
     }
+    updateKeywordPillStates();
     applyProspectFilters();
     updateToggleSlider();
   } else {
@@ -543,6 +602,7 @@ function switchView(view) {
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = '';
     }
+    updateKeywordPillStates();
     apply();
     updateToggleSlider();
   }
@@ -609,6 +669,10 @@ function renderProspect(p) {
   if (p.pin) {
     keywords.push({ text: "Pinned", className: "pin-indicator" });
   }
+  // Add invitation only as maroon pill before other keywords
+  if (p.invitationOnly) {
+    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
+  }
   // Add funder type as blue pill after pin
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
@@ -635,10 +699,16 @@ function renderProspect(p) {
   const hasNotes = p.notes && p.notes.trim().length > 0;
   const fullNotes = p.notes || "";
   
+  // Build hyperlink pills
+  const hyperlinkPills = (p.hyperlinks || [])
+    .map(link => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill">${escapeHtml(link.text)} ↗</a>`)
+    .join("");
+  
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
-    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${fullNotes}</p>` : ""}
+    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
+    ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
     <div class="card-actions">
       <button class="btn btn-small edit-prospect">Edit</button>
     </div>
@@ -647,6 +717,13 @@ function renderProspect(p) {
   // Handle edit
   div.querySelector(".edit-prospect").addEventListener("click", () => {
     openProspectDialog(prospects.indexOf(p));
+  });
+  
+  // Handle hyperlink pill clicks to stop propagation
+  div.querySelectorAll(".hyperlink-pill").forEach(pill => {
+    pill.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
   });
   
   return div;
@@ -1133,9 +1210,21 @@ function populateProspectDialog(prospect = {}) {
   document.getElementById("p_funderType").value = prospect.funderType || "";
   document.getElementById("p_geography").value = prospect.geography || "None";
   document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
+  
+  document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly === true;
+  document.getElementById("p_invitationOnly_no").checked = prospect.invitationOnly !== true;
+  
   document.getElementById("p_link").value = prospect.link || "";
   [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
   document.getElementById("p_notes").value = prospect.notes || "";
+  
+  // Populate hyperlinks
+  const hyperlinks = prospect.hyperlinks || [];
+  for (let i = 1; i <= 5; i++) {
+    const link = hyperlinks[i - 1] || {};
+    document.getElementById(`p_hyperlink${i}_text`).value = link.text || "";
+    document.getElementById(`p_hyperlink${i}_url`).value = link.url || "";
+  }
   
   highlightApostropheFieldsProspects();
   els.prospectDialog.showModal();
@@ -1341,6 +1430,25 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
     prospect.pin = false;
   }
   
+  // Add invitation only field
+  const invitationOnlyValue = document.querySelector('input[name="p_invitationOnly"]:checked').value;
+  prospect.invitationOnly = invitationOnlyValue === "yes";
+  
+  // Add hyperlinks
+  const hyperlinks = [];
+  for (let i = 1; i <= 5; i++) {
+    const text = document.getElementById(`p_hyperlink${i}_text`).value.trim();
+    const url = document.getElementById(`p_hyperlink${i}_url`).value.trim();
+    if (text && url) {
+      hyperlinks.push({ text, url });
+    }
+  }
+  if (hyperlinks.length > 0) {
+    prospect.hyperlinks = hyperlinks;
+  } else {
+    delete prospect.hyperlinks;
+  }
+  
   // Preserve ID when editing, generate new one when adding
   if (prospectEditIndex !== null && prospects[prospectEditIndex]) {
     prospect.id = prospects[prospectEditIndex].id;
@@ -1354,6 +1462,9 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   }
   if (localProspect.piRestriction === "None") {
     delete localProspect.piRestriction;
+  }
+  if (!localProspect.invitationOnly) {
+    delete localProspect.invitationOnly;
   }
 
   const payload = { ...localProspect };

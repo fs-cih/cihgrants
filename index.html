@@ -187,9 +187,60 @@
       <label>Funder Type<select id="p_funderType" class="control"></select></label>
       <label>Geography Restriction<select id="p_geography" class="control"></select></label>
       <label>PI Restriction<select id="p_piRestriction" class="control"></select></label>
+      
+      <label>Invitation Only
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="p_invitationOnly" value="no" id="p_invitationOnly_no" checked>
+            <span>No</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="p_invitationOnly" value="yes" id="p_invitationOnly_yes">
+            <span>Yes</span>
+          </label>
+        </div>
+      </label>
+      
       <label>Website Link<input id="p_link" class="control" type="url" required></label>
       <label>Keywords<select id="p_keywords" class="control" multiple></select></label>
       <label>Notes<textarea id="p_notes" class="control" rows="5"></textarea></label>
+      
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 1rem; color: #631500;">Additional Links</h3>
+      
+      <label>Hyperlink 1
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 4px;">
+          <input id="p_hyperlink1_text" class="control" placeholder="Pill Text">
+          <input id="p_hyperlink1_url" class="control" type="url" placeholder="Hyperlink">
+        </div>
+      </label>
+      
+      <label>Hyperlink 2
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 4px;">
+          <input id="p_hyperlink2_text" class="control" placeholder="Pill Text">
+          <input id="p_hyperlink2_url" class="control" type="url" placeholder="Hyperlink">
+        </div>
+      </label>
+      
+      <label>Hyperlink 3
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 4px;">
+          <input id="p_hyperlink3_text" class="control" placeholder="Pill Text">
+          <input id="p_hyperlink3_url" class="control" type="url" placeholder="Hyperlink">
+        </div>
+      </label>
+      
+      <label>Hyperlink 4
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 4px;">
+          <input id="p_hyperlink4_text" class="control" placeholder="Pill Text">
+          <input id="p_hyperlink4_url" class="control" type="url" placeholder="Hyperlink">
+        </div>
+      </label>
+      
+      <label>Hyperlink 5
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 4px;">
+          <input id="p_hyperlink5_text" class="control" placeholder="Pill Text">
+          <input id="p_hyperlink5_url" class="control" type="url" placeholder="Hyperlink">
+        </div>
+      </label>
 
       <div class="dialog-actions">
         <button id="prospectSaveBtn" class="btn primary" type="button">Save</button>
