@@ -1,5 +1,28 @@
 [
   {
+    "funder": "Substance Abuse and Mental Health Services Administration",
+    "funderType": "Federal",
+    "link": "https://www.samhsa.gov/",
+    "keywords": [
+      "Behavioral Health",
+      "Ceremony-Assisted Treatment",
+      "Disparities",
+      "Mental Health",
+      "Public Health",
+      "Substance Use",
+      "Tobacco Control"
+    ],
+    "notes": "",
+    "pin": true,
+    "hyperlinks": [
+      {
+        "text": "FY2026 NOFO Forecast",
+        "url": "https://www.samhsa.gov/grants/grants-dashboard/forecasts"
+      }
+    ],
+    "id": "prospect_1771005968568_11_xr7dseh7f"
+  },
+  {
     "funder": "Medica Foundation",
     "funderType": "Federal",
     "geography": [
