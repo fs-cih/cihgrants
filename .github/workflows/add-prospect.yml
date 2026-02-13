@@ -89,8 +89,7 @@ jobs:
           git config user.email "cih-grants-bot@users.noreply.github.com"
           git add data/prospects.json
           
-          FUNDER=$(echo '${{ github.event.inputs.payload }}' | jq -r .funder)
-          MODE="${{ github.event.inputs.mode }}"
+          FUNDER=$(jq -r .funder <<< "$PAYLOAD")
           
           if [ "$MODE" = "edit" ]; then
             git commit -m "Edit prospect: $FUNDER"
@@ -102,3 +101,6 @@ jobs:
           
           git pull --rebase origin main
           git push
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          PAYLOAD: ${{ github.event.inputs.payload }}

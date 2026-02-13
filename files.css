@@ -155,9 +155,9 @@ h1 {
 }
 
 .keyword-pill.inactive {
-  background: #d1d5db;
-  border-color: #d1d5db;
-  color: #6b7280;
+  background: #e5e7eb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
   cursor: not-allowed;
 }
 
