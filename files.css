@@ -250,6 +250,7 @@ h1 {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .grant-pills-row2 {
