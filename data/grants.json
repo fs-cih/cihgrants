@@ -1,7 +1,8 @@
 [
   {
-    "title": "PCORI - Engagement Award: Dissemination Initiative - Spring 2026 Cycle (LOI only)",
+    "title": "Engagement Award: Dissemination Initiative - Spring 2026 Cycle (LOI only)",
     "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
     "eligibility": "Prime",
     "amount": 300000,
     "amountDetail": "over total award period",
@@ -14,6 +15,7 @@
       "Health Communications"
     ],
     "pin": false,
+    "letterOfInterest": true,
     "id": "grant_1771010898166_48_dma7dab86",
     "deadlines": [
       "2026-03-30"
