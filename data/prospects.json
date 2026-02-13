@@ -57,7 +57,11 @@
     "funder": "Robert Wood Johnson Foundation",
     "funderType": "Foundation",
     "link": "https://www.rwjf.org/",
-    "keywords": [],
+    "keywords": [
+      "General Research",
+      "Public Health",
+      "Translation & Implementation"
+    ],
     "notes": "",
     "pin": true,
     "hyperlinks": [
