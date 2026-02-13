@@ -1,5 +1,33 @@
 [
   {
+    "funder": "Otto Bremer Trust",
+    "funderType": "Foundation",
+    "geography": [
+      "Minnesota",
+      "Montana",
+      "North Dakota",
+      "Wisconsin"
+    ],
+    "link": "https://ottobremer.org/grantmaking/our-grantmaking/#our-approaches",
+    "keywords": [
+      "Food Sovereignty",
+      "Mental Health"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Strategic Grants",
+        "url": "https://ottobremer.org/grantmaking/our-grantmaking/#strategic-grants"
+      },
+      {
+        "text": "2026 Community Responsive Fund",
+        "url": "https://ottobremer.org/grantmaking/our-grantmaking/#2026-community-responsive-fund"
+      }
+    ],
+    "id": "prospect_1771002324787_5_j45sbjaap"
+  },
+  {
     "funder": "Trust for Learning",
     "funderType": "Foundation",
     "link": "https://trustforlearning.org/about/for-grant-seekers/",
