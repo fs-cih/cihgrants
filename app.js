@@ -709,10 +709,10 @@ function renderProspect(p) {
     .join("");
   
   div.innerHTML = `
-    <div class="grant-top">${keywordPills}</div>
     <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
-    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
+    <div class="grant-top">${keywordPills}</div>
     ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
+    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
     <div class="card-actions">
       <button class="btn btn-small edit-prospect">Edit</button>
     </div>
