@@ -49,6 +49,8 @@ let vocab = {};
 let editIndex = null;
 let prospectEditIndex = null;
 let currentView = 'grants'; // 'grants' or 'prospects'
+let mutationQueue = Promise.resolve();
+let queuedMutations = 0;
 
 const els = {
   list: document.getElementById("list"),
@@ -72,6 +74,21 @@ const els = {
   toggleProspects: document.getElementById("toggleProspects"),
   downloadBtn: document.getElementById("downloadBtn")
 };
+
+async function enqueueMutation(task, statusEl) {
+  const queuePosition = ++queuedMutations;
+  if (statusEl && queuePosition > 1) {
+    statusEl.textContent = `Queued (#${queuePosition - 1} ahead)…`;
+  }
+
+  const nextTask = mutationQueue.then(() => task());
+
+  mutationQueue = nextTask.catch(() => {}).finally(() => {
+    queuedMutations = Math.max(queuedMutations - 1, 0);
+  });
+
+  return nextTask;
+}
 
 async function loadData(options = {}) {
   // Always cache-bust to ensure users see the most current data (per requirement #3)
@@ -100,7 +117,9 @@ async function loadData(options = {}) {
     bindEvents();
   }
   apply();
+  updateToggleSlider();
 }
+
 
 function generateGrantId(timestamp, index) {
   return `grant_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
@@ -234,10 +253,8 @@ function bindEvents() {
   els.toggleGrants.onclick = () => switchView('grants');
   els.toggleProspects.onclick = () => switchView('prospects');
   
-  // Download button (placeholder)
-  els.downloadBtn.onclick = () => {
-    console.log('Download button clicked (placeholder)');
-  };
+  // Download button
+  els.downloadBtn.onclick = () => downloadCurrentViewPdf();
   
   // Handle deadline type radio buttons
   document.querySelectorAll('input[name="deadlineType"]').forEach(radio => {
@@ -261,7 +278,10 @@ function bindEvents() {
       field.addEventListener('input', highlightApostropheFieldsProspects);
     }
   });
+
+  window.addEventListener('resize', updateToggleSlider);
 }
+
 
 function updateDeadlineFields() {
   const deadlineType = document.querySelector('input[name="deadlineType"]:checked').value;
@@ -514,6 +534,7 @@ function switchView(view) {
       eligibilityFilterRow.style.display = 'none';
     }
     applyProspectFilters();
+    updateToggleSlider();
   } else {
     toggleContainer.classList.remove('prospects');
     els.toggleGrants.classList.add('active');
@@ -523,8 +544,24 @@ function switchView(view) {
       eligibilityFilterRow.style.display = '';
     }
     apply();
+    updateToggleSlider();
   }
 }
+
+function updateToggleSlider() {
+  const slider = document.querySelector('.toggle-slider');
+  const container = document.querySelector('.toggle-container');
+  const activeBtn = document.querySelector('.toggle-btn.active');
+  if (!slider || !container || !activeBtn) {
+    return;
+  }
+
+  const left = activeBtn.offsetLeft - 2;
+  const width = activeBtn.offsetWidth;
+  slider.style.width = `${width}px`;
+  slider.style.transform = `translateX(${left}px)`;
+}
+
 
 function render(list, selectedKeywords = []) {
   els.list.innerHTML = "";
@@ -1107,7 +1144,7 @@ function closeProspectDialog() {
   prospectEditIndex = null;
 }
 
-els.saveBtn.onclick = async () => {
+els.saveBtn.onclick = async () => enqueueMutation(async () => {
   const token = document.getElementById("a_token").value.trim();
   if (!token) {
     els.adminStatus.textContent = "GitHub token is required.";
@@ -1234,10 +1271,11 @@ els.saveBtn.onclick = async () => {
     console.error(error);
     els.adminStatus.textContent = `Save failed: ${error.message}`;
   }
-};
+}, els.adminStatus);
 
 
 async function deleteCurrentGrant() {
+  return enqueueMutation(async () => {
   if (editIndex === null) {
     return;
   }
@@ -1264,9 +1302,10 @@ async function deleteCurrentGrant() {
     console.error(error);
     els.adminStatus.textContent = `Delete failed: ${error.message}`;
   }
+}, els.adminStatus);
 }
 
-els.prospectSaveBtn.onclick = async () => {
+els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   const token = document.getElementById("p_token").value.trim();
   if (!token) {
     els.prospectStatus.textContent = "GitHub token is required.";
@@ -1338,9 +1377,10 @@ els.prospectSaveBtn.onclick = async () => {
     console.error(error);
     els.prospectStatus.textContent = `Save failed: ${error.message}`;
   }
-};
+}, els.prospectStatus);
 
 async function deleteCurrentProspect() {
+  return enqueueMutation(async () => {
   if (prospectEditIndex === null) {
     return;
   }
@@ -1367,6 +1407,7 @@ async function deleteCurrentProspect() {
     console.error(error);
     els.prospectStatus.textContent = `Delete failed: ${error.message}`;
   }
+}, els.prospectStatus);
 }
 
 async function saveGrant(mode, payload, tokenInput) {
@@ -1482,5 +1523,171 @@ async function saveProspect(mode, payload, tokenInput) {
     throw new Error(errorMessage);
   }
 }
+
+
+function createPillText(items = []) {
+  return items.filter(Boolean).join(' • ');
+}
+
+function downloadCurrentViewPdf() {
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    alert('PDF library failed to load. Please refresh and try again.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: 'pt', format: 'letter' });
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const margin = 40;
+  const contentWidth = pageWidth - margin * 2;
+  let y = margin;
+
+  const sanitize = (value = '') => value.replace(/\s+/g, ' ').trim();
+
+  const ensureSpace = (heightNeeded = 0) => {
+    if (y + heightNeeded > pageHeight - margin) {
+      pdf.addPage();
+      y = margin;
+    }
+  };
+
+  const drawCard = ({ title, subtitle, pills, bodyLines = [] }) => {
+    const titleLines = pdf.splitTextToSize(title || 'Untitled', contentWidth - 24);
+    const subtitleLines = subtitle ? pdf.splitTextToSize(subtitle, contentWidth - 24) : [];
+    const pillLines = pills ? pdf.splitTextToSize(pills, contentWidth - 24) : [];
+    const bodySegments = bodyLines.map(line => pdf.splitTextToSize(line, contentWidth - 24));
+
+    let cardHeight = 20 + titleLines.length * 14;
+    if (subtitleLines.length) cardHeight += subtitleLines.length * 12 + 4;
+    if (pillLines.length) cardHeight += pillLines.length * 11 + 10;
+    bodySegments.forEach(lines => {
+      cardHeight += lines.length * 11 + 3;
+    });
+    cardHeight += 10;
+
+    ensureSpace(cardHeight + 8);
+    pdf.setDrawColor(215, 210, 195);
+    pdf.setFillColor(255, 255, 255);
+    pdf.roundedRect(margin, y, contentWidth, cardHeight, 10, 10, 'FD');
+
+    let cursorY = y + 18;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    pdf.setTextColor(29, 42, 57);
+    pdf.text(titleLines, margin + 12, cursorY);
+    cursorY += titleLines.length * 14;
+
+    if (subtitleLines.length) {
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      pdf.setTextColor(9, 105, 218);
+      pdf.text(subtitleLines, margin + 12, cursorY);
+      cursorY += subtitleLines.length * 12 + 4;
+    }
+
+    if (pillLines.length) {
+      pdf.setFillColor(246, 248, 251);
+      const pillBoxHeight = pillLines.length * 11 + 8;
+      pdf.roundedRect(margin + 10, cursorY - 9, contentWidth - 20, pillBoxHeight, 8, 8, 'F');
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(9);
+      pdf.setTextColor(51, 65, 85);
+      pdf.text(pillLines, margin + 16, cursorY);
+      cursorY += pillLines.length * 11 + 10;
+    }
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(10);
+    pdf.setTextColor(31, 41, 55);
+    bodySegments.forEach(lines => {
+      pdf.text(lines, margin + 12, cursorY);
+      cursorY += lines.length * 11 + 3;
+    });
+
+    y += cardHeight + 8;
+  };
+
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(18);
+  const heading = currentView === 'prospects' ? 'Prospects Summary' : 'Grants Summary';
+  pdf.text(heading, margin, y);
+  y += 18;
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(10);
+  pdf.setTextColor(75, 85, 99);
+  pdf.text(`Generated ${new Date().toLocaleString()}`, margin, y);
+  y += 18;
+
+  if (currentView === 'prospects') {
+    const sorted = [...prospects].sort((a, b) => (a.funder || '').localeCompare(b.funder || ''));
+    sorted.forEach((p, idx) => {
+      const pills = createPillText([
+        p.pin ? 'Pinned' : '',
+        p.funderType || '',
+        p.geography || '',
+        p.piRestriction && p.piRestriction !== 'None' ? p.piRestriction : '',
+        ...(p.keywords || [])
+      ]);
+      drawCard({
+        title: `${idx + 1}. ${p.funder || 'Untitled Prospect'}`,
+        subtitle: p.link || '',
+        pills,
+        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : 'Notes: —']
+      });
+    });
+    pdf.save('prospects-summary.pdf');
+    return;
+  }
+
+  const activeGrants = grants.filter(g => hasActiveDeadline(g));
+  const topLevel = activeGrants.filter(g => !g.parentGrantId).sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+
+  topLevel.forEach((g, idx) => {
+    const pills = createPillText([
+      g.pin ? 'Pinned' : '',
+      g.funderType || '',
+      g.eligibility || '',
+      g.geography || '',
+      g.piRestriction && g.piRestriction !== 'None' ? g.piRestriction : '',
+      ...(g.keywords || [])
+    ]);
+
+    const deadlineText = sanitize(deadlineMarkup(g).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+
+    drawCard({
+      title: `${idx + 1}. ${g.title || 'Untitled Grant'}`,
+      subtitle: g.link || '',
+      pills,
+      bodyLines: [
+        `Amount: ${formatAmount(g.amount)}`,
+        g.duration ? `Duration: ${sanitize(g.duration)}` : 'Duration: —',
+        deadlineText,
+        g.description ? `Description: ${sanitize(g.description)}` : 'Description: —'
+      ]
+    });
+
+    const children = activeGrants
+      .filter(ng => ng.parentGrantId === g.id)
+      .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+
+    children.forEach((child, childIndex) => {
+      const childPills = createPillText([child.funderType || '', child.eligibility || '', ...(child.keywords || [])]);
+      drawCard({
+        title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
+        subtitle: child.link || '',
+        pills: childPills,
+        bodyLines: [
+          `Amount: ${formatAmount(child.amount)}`,
+          child.duration ? `Duration: ${sanitize(child.duration)}` : 'Duration: —',
+          child.description ? `Description: ${sanitize(child.description)}` : 'Description: —'
+        ]
+      });
+    });
+  });
+
+  pdf.save('grants-summary.pdf');
+}
+
 
 loadData({ skipBindEvents: false });

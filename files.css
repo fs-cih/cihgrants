@@ -417,6 +417,7 @@ h1 {
   border-radius: 20px;
   padding: 2px;
   height: 38px;
+  align-items: center;
 }
 
 .toggle-btn {
@@ -431,7 +432,7 @@ h1 {
   cursor: pointer;
   transition: color 0.3s ease;
   border-radius: 18px;
-  min-width: 85px;
+  min-width: 0;
   text-align: center;
 }
 
@@ -443,30 +444,29 @@ h1 {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: calc(50% - 2px);
+  width: 90px;
   height: calc(100% - 4px);
   background: #631500;
   border-radius: 18px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.3s ease;
   z-index: 1;
 }
 
-.toggle-container.prospects .toggle-slider {
-  transform: translateX(calc(100% + 2px));
-}
-
-#adminDialog {
+#adminDialog,
+#prospectDialog {
   border: 1px solid var(--border);
   border-radius: 12px;
   width: min(720px, 92vw);
 }
 
-#adminForm {
+#adminForm,
+#prospectForm {
   display: grid;
   gap: 10px;
 }
 
-#adminForm label {
+#adminForm label,
+#prospectForm label {
   display: grid;
   gap: 6px;
 }
