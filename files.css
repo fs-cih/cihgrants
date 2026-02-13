@@ -161,12 +161,8 @@ h1 {
   cursor: not-allowed;
 }
 
-.keyword-pill:hover {
+.keyword-pill:not(.inactive):hover {
   opacity: 0.9;
-}
-
-.keyword-pill.inactive:hover {
-  opacity: 1;
 }
 
 .control {

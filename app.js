@@ -345,6 +345,20 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function sanitizeUrl(url) {
+  // Check for dangerous protocols
+  const dangerousProtocols = ['javascript:', 'data:', 'vbscript:'];
+  const lowerUrl = url.toLowerCase().trim();
+  
+  for (const protocol of dangerousProtocols) {
+    if (lowerUrl.startsWith(protocol)) {
+      return '#'; // Return safe fallback
+    }
+  }
+  
+  return url;
+}
+
 function updateFederalAgencyField() {
   const funderType = document.getElementById("a_funderType").value;
   const agencyLabel = document.getElementById("a_federalAgency_label");
@@ -680,7 +694,7 @@ function renderProspect(p) {
   
   // Build hyperlink pills
   const hyperlinkPills = (p.hyperlinks || [])
-    .map(link => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" onclick="event.stopPropagation()">${escapeHtml(link.text)} ↗</a>`)
+    .map(link => `<a href="${escapeHtml(sanitizeUrl(link.url))}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill" onclick="event.stopPropagation()">${escapeHtml(link.text)} ↗</a>`)
     .join("");
   
   div.innerHTML = `
@@ -1183,7 +1197,7 @@ function populateProspectDialog(prospect = {}) {
   document.getElementById("p_geography").value = prospect.geography || "None";
   document.getElementById("p_piRestriction").value = prospect.piRestriction || "None";
   
-  document.getElementById("p_invitationOnly_yes").checked = !!prospect.invitationOnly;
+  document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly || false;
   document.getElementById("p_invitationOnly_no").checked = !prospect.invitationOnly;
   
   document.getElementById("p_link").value = prospect.link || "";
