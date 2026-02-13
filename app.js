@@ -609,6 +609,10 @@ function renderProspect(p) {
   if (p.pin) {
     keywords.push({ text: "Pinned", className: "pin-indicator" });
   }
+  // Add funder type as blue pill after pin
+  if (p.funderType) {
+    keywords.push({ text: p.funderType, className: "kcard-funder-type" });
+  }
   if (p.piRestriction && p.piRestriction !== "None") {
     keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
   }
@@ -634,7 +638,6 @@ function renderProspect(p) {
   div.innerHTML = `
     <div class="grant-top">${keywordPills}</div>
     <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
-    ${p.funderType ? `<p class="meta-row"><strong>Funder Type:</strong> ${p.funderType}</p>` : ""}
     ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${fullNotes}</p>` : ""}
     <div class="card-actions">
       <button class="btn btn-small edit-prospect">Edit</button>
