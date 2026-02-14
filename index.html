@@ -265,6 +265,34 @@
     </form>
   </dialog>
 
+  <dialog id="pillFilterDialog">
+    <div class="pill-filter-header">
+      <h2 id="pillFilterTitle">Filtered Results</h2>
+      <button class="pill-filter-close" id="pillFilterClose" aria-label="Close">×</button>
+    </div>
+    <div class="pill-filter-content">
+      <div class="pill-filter-section">
+        <div class="pill-filter-section-header" id="grantsSection">
+          <span class="pill-filter-section-toggle">▶</span>
+          <span id="grantsSectionLabel">Grants (0)</span>
+        </div>
+        <div class="pill-filter-section-content" id="grantsSectionContent">
+          <div class="pill-filter-cards" id="grantsCards"></div>
+        </div>
+      </div>
+      
+      <div class="pill-filter-section">
+        <div class="pill-filter-section-header" id="prospectsSection">
+          <span class="pill-filter-section-toggle">▶</span>
+          <span id="prospectsSectionLabel">Prospects (0)</span>
+        </div>
+        <div class="pill-filter-section-content" id="prospectsSectionContent">
+          <div class="pill-filter-cards" id="prospectsCards"></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>

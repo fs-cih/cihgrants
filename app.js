@@ -493,7 +493,7 @@ function apply() {
       if (!q) {
         return true;
       }
-      const hay = [g.title, g.description, ...(g.keywords || [])].join(" ").toLowerCase();
+      const hay = [g.title, g.description, g.agencyName, ...(g.keywords || [])].join(" ").toLowerCase();
       return hay.includes(q);
     });
 
@@ -733,6 +733,28 @@ function renderProspect(p) {
   div.querySelectorAll(".hyperlink-pill").forEach(pill => {
     pill.addEventListener("click", (e) => {
       e.stopPropagation();
+    });
+  });
+  
+  // Add click event listeners to clickable pills
+  div.querySelectorAll('.kcard-state').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('state', pill.textContent);
+    });
+  });
+
+  div.querySelectorAll('.kcard-pi-restriction').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('piRestriction', pill.textContent);
+    });
+  });
+
+  div.querySelectorAll('.kcard-invitation-only').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('invitationOnly', null);
     });
   });
   
@@ -1048,6 +1070,28 @@ function renderGrant(g, selectedKeywords = []) {
       nestedContainer.appendChild(nestedItem);
     });
   }
+
+  // Add click event listeners to clickable pills
+  div.querySelectorAll('.kcard-state').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('state', pill.textContent);
+    });
+  });
+
+  div.querySelectorAll('.kcard-pi-restriction').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('piRestriction', pill.textContent);
+    });
+  });
+
+  div.querySelectorAll('.kcard-loi').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('letterOfInterest', null);
+    });
+  });
 
   return div;
 }
@@ -1865,6 +1909,413 @@ function downloadCurrentViewPdf() {
   });
 
   pdf.save('grants-summary.pdf');
+}
+
+// Pill filter popup functionality
+const pillFilterDialog = document.getElementById('pillFilterDialog');
+const pillFilterClose = document.getElementById('pillFilterClose');
+const pillFilterTitle = document.getElementById('pillFilterTitle');
+const grantsSection = document.getElementById('grantsSection');
+const prospectsSection = document.getElementById('prospectsSection');
+const grantsSectionContent = document.getElementById('grantsSectionContent');
+const prospectsSectionContent = document.getElementById('prospectsSectionContent');
+const grantsSectionLabel = document.getElementById('grantsSectionLabel');
+const prospectsSectionLabel = document.getElementById('prospectsSectionLabel');
+const grantsCards = document.getElementById('grantsCards');
+const prospectsCards = document.getElementById('prospectsCards');
+
+// Close dialog on close button click
+pillFilterClose.addEventListener('click', () => {
+  pillFilterDialog.close();
+});
+
+// Close dialog on backdrop click
+pillFilterDialog.addEventListener('click', (e) => {
+  if (e.target === pillFilterDialog) {
+    pillFilterDialog.close();
+  }
+});
+
+// Toggle sections
+grantsSection.addEventListener('click', () => {
+  const toggle = grantsSection.querySelector('.pill-filter-section-toggle');
+  const content = grantsSectionContent;
+  
+  if (content.classList.contains('expanded')) {
+    content.classList.remove('expanded');
+    toggle.classList.remove('expanded');
+  } else {
+    content.classList.add('expanded');
+    toggle.classList.add('expanded');
+  }
+});
+
+prospectsSection.addEventListener('click', () => {
+  const toggle = prospectsSection.querySelector('.pill-filter-section-toggle');
+  const content = prospectsSectionContent;
+  
+  if (content.classList.contains('expanded')) {
+    content.classList.remove('expanded');
+    toggle.classList.remove('expanded');
+  } else {
+    content.classList.add('expanded');
+    toggle.classList.add('expanded');
+  }
+});
+
+// Function to render grant card without edit button
+function renderGrantForPopup(g, selectedKeywords = []) {
+  const div = document.createElement("article");
+  div.className = "grant";
+
+  const previewLimit = CIH_CONFIG.descriptionPreviewChars || 220;
+  const fullDescription = g.description || "";
+  const hasOverflow = fullDescription.length > previewLimit;
+  const preview = hasOverflow ? fullDescription.slice(0, previewLimit).trimEnd() : fullDescription;
+  const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
+
+  // Organize pills into two rows (same as normal rendering)
+  const row1Pills = [];
+  const row2Pills = [];
+  
+  if (g.pin) {
+    row1Pills.push({ text: "★ Pinned", className: "pin-indicator" });
+  }
+  if (isNewGrant(g)) {
+    row1Pills.push({ text: "New", className: "kcard-new" });
+  }
+  (g.keywords || []).forEach(kw => {
+    const isMatched = selectedKeywords.includes(kw);
+    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+  });
+  
+  if (g.letterOfInterest) {
+    row2Pills.push({ text: "Letter of Interest", className: "kcard-loi" });
+  }
+  if (g.piRestriction && g.piRestriction !== "None") {
+    row2Pills.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
+  }
+  if (g.geography && Array.isArray(g.geography) && g.geography.length > 0) {
+    const sortedStates = [...g.geography].sort();
+    sortedStates.forEach(state => {
+      row2Pills.push({ text: state, className: "kcard-state" });
+    });
+  }
+
+  const formatPills = (pills) => pills
+    .map(pill => {
+      if (pill.className === "pin-indicator") {
+        return `<span class="${pill.className}">${pill.text}</span>`;
+      }
+      return `<span class="kcard ${pill.className}">${pill.text}</span>`;
+    })
+    .join("");
+
+  const row1Markup = row1Pills.length > 0 ? `<div class="grant-pills-row1">${formatPills(row1Pills)}</div>` : "";
+  const row2Markup = row2Pills.length > 0 ? `<div class="grant-pills-row2">${formatPills(row2Pills)}</div>` : "";
+  const pillsMarkup = row1Markup || row2Markup ? `<div class="grant-top">${row1Markup}${row2Markup}</div>` : "";
+
+  const funderTypeMarkup = g.funderType === "Federal" && g.agencyName
+    ? `<span class="agency-pill">${g.agencyName}</span>`
+    : g.funderType
+      ? `<span class="kcard kcard-funder-type">${g.funderType}</span>`
+      : "";
+
+  const eligibilityMarkup = g.eligibility === "Prime"
+    ? `<span class="eligibility-primary">Prime</span>`
+    : `<span class="eligibility-secondary">${g.eligibility}</span>`;
+
+  div.innerHTML = `
+    <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
+    ${pillsMarkup}
+    ${deadlineMarkup(g)}
+    <p class="meta-row">
+      <strong>Funder:</strong> ${funderTypeMarkup} | 
+      <strong>Eligibility:</strong> ${eligibilityMarkup}
+    </p>
+    ${g.amount ? `<p class="meta-row"><strong>Amount:</strong> $${g.amount.toLocaleString()} ${g.amountDetail || ""}</p>` : ""}
+    ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${g.duration}</p>` : ""}
+    <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
+    ${hasOverflow ? `<button class="toggle">Show more</button>` : ""}
+    ${rfaPillHtml(g)}
+  `;
+
+  // Handle show more/less toggle
+  if (hasOverflow) {
+    const toggleBtn = div.querySelector(".toggle");
+    const descPreview = div.querySelector(".desc-preview");
+    toggleBtn.addEventListener("click", () => {
+      const ellipsis = descPreview.querySelector(".ellipsis");
+      const descRest = descPreview.querySelector(".desc-rest");
+      if (descRest.style.display === "inline") {
+        descRest.style.display = "none";
+        ellipsis.style.display = "inline";
+        toggleBtn.textContent = "Show more";
+      } else {
+        descRest.style.display = "inline";
+        ellipsis.style.display = "none";
+        toggleBtn.textContent = "Show less";
+      }
+    });
+  }
+
+  // Check for nested grants
+  const nestedGrants = grants.filter(ng => 
+    ng.parentGrantId === g.id && hasActiveDeadline(ng)
+  );
+
+  if (nestedGrants.length > 0) {
+    const nestedContainer = document.createElement("div");
+    nestedContainer.className = "nested-grants";
+    
+    nestedGrants.forEach(nested => {
+      const nestedItem = document.createElement("div");
+      nestedItem.className = "nested-grant-item";
+      
+      const nestedPills = [];
+      if (nested.letterOfInterest) {
+        nestedPills.push({ text: "Letter of Interest", className: "kcard-loi" });
+      }
+      if (nested.piRestriction && nested.piRestriction !== "None") {
+        nestedPills.push({ text: nested.piRestriction, className: "kcard-pi-restriction" });
+      }
+      if (nested.geography && Array.isArray(nested.geography) && nested.geography.length > 0) {
+        const sortedStates = [...nested.geography].sort();
+        sortedStates.forEach(state => {
+          nestedPills.push({ text: state, className: "kcard-state" });
+        });
+      }
+      (nested.keywords || []).forEach(kw => {
+        nestedPills.push({ text: kw, className: "" });
+      });
+      
+      const nestedPillsMarkup = nestedPills.length > 0
+        ? `<div class="nested-grant-pills grant-top"><div class="grant-pills-row1">${formatPills(nestedPills)}</div></div>`
+        : "";
+      
+      nestedItem.innerHTML = `
+        <div class="nested-grant-title">${nested.title}</div>
+        ${nestedPillsMarkup}
+        ${deadlineMarkup(nested)}
+      `;
+      
+      nestedItem.addEventListener("click", () => {
+        if (nestedItem.classList.contains("expanded")) {
+          const expanded = nestedItem.querySelector(".nested-grant-expanded");
+          if (expanded) expanded.remove();
+          nestedItem.classList.remove("expanded");
+        } else {
+          const expandedDiv = document.createElement("div");
+          expandedDiv.className = "nested-grant-expanded";
+          
+          const nestedFullDesc = nested.description || "";
+          const nestedHasOverflow = nestedFullDesc.length > previewLimit;
+          const nestedPreview = nestedHasOverflow ? nestedFullDesc.slice(0, previewLimit).trimEnd() : nestedFullDesc;
+          const nestedRest = nestedHasOverflow ? nestedFullDesc.slice(previewLimit) : "";
+          
+          const nestedFunderTypeMarkup = nested.funderType === "Federal" && nested.agencyName
+            ? `<span class="agency-pill">${nested.agencyName}</span>`
+            : nested.funderType
+              ? `<span class="kcard kcard-funder-type">${nested.funderType}</span>`
+              : "";
+          
+          const nestedEligibilityMarkup = nested.eligibility === "Prime"
+            ? `<span class="eligibility-primary">Prime</span>`
+            : `<span class="eligibility-secondary">${nested.eligibility}</span>`;
+          
+          expandedDiv.innerHTML = `
+            <p class="meta-row">
+              <strong>Funder:</strong> ${nestedFunderTypeMarkup} | 
+              <strong>Eligibility:</strong> ${nestedEligibilityMarkup}
+            </p>
+            ${nested.amount ? `<p class="meta-row"><strong>Amount:</strong> $${nested.amount.toLocaleString()} ${nested.amountDetail || ""}</p>` : ""}
+            ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${nested.duration}</p>` : ""}
+            <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
+            ${nestedHasOverflow ? `<button class="toggle">Show more</button>` : ""}
+            ${rfaPillHtml(nested, true)}
+          `;
+          
+          if (nestedHasOverflow) {
+            const nestedToggleBtn = expandedDiv.querySelector(".toggle");
+            const nestedDescPreview = expandedDiv.querySelector(".desc-preview");
+            nestedToggleBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const ellipsis = nestedDescPreview.querySelector(".ellipsis");
+              const descRest = nestedDescPreview.querySelector(".desc-rest");
+              if (descRest.style.display === "inline") {
+                descRest.style.display = "none";
+                ellipsis.style.display = "inline";
+                nestedToggleBtn.textContent = "Show more";
+              } else {
+                descRest.style.display = "inline";
+                ellipsis.style.display = "none";
+                nestedToggleBtn.textContent = "Show less";
+              }
+            });
+          }
+          
+          nestedItem.appendChild(expandedDiv);
+          nestedItem.classList.add("expanded");
+        }
+      });
+      
+      nestedContainer.appendChild(nestedItem);
+    });
+    
+    div.appendChild(nestedContainer);
+  }
+
+  return div;
+}
+
+// Function to render prospect card without edit button
+function renderProspectForPopup(p) {
+  const div = document.createElement("article");
+  div.className = "grant";
+  
+  const keywords = [];
+  if (p.pin) {
+    keywords.push({ text: "★ Pinned", className: "pin-indicator" });
+  }
+  if (p.invitationOnly) {
+    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
+  }
+  if (p.funderType) {
+    keywords.push({ text: p.funderType, className: "kcard-funder-type" });
+  }
+  if (p.piRestriction && p.piRestriction !== "None") {
+    keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
+  }
+  if (p.geography && Array.isArray(p.geography) && p.geography.length > 0) {
+    const sortedStates = [...p.geography].sort();
+    sortedStates.forEach(state => {
+      keywords.push({ text: state, className: "kcard-state" });
+    });
+  }
+  (p.keywords || []).forEach(kw => {
+    keywords.push({ text: kw, className: "" });
+  });
+  
+  const keywordPills = keywords
+    .map(kw => {
+      if (kw.className === "pin-indicator") {
+        return `<span class="${kw.className}">${kw.text}</span>`;
+      }
+      return `<span class="kcard ${kw.className}">${kw.text}</span>`;
+    })
+    .join("");
+  
+  const hasNotes = p.notes && p.notes.trim().length > 0;
+  const fullNotes = p.notes || "";
+  
+  const hyperlinkPills = (p.hyperlinks || [])
+    .map(link => `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" class="hyperlink-pill">${escapeHtml(link.text)} ↗</a>`)
+    .join("");
+  
+  div.innerHTML = `
+    <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
+    <div class="grant-top">${keywordPills}</div>
+    ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
+    ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
+  `;
+  
+  div.querySelectorAll(".hyperlink-pill").forEach(pill => {
+    pill.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  });
+  
+  return div;
+}
+
+// Function to filter and show grants/prospects by pill type and value
+function showPillFilter(pillType, pillValue) {
+  // Filter grants based on pill type and value
+  const filteredGrants = grants.filter(g => {
+    if (!hasActiveDeadline(g)) return false;
+    
+    // Don't show nested grants as separate items
+    if (g.parentGrantId) {
+      const parent = grants.find(p => p.id === g.parentGrantId);
+      if (parent && hasActiveDeadline(parent)) return false;
+    }
+    
+    switch(pillType) {
+      case 'state':
+        return g.geography && g.geography.includes(pillValue);
+      case 'piRestriction':
+        return g.piRestriction === pillValue;
+      case 'letterOfInterest':
+        return g.letterOfInterest === true;
+      case 'invitationOnly':
+        return false; // Grants don't have invitation only
+      default:
+        return false;
+    }
+  });
+  
+  // Filter prospects based on pill type and value
+  const filteredProspects = prospects.filter(p => {
+    switch(pillType) {
+      case 'state':
+        return p.geography && p.geography.includes(pillValue);
+      case 'piRestriction':
+        return p.piRestriction === pillValue;
+      case 'letterOfInterest':
+        return false; // Prospects don't have letter of interest
+      case 'invitationOnly':
+        return p.invitationOnly === true;
+      default:
+        return false;
+    }
+  });
+  
+  // Update dialog title
+  let titleText = '';
+  switch(pillType) {
+    case 'state':
+      titleText = `${pillValue} Restriction`;
+      break;
+    case 'piRestriction':
+      titleText = `${pillValue}`;
+      break;
+    case 'letterOfInterest':
+      titleText = 'Letter of Interest Required';
+      break;
+    case 'invitationOnly':
+      titleText = 'Invitation Only';
+      break;
+  }
+  pillFilterTitle.textContent = titleText;
+  
+  // Update section labels with counts
+  grantsSectionLabel.textContent = `Grants (${filteredGrants.length})`;
+  prospectsSectionLabel.textContent = `Prospects (${filteredProspects.length})`;
+  
+  // Clear previous cards
+  grantsCards.innerHTML = '';
+  prospectsCards.innerHTML = '';
+  
+  // Render grants
+  filteredGrants.forEach(g => {
+    const card = renderGrantForPopup(g);
+    grantsCards.appendChild(card);
+  });
+  
+  // Render prospects
+  filteredProspects.forEach(p => {
+    const card = renderProspectForPopup(p);
+    prospectsCards.appendChild(card);
+  });
+  
+  // Reset sections to collapsed state
+  grantsSectionContent.classList.remove('expanded');
+  prospectsSectionContent.classList.remove('expanded');
+  grantsSection.querySelector('.pill-filter-section-toggle').classList.remove('expanded');
+  prospectsSection.querySelector('.pill-filter-section-toggle').classList.remove('expanded');
+  
+  // Show dialog
+  pillFilterDialog.showModal();
 }
 
 
