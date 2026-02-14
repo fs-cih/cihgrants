@@ -493,7 +493,7 @@ function apply() {
       if (!q) {
         return true;
       }
-      const hay = [g.title, g.description, g.agencyName, ...(g.keywords || [])].join(" ").toLowerCase();
+      const hay = [g.title || "", g.description || "", g.agencyName || "", g.federalAgency || "", ...(g.keywords || [])].join(" ").toLowerCase();
       return hay.includes(q);
     });
 
