@@ -672,3 +672,122 @@ h1 {
 .nested-grant-expanded .grant-top {
   margin-top: 4px;
 }
+
+/* Pill filter popup styles */
+#pillFilterDialog {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 80vw;
+  height: 80vh;
+  max-width: 80vw;
+  max-height: 80vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+#pillFilterDialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.pill-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 2px solid var(--border);
+  background: var(--card-soft);
+}
+
+.pill-filter-header h2 {
+  margin: 0;
+  color: #631500;
+  font-size: 1.3rem;
+}
+
+.pill-filter-close {
+  font-size: 28px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.pill-filter-close:hover {
+  background: var(--border);
+}
+
+.pill-filter-content {
+  padding: 20px 24px;
+  overflow-y: auto;
+  height: calc(100% - 80px);
+}
+
+.pill-filter-section {
+  margin-bottom: 20px;
+}
+
+.pill-filter-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+
+.pill-filter-section-header:hover {
+  color: var(--brand);
+}
+
+.pill-filter-section-toggle {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.pill-filter-section-toggle.expanded {
+  transform: rotate(90deg);
+}
+
+.pill-filter-section-content {
+  display: none;
+  margin-top: 12px;
+}
+
+.pill-filter-section-content.expanded {
+  display: block;
+}
+
+.pill-filter-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Make certain pills clickable */
+.kcard-state,
+.kcard-pi-restriction,
+.kcard-loi,
+.kcard-invitation-only {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.kcard-state:hover,
+.kcard-pi-restriction:hover,
+.kcard-loi:hover,
+.kcard-invitation-only:hover {
+  opacity: 0.85;
+}
