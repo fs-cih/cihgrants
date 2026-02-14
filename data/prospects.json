@@ -1,5 +1,27 @@
 [
   {
+    "funder": "South Dakota Community Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "South Dakota"
+    ],
+    "link": "https://www.sdcommunityfoundation.org/",
+    "keywords": [],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Beyond Ideas Grant",
+        "url": "https://www.sdcommunityfoundation.org/grants/beyond-idea-grants"
+      },
+      {
+        "text": "South Dakota Fund",
+        "url": "https://www.sdcommunityfoundation.org/grants/south-dakota-fund-grant"
+      }
+    ],
+    "id": "prospect_1771075953987_22_2ogmabqss"
+  },
+  {
     "funder": "Boreal Waters Community Foundation",
     "funderType": "Foundation",
     "geography": [
