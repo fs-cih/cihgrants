@@ -1,5 +1,24 @@
 [
   {
+    "funder": "Arnold Ventures",
+    "funderType": "Foundation",
+    "link": "https://www.arnoldventures.org/",
+    "keywords": [
+      "General Research",
+      "Policy & Advocacy",
+      "Sexual & Reproductive Health"
+    ],
+    "notes": "Our giving is focused on evidence-based solutions to some of the biggest challenges in Criminal Justice, Health Care, Infrastructure, Public Finance, Higher Education, Journalism, Affordable Housing, Climate and Energy, and Democracy.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Requests for Proposals",
+        "url": "https://www.arnoldventures.org/grantees#requests-for-proposals"
+      }
+    ],
+    "id": "prospect_1771197357119_23_99ea949i8"
+  },
+  {
     "funder": "South Dakota Community Foundation",
     "funderType": "Foundation",
     "geography": [
