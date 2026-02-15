@@ -1,5 +1,30 @@
 [
   {
+    "title": "Building Evidence",
+    "funderType": "Foundation",
+    "agencyName": "Arnold Ventures",
+    "eligibility": "Prime",
+    "amount": 400000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-02-15",
+    "link": "https://assets.arnoldventures.org/uploads/PDFs/AV_RFP_Building-Evidence.pdf",
+    "description": "Causal research employing strong, quasi-experimental methods is a critical component of the evidence-building process and important for increasing the knowledge base for decision-makers and stakeholders. Examples of quasi-experimental methods include natural experiments, regression discontinuity, difference-in-differences, and instrumental variable designs. If you\nwould like to submit a letter of interest (LOI) for a study employing random assignment, please check out our Strengthening Evidence RFP here, and if you are focused on criminal justice outcomes see a separate RFP here. This Request for Proposals (RFP) seeks to advance the knowledge base about potentially effective policies, programs, and interventions by funding rigorous, causal research using quasi-experimental methods in the following AV policy areas: Career Pathways, Contraceptive Choice and Access, Higher Education, Infrastructure, Medicaid, and Public Finance.",
+    "keywords": [
+      "General Research",
+      "Policy & Advocacy",
+      "Sexual & Reproductive Health"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "parentGrantId": "grant_1771196096649_49_5j6fkto2n",
+    "id": "grant_1771196374690_50_xrwnax1o1",
+    "deadlines": [
+      "2026-03-06"
+    ]
+  },
+  {
     "title": "Strengthening Evidence",
     "funderType": "Foundation",
     "agencyName": "Arnold Ventures",
