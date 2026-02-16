@@ -1737,6 +1737,17 @@ function sanitizeText(value = '') {
   return value.replace(/\s+/g, ' ').trim();
 }
 
+function stripHtmlTags(html) {
+  // More robust HTML tag removal - repeatedly remove tags until none remain
+  let text = html;
+  let prevText;
+  do {
+    prevText = text;
+    text = text.replace(/<[^>]*>/g, '');
+  } while (text !== prevText && text.includes('<'));
+  return text;
+}
+
 function formatGeographyForPDF(geography) {
   return Array.isArray(geography) && geography.length > 0 
     ? [...geography].sort().join(', ') 
@@ -1744,7 +1755,7 @@ function formatGeographyForPDF(geography) {
 }
 
 function formatDeadlineForPDF(grant) {
-  return sanitizeText(deadlineMarkup(grant).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+  return sanitizeText(stripHtmlTags(deadlineMarkup(grant))) || 'Deadline: —';
 }
 
 function downloadCurrentViewPdf() {
