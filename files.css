@@ -7,6 +7,7 @@
   --muted: #5b6573;
   --brand: #9d3a2b;
   --new: #7c3aed;
+  --title-font-size: clamp(1.4rem, 2.5vw, 2rem);
 }
 
 * {
@@ -29,13 +30,24 @@ body {
 h1 {
   margin: 0;
   color: #631500;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: var(--title-font-size);
+}
+
+.title-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: calc(var(--title-font-size) * 1.2);
+  width: auto;
 }
 
 .title-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
