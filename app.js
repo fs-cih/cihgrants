@@ -715,7 +715,7 @@ function renderProspect(p) {
     .join("");
   
   div.innerHTML = `
-    <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
+    <h3><a href="${sanitizeUrl(p.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.funder)}</a></h3>
     <div class="grant-top">${keywordPills}</div>
     ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
     ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
@@ -900,13 +900,13 @@ function renderGrant(g, selectedKeywords = []) {
 
   div.innerHTML = `
     ${pillsMarkup}
-    <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
+    <h3><a href="${sanitizeUrl(g.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(g.title)}</a></h3>
     ${funderTypeMarkup}
     ${deadlineMarkup(g)}
-    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${g.amountDetail}` : ""} <span class="muted">(${formatIdcNote(g)})</span></p>
-    <p class="meta-row"><strong>Duration:</strong> ${g.duration || "Not specified"}</p>
+    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : ""} <span class="muted">(${formatIdcNote(g)})</span></p>
+    <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${eligibilityText}</span></p>
-    <p class="meta-row desc-preview"><strong>Description:</strong> ${preview}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${rest}</span>` : ""}</p>
+    <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(preview)}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
     ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
@@ -944,7 +944,7 @@ function renderGrant(g, selectedKeywords = []) {
       
       // Initial collapsed view - just title
       nestedItem.innerHTML = `
-        <div class="nested-grant-title">${ng.title}</div>
+        <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
         <div class="nested-grant-pills">
           ${rfaPillHtml(ng, true)}
         </div>
@@ -956,7 +956,7 @@ function renderGrant(g, selectedKeywords = []) {
         if (isExpanded) {
           // Collapse: show only title
           nestedItem.innerHTML = `
-            <div class="nested-grant-title">${ng.title}</div>
+            <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
             <div class="nested-grant-pills">
               ${rfaPillHtml(ng, true)}
             </div>
@@ -1023,7 +1023,7 @@ function renderGrant(g, selectedKeywords = []) {
           const nestedRest = nestedHasOverflow ? nestedFullDescription.slice(nestedPreviewLimit) : "";
           
           nestedItem.innerHTML = `
-            <div class="nested-grant-title">${ng.title}</div>
+            <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
             <div class="nested-grant-expanded">
               <div class="grant-top">
                 ${rfaPillHtml(ng, true)}
@@ -1031,10 +1031,10 @@ function renderGrant(g, selectedKeywords = []) {
               </div>
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
-              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${ng.amountDetail}` : ""} <span class="muted">(${formatIdcNote(ng)})</span></p>
-              <p class="meta-row"><strong>Duration:</strong> ${ng.duration || "Not specified"}</p>
+              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${escapeHtml(ng.amountDetail)}` : ""} <span class="muted">(${formatIdcNote(ng)})</span></p>
+              <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(ng.duration || "Not specified")}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${nestedEligibilityText}</span></p>
-              <p class="meta-row desc-preview"><strong>Description:</strong> ${nestedPreview}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${nestedRest}</span>` : ""}</p>
+              <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
               <div class="card-actions"><button class="btn edit-nested-btn" type="button">Edit</button></div>
@@ -1454,7 +1454,6 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     apply();
     closeAdminDialog();
   } catch (error) {
-    console.error(error);
     els.adminStatus.textContent = `Save failed: ${error.message}`;
   }
 }, els.adminStatus);
@@ -1485,7 +1484,6 @@ async function deleteCurrentGrant() {
     apply();
     closeAdminDialog();
   } catch (error) {
-    console.error(error);
     els.adminStatus.textContent = `Delete failed: ${error.message}`;
   }
 }, els.adminStatus);
@@ -1582,7 +1580,6 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
     renderProspects();
     closeProspectDialog();
   } catch (error) {
-    console.error(error);
     els.prospectStatus.textContent = `Save failed: ${error.message}`;
   }
 }, els.prospectStatus);
@@ -1612,7 +1609,6 @@ async function deleteCurrentProspect() {
     renderProspects();
     closeProspectDialog();
   } catch (error) {
-    console.error(error);
     els.prospectStatus.textContent = `Delete failed: ${error.message}`;
   }
 }, els.prospectStatus);
@@ -2027,15 +2023,15 @@ function renderGrantForPopup(g, selectedKeywords = []) {
     : `<span class="eligibility-secondary">${g.eligibility}</span>`;
 
   div.innerHTML = `
-    <h3><a href="${g.link}" target="_blank" rel="noopener noreferrer">${g.title}</a></h3>
+    <h3><a href="${sanitizeUrl(g.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(g.title)}</a></h3>
     ${pillsMarkup}
     ${deadlineMarkup(g)}
     <p class="meta-row">
       <strong>Funder:</strong> ${funderTypeMarkup} | 
       <strong>Eligibility:</strong> ${eligibilityMarkup}
     </p>
-    ${g.amount ? `<p class="meta-row"><strong>Amount:</strong> $${g.amount.toLocaleString()} ${g.amountDetail || ""}</p>` : ""}
-    ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${g.duration}</p>` : ""}
+    ${g.amount ? `<p class="meta-row"><strong>Amount:</strong> $${g.amount.toLocaleString()} ${escapeHtml(g.amountDetail || "")}</p>` : ""}
+    ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${hasOverflow ? `<button class="toggle">Show more</button>` : ""}
     ${rfaPillHtml(g)}
@@ -2095,7 +2091,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
         : "";
       
       nestedItem.innerHTML = `
-        <div class="nested-grant-title">${nested.title}</div>
+        <div class="nested-grant-title">${escapeHtml(nested.title)}</div>
         ${nestedPillsMarkup}
         ${deadlineMarkup(nested)}
       `;
@@ -2130,8 +2126,8 @@ function renderGrantForPopup(g, selectedKeywords = []) {
               <strong>Funder:</strong> ${nestedFunderTypeMarkup} | 
               <strong>Eligibility:</strong> ${nestedEligibilityMarkup}
             </p>
-            ${nested.amount ? `<p class="meta-row"><strong>Amount:</strong> $${nested.amount.toLocaleString()} ${nested.amountDetail || ""}</p>` : ""}
-            ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${nested.duration}</p>` : ""}
+            ${nested.amount ? `<p class="meta-row"><strong>Amount:</strong> $${nested.amount.toLocaleString()} ${escapeHtml(nested.amountDetail || "")}</p>` : ""}
+            ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(nested.duration)}</p>` : ""}
             <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
             ${nestedHasOverflow ? `<button class="toggle">Show more</button>` : ""}
             ${rfaPillHtml(nested, true)}
@@ -2215,7 +2211,7 @@ function renderProspectForPopup(p) {
     .join("");
   
   div.innerHTML = `
-    <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.funder}</a></h3>
+    <h3><a href="${sanitizeUrl(p.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.funder)}</a></h3>
     <div class="grant-top">${keywordPills}</div>
     ${hyperlinkPills ? `<div class="hyperlink-pills">${hyperlinkPills}</div>` : ""}
     ${hasNotes ? `<p class="meta-row"><strong>Notes:</strong> ${escapeHtml(fullNotes)}</p>` : ""}
