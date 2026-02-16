@@ -1733,6 +1733,10 @@ function createPillText(items = []) {
   return items.filter(Boolean).join(' • ');
 }
 
+function sanitizeText(value = '') {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
 function formatGeographyForPDF(geography) {
   return Array.isArray(geography) && geography.length > 0 
     ? [...geography].sort().join(', ') 
@@ -1740,8 +1744,7 @@ function formatGeographyForPDF(geography) {
 }
 
 function formatDeadlineForPDF(grant) {
-  const sanitize = (value = '') => value.replace(/\s+/g, ' ').trim();
-  return sanitize(deadlineMarkup(grant).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+  return sanitizeText(deadlineMarkup(grant).replace(/<[^>]*>/g, '')) || 'Deadline: —';
 }
 
 function downloadCurrentViewPdf() {
@@ -1759,8 +1762,6 @@ function downloadCurrentViewPdf() {
   let y = margin;
   const lineHeight = 12;
   const sectionSpacing = 18;
-
-  const sanitize = (value = '') => value.replace(/\s+/g, ' ').trim();
 
   const ensureSpace = (heightNeeded = 0) => {
     if (y + heightNeeded > pageHeight - margin) {
@@ -1854,7 +1855,7 @@ function downloadCurrentViewPdf() {
         title: `${idx + 1}. ${p.funder || 'Untitled Prospect'}`,
         subtitle: p.link || '',
         metadata,
-        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : ''].filter(Boolean)
+        bodyLines: [p.notes ? `Notes: ${sanitizeText(p.notes)}` : ''].filter(Boolean)
       });
     });
     pdf.save('prospects-summary.pdf');
@@ -1882,9 +1883,9 @@ function downloadCurrentViewPdf() {
       metadata,
       bodyLines: [
         `Amount: ${formatAmount(g.amount)}`,
-        g.duration ? `Duration: ${sanitize(g.duration)}` : '',
+        g.duration ? `Duration: ${sanitizeText(g.duration)}` : '',
         deadlineText,
-        g.description ? `Description: ${sanitize(g.description)}` : ''
+        g.description ? `Description: ${sanitizeText(g.description)}` : ''
       ].filter(Boolean)
     });
 
@@ -1904,14 +1905,14 @@ function downloadCurrentViewPdf() {
       const childDeadlineText = formatDeadlineForPDF(child);
 
       drawItem({
-        title: `  ↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
+        title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
         subtitle: child.link || '',
         metadata: childMetadata,
         bodyLines: [
           `Amount: ${formatAmount(child.amount)}`,
-          child.duration ? `Duration: ${sanitize(child.duration)}` : '',
+          child.duration ? `Duration: ${sanitizeText(child.duration)}` : '',
           childDeadlineText,
-          child.description ? `Description: ${sanitize(child.description)}` : ''
+          child.description ? `Description: ${sanitizeText(child.description)}` : ''
         ].filter(Boolean),
         indent: 20
       });
