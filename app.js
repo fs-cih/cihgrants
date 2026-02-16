@@ -1855,7 +1855,7 @@ function downloadCurrentViewPdf() {
         title: `${idx + 1}. ${p.funder || 'Untitled Prospect'}`,
         subtitle: p.link || '',
         metadata,
-        bodyLines: [p.notes ? `Notes: ${sanitizeText(p.notes)}` : ''].filter(Boolean)
+        bodyLines: [p.notes && `Notes: ${sanitizeText(p.notes)}`].filter(Boolean)
       });
     });
     pdf.save('prospects-summary.pdf');
@@ -1883,9 +1883,9 @@ function downloadCurrentViewPdf() {
       metadata,
       bodyLines: [
         `Amount: ${formatAmount(g.amount)}`,
-        g.duration ? `Duration: ${sanitizeText(g.duration)}` : '',
+        g.duration && `Duration: ${sanitizeText(g.duration)}`,
         deadlineText,
-        g.description ? `Description: ${sanitizeText(g.description)}` : ''
+        g.description && `Description: ${sanitizeText(g.description)}`
       ].filter(Boolean)
     });
 
@@ -1902,17 +1902,14 @@ function downloadCurrentViewPdf() {
       if (child.piRestriction && child.piRestriction !== 'None') childMetadata.push(`PI: ${child.piRestriction}`);
       if (child.keywords && child.keywords.length > 0) childMetadata.push(`Keywords: ${child.keywords.join(', ')}`);
 
-      const childDeadlineText = formatDeadlineForPDF(child);
-
       drawItem({
         title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
         subtitle: child.link || '',
         metadata: childMetadata,
         bodyLines: [
           `Amount: ${formatAmount(child.amount)}`,
-          child.duration ? `Duration: ${sanitizeText(child.duration)}` : '',
-          childDeadlineText,
-          child.description ? `Description: ${sanitizeText(child.description)}` : ''
+          child.duration && `Duration: ${sanitizeText(child.duration)}`,
+          child.description && `Description: ${sanitizeText(child.description)}`
         ].filter(Boolean),
         indent: 20
       });
