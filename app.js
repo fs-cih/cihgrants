@@ -1739,6 +1739,11 @@ function formatGeographyForPDF(geography) {
     : '';
 }
 
+function formatDeadlineForPDF(grant) {
+  const sanitize = (value = '') => value.replace(/\s+/g, ' ').trim();
+  return sanitize(deadlineMarkup(grant).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+}
+
 function downloadCurrentViewPdf() {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     alert('PDF library failed to load. Please refresh and try again.');
@@ -1849,7 +1854,7 @@ function downloadCurrentViewPdf() {
         title: `${idx + 1}. ${p.funder || 'Untitled Prospect'}`,
         subtitle: p.link || '',
         metadata,
-        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : '']
+        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : ''].filter(Boolean)
       });
     });
     pdf.save('prospects-summary.pdf');
@@ -1869,7 +1874,7 @@ function downloadCurrentViewPdf() {
     if (g.piRestriction && g.piRestriction !== 'None') metadata.push(`PI: ${g.piRestriction}`);
     if (g.keywords && g.keywords.length > 0) metadata.push(`Keywords: ${g.keywords.join(', ')}`);
 
-    const deadlineText = sanitize(deadlineMarkup(g).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+    const deadlineText = formatDeadlineForPDF(g);
 
     drawItem({
       title: `${idx + 1}. ${g.title || 'Untitled Grant'}`,
@@ -1896,7 +1901,7 @@ function downloadCurrentViewPdf() {
       if (child.piRestriction && child.piRestriction !== 'None') childMetadata.push(`PI: ${child.piRestriction}`);
       if (child.keywords && child.keywords.length > 0) childMetadata.push(`Keywords: ${child.keywords.join(', ')}`);
 
-      const childDeadlineText = sanitize(deadlineMarkup(child).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+      const childDeadlineText = formatDeadlineForPDF(child);
 
       drawItem({
         title: `  ↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
