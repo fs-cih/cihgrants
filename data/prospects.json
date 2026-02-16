@@ -1,5 +1,23 @@
 [
   {
+    "funder": "Kresge Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Minnesota"
+    ],
+    "link": "https://kresge.org/",
+    "keywords": [],
+    "notes": "The giving of this foundation focuses on American cities. While the website does not specify the what constitutes a city, they have worked with the US Conference of Mayors, which classifies cities as a population center with 30,000 or more residents—so Duluth, Minnesota is likely the only place with a concentration of CIH work that would align with the giving of this foundation. Their focus areas include arts and culture; education; environment; health; human services; and social investments.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Funding Opportunities",
+        "url": "https://kresge.org/grants-social-investments/current-funding-opportunities/"
+      }
+    ],
+    "id": "prospect_1771241295830_24_dmqgh2lao"
+  },
+  {
     "funder": "Arnold Ventures",
     "funderType": "Foundation",
     "link": "https://www.arnoldventures.org/",
