@@ -997,8 +997,9 @@ function renderGrant(g, selectedKeywords = []) {
           // Build funder type display
           let nestedFunderTypeMarkup = "";
           if (ng.funderType) {
-            if (ng.funderType === "Federal" && ng.federalAgency) {
-              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> Federal <span class="agency-pill">${ng.federalAgency}</span></p>`;
+            const agencyName = ng.agencyName || ng.federalAgency; // Support both old and new field names
+            if ((ng.funderType === "Federal" || ng.funderType === "Foundation" || ng.funderType === "State") && agencyName) {
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${ng.funderType} <span class="agency-pill">${agencyName}</span></p>`;
             } else {
               nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${ng.funderType}</p>`;
             }
@@ -2113,8 +2114,9 @@ function renderGrantForPopup(g, selectedKeywords = []) {
           const nestedPreview = nestedHasOverflow ? nestedFullDesc.slice(0, previewLimit).trimEnd() : nestedFullDesc;
           const nestedRest = nestedHasOverflow ? nestedFullDesc.slice(previewLimit) : "";
           
-          const nestedFunderTypeMarkup = nested.funderType === "Federal" && nested.agencyName
-            ? `<span class="agency-pill">${nested.agencyName}</span>`
+          const agencyName = nested.agencyName || nested.federalAgency; // Support both old and new field names
+          const nestedFunderTypeMarkup = (nested.funderType === "Federal" || nested.funderType === "Foundation" || nested.funderType === "State") && agencyName
+            ? `<span class="agency-pill">${agencyName}</span>`
             : nested.funderType
               ? `<span class="kcard kcard-funder-type">${nested.funderType}</span>`
               : "";
@@ -2268,6 +2270,42 @@ function showPillFilter(pillType, pillValue) {
       default:
         return false;
     }
+  });
+  
+  // Sort grants same as normal view: by deadline date, then open status
+  filteredGrants.sort((a, b) => {
+    const aNextDeadline = nextDeadline(a);
+    const bNextDeadline = nextDeadline(b);
+    
+    // Both have future deadlines - sort by days until deadline
+    if (aNextDeadline && bNextDeadline) {
+      const aDays = daysBetween(TODAY, aNextDeadline);
+      const bDays = daysBetween(TODAY, bNextDeadline);
+      if (aDays !== bDays) {
+        return aDays - bDays;
+      }
+      // If same days, sort alphabetically
+      return (a.title || "").localeCompare(b.title || "");
+    }
+    
+    // One has future deadline, one doesn't
+    if (aNextDeadline && !bNextDeadline) return -1;
+    if (!aNextDeadline && bNextDeadline) return 1;
+    
+    // Neither has future deadline - recurring comes before always open
+    const aIsRecurring = !!a.deadlineRecurring;
+    const bIsRecurring = !!b.deadlineRecurring;
+    
+    if (aIsRecurring && !bIsRecurring) return -1;
+    if (!aIsRecurring && bIsRecurring) return 1;
+    
+    // Both same type (recurring or open), sort alphabetically
+    return (a.title || "").localeCompare(b.title || "");
+  });
+  
+  // Sort prospects alphabetically by funder name (same as normal view)
+  filteredProspects.sort((a, b) => {
+    return (a.funder || "").localeCompare(b.funder || "");
   });
   
   // Update dialog title
