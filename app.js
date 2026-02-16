@@ -879,10 +879,10 @@ function renderGrant(g, selectedKeywords = []) {
     const agencyName = g.agencyName || g.federalAgency; // Support both old and new field names
     if ((g.funderType === "Federal" || g.funderType === "Foundation" || g.funderType === "State") && agencyName) {
       // Show funder type in regular text with agency in a small pill
-      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${g.funderType} <span class="agency-pill">${agencyName}</span></p>`;
+      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(g.funderType)} <span class="agency-pill">${escapeHtml(agencyName)}</span></p>`;
     } else {
       // Show funder type as regular text
-      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${g.funderType}</p>`;
+      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(g.funderType)}</p>`;
     }
   }
 
@@ -999,9 +999,9 @@ function renderGrant(g, selectedKeywords = []) {
           if (ng.funderType) {
             const agencyName = ng.agencyName || ng.federalAgency; // Support both old and new field names
             if ((ng.funderType === "Federal" || ng.funderType === "Foundation" || ng.funderType === "State") && agencyName) {
-              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${ng.funderType} <span class="agency-pill">${agencyName}</span></p>`;
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(ng.funderType)} <span class="agency-pill">${escapeHtml(agencyName)}</span></p>`;
             } else {
-              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${ng.funderType}</p>`;
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(ng.funderType)}</p>`;
             }
           }
           
@@ -2013,9 +2013,9 @@ function renderGrantForPopup(g, selectedKeywords = []) {
   const pillsMarkup = row1Markup || row2Markup ? `<div class="grant-top">${row1Markup}${row2Markup}</div>` : "";
 
   const funderTypeMarkup = g.funderType === "Federal" && g.agencyName
-    ? `<span class="agency-pill">${g.agencyName}</span>`
+    ? `<span class="agency-pill">${escapeHtml(g.agencyName)}</span>`
     : g.funderType
-      ? `<span class="kcard kcard-funder-type">${g.funderType}</span>`
+      ? `<span class="kcard kcard-funder-type">${escapeHtml(g.funderType)}</span>`
       : "";
 
   const eligibilityMarkup = g.eligibility === "Prime"
@@ -2112,14 +2112,14 @@ function renderGrantForPopup(g, selectedKeywords = []) {
           
           const agencyName = nested.agencyName || nested.federalAgency; // Support both old and new field names
           const nestedFunderTypeMarkup = (nested.funderType === "Federal" || nested.funderType === "Foundation" || nested.funderType === "State") && agencyName
-            ? `<span class="agency-pill">${agencyName}</span>`
+            ? `<span class="agency-pill">${escapeHtml(agencyName)}</span>`
             : nested.funderType
-              ? `<span class="kcard kcard-funder-type">${nested.funderType}</span>`
+              ? `<span class="kcard kcard-funder-type">${escapeHtml(nested.funderType)}</span>`
               : "";
           
           const nestedEligibilityMarkup = nested.eligibility === "Prime"
             ? `<span class="eligibility-primary">Prime</span>`
-            : `<span class="eligibility-secondary">${nested.eligibility}</span>`;
+            : `<span class="eligibility-secondary">${escapeHtml(nested.eligibility)}</span>`;
           
           expandedDiv.innerHTML = `
             <p class="meta-row">
