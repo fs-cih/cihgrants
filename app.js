@@ -1749,9 +1749,11 @@ function downloadCurrentViewPdf() {
   const pdf = new jsPDF({ unit: 'pt', format: 'letter' });
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
-  const margin = 40;
+  const margin = 72; // 1-inch margin
   const contentWidth = pageWidth - margin * 2;
   let y = margin;
+  const lineHeight = 12;
+  const sectionSpacing = 18;
 
   const sanitize = (value = '') => value.replace(/\s+/g, ' ').trim();
 
@@ -1762,89 +1764,92 @@ function downloadCurrentViewPdf() {
     }
   };
 
-  const drawCard = ({ title, subtitle, pills, bodyLines = [] }) => {
-    const titleLines = pdf.splitTextToSize(title || 'Untitled', contentWidth - 24);
-    const subtitleLines = subtitle ? pdf.splitTextToSize(subtitle, contentWidth - 24) : [];
-    const pillLines = pills ? pdf.splitTextToSize(pills, contentWidth - 24) : [];
-    const bodySegments = bodyLines.map(line => pdf.splitTextToSize(line, contentWidth - 24));
+  const drawItem = ({ title, subtitle, metadata = [], bodyLines = [], indent = 0 }) => {
+    const leftMargin = margin + indent;
+    const itemWidth = contentWidth - indent;
+    
+    // Calculate height needed for this item
+    const titleLines = pdf.splitTextToSize(title || 'Untitled', itemWidth);
+    const subtitleLines = subtitle ? pdf.splitTextToSize(subtitle, itemWidth) : [];
+    const metadataLines = metadata.filter(Boolean).map(m => pdf.splitTextToSize(m, itemWidth));
+    const bodySegments = bodyLines.map(line => pdf.splitTextToSize(line, itemWidth));
+    
+    let heightNeeded = titleLines.length * 14 + 6; // title + spacing
+    if (subtitleLines.length) heightNeeded += subtitleLines.length * lineHeight + 4;
+    metadataLines.forEach(lines => heightNeeded += lines.length * lineHeight + 2);
+    bodySegments.forEach(lines => heightNeeded += lines.length * lineHeight + 2);
+    heightNeeded += sectionSpacing;
 
-    let cardHeight = 20 + titleLines.length * 14;
-    if (subtitleLines.length) cardHeight += subtitleLines.length * 12 + 4;
-    if (pillLines.length) cardHeight += pillLines.length * 11 + 10;
-    bodySegments.forEach(lines => {
-      cardHeight += lines.length * 11 + 3;
-    });
-    cardHeight += 10;
+    ensureSpace(heightNeeded);
 
-    ensureSpace(cardHeight + 8);
-    pdf.setDrawColor(215, 210, 195);
-    pdf.setFillColor(255, 255, 255);
-    pdf.roundedRect(margin, y, contentWidth, cardHeight, 10, 10, 'FD');
-
-    let cursorY = y + 18;
+    // Draw title (bold, larger)
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(12);
-    pdf.setTextColor(29, 42, 57);
-    pdf.text(titleLines, margin + 12, cursorY);
-    cursorY += titleLines.length * 14;
+    pdf.setFontSize(11);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text(titleLines, leftMargin, y);
+    y += titleLines.length * 14 + 6;
 
+    // Draw subtitle (link in blue)
     if (subtitleLines.length) {
       pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(10);
-      pdf.setTextColor(9, 105, 218);
-      pdf.text(subtitleLines, margin + 12, cursorY);
-      cursorY += subtitleLines.length * 12 + 4;
-    }
-
-    if (pillLines.length) {
-      pdf.setFillColor(246, 248, 251);
-      const pillBoxHeight = pillLines.length * 11 + 8;
-      pdf.roundedRect(margin + 10, cursorY - 9, contentWidth - 20, pillBoxHeight, 8, 8, 'F');
-      pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(9);
-      pdf.setTextColor(51, 65, 85);
-      pdf.text(pillLines, margin + 16, cursorY);
-      cursorY += pillLines.length * 11 + 10;
+      pdf.setTextColor(0, 0, 255);
+      pdf.text(subtitleLines, leftMargin, y);
+      y += subtitleLines.length * lineHeight + 4;
     }
 
+    // Draw metadata as simple text lines
+    if (metadataLines.length) {
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      pdf.setTextColor(60, 60, 60);
+      metadataLines.forEach(lines => {
+        pdf.text(lines, leftMargin, y);
+        y += lines.length * lineHeight + 2;
+      });
+    }
+
+    // Draw body lines
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(10);
-    pdf.setTextColor(31, 41, 55);
+    pdf.setFontSize(9);
+    pdf.setTextColor(0, 0, 0);
     bodySegments.forEach(lines => {
-      pdf.text(lines, margin + 12, cursorY);
-      cursorY += lines.length * 11 + 3;
+      pdf.text(lines, leftMargin, y);
+      y += lines.length * lineHeight + 2;
     });
 
-    y += cardHeight + 8;
+    y += sectionSpacing;
   };
 
+  // Header
   pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(18);
+  pdf.setFontSize(16);
+  pdf.setTextColor(0, 0, 0);
   const heading = currentView === 'prospects' ? 'Prospects Summary' : 'Grants Summary';
   pdf.text(heading, margin, y);
-  y += 18;
+  y += 20;
   pdf.setFont('helvetica', 'normal');
-  pdf.setFontSize(10);
-  pdf.setTextColor(75, 85, 99);
+  pdf.setFontSize(9);
+  pdf.setTextColor(100, 100, 100);
   pdf.text(`Generated ${new Date().toLocaleString()}`, margin, y);
-  y += 18;
+  y += 24;
 
   if (currentView === 'prospects') {
     const sorted = [...prospects].sort((a, b) => (a.funder || '').localeCompare(b.funder || ''));
     sorted.forEach((p, idx) => {
       const geographyText = formatGeographyForPDF(p.geography);
-      const pills = createPillText([
-        p.pin ? 'Pinned' : '',
-        p.funderType || '',
-        geographyText,
-        p.piRestriction && p.piRestriction !== 'None' ? p.piRestriction : '',
-        ...(p.keywords || [])
-      ]);
-      drawCard({
+      const metadata = [];
+      if (p.pin) metadata.push('Pinned');
+      if (p.funderType) metadata.push(p.funderType);
+      if (geographyText) metadata.push(`Geography: ${geographyText}`);
+      if (p.piRestriction && p.piRestriction !== 'None') metadata.push(`PI: ${p.piRestriction}`);
+      if (p.keywords && p.keywords.length > 0) metadata.push(`Keywords: ${p.keywords.join(', ')}`);
+
+      drawItem({
         title: `${idx + 1}. ${p.funder || 'Untitled Prospect'}`,
         subtitle: p.link || '',
-        pills,
-        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : 'Notes: —']
+        metadata,
+        bodyLines: [p.notes ? `Notes: ${sanitize(p.notes)}` : '']
       });
     });
     pdf.save('prospects-summary.pdf');
@@ -1856,27 +1861,26 @@ function downloadCurrentViewPdf() {
 
   topLevel.forEach((g, idx) => {
     const geographyText = formatGeographyForPDF(g.geography);
-    const pills = createPillText([
-      g.pin ? 'Pinned' : '',
-      g.funderType || '',
-      g.eligibility || '',
-      geographyText,
-      g.piRestriction && g.piRestriction !== 'None' ? g.piRestriction : '',
-      ...(g.keywords || [])
-    ]);
+    const metadata = [];
+    if (g.pin) metadata.push('Pinned');
+    if (g.funderType) metadata.push(g.funderType);
+    if (g.eligibility) metadata.push(g.eligibility);
+    if (geographyText) metadata.push(`Geography: ${geographyText}`);
+    if (g.piRestriction && g.piRestriction !== 'None') metadata.push(`PI: ${g.piRestriction}`);
+    if (g.keywords && g.keywords.length > 0) metadata.push(`Keywords: ${g.keywords.join(', ')}`);
 
     const deadlineText = sanitize(deadlineMarkup(g).replace(/<[^>]*>/g, '')) || 'Deadline: —';
 
-    drawCard({
+    drawItem({
       title: `${idx + 1}. ${g.title || 'Untitled Grant'}`,
       subtitle: g.link || '',
-      pills,
+      metadata,
       bodyLines: [
         `Amount: ${formatAmount(g.amount)}`,
-        g.duration ? `Duration: ${sanitize(g.duration)}` : 'Duration: —',
+        g.duration ? `Duration: ${sanitize(g.duration)}` : '',
         deadlineText,
-        g.description ? `Description: ${sanitize(g.description)}` : 'Description: —'
-      ]
+        g.description ? `Description: ${sanitize(g.description)}` : ''
+      ].filter(Boolean)
     });
 
     const children = activeGrants
@@ -1885,22 +1889,26 @@ function downloadCurrentViewPdf() {
 
     children.forEach((child, childIndex) => {
       const childGeographyText = formatGeographyForPDF(child.geography);
-      const childPills = createPillText([
-        child.funderType || '', 
-        child.eligibility || '', 
-        childGeographyText,
-        child.piRestriction && child.piRestriction !== 'None' ? child.piRestriction : '',
-        ...(child.keywords || [])
-      ]);
-      drawCard({
-        title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
+      const childMetadata = [];
+      if (child.funderType) childMetadata.push(child.funderType);
+      if (child.eligibility) childMetadata.push(child.eligibility);
+      if (childGeographyText) childMetadata.push(`Geography: ${childGeographyText}`);
+      if (child.piRestriction && child.piRestriction !== 'None') childMetadata.push(`PI: ${child.piRestriction}`);
+      if (child.keywords && child.keywords.length > 0) childMetadata.push(`Keywords: ${child.keywords.join(', ')}`);
+
+      const childDeadlineText = sanitize(deadlineMarkup(child).replace(/<[^>]*>/g, '')) || 'Deadline: —';
+
+      drawItem({
+        title: `  ↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
         subtitle: child.link || '',
-        pills: childPills,
+        metadata: childMetadata,
         bodyLines: [
           `Amount: ${formatAmount(child.amount)}`,
-          child.duration ? `Duration: ${sanitize(child.duration)}` : 'Duration: —',
-          child.description ? `Description: ${sanitize(child.description)}` : 'Description: —'
-        ]
+          child.duration ? `Duration: ${sanitize(child.duration)}` : '',
+          childDeadlineText,
+          child.description ? `Description: ${sanitize(child.description)}` : ''
+        ].filter(Boolean),
+        indent: 20
       });
     });
   });
