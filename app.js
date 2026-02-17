@@ -2307,7 +2307,7 @@ function showPillFilter(pillType, pillValue) {
         case 'letterOfInterest':
           return ng.letterOfInterest === true;
         case 'invitationOnly':
-          return false;
+          return false; // Grants don't have invitation-only (only prospects do)
         default:
           return false;
       }
