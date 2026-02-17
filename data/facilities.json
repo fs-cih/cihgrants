@@ -1,1 +1,53 @@
-[]
+[
+  {
+    "id": "facility_test_1",
+    "name": "Main Research Building",
+    "address": "123 Health Sciences Dr, Seattle, WA",
+    "ownershipType": "lease",
+    "status": "active",
+    "squareFootage": 15000,
+    "agreementStartDate": "2020-01-01",
+    "agreementEndDate": "2026-12-31",
+    "buildingLeaseCost": 25000,
+    "buildingAccountNumber": "ACC-001-BLD",
+    "landLeaseCost": 5000,
+    "landAccountNumber": "ACC-002-LAND",
+    "utilityCosts": 3500,
+    "utilityAccountNumber": "ACC-003-UTL",
+    "notes": "Primary research facility"
+  },
+  {
+    "id": "facility_test_2",
+    "name": "Community Health Center",
+    "address": "456 Wellness Ave, Portland, OR",
+    "ownershipType": "own",
+    "status": "active",
+    "squareFootage": 8000,
+    "agreementStartDate": "2018-06-15",
+    "agreementEndDate": "2028-06-14",
+    "buildingLeaseCost": 0,
+    "buildingAccountNumber": "",
+    "landLeaseCost": 0,
+    "landAccountNumber": "",
+    "utilityCosts": 2200,
+    "utilityAccountNumber": "ACC-004-UTL",
+    "notes": "Owned facility, no lease costs"
+  },
+  {
+    "id": "facility_test_3",
+    "name": "Fieldwork Station",
+    "address": "789 Rural Rd, Spokane, WA",
+    "ownershipType": "in-kind",
+    "status": "active",
+    "squareFootage": 3000,
+    "agreementStartDate": "2023-01-01",
+    "agreementEndDate": "2027-01-01",
+    "buildingLeaseCost": 0,
+    "buildingAccountNumber": "",
+    "landLeaseCost": 0,
+    "landAccountNumber": "",
+    "utilityCosts": 800,
+    "utilityAccountNumber": "ACC-005-UTL",
+    "notes": "In-kind donation from tribal partner"
+  }
+]
