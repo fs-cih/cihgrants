@@ -473,18 +473,20 @@
   {
     "title": "Tribal Institutional Review Board Establishment and Enhancement (TIRBEE) (R24 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Secondary",
     "amount": 350000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-24-260.html",
     "description": "The purpose of the Tribal Institutional Review Board Establishment and Enhancement (TIRBEE) award is to support federally-recognized American Indian/Alaska Native (AI/AN) Tribes, Tribal colleges and universities, Tribal health programs, or Tribal organizations (collectively, eligible federally-recognized Tribes or Tribal Entities) to establish Institutional Review Boards (IRBs) or enhance the capacity of existing Tribal IRBs.",
     "keywords": [
       "Capacity-Building"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770916067714_42_gs7k8irs3",
     "deadlines": [
       "2027-01-27"
