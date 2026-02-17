@@ -498,21 +498,23 @@
     ]
   },
   {
-    "title": "NLM Information Resource Grants to Reduce Health Disparities and Promote Health for All (G08 Clinical Trial Not Allowed)",
+    "title": "Information Resource Grants to Reduce Health Disparities and Promote Health for All (G08 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH, NLM, ORWH",
     "eligibility": "Prime",
     "amount": 200000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "3 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-24-281.html",
     "description": "This Notice of Funding Opportunity Announcement (NOFO) solicits resource grant applications for projects that will provide accurate, useful, usable, and understandable health information to populations that experience health disparities and their health care providers. This NOFO supports the development of resources that can be used to improve health and well-being and that lead to reductions in health disparities. Access to accurate, useful, usable, and understandable health information is an important factor when managing health and health care. Proposed projects should harness the capabilities of information technology and medical or health libraries to disseminate clear, evidence-based health-related information in formats used by individuals and their health care providers. Proposed projects should emphasize the development and deployment of new information resources or services, or expand and improve an existing resource or service, to meet the needs of populations experiencing health disparities and to promote health for all.",
     "keywords": [
       "Disparities",
       "Health Communications"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770915939717_41_fo8w7snn2",
     "deadlines": [
       "2026-05-25"
