@@ -340,20 +340,22 @@
     ]
   },
   {
-    "title": "Gilead - Giving in North America",
+    "title": "Giving in North America",
     "funderType": "Foundation",
+    "agencyName": "Gilead",
     "eligibility": "Prime",
     "amount": 0,
     "amountDetail": "",
     "amountIdc": "",
     "duration": "",
-    "addedDate": "2026-02-13",
+    "addedDate": "2026-01-01",
     "link": "https://www.gilead.com/responsibility/giving-at-gilead/corporate-giving/how-to-apply-for-funding/giving-in-north-america",
     "description": "While oncology is the most aligned focus area between Gilead and the work of the Center, other topics include HIV, liver disease, and inflammatory and respiratory disease.",
     "keywords": [
       "Cancer"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1771006384489_46_bdvrgtnm2",
     "deadlineOpen": true
   },
