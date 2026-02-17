@@ -1282,19 +1282,20 @@
   {
     "title": "Intervention Research to Improve Native American Health (R01 - Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-379.html",
     "description": "\nThe purpose of this notice of funding opportunity (NOFO) is to support research on interventions to improve health in Native populations. This includes 1) etiologic research that will directly inform intervention development or adaptations, 2) research that develops, adapts, or tests interventions for health promotion, prevention, treatment, or recovery, and 3) where a sufficient body of knowledge on intervention efficacy exists, research on dissemination and implementation that develops and tests strategies to overcome barriers to the adoption, integration, scale-up, and sustainability of effective interventions. Through this initiative, intervention and related research is sought to build upon community knowledge, resources, and resilience to identify and rigorously test culturally appropriate solutions to reduce morbidity and mortality. Interventions should be designed with consideration for sustainability within the communities where they are tested, and have the flexibility to be readily adapted, disseminated, and scaled up to other communities where culturally appropriate. This NOFO is part of the Intervention Research to Improve Native American Health the R34 Clinical Trial Planning Grant mechanism (PAR-25-378). Research projects may address topics within the identified interests of any of the participating Institutes or Centers; projects are not limited to substance use and addiction research. ",
     "keywords": [
       "General Research"
     ],
     "pin": true,
+    "letterOfInterest": false,
     "id": "grant_1770906460872_8_f9dh64y6u",
     "deadlines": [
       "2026-10-21"
