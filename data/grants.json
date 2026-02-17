@@ -1260,19 +1260,20 @@
   {
     "title": "Intervention Research to Improve Native American Health (R34 Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 450000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "3 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-378.html",
     "description": "The purpose of this notice of funding opportunity (NOFO) is to support planning and development, including pilot or feasibility research, to improve health in Native populations. Proposed research may address health promotion, disease prevention, treatment, recovery, or services research to inform intervention implementation and dissemination. Research with Native populations requires engagement with tribal partners and communities to develop and/or adapt interventions and clinical trial protocols, understand intervention feasibility and acceptability, and identify and/or develop scientifically rigorous and culturally appropriate study designs and methods. Preparatory studies may fill information gaps, address unknowns, allow for strengthening of partnerships with Native community leaders and organizations, and pilot test the feasibility of the intervention and clinical trial design, thereby improving scientific rigor and cultural appropriateness of a future efficacy, effectiveness, or implementation trial. This NOFO is part of the Intervention Research to Improve Native American Health (IRINAH) initiative, which also includes PAR-25-379, which uses the R01 Research Project Grant mechanism. Research projects may address topics within the identified interests of any of the participating Institutes or Centers; projects are not limited to substance use and addiction research.",
     "keywords": [
       "General Research"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770906460872_8_f9dh64y6u",
     "id": "grant_1770906389555_7_3jv8obc2y",
     "deadlines": [
