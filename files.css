@@ -119,6 +119,10 @@ h1 {
   display: none;
 }
 
+#collapsibleFilters.filters-expanded {
+  display: block;
+}
+
 .filter-actions {
   display: flex;
   flex-direction: column;

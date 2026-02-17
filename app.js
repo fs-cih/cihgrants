@@ -330,7 +330,7 @@ function bindEvents() {
     let isExpanded = false;
     toggleFiltersBtn.onclick = () => {
       isExpanded = !isExpanded;
-      collapsibleFilters.style.display = isExpanded ? "block" : "none";
+      collapsibleFilters.classList.toggle("filters-expanded", isExpanded);
       toggleFiltersBtn.setAttribute("aria-expanded", isExpanded ? "true" : "false");
       collapsibleFilters.setAttribute("aria-hidden", isExpanded ? "false" : "true");
     };
