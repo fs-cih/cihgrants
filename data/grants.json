@@ -1143,7 +1143,7 @@
   {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
-    "agencyName": "NIH",
+    "agencyName": "NIH, NEI, NIA, NIAAA, NICHD, NIDCD, NIDA, NIMH, NINR, NCCIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
