@@ -1,5 +1,32 @@
 [
   {
+    "title": "NIMS Pilot Effectiveness Trials for Post-Acute Interventions and Services to Optimize Longer-term Outcomes (R01 Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "3 years",
+    "addedDate": "2026-02-17",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-206.html",
+    "description": "NIMH seeks applications for pilot projects to evaluate the preliminary effectiveness of therapeutic and service delivery interventions for the post-acute management of mental health conditions that are matched to the stage of illness in terms of both their focus (e.g., consolidating and maintaining gains from initial treatment, managing residual symptoms/impairment, preventing relapse, promoting adherence and appropriate service use) and intensity/burden. In this pilot phase of effectiveness research, the trial should be designed to evaluate the feasibility, tolerability, acceptability, safety, and potential effectiveness of the approach; to address whether the intervention engages the target(s)/mechanisms(s) presumed to underlie the intervention effects; and to obtain preliminary data needed as a pre-requisite to a larger-scale effectiveness trial (e.g., comparative effectiveness study, practical trial) designed to definitely test the effectiveness of interventions to improve post-acute outcomes.",
+    "keywords": [
+      "Mental Health",
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "id": "grant_1771291538488_58_kviwmx5vi",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05",
+      "2026-02-05",
+      "2027-06-05",
+      "2027-10-05"
+    ]
+  },
+  {
     "title": "NIMS Effectiveness Trials for Post-Acute Interventions and Services to Optimize Longer-term Outcomes (R01 Clinical Trial Required)",
     "funderType": "Federal",
     "agencyName": "NIH",
