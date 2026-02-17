@@ -1,5 +1,33 @@
 [
   {
+    "title": "NICHD Small Research Grant Program (R03 Basic Experimental Studies with Humans Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH",
+    "eligibility": "Prime",
+    "amount": 50000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "2 years",
+    "addedDate": "2026-02-17",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-126.html",
+    "description": "The NICHD Small Research Grant Program (R03 Basic Experimental Studies with Humans Required) supports clinical trials that fall within the NICHD mission and also meet the criteria for basic science experimental studies involving humans (BESH), referred to in NOT-OD-18-212 as “prospective basic science studies involving human participants.”  These studies fall within the NIH definition of a clinical trial and also meet the definition of basic research. Types of studies that should submit under this NOFO include studies that prospectively assign human participants to conditions (i.e., experimentally manipulate independent variables) and that assess biomedical or behavioral outcomes in humans for the purpose of understanding the fundamental aspects of phenomena without specific application towards processes or products in mind. ",
+    "keywords": [
+      "Adolescent Health",
+      "Early Childhood"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "parentGrantId": "grant_1771290837011_54_zced5dtxi",
+    "id": "grant_1771290913678_55_y5b1b0dff",
+    "deadlines": [
+      "2026-06-16",
+      "2026-10-16",
+      "2027-02-16",
+      "2027-06-16",
+      "2027-10-16"
+    ]
+  },
+  {
     "title": "NICHD Small Research Grant Program (R03 Clinical Trial Required)",
     "funderType": "Federal",
     "agencyName": "NIH",
