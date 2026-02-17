@@ -105,6 +105,28 @@ h1 {
   gap: 8px;
 }
 
+.filter-control-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-control-row input[type="search"] {
+  flex: 1;
+}
+
+#collapsibleFilters {
+  display: none;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 .checkbox-group {
   display: flex;
   flex-direction: row;

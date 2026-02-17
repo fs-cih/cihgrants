@@ -36,8 +36,8 @@
         <div class="filter-grid">
           <div class="filter-row">
             <label class="filter-label">Search:</label>
-            <div class="filter-control" style="display: flex; gap: 8px; align-items: center;">
-              <input id="q" class="control" type="search" placeholder="Search title, description, or keywords…" style="flex: 1;" />
+            <div class="filter-control filter-control-row">
+              <input id="q" class="control" type="search" placeholder="Search title, description, or keywords…" />
               <button id="toggleFilters" class="btn btn-filter" title="Toggle filters">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <div id="collapsibleFilters" style="display: none;">
+          <div id="collapsibleFilters">
             <div class="filter-row">
               <label class="filter-label">Funder Type:</label>
               <div class="filter-control">
@@ -69,7 +69,7 @@
               </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 12px;">
+            <div class="filter-actions">
               <span id="resultCount" class="meta"></span>
               <button id="clearFilters" class="btn btn-small">Clear</button>
             </div>

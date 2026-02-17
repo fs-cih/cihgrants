@@ -330,7 +330,10 @@ function bindEvents() {
     toggleFiltersBtn.onclick = () => {
       const isHidden = collapsibleFilters.style.display === "none";
       collapsibleFilters.style.display = isHidden ? "block" : "none";
+      toggleFiltersBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
     };
+    // Set initial aria-expanded state
+    toggleFiltersBtn.setAttribute("aria-expanded", "false");
   }
 
   els.adminPlus.onclick = () => {
@@ -888,7 +891,7 @@ function formatAgencyPills(agencyName) {
   const pills = agencies.map((agency, index) => {
     const className = index === 0 ? 'agency-pill-primary' : 'agency-pill-secondary';
     // Check if the agency is an NIH abbreviation and add tooltip
-    const tooltip = NIH_ABBREVIATIONS[agency] ? ` title="${NIH_ABBREVIATIONS[agency]}"` : '';
+    const tooltip = NIH_ABBREVIATIONS[agency] ? ` title="${escapeHtml(NIH_ABBREVIATIONS[agency])}"` : '';
     return `<span class="${className}"${tooltip}>${escapeHtml(agency)}</span>`;
   }).join('');
   
