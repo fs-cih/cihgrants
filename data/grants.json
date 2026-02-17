@@ -600,18 +600,20 @@
   {
     "title": "Exploratory Grants in Cancer Control (R21 Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "2 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-253.html",
     "description": "Through this Notice of Funding Opportunity (NOFO), the National Cancer Institute (NCI) encourages the submission of exploratory/developmental research grant (R21) applications that focus on different aspects of cancer control by modifying behavior, screening, and understanding etiologic factors contributing to the development of cancer, and developing ways to control cancer. The overarching goal is to provide support to promote the early and conceptual stages of research efforts on novel scientific ideas that have the potential to substantially advance population-based cancer research, such as the development of novel techniques, agents, methodologies, models, or applications that could have a major impact on a field of cancer research (e.g. epidemiologic, biomedical, behavioral, health care delivery or clinical).",
     "keywords": [
       "Cancer"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770914969630_36_5mnshil54",
     "deadlines": [
       "2026-06-16",
