@@ -31,41 +31,49 @@
       </div>
 
       <section class="controls" aria-label="Filter and sort grants">
-        <h2>Filter Results</h2>
+        <h2>Search &amp; Filter Results</h2>
 
         <div class="filter-grid">
           <div class="filter-row">
             <label class="filter-label">Search:</label>
-            <div class="filter-control">
+            <div class="filter-control filter-control-row">
               <input id="q" class="control" type="search" placeholder="Search title, description, or keywords…" />
+              <button id="toggleFilters" class="btn btn-filter" title="Toggle filters" aria-controls="collapsibleFilters">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Filter
+              </button>
             </div>
           </div>
 
-          <div class="filter-row">
-            <label class="filter-label">Funder Type:</label>
-            <div class="filter-control">
-              <div id="funderTypeCheckboxes" class="checkbox-group"></div>
+          <div id="collapsibleFilters">
+            <div class="filter-row">
+              <label class="filter-label">Funder Type:</label>
+              <div class="filter-control">
+                <div id="funderTypeCheckboxes" class="checkbox-group"></div>
+              </div>
+            </div>
+
+            <div class="filter-row" id="eligibilityFilterRow">
+              <label class="filter-label">Eligibility:</label>
+              <div class="filter-control">
+                <div id="eligibilityCheckboxes" class="checkbox-group"></div>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <label class="filter-label filter-label-top">Keywords:</label>
+              <div class="filter-control">
+                <div id="keywordPills" class="keyword-pills"></div>
+              </div>
+            </div>
+
+            <div class="filter-actions">
+              <span id="resultCount" class="meta"></span>
+              <button id="clearFilters" class="btn btn-small">Clear</button>
             </div>
           </div>
-
-          <div class="filter-row" id="eligibilityFilterRow">
-            <label class="filter-label">Eligibility:</label>
-            <div class="filter-control">
-              <div id="eligibilityCheckboxes" class="checkbox-group"></div>
-            </div>
-          </div>
-
-          <div class="filter-row">
-            <label class="filter-label filter-label-top">Keywords:</label>
-            <div class="filter-control">
-              <div id="keywordPills" class="keyword-pills"></div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 12px;">
-          <span id="resultCount" class="meta"></span>
-          <button id="clearFilters" class="btn btn-small">Clear</button>
         </div>
       </section>
     </div>
