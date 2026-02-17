@@ -678,19 +678,20 @@
   {
     "title": "Basic Research in Cancer Health Disparities (R21 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH, NCI",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "2 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-244.html",
     "description": "This Notice of Funding Opportunity (NOFO) encourages grant applications from investigators interested in conducting basic research studies into the biological/genetic causes and mechanisms of cancer health disparities. These awards will support pilot and feasibility studies designed to investigate biological/genetic contributors of cancer health disparities, such as (1) mechanistic studies of biological factors associated with cancer health disparities, (2) the development and testing of new methodologies and models, and (3) secondary data analyses. This NOFO is also designed to aid and facilitate the growth of a nationwide cohort of scientists with a high level of basic research expertise in cancer health disparities research who can expand available resources and tools, such as biospecimens, patient derived models and methods that are necessary to conduct basic research in cancer health disparities. In addition, the NOFO will further the development of scientific areas, providing support for early-stage exploratory projects that lead to future in-depth mechanistic studies (such as R01 projects) of the biology of cancer health disparities.",
     "keywords": [
       "Cancer"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770914667684_34_m419unj6b",
     "id": "grant_1770913985101_34_bdvnx64l6",
     "deadlines": [
