@@ -2353,15 +2353,23 @@ function createFacilitiesListCard(allFacilities) {
     table.style.cssText = 'width: 100%; border-collapse: collapse;';
     
     const thead = document.createElement('thead');
-    thead.innerHTML = `
-      <tr style="border-bottom: 2px solid #631500;">
-        <th style="text-align: left; padding: 12px; color: #631500;">Name</th>
-        <th style="text-align: left; padding: 12px; color: #631500;">Ownership</th>
-        <th style="text-align: left; padding: 12px; color: #631500;">Status</th>
-        <th style="text-align: right; padding: 12px; color: #631500;">Monthly Cost</th>
-        <th style="text-align: center; padding: 12px; color: #631500;">Actions</th>
-      </tr>
-    `;
+    const headerRow = document.createElement('tr');
+    headerRow.style.cssText = 'border-bottom: 2px solid #631500;';
+    
+    ['Name', 'Ownership', 'Status', 'Monthly Cost', 'Actions'].forEach((text, idx) => {
+      const th = document.createElement('th');
+      th.textContent = text;
+      th.style.cssText = 'padding: 12px; color: #631500;';
+      if (idx === 0 || idx === 1 || idx === 2) {
+        th.style.textAlign = 'left';
+      } else if (idx === 3) {
+        th.style.textAlign = 'right';
+      } else {
+        th.style.textAlign = 'center';
+      }
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
     table.appendChild(thead);
     
     const tbody = document.createElement('tbody');
@@ -2371,37 +2379,49 @@ function createFacilitiesListCard(allFacilities) {
       const row = document.createElement('tr');
       row.style.cssText = 'border-bottom: 1px solid #eee;';
       
-      row.innerHTML = `
-        <td style="padding: 12px; color: #333;">${f.name}</td>
-        <td style="padding: 12px; color: #666;">${f.ownershipType}</td>
-        <td style="padding: 12px;">
-          <span style="background: ${f.status === 'active' ? '#4CAF50' : '#999'}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem;">
-            ${f.status}
-          </span>
-        </td>
-        <td style="padding: 12px; text-align: right; color: #333;">$${monthlyCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-        <td style="padding: 12px; text-align: center;">
-          <button class="btn btn-small" data-facility-index="${index}" style="background: #631500; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-            Open Card
-          </button>
-        </td>
-      `;
+      // Name cell
+      const nameCell = document.createElement('td');
+      nameCell.textContent = f.name;
+      nameCell.style.cssText = 'padding: 12px; color: #333;';
+      row.appendChild(nameCell);
+      
+      // Ownership cell
+      const ownershipCell = document.createElement('td');
+      ownershipCell.textContent = f.ownershipType;
+      ownershipCell.style.cssText = 'padding: 12px; color: #666;';
+      row.appendChild(ownershipCell);
+      
+      // Status cell
+      const statusCell = document.createElement('td');
+      statusCell.style.cssText = 'padding: 12px;';
+      const statusSpan = document.createElement('span');
+      statusSpan.textContent = f.status;
+      statusSpan.style.cssText = `background: ${f.status === 'active' ? '#4CAF50' : '#999'}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem;`;
+      statusCell.appendChild(statusSpan);
+      row.appendChild(statusCell);
+      
+      // Cost cell
+      const costCell = document.createElement('td');
+      costCell.textContent = `$${monthlyCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      costCell.style.cssText = 'padding: 12px; text-align: right; color: #333;';
+      row.appendChild(costCell);
+      
+      // Actions cell with button
+      const actionsCell = document.createElement('td');
+      actionsCell.style.cssText = 'padding: 12px; text-align: center;';
+      const openBtn = document.createElement('button');
+      openBtn.className = 'btn btn-small';
+      openBtn.textContent = 'Open Card';
+      openBtn.style.cssText = 'background: #631500; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;';
+      openBtn.addEventListener('click', () => editFacility(index));
+      actionsCell.appendChild(openBtn);
+      row.appendChild(actionsCell);
       
       tbody.appendChild(row);
     });
     table.appendChild(tbody);
     
     card.appendChild(table);
-    
-    // Add event listeners to Open Card buttons
-    setTimeout(() => {
-      document.querySelectorAll('[data-facility-index]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = parseInt(btn.dataset.facilityIndex);
-          editFacility(index);
-        });
-      });
-    }, 0);
   }
   
   return card;
