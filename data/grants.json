@@ -1051,7 +1051,7 @@
   {
     "title": "NIH Small Research Grant Program (Parent R03 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "agencyName": "NIH",
+    "agencyName": "NIH, NHGRI, NIA, NIAAA, NIAID, NIBIB, NICHD, NIDA, NIEHS, NIMH, NINDS, NLM, NCI, ODSS",
     "eligibility": "Prime",
     "amount": 50000,
     "amountDetail": "per year",
