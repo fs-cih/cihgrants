@@ -1,5 +1,38 @@
 [
   {
+    "title": "Laboratories to Optimize Digital Health (R01 Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "Excluding IDC",
+    "duration": "4 years",
+    "addedDate": "2026-02-17",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-136.html",
+    "description": "NIMH seeks applications for innovative research projects to test strategies to increase the reach, efficiency, effectiveness, and quality of digital mental health interventions which may impact mental health outcomes, including suicide behaviors and serious mental illness. This Notice of Funding Opportunity (NOFO) is intended to support the development of digital health test beds that leverage well-established digital health platforms and infrastructure to rapidly refine and optimize existing evidence-based digital health interventions and to conduct clinical research testing digital mental health interventions that are statistically powered to provide a definitive answer regarding the effectiveness of the intervention particularly in populations who experience health disparities and vulnerable populations.",
+    "keywords": [
+      "Adolescent Health",
+      "Artificial Intelligence",
+      "Behavioral Health",
+      "Disparities",
+      "General Research",
+      "Mental Health",
+      "Suicide Prevention",
+      "Technology"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "id": "grant_1771291213124_56_5epu9fjh3",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05",
+      "2027-02-05",
+      "2027-06-05",
+      "2027-10-05"
+    ]
+  },
+  {
     "title": "NICHD Small Research Grant Program (R03 Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
     "agencyName": "NIH",
