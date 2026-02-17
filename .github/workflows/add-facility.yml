@@ -1,0 +1,126 @@
+name: Add facility
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        required: true
+        type: choice
+        description: 'Operation mode: add, edit, or delete'
+        options:
+          - add
+          - edit
+          - delete
+      payload:
+        required: true
+        description: 'Facility data as JSON string'
+
+concurrency:
+  group: facility-modifications
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add, edit, or delete facility
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const payload = JSON.parse(process.env.PAYLOAD);
+          const mode = process.env.MODE;
+          const path = 'data/facilities.json';
+          const facilities = JSON.parse(fs.readFileSync(path, 'utf8'));
+          
+          const findIndexForPayload = () => {
+            if (payload.id) {
+              const indexById = facilities.findIndex(facility => facility.id === payload.id);
+              if (indexById !== -1) {
+                return indexById;
+              }
+            }
+            const editIndex = payload.editIndex;
+            if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < facilities.length) {
+              return editIndex;
+            }
+            return -1;
+          };
+
+          if (mode === 'edit') {
+            const targetIndex = findIndexForPayload();
+            if (targetIndex !== -1) {
+              // Remove editIndex from payload before saving (it's metadata, not facility data)
+              const { editIndex: _removed, ...facility } = payload;
+              facilities[targetIndex] = facility;
+            } else {
+              console.error('Could not find facility to edit using id/editIndex:', payload.id, payload.editIndex);
+              process.exit(1);
+            }
+          } else if (mode === 'delete') {
+            const targetIndex = findIndexForPayload();
+            if (targetIndex !== -1) {
+              facilities.splice(targetIndex, 1);
+            } else {
+              console.error('Could not find facility to delete using id/editIndex:', payload.id, payload.editIndex);
+              process.exit(1);
+            }
+          } else {
+            // mode === 'add'
+            // Defensively remove editIndex if present (shouldn't be, but ensures clean data)
+            const { editIndex: _removed, ...facility } = payload;
+            facilities.unshift(facility);
+          }
+          
+          fs.writeFileSync(path, JSON.stringify(facilities, null, 2));
+          EOF
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          PAYLOAD: ${{ github.event.inputs.payload }}
+
+      - name: Commit
+        run: |
+          git config user.name "cih-grants-bot"
+          git config user.email "cih-grants-bot@users.noreply.github.com"
+          git add data/facilities.json
+          
+          NAME=$(jq -r .name <<< "$PAYLOAD")
+          
+          if [ "$MODE" = "edit" ]; then
+            git commit -m "Edit facility: $NAME"
+          elif [ "$MODE" = "delete" ]; then
+            git commit -m "Delete facility: $NAME"
+          else
+            git commit -m "Add facility: $NAME"
+          fi
+          
+          # Use merge instead of rebase to handle concurrent edits more gracefully
+          # Retry up to 3 times with exponential backoff if push fails
+          for i in 1 2 3; do
+            git pull --no-rebase origin main && git push && break || {
+              if [ $i -eq 3 ]; then
+                echo "Failed to push after 3 attempts due to concurrent modifications"
+                exit 1
+              fi
+              echo "Push failed, retrying in $((2**i)) seconds..."
+              sleep $((2**i))
+              git reset --soft HEAD~1
+              git pull --no-rebase origin main
+              git add data/facilities.json
+              if [ "$MODE" = "edit" ]; then
+                git commit -m "Edit facility: $NAME"
+              elif [ "$MODE" = "delete" ]; then
+                git commit -m "Delete facility: $NAME"
+              else
+                git commit -m "Add facility: $NAME"
+              fi
+            }
+          done
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          PAYLOAD: ${{ github.event.inputs.payload }}

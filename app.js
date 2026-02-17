@@ -45,10 +45,12 @@ const APOSTROPHE_CHECK_FIELDS_PROSPECTS = [
 
 let grants = [];
 let prospects = [];
+let facilities = [];
 let vocab = {};
 let editIndex = null;
 let prospectEditIndex = null;
-let currentView = 'grants'; // 'grants' or 'prospects'
+let facilityEditIndex = null;
+let currentView = 'grants'; // 'grants', 'prospects', or 'facilities'
 let mutationQueue = Promise.resolve();
 let queuedMutations = 0;
 
@@ -70,8 +72,15 @@ const els = {
   prospectDeleteBtn: document.getElementById("prospectDeleteBtn"),
   prospectCancelBtn: document.getElementById("prospectCancelBtn"),
   prospectStatus: document.getElementById("prospectStatus"),
+  facilityDialog: document.getElementById("facilityDialog"),
+  facilityDialogTitle: document.getElementById("facilityDialogTitle"),
+  facilitySaveBtn: document.getElementById("facilitySaveBtn"),
+  facilityDeleteBtn: document.getElementById("facilityDeleteBtn"),
+  facilityCancelBtn: document.getElementById("facilityCancelBtn"),
+  facilityStatus: document.getElementById("facilityStatus"),
   toggleGrants: document.getElementById("toggleGrants"),
   toggleProspects: document.getElementById("toggleProspects"),
+  toggleFacilities: document.getElementById("toggleFacilities"),
   downloadBtn: document.getElementById("downloadBtn")
 };
 
@@ -96,6 +105,7 @@ async function loadData(options = {}) {
   vocab = await fetch(`data/vocab.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   grants = await fetch(`data/grants.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   prospects = await fetch(`data/prospects.json${suffix}`, { cache: "no-store" }).then(r => r.json());
+  facilities = await fetch(`data/facilities.json${suffix}`, { cache: "no-store" }).then(r => r.json());
   
   // Ensure all grants have unique IDs for proper edit tracking
   const timestamp = Date.now();
@@ -109,6 +119,13 @@ async function loadData(options = {}) {
   prospects.forEach((p, index) => {
     if (!p.id) {
       p.id = generateProspectId(timestamp, index);
+    }
+  });
+  
+  // Ensure all facilities have unique IDs for proper edit tracking
+  facilities.forEach((f, index) => {
+    if (!f.id) {
+      f.id = generateFacilityId(timestamp, index);
     }
   });
   
@@ -128,6 +145,10 @@ function generateGrantId(timestamp, index) {
 
 function generateProspectId(timestamp, index) {
   return `prospect_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
+}
+
+function generateFacilityId(timestamp, index) {
+  return `facility_${timestamp}_${index}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
 function initFilters() {
@@ -268,8 +289,10 @@ function bindEvents() {
   els.adminPlus.onclick = () => {
     if (currentView === 'grants') {
       openAdminDialog();
-    } else {
+    } else if (currentView === 'prospects') {
       openProspectDialog();
+    } else if (currentView === 'facilities') {
+      openFacilityDialog();
     }
   };
   els.cancelBtn.onclick = () => closeAdminDialog();
@@ -279,9 +302,14 @@ function bindEvents() {
   els.prospectCancelBtn.onclick = () => closeProspectDialog();
   els.prospectDeleteBtn.onclick = () => deleteCurrentProspect();
   
+  // Facility dialog handlers
+  els.facilityCancelBtn.onclick = () => closeFacilityDialog();
+  els.facilityDeleteBtn.onclick = () => deleteCurrentFacility();
+  
   // Toggle handlers
   els.toggleGrants.onclick = () => switchView('grants');
   els.toggleProspects.onclick = () => switchView('prospects');
+  els.toggleFacilities.onclick = () => switchView('facilities');
   
   // Download button
   els.downloadBtn.onclick = () => downloadCurrentViewPdf();
@@ -588,12 +616,30 @@ function switchView(view) {
   currentView = view;
   const toggleContainer = document.querySelector('.toggle-container');
   const eligibilityFilterRow = document.getElementById('eligibilityFilterRow');
+  const controlsSection = document.querySelector('.controls');
   
-  if (view === 'prospects') {
+  if (view === 'facilities') {
+    toggleContainer.classList.remove('prospects');
+    toggleContainer.classList.add('facilities');
+    els.toggleGrants.classList.remove('active');
+    els.toggleProspects.classList.remove('active');
+    els.toggleFacilities.classList.add('active');
+    // Hide filters for facilities
+    if (controlsSection) {
+      controlsSection.style.display = 'none';
+    }
+    renderFacilitiesDashboard();
+    updateToggleSlider();
+  } else if (view === 'prospects') {
+    toggleContainer.classList.remove('facilities');
     toggleContainer.classList.add('prospects');
     els.toggleGrants.classList.remove('active');
     els.toggleProspects.classList.add('active');
-    // Hide eligibility filter for prospects
+    els.toggleFacilities.classList.remove('active');
+    // Show controls but hide eligibility filter for prospects
+    if (controlsSection) {
+      controlsSection.style.display = '';
+    }
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = 'none';
     }
@@ -602,9 +648,14 @@ function switchView(view) {
     updateToggleSlider();
   } else {
     toggleContainer.classList.remove('prospects');
+    toggleContainer.classList.remove('facilities');
     els.toggleGrants.classList.add('active');
     els.toggleProspects.classList.remove('active');
-    // Show eligibility filter for grants
+    els.toggleFacilities.classList.remove('active');
+    // Show controls and eligibility filter for grants
+    if (controlsSection) {
+      controlsSection.style.display = '';
+    }
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = '';
     }
@@ -1742,6 +1793,618 @@ async function saveProspect(mode, payload, tokenInput) {
     
     throw new Error(errorMessage);
   }
+}
+
+// ============================================================================
+// FACILITIES FUNCTIONS
+// ============================================================================
+
+function openFacilityDialog() {
+  facilityEditIndex = null;
+  els.facilityDialogTitle.textContent = "Add Facility";
+  els.facilityDeleteBtn.hidden = true;
+  
+  // Reset form
+  document.getElementById("f_token").value = "";
+  document.getElementById("f_name").value = "";
+  document.getElementById("f_address").value = "";
+  document.getElementById("f_ownershipType").value = "";
+  document.getElementById("f_status_active").checked = true;
+  document.getElementById("f_squareFootage").value = "";
+  document.getElementById("f_agreementStartDate").value = "";
+  document.getElementById("f_agreementEndDate").value = "";
+  document.getElementById("f_buildingLeaseCost").value = "";
+  document.getElementById("f_buildingAccountNumber").value = "";
+  document.getElementById("f_landLeaseCost").value = "";
+  document.getElementById("f_landAccountNumber").value = "";
+  document.getElementById("f_utilityCosts").value = "";
+  document.getElementById("f_utilityAccountNumber").value = "";
+  document.getElementById("f_notes").value = "";
+  els.facilityStatus.textContent = "";
+  
+  els.facilityDialog.showModal();
+}
+
+function editFacility(index) {
+  facilityEditIndex = index;
+  const f = facilities[index];
+  
+  els.facilityDialogTitle.textContent = "Edit Facility";
+  els.facilityDeleteBtn.hidden = false;
+  
+  document.getElementById("f_token").value = "";
+  document.getElementById("f_name").value = f.name || "";
+  document.getElementById("f_address").value = f.address || "";
+  document.getElementById("f_ownershipType").value = f.ownershipType || "";
+  
+  if (f.status === "inactive") {
+    document.getElementById("f_status_inactive").checked = true;
+  } else {
+    document.getElementById("f_status_active").checked = true;
+  }
+  
+  document.getElementById("f_squareFootage").value = f.squareFootage || "";
+  document.getElementById("f_agreementStartDate").value = f.agreementStartDate || "";
+  document.getElementById("f_agreementEndDate").value = f.agreementEndDate || "";
+  document.getElementById("f_buildingLeaseCost").value = f.buildingLeaseCost || "";
+  document.getElementById("f_buildingAccountNumber").value = f.buildingAccountNumber || "";
+  document.getElementById("f_landLeaseCost").value = f.landLeaseCost || "";
+  document.getElementById("f_landAccountNumber").value = f.landAccountNumber || "";
+  document.getElementById("f_utilityCosts").value = f.utilityCosts || "";
+  document.getElementById("f_utilityAccountNumber").value = f.utilityAccountNumber || "";
+  document.getElementById("f_notes").value = f.notes || "";
+  els.facilityStatus.textContent = "";
+  
+  els.facilityDialog.showModal();
+}
+
+function closeFacilityDialog() {
+  els.facilityDialog.close("cancel");
+  els.facilityStatus.textContent = "";
+  facilityEditIndex = null;
+}
+
+els.facilitySaveBtn.onclick = async () => enqueueMutation(async () => {
+  const token = document.getElementById("f_token").value.trim();
+  if (!token) {
+    els.facilityStatus.textContent = "GitHub token is required.";
+    return;
+  }
+
+  const name = document.getElementById("f_name").value.trim();
+  const ownershipType = document.getElementById("f_ownershipType").value;
+  
+  if (!name || !ownershipType) {
+    els.facilityStatus.textContent = "Facility name and ownership type are required.";
+    return;
+  }
+
+  const facility = {
+    name,
+    address: document.getElementById("f_address").value.trim(),
+    ownershipType,
+    status: document.querySelector('input[name="f_status"]:checked').value,
+    squareFootage: Number(document.getElementById("f_squareFootage").value || 0),
+    agreementStartDate: document.getElementById("f_agreementStartDate").value,
+    agreementEndDate: document.getElementById("f_agreementEndDate").value,
+    buildingLeaseCost: Number(document.getElementById("f_buildingLeaseCost").value || 0),
+    buildingAccountNumber: document.getElementById("f_buildingAccountNumber").value.trim(),
+    landLeaseCost: Number(document.getElementById("f_landLeaseCost").value || 0),
+    landAccountNumber: document.getElementById("f_landAccountNumber").value.trim(),
+    utilityCosts: Number(document.getElementById("f_utilityCosts").value || 0),
+    utilityAccountNumber: document.getElementById("f_utilityAccountNumber").value.trim(),
+    notes: document.getElementById("f_notes").value.trim()
+  };
+
+  // Preserve ID when editing, generate new one when adding
+  if (facilityEditIndex !== null && facilities[facilityEditIndex]) {
+    facility.id = facilities[facilityEditIndex].id;
+  } else {
+    facility.id = generateFacilityId(Date.now(), facilities.length);
+  }
+
+  els.facilityStatus.textContent = "Saving…";
+
+  try {
+    const mode = facilityEditIndex !== null ? "edit" : "add";
+    const payload = { facility, editIndex: facilityEditIndex, id: facility.id, name: facility.name };
+    await saveFacility(mode, payload, token);
+
+    if (facilityEditIndex !== null) {
+      facilities[facilityEditIndex] = facility;
+    } else {
+      facilities.push(facility);
+    }
+
+    renderFacilitiesDashboard();
+    closeFacilityDialog();
+    setTimeout(() => loadData({ skipBindEvents: true }), 2000);
+  } catch (error) {
+    els.facilityStatus.textContent = `Save failed: ${error.message}`;
+  }
+}, els.facilityStatus);
+
+async function deleteCurrentFacility() {
+  return enqueueMutation(async () => {
+    if (facilityEditIndex === null) {
+      return;
+    }
+
+    const token = document.getElementById("f_token").value.trim();
+    if (!token) {
+      els.facilityStatus.textContent = "GitHub token is required.";
+      return;
+    }
+
+    const shouldDelete = window.confirm("Delete this facility entry permanently?");
+    if (!shouldDelete) {
+      return;
+    }
+
+    els.facilityStatus.textContent = "Deleting…";
+
+    try {
+      await saveFacility("delete", { editIndex: facilityEditIndex, id: facilities[facilityEditIndex]?.id, name: facilities[facilityEditIndex]?.name }, token);
+      facilities.splice(facilityEditIndex, 1);
+      renderFacilitiesDashboard();
+      closeFacilityDialog();
+    } catch (error) {
+      els.facilityStatus.textContent = `Delete failed: ${error.message}`;
+    }
+  }, els.facilityStatus);
+}
+
+async function saveFacility(mode, payload, tokenInput) {
+  const owner = CIH_CONFIG.githubOwner;
+  const repo = CIH_CONFIG.githubRepo;
+  const branch = CIH_CONFIG.githubBranch || "main";
+  const token = (tokenInput || "").trim();
+
+  if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
+    throw new Error("GitHub repository is not configured. Set githubOwner and githubRepo in config.js.");
+  }
+
+  if (!token) {
+    throw new Error("GitHub token is missing. Enter a PAT in the facility dialog.");
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-facility.yml/dispatches`,
+    {
+      method: "POST",
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ref: branch,
+        inputs: {
+          mode,
+          payload: JSON.stringify(payload)
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
+    
+    // Provide helpful guidance for common authentication errors
+    if (response.status === 403) {
+      let needsPermissionHelp = false;
+      try {
+        const errorData = JSON.parse(errorText);
+        needsPermissionHelp = errorData.message && errorData.message.includes("Resource not accessible by personal access token");
+      } catch (e) {
+        needsPermissionHelp = errorText.includes("Resource not accessible by personal access token");
+      }
+      if (needsPermissionHelp) {
+        errorMessage += PAT_PERMISSION_HELP;
+      }
+    } else if (response.status === 401) {
+      errorMessage += PAT_INVALID_HELP;
+    }
+    
+    throw new Error(errorMessage);
+  }
+}
+
+function renderFacilitiesDashboard() {
+  els.list.innerHTML = "";
+  
+  const activeFacilities = facilities.filter(f => f.status === 'active');
+  
+  // Create dashboard container
+  const dashboard = document.createElement('div');
+  dashboard.className = 'facilities-dashboard';
+  dashboard.style.cssText = 'padding: 24px; max-width: 1400px; margin: 0 auto;';
+  
+  // Create two-column layout
+  const columns = document.createElement('div');
+  columns.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;';
+  
+  // Left column
+  const leftColumn = document.createElement('div');
+  leftColumn.style.cssText = 'display: flex; flex-direction: column; gap: 24px;';
+  
+  // Right column
+  const rightColumn = document.createElement('div');
+  rightColumn.style.cssText = 'display: flex; flex-direction: column; gap: 24px;';
+  
+  // Facilities Summary Card (left column, full width)
+  const summaryCard = createFacilitiesSummaryCard(activeFacilities);
+  leftColumn.appendChild(summaryCard);
+  
+  // Ownership Summary Card (left column, below Facilities Summary, 1/2 width)
+  const ownershipCard = createOwnershipSummaryCard(activeFacilities);
+  leftColumn.appendChild(ownershipCard);
+  
+  // Agreement End Dates Card (right column)
+  const agreementCard = createAgreementEndDatesCard(activeFacilities);
+  rightColumn.appendChild(agreementCard);
+  
+  // Funding Sources Card (right column, below Agreement End Dates)
+  const fundingCard = createFundingSourcesCard(activeFacilities);
+  rightColumn.appendChild(fundingCard);
+  
+  columns.appendChild(leftColumn);
+  columns.appendChild(rightColumn);
+  dashboard.appendChild(columns);
+  
+  // Add facilities list
+  const facilitiesListCard = createFacilitiesListCard(facilities);
+  dashboard.appendChild(facilitiesListCard);
+  
+  els.list.appendChild(dashboard);
+}
+
+function createFacilitiesSummaryCard(activeFacilities) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = 'background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);';
+  
+  const title = document.createElement('h2');
+  title.textContent = 'Facilities Summary';
+  title.style.cssText = 'margin: 0 0 20px 0; font-size: 1.5rem; color: #631500;';
+  card.appendChild(title);
+  
+  // Calculate totals
+  let totalBuildingCost = 0;
+  let totalLandCost = 0;
+  let totalUtilityCost = 0;
+  
+  activeFacilities.forEach(f => {
+    totalBuildingCost += f.buildingLeaseCost || 0;
+    totalLandCost += f.landLeaseCost || 0;
+    totalUtilityCost += f.utilityCosts || 0;
+  });
+  
+  const totalMonthlyCost = totalBuildingCost + totalLandCost + totalUtilityCost;
+  const totalAnnualCost = totalMonthlyCost * 12;
+  
+  // Cost breakdown
+  const costSection = document.createElement('div');
+  costSection.style.cssText = 'display: flex; flex-direction: column; gap: 12px;';
+  
+  const buildingRow = createCostRow('Monthly Building Lease Cost:', totalBuildingCost);
+  const landRow = createCostRow('Monthly Land Lease Cost:', totalLandCost);
+  const utilityRow = createCostRow('Monthly Utility Costs:', totalUtilityCost);
+  const totalMonthlyRow = createCostRow('Total Monthly Costs:', totalMonthlyCost, true);
+  const totalAnnualRow = createCostRow('Total Annual Costs:', totalAnnualCost, true);
+  
+  costSection.appendChild(buildingRow);
+  costSection.appendChild(landRow);
+  costSection.appendChild(utilityRow);
+  costSection.appendChild(totalMonthlyRow);
+  costSection.appendChild(totalAnnualRow);
+  
+  card.appendChild(costSection);
+  
+  return card;
+}
+
+function createCostRow(label, amount, isBold = false) {
+  const row = document.createElement('div');
+  row.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;';
+  
+  const labelSpan = document.createElement('span');
+  labelSpan.textContent = label;
+  labelSpan.style.cssText = isBold ? 'font-weight: 600; color: #631500;' : 'color: #333;';
+  
+  const amountSpan = document.createElement('span');
+  amountSpan.textContent = `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  amountSpan.style.cssText = isBold ? 'font-weight: 600; font-size: 1.1rem; color: #631500;' : 'color: #333;';
+  
+  row.appendChild(labelSpan);
+  row.appendChild(amountSpan);
+  
+  return row;
+}
+
+function createOwnershipSummaryCard(activeFacilities) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = 'background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);';
+  
+  const title = document.createElement('h2');
+  title.textContent = 'Ownership Summary';
+  title.style.cssText = 'margin: 0 0 20px 0; font-size: 1.5rem; color: #631500;';
+  card.appendChild(title);
+  
+  // Count by ownership type
+  const ownCount = activeFacilities.filter(f => f.ownershipType === 'own').length;
+  const leaseCount = activeFacilities.filter(f => f.ownershipType === 'lease').length;
+  const inKindCount = activeFacilities.filter(f => f.ownershipType === 'in-kind').length;
+  const total = ownCount + leaseCount + inKindCount;
+  
+  // Create simple pie chart using CSS
+  const chartContainer = document.createElement('div');
+  chartContainer.style.cssText = 'display: flex; justify-content: center; margin-bottom: 20px;';
+  
+  const pieChart = document.createElement('div');
+  pieChart.style.cssText = 'width: 200px; height: 200px; border-radius: 50%; position: relative;';
+  
+  if (total > 0) {
+    const ownPercent = (ownCount / total) * 100;
+    const leasePercent = (leaseCount / total) * 100;
+    const inKindPercent = (inKindCount / total) * 100;
+    
+    pieChart.style.background = `conic-gradient(
+      #4CAF50 0% ${ownPercent}%,
+      #2196F3 ${ownPercent}% ${ownPercent + leasePercent}%,
+      #FF9800 ${ownPercent + leasePercent}% 100%
+    )`;
+  } else {
+    pieChart.style.background = '#ddd';
+  }
+  
+  chartContainer.appendChild(pieChart);
+  card.appendChild(chartContainer);
+  
+  // Legend with centered pills
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display: flex; flex-direction: column; align-items: center; gap: 12px;';
+  
+  const ownPill = createLegendPill('Own', ownCount, '#4CAF50');
+  const leasePill = createLegendPill('Lease', leaseCount, '#2196F3');
+  const inKindPill = createLegendPill('In-Kind', inKindCount, '#FF9800');
+  
+  legend.appendChild(ownPill);
+  legend.appendChild(leasePill);
+  legend.appendChild(inKindPill);
+  
+  card.appendChild(legend);
+  
+  return card;
+}
+
+function createLegendPill(label, count, color) {
+  const pill = document.createElement('div');
+  pill.style.cssText = `background: ${color}; color: white; padding: 8px 16px; border-radius: 20px; font-weight: 500; display: flex; align-items: center; gap: 8px;`;
+  pill.textContent = `${label}: ${count}`;
+  return pill;
+}
+
+function createAgreementEndDatesCard(activeFacilities) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = 'background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);';
+  
+  const title = document.createElement('h2');
+  title.textContent = 'Agreement End Dates';
+  title.style.cssText = 'margin: 0 0 20px 0; font-size: 1.5rem; color: #631500;';
+  card.appendChild(title);
+  
+  // Sort by end date
+  const facilitiesWithEndDate = activeFacilities
+    .filter(f => f.agreementEndDate)
+    .sort((a, b) => new Date(a.agreementEndDate) - new Date(b.agreementEndDate));
+  
+  if (facilitiesWithEndDate.length === 0) {
+    const noData = document.createElement('p');
+    noData.textContent = 'No facilities with end dates';
+    noData.style.cssText = 'color: #666; font-style: italic;';
+    card.appendChild(noData);
+  } else {
+    const list = document.createElement('div');
+    list.style.cssText = 'display: flex; flex-direction: column; gap: 12px;';
+    
+    facilitiesWithEndDate.forEach(f => {
+      const item = document.createElement('div');
+      item.style.cssText = 'display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;';
+      
+      const name = document.createElement('span');
+      name.textContent = f.name;
+      name.style.cssText = 'font-weight: 500; color: #333;';
+      
+      const date = document.createElement('span');
+      date.textContent = new Date(f.agreementEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      date.style.cssText = 'color: #666;';
+      
+      item.appendChild(name);
+      item.appendChild(date);
+      list.appendChild(item);
+    });
+    
+    card.appendChild(list);
+  }
+  
+  return card;
+}
+
+function createFundingSourcesCard(activeFacilities) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = 'background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);';
+  
+  const title = document.createElement('h2');
+  title.textContent = 'Funding Sources';
+  title.style.cssText = 'margin: 0 0 20px 0; font-size: 1.5rem; color: #631500;';
+  card.appendChild(title);
+  
+  // Building Costs Section
+  const buildingSection = createFundingSection('Building Costs', activeFacilities, 'buildingAccountNumber', 'buildingLeaseCost');
+  card.appendChild(buildingSection);
+  
+  // Land Costs Section
+  const landSection = createFundingSection('Land Costs', activeFacilities, 'landAccountNumber', 'landLeaseCost');
+  card.appendChild(landSection);
+  
+  // Utility Costs Section
+  const utilitySection = createFundingSection('Utility Costs', activeFacilities, 'utilityAccountNumber', 'utilityCosts');
+  card.appendChild(utilitySection);
+  
+  return card;
+}
+
+function createFundingSection(title, facilities, accountField, costField) {
+  const section = document.createElement('div');
+  section.style.cssText = 'margin-bottom: 20px;';
+  
+  const sectionTitle = document.createElement('h3');
+  sectionTitle.textContent = title;
+  sectionTitle.style.cssText = 'font-size: 1.1rem; color: #631500; margin: 0 0 12px 0; font-weight: 600;';
+  section.appendChild(sectionTitle);
+  
+  // Collect account numbers and costs
+  const accounts = new Map();
+  let totalCost = 0;
+  
+  facilities.forEach(f => {
+    const accountNum = f[accountField];
+    const cost = f[costField] || 0;
+    
+    if (accountNum && cost > 0) {
+      if (!accounts.has(accountNum)) {
+        accounts.set(accountNum, 0);
+      }
+      accounts.set(accountNum, accounts.get(accountNum) + cost);
+      totalCost += cost;
+    }
+  });
+  
+  if (accounts.size === 0) {
+    const noData = document.createElement('p');
+    noData.textContent = 'No accounts assigned';
+    noData.style.cssText = 'color: #666; font-style: italic; margin: 0;';
+    section.appendChild(noData);
+  } else {
+    const accountList = document.createElement('div');
+    accountList.style.cssText = 'display: flex; flex-direction: column; gap: 8px;';
+    
+    accounts.forEach((cost, accountNum) => {
+      const percent = totalCost > 0 ? ((cost / totalCost) * 100).toFixed(1) : 0;
+      
+      const item = document.createElement('div');
+      item.style.cssText = 'display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;';
+      
+      const accountInfo = document.createElement('span');
+      accountInfo.textContent = `${accountNum}`;
+      accountInfo.style.cssText = 'color: #333; font-weight: 500;';
+      
+      const costInfo = document.createElement('span');
+      costInfo.textContent = `$${cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${percent}%)`;
+      costInfo.style.cssText = 'color: #666;';
+      
+      item.appendChild(accountInfo);
+      item.appendChild(costInfo);
+      accountList.appendChild(item);
+    });
+    
+    // Add total row
+    const totalRow = document.createElement('div');
+    totalRow.style.cssText = 'display: flex; justify-content: space-between; padding: 8px 0; margin-top: 4px; font-weight: 600; color: #631500;';
+    
+    const totalLabel = document.createElement('span');
+    totalLabel.textContent = 'Total:';
+    
+    const totalAmount = document.createElement('span');
+    totalAmount.textContent = `$${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    
+    totalRow.appendChild(totalLabel);
+    totalRow.appendChild(totalAmount);
+    accountList.appendChild(totalRow);
+    
+    section.appendChild(accountList);
+  }
+  
+  return section;
+}
+
+function createFacilitiesListCard(allFacilities) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = 'background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);';
+  
+  const title = document.createElement('h2');
+  title.textContent = 'All Facilities';
+  title.style.cssText = 'margin: 0 0 20px 0; font-size: 1.5rem; color: #631500;';
+  card.appendChild(title);
+  
+  if (allFacilities.length === 0) {
+    const noData = document.createElement('p');
+    noData.textContent = 'No facilities added yet. Click the + button to add a facility.';
+    noData.style.cssText = 'color: #666; font-style: italic;';
+    card.appendChild(noData);
+  } else {
+    const table = document.createElement('table');
+    table.style.cssText = 'width: 100%; border-collapse: collapse;';
+    
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr style="border-bottom: 2px solid #631500;">
+        <th style="text-align: left; padding: 12px; color: #631500;">Name</th>
+        <th style="text-align: left; padding: 12px; color: #631500;">Ownership</th>
+        <th style="text-align: left; padding: 12px; color: #631500;">Status</th>
+        <th style="text-align: right; padding: 12px; color: #631500;">Monthly Cost</th>
+        <th style="text-align: center; padding: 12px; color: #631500;">Actions</th>
+      </tr>
+    `;
+    table.appendChild(thead);
+    
+    const tbody = document.createElement('tbody');
+    allFacilities.forEach((f, index) => {
+      const monthlyCost = (f.buildingLeaseCost || 0) + (f.landLeaseCost || 0) + (f.utilityCosts || 0);
+      
+      const row = document.createElement('tr');
+      row.style.cssText = 'border-bottom: 1px solid #eee;';
+      
+      row.innerHTML = `
+        <td style="padding: 12px; color: #333;">${f.name}</td>
+        <td style="padding: 12px; color: #666;">${f.ownershipType}</td>
+        <td style="padding: 12px;">
+          <span style="background: ${f.status === 'active' ? '#4CAF50' : '#999'}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem;">
+            ${f.status}
+          </span>
+        </td>
+        <td style="padding: 12px; text-align: right; color: #333;">$${monthlyCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td style="padding: 12px; text-align: center;">
+          <button class="btn btn-small" data-facility-index="${index}" style="background: #631500; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+            Open Card
+          </button>
+        </td>
+      `;
+      
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+    
+    card.appendChild(table);
+    
+    // Add event listeners to Open Card buttons
+    setTimeout(() => {
+      document.querySelectorAll('[data-facility-index]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.facilityIndex);
+          editFacility(index);
+        });
+      });
+    }, 0);
+  }
+  
+  return card;
 }
 
 

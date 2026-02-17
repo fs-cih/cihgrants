@@ -526,7 +526,8 @@ h1 {
 }
 
 #adminDialog,
-#prospectDialog {
+#prospectDialog,
+#facilityDialog {
   border: 1px solid var(--border);
   border-radius: 12px;
   width: min(720px, 92vw);

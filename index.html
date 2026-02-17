@@ -17,6 +17,7 @@
           <div class="toggle-container">
             <button id="toggleGrants" class="toggle-btn active">Grants</button>
             <button id="toggleProspects" class="toggle-btn">Prospects</button>
+            <button id="toggleFacilities" class="toggle-btn">Facilities</button>
             <div class="toggle-slider"></div>
           </div>
           <button id="downloadBtn" class="icon-btn-circle" title="Download" aria-label="Download">
@@ -262,6 +263,71 @@
       </div>
 
       <p id="prospectStatus" class="status"></p>
+    </form>
+  </dialog>
+
+  <dialog id="facilityDialog">
+    <form method="dialog" id="facilityForm">
+      <h2 id="facilityDialogTitle">Add Facility</h2>
+
+      <label>GitHub Personal Access Token
+        <input id="f_token" class="control" type="password" autocomplete="off" placeholder="github_pat_...">
+        <small style="display: block; margin-top: 4px; color: #666;">
+          Required scopes: <code>workflow</code> + <code>repo</code> (Classic) or Actions: Read and write (Fine-grained). 
+          <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="color: #0969da;">Create token →</a>
+        </small>
+      </label>
+
+      <label>Facility Name<input id="f_name" class="control" required></label>
+      <label>Address<input id="f_address" class="control" type="text"></label>
+      
+      <label>Ownership Type
+        <select id="f_ownershipType" class="control" required>
+          <option value="">Select...</option>
+          <option value="own">Own</option>
+          <option value="lease">Lease</option>
+          <option value="in-kind">In-Kind</option>
+        </select>
+      </label>
+      
+      <label>Status
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="f_status" value="active" id="f_status_active" checked>
+            <span>Active</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="f_status" value="inactive" id="f_status_inactive">
+            <span>Inactive</span>
+          </label>
+        </div>
+      </label>
+
+      <label>Square Footage<input id="f_squareFootage" class="control" type="number" min="0"></label>
+      
+      <label>Agreement Start Date<input id="f_agreementStartDate" class="control" type="date"></label>
+      <label>Agreement End Date<input id="f_agreementEndDate" class="control" type="date"></label>
+      
+      <h3 style="margin-top: 20px; margin-bottom: 12px; font-size: 1rem; color: #631500;">Monthly Costs</h3>
+      
+      <label>Building Lease Cost (Monthly)<input id="f_buildingLeaseCost" class="control" type="number" min="0" step="0.01"></label>
+      <label>Building Cost Account Number<input id="f_buildingAccountNumber" class="control" type="text"></label>
+      
+      <label>Land Lease Cost (Monthly)<input id="f_landLeaseCost" class="control" type="number" min="0" step="0.01"></label>
+      <label>Land Cost Account Number<input id="f_landAccountNumber" class="control" type="text"></label>
+      
+      <label>Utility Costs (Monthly)<input id="f_utilityCosts" class="control" type="number" min="0" step="0.01"></label>
+      <label>Utility Account Number<input id="f_utilityAccountNumber" class="control" type="text"></label>
+
+      <label>Notes<textarea id="f_notes" class="control" rows="4"></textarea></label>
+
+      <div class="dialog-actions">
+        <button id="facilitySaveBtn" class="btn primary" type="button">Save</button>
+        <button id="facilityCancelBtn" class="btn" type="button">Cancel</button>
+        <button id="facilityDeleteBtn" class="btn danger" type="button" hidden>Delete</button>
+      </div>
+
+      <p id="facilityStatus" class="status"></p>
     </form>
   </dialog>
 
