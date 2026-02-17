@@ -809,6 +809,22 @@ function rfaPillHtml(grant, alwaysShow = false) {
   return `<a href="${grant.link}" target="_blank" rel="noopener noreferrer" class="rfa-pill" onclick="event.stopPropagation()">Open RFA ↗</a>`;
 }
 
+function formatAgencyPills(agencyName) {
+  // Split agency names by comma and create pills
+  if (!agencyName) return '';
+  
+  const agencies = agencyName.split(',').map(a => a.trim()).filter(a => a.length > 0);
+  if (agencies.length === 0) return '';
+  
+  // First agency gets medium blue, rest get light blue
+  const pills = agencies.map((agency, index) => {
+    const className = index === 0 ? 'agency-pill-primary' : 'agency-pill-secondary';
+    return `<span class="${className}">${escapeHtml(agency)}</span>`;
+  }).join('');
+  
+  return pills;
+}
+
 function renderGrant(g, selectedKeywords = []) {
   const div = document.createElement("article");
   div.className = "grant";
@@ -878,8 +894,8 @@ function renderGrant(g, selectedKeywords = []) {
   if (g.funderType) {
     const agencyName = g.agencyName || g.federalAgency; // Support both old and new field names
     if ((g.funderType === "Federal" || g.funderType === "Foundation" || g.funderType === "State") && agencyName) {
-      // Show funder type in regular text with agency in a small pill
-      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(g.funderType)} <span class="agency-pill">${escapeHtml(agencyName)}</span></p>`;
+      // Show funder type in regular text with agency in pills (first is medium blue, rest are light blue)
+      funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(g.funderType)} ${formatAgencyPills(agencyName)}</p>`;
     } else {
       // Show funder type as regular text
       funderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(g.funderType)}</p>`;
@@ -999,7 +1015,7 @@ function renderGrant(g, selectedKeywords = []) {
           if (ng.funderType) {
             const agencyName = ng.agencyName || ng.federalAgency; // Support both old and new field names
             if ((ng.funderType === "Federal" || ng.funderType === "Foundation" || ng.funderType === "State") && agencyName) {
-              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(ng.funderType)} <span class="agency-pill">${escapeHtml(agencyName)}</span></p>`;
+              nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(ng.funderType)} ${formatAgencyPills(agencyName)}</p>`;
             } else {
               nestedFunderTypeMarkup = `<p class="meta-row"><strong>Funder Type:</strong> ${escapeHtml(ng.funderType)}</p>`;
             }
@@ -2034,8 +2050,8 @@ function renderGrantForPopup(g, selectedKeywords = []) {
   const row2Markup = row2Pills.length > 0 ? `<div class="grant-pills-row2">${formatPills(row2Pills)}</div>` : "";
   const pillsMarkup = row1Markup || row2Markup ? `<div class="grant-top">${row1Markup}${row2Markup}</div>` : "";
 
-  const funderTypeMarkup = g.funderType === "Federal" && g.agencyName
-    ? `<span class="agency-pill">${escapeHtml(g.agencyName)}</span>`
+  const funderTypeMarkup = (g.funderType === "Federal" || g.funderType === "Foundation" || g.funderType === "State") && g.agencyName
+    ? `${escapeHtml(g.funderType)} ${formatAgencyPills(g.agencyName)}`
     : g.funderType
       ? `<span class="kcard kcard-funder-type">${escapeHtml(g.funderType)}</span>`
       : "";
@@ -2134,7 +2150,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
           
           const agencyName = nested.agencyName || nested.federalAgency; // Support both old and new field names
           const nestedFunderTypeMarkup = (nested.funderType === "Federal" || nested.funderType === "Foundation" || nested.funderType === "State") && agencyName
-            ? `<span class="agency-pill">${escapeHtml(agencyName)}</span>`
+            ? `${escapeHtml(nested.funderType)} ${formatAgencyPills(agencyName)}`
             : nested.funderType
               ? `<span class="kcard kcard-funder-type">${escapeHtml(nested.funderType)}</span>`
               : "";
@@ -2274,6 +2290,35 @@ function showPillFilter(pillType, pillValue) {
     }
   });
   
+  // Count nested grants that match the filter criteria
+  let nestedGrantsCount = 0;
+  filteredGrants.forEach(g => {
+    const nestedGrants = grants.filter(ng => 
+      ng.parentGrantId === g.id && hasActiveDeadline(ng)
+    );
+    
+    // Filter nested grants by the same criteria
+    const matchingNested = nestedGrants.filter(ng => {
+      switch(pillType) {
+        case 'state':
+          return ng.geography && ng.geography.includes(pillValue);
+        case 'piRestriction':
+          return ng.piRestriction === pillValue;
+        case 'letterOfInterest':
+          return ng.letterOfInterest === true;
+        case 'invitationOnly':
+          return false;
+        default:
+          return false;
+      }
+    });
+    
+    nestedGrantsCount += matchingNested.length;
+  });
+  
+  // Total count includes parent grants + nested grants that match
+  const totalGrantsCount = filteredGrants.length + nestedGrantsCount;
+  
   // Filter prospects based on pill type and value
   const filteredProspects = prospects.filter(p => {
     switch(pillType) {
@@ -2344,8 +2389,8 @@ function showPillFilter(pillType, pillValue) {
   }
   pillFilterTitle.textContent = titleText;
   
-  // Update section labels with counts
-  grantsSectionLabel.textContent = `Grants (${filteredGrants.length})`;
+  // Update section labels with counts (include nested grants in total)
+  grantsSectionLabel.textContent = `Grants (${totalGrantsCount})`;
   prospectsSectionLabel.textContent = `Prospects (${filteredProspects.length})`;
   
   // Clear previous cards
