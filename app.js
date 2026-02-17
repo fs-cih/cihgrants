@@ -327,11 +327,12 @@ function bindEvents() {
   const toggleFiltersBtn = document.getElementById("toggleFilters");
   const collapsibleFilters = document.getElementById("collapsibleFilters");
   if (toggleFiltersBtn && collapsibleFilters) {
+    let isExpanded = false;
     toggleFiltersBtn.onclick = () => {
-      const isHidden = getComputedStyle(collapsibleFilters).display === "none";
-      collapsibleFilters.style.display = isHidden ? "block" : "none";
-      toggleFiltersBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
-      collapsibleFilters.setAttribute("aria-hidden", isHidden ? "false" : "true");
+      isExpanded = !isExpanded;
+      collapsibleFilters.style.display = isExpanded ? "block" : "none";
+      toggleFiltersBtn.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+      collapsibleFilters.setAttribute("aria-hidden", isExpanded ? "false" : "true");
     };
     // Set initial aria attributes
     toggleFiltersBtn.setAttribute("aria-expanded", "false");
