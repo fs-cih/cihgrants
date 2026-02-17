@@ -113,7 +113,8 @@ let queuedMutations = 0;
 const els = {
   list: document.getElementById("list"),
   q: document.getElementById("q"),
-  resultCount: document.getElementById("resultCount"),
+  resultCountCollapsed: document.getElementById("resultCountCollapsed"),
+  resultCountExpanded: document.getElementById("resultCountExpanded"),
   clearFilters: document.getElementById("clearFilters"),
   adminPlus: document.getElementById("adminPlus"),
   adminDialog: document.getElementById("adminDialog"),
@@ -326,17 +327,26 @@ function bindEvents() {
   // Toggle filter visibility
   const toggleFiltersBtn = document.getElementById("toggleFilters");
   const collapsibleFilters = document.getElementById("collapsibleFilters");
+  const filterGrid = document.getElementById("filterGrid");
   if (toggleFiltersBtn && collapsibleFilters) {
     let isExpanded = false;
-    toggleFiltersBtn.onclick = () => {
-      isExpanded = !isExpanded;
+
+    const updateFilterExpansionState = () => {
       collapsibleFilters.classList.toggle("filters-expanded", isExpanded);
+      if (filterGrid) {
+        filterGrid.classList.toggle("filters-open", isExpanded);
+      }
       toggleFiltersBtn.setAttribute("aria-expanded", isExpanded ? "true" : "false");
       collapsibleFilters.setAttribute("aria-hidden", isExpanded ? "false" : "true");
     };
+
+    toggleFiltersBtn.onclick = () => {
+      isExpanded = !isExpanded;
+      updateFilterExpansionState();
+    };
+
     // Set initial aria attributes
-    toggleFiltersBtn.setAttribute("aria-expanded", "false");
-    collapsibleFilters.setAttribute("aria-hidden", "true");
+    updateFilterExpansionState();
   }
 
   els.adminPlus.onclick = () => {
@@ -720,7 +730,13 @@ function render(list, selectedKeywords = []) {
     totalCount += (nestedCountMap.get(g.id) || 0);
   });
   
-  els.resultCount.textContent = `${totalCount} ${pluralize(totalCount, 'opportunity', 'opportunities')}`;
+  const countText = `${totalCount} ${pluralize(totalCount, 'opportunity', 'opportunities')}`;
+  if (els.resultCountCollapsed) {
+    els.resultCountCollapsed.textContent = countText;
+  }
+  if (els.resultCountExpanded) {
+    els.resultCountExpanded.textContent = countText;
+  }
   list.forEach(g => els.list.append(renderGrant(g, selectedKeywords)));
 }
 
@@ -736,7 +752,13 @@ function renderProspects(filteredProspects = prospects) {
     return (a.funder || "").localeCompare(b.funder || "");
   });
   
-  els.resultCount.textContent = `${sorted.length} ${pluralize(sorted.length, 'prospect')}`;
+  const countText = `${sorted.length} ${pluralize(sorted.length, 'prospect')}`;
+  if (els.resultCountCollapsed) {
+    els.resultCountCollapsed.textContent = countText;
+  }
+  if (els.resultCountExpanded) {
+    els.resultCountExpanded.textContent = countText;
+  }
   sorted.forEach(p => els.list.append(renderProspect(p)));
 }
 
