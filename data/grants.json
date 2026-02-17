@@ -1089,7 +1089,7 @@
   {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "agencyName": "NIH",
+    "agencyName": "NIH, NEI, NHGRI, NIA, NIAAA, NIAID, NIBIB, NICHD, NIDCD, NIDA, NIEHS, NIMH, NINR, NLM, NIMHD, NIAMS, NCI, NCCIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
