@@ -1,5 +1,23 @@
 [
   {
+    "funder": "Lung Cancer Research Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.lungcancerresearchfoundation.org/",
+    "keywords": [
+      "Cancer",
+      "Tobacco Control"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Funding Opportunities",
+        "url": "https://www.lungcancerresearchfoundation.org/research/funding-opportunities-2026/"
+      }
+    ],
+    "id": "prospect_1771340163928_27_29hhbgbto"
+  },
+  {
     "funder": "National Institutes of Health",
     "funderType": "Federal",
     "link": "https://grants.nih.gov/",
