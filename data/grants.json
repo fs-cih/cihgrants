@@ -427,19 +427,21 @@
   {
     "title": "NIH Pathway to Independence Award (Parent K99/R00 – Independent Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 249000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "piRestriction": "New Investigator",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PA-24-194.html",
     "description": "The purpose of the NIH Pathway to Independence Award (K99/R00) program is to facilitate a timely transition of outstanding postdoctoral researchers with a research and/or clinical doctorate degree from mentored, postdoctoral research positions to independent, tenure-track or equivalent faculty positions. The program will provide independent NIH research support during this transition in order to help awardees to launch competitive, independent research careers.",
     "keywords": [
       "General Research"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770916381395_45_cc9enamp1",
     "deadlines": [
       "2026-06-12",
