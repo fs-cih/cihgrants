@@ -1057,19 +1057,20 @@
   {
     "title": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "2 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-304.html",
     "description": "The NIH Exploratory/Developmental Grant supports exploratory and developmental research projects by providing support for the early and conceptual stages of these projects. These studies may involve considerable risk but may lead to a breakthrough in a particular area, or to the development of novel techniques, agents, methodologies, models, or applications that could have a major impact on a field of biomedical, behavioral, or clinical research.",
     "keywords": [
       "General Research"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770908705139_17_lz9h4ix1p",
     "id": "grant_1770908878118_19_y0l64q5m4",
     "deadlines": [
