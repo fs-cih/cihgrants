@@ -885,21 +885,22 @@
     ]
   },
   {
-    "title": "Pilot Hybrid Effectiveness-Implementation Trials for Mental Health Interventions (R01 – Clinical Trial Required)",
+    "title": "NIMH Pilot Hybrid Effectiveness-Implementation Trials for Mental Health Interventions (R01 – Clinical Trial Required)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 750000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "3 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-178.html",
     "description": "This NOFO seeks pilot hybrid effectiveness implementation research consistent with NIMH priorities for: 1) refining and optimizing preventive and therapeutic interventions with previously demonstrated efficacy for use with broader target populations or for delivery routine care, school, community, or online settings, and 2) research on implementation strategies that support the delivery and sustainability of evidence supported interventions in accessible settings. This NOFO supports pilot research designed to generate the preliminary data needed as a prerequisite to a well powered clinical trial. This includes research designed to assess the feasibility, acceptability, safety, and fit of approach, and explore the impact of the approach on both the outcomes of interest and at least one hypothesized mechanism of action.",
     "keywords": [
       "Mental Health"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770912689848_24_2bz9vaz70",
     "id": "grant_1770911131027_29_1oivysmmr",
     "deadlines": [
