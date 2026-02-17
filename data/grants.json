@@ -968,13 +968,13 @@
   {
     "title": "Risk and Protective Factors of Family Health and Family Level Interventions (R01 Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-317.html",
     "description": "The purpose of this initiative is to advance the science of minority health and health disparities by supporting research on family health and well-being and resilience. The NIMHD Research Framework recognizes family health, family well-being, and family resilience as important areas of research to decrease disparities and improve outcomes.",
     "keywords": [
@@ -985,6 +985,8 @@
       "Maternal Health",
       "Mental Health"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770909384154_23_v3e45ufyc",
     "deadlines": [
       "2026-06-05",
