@@ -1169,7 +1169,7 @@
   {
     "title": "NIH Research Project Grant (Parent R01 Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "agencyName": "NIH",
+    "agencyName": "NIH, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NIAMS, NIBIB, NICHD, NIDCR, NIDDK, NIDA, NCI, NIEHS, NIGMS, NIMH, NINDS, NINR, NIDCD, NIMHD, NLM, NCCIH, ORIP",
     "eligibility": "Prime",
     "amount": 500000,
     "amountDetail": "per year",
