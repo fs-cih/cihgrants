@@ -33,9 +33,12 @@
       <section class="controls" aria-label="Filter and sort grants">
         <h2>Search &amp; Filter Results</h2>
 
-        <div class="filter-grid">
+        <div id="filterGrid" class="filter-grid">
           <div class="filter-row">
-            <label class="filter-label">Search:</label>
+            <label class="filter-label search-label-wrap">
+              <span>Search:</span>
+              <span id="resultCountCollapsed" class="meta result-count-collapsed"></span>
+            </label>
             <div class="filter-control filter-control-row">
               <input id="q" class="control" type="search" placeholder="Search title, description, or keywords…" />
               <button id="toggleFilters" class="btn btn-filter" title="Toggle filters" aria-controls="collapsibleFilters">
@@ -70,7 +73,7 @@
             </div>
 
             <div class="filter-actions">
-              <span id="resultCount" class="meta"></span>
+              <span id="resultCountExpanded" class="meta"></span>
               <button id="clearFilters" class="btn btn-small">Clear</button>
             </div>
           </div>
