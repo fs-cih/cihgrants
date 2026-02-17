@@ -1435,19 +1435,20 @@
   {
     "title": "Innovative Pilot Mental Health Services Research Not Involving Clinical Trials (R34 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH, NIMH",
     "eligibility": "Prime",
     "amount": 450000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "3 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-284.html",
     "description": "The purpose of this notice of funding opportunity (NOFO) is to encourage innovative pilot research that will inform and support the delivery of high-quality, continuously improving mental health services to benefit the greatest number of individuals with, or at risk for developing, a mental illness. This announcement invites applications for non-clinical trial pilot projects that address NIMH strategic priorities to strengthen the public health impact of NIMH-supported research as described in Goal 4 of the NIMH Strategic Plan. Proposed research should seek to: 1) Identify mutable factors that impact access, continuity, utilization, quality, value, and outcomes, including disparities in outcomes, or scalability of mental health services, which may serve as targets in future service delivery intervention development, 2) Develop and test new research tools, technologies, measures, or methods and statistical approaches to study these issues, and 3) Test the feasibility of integrating and analyzing large data sets to understand factors affecting mental health services outcomes using advanced computational and predictive analytic approaches. 4) Wherever possible, leverage existing infrastructure and partnerships to accomplish these goals.",
     "keywords": [
       "Mental Health"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770907278552_13_vphy5gd8c",
     "id": "grant_1770907013538_12_qfvg4r96g",
     "deadlines": [
