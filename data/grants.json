@@ -1471,13 +1471,13 @@
   {
     "title": "Social disconnection and Suicide Risk in Late Life (R21 Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Prime",
     "amount": 275000,
     "amountDetail": "over total award period",
     "amountIdc": "Excluding IDC",
     "duration": "2 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-25-066.html",
     "description": "The purpose of this Notice of Funding Opportunity (NOFO) is to encourage research that addresses the link between social disconnection in late-life and late-life suicidal thoughts and behaviors. Of specific interest is research that identifies mechanisms by which social disconnection confers risk for, and social integration protects against, suicidal thoughts and behaviors in late life. Mechanisms to be considered exist at multiple levels of analysis, including but not limited to neurobiological, behavioral, and environmental.",
     "keywords": [
@@ -1486,6 +1486,7 @@
       "Suicide Prevention"
     ],
     "pin": false,
+    "letterOfInterest": false,
     "parentGrantId": "grant_1770913864780_33_ty11469z6",
     "id": "grant_1770913691017_32_gjijrtn17",
     "deadlines": [
