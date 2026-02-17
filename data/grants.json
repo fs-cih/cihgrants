@@ -1,5 +1,34 @@
 [
   {
+    "title": "Advancing Healthcare for Older Adults from Populations that Experience Health Disparities (R01 - Clinical Trial Optional)",
+    "funderType": "Federal",
+    "agencyName": "NIH",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-02-17",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-24-273.html",
+    "description": "The purpose of this initiative is to advance the science and implementation of innovative multi-level health care research for older adults from populations that experience health disparities. The initiative will support research designed to (1) gain a better understanding of appropriate screening, diagnostic, and clinical care guidelines in a primary care setting, (2) explore shared decision-making that is needed to enhance care planning and patient agency between clinicians and care teams with the older adult and their caregiver(s), and (3) identify effective strategies for care coordination.",
+    "keywords": [
+      "Community Health Workers",
+      "Disparities",
+      "Elders",
+      "Healthcare"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "id": "grant_1771337740673_59_z7u5wcrka",
+    "deadlines": [
+      "2026-06-05",
+      "2026-10-05",
+      "2027-02-05",
+      "2027-06-05",
+      "2027-10-05"
+    ]
+  },
+  {
     "title": "NIMH Pilot Effectiveness Trials for Post-Acute Interventions and Services to Optimize Longer-term Outcomes (R01 Clinical Trial Required)",
     "funderType": "Federal",
     "agencyName": "NIH",
