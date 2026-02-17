@@ -1,5 +1,28 @@
 [
   {
+    "funder": "American Lung Association",
+    "funderType": "Foundation",
+    "link": "https://www.lung.org/",
+    "keywords": [
+      "Cancer",
+      "Disparities",
+      "General Research",
+      "Health Communications",
+      "Public Health",
+      "Substance Use",
+      "Tobacco Control"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Awards & Grants Opportunities",
+        "url": "https://www.lung.org/research/awards-and-grants-opportunities"
+      }
+    ],
+    "id": "prospect_1771354313705_28_4khotu4lg"
+  },
+  {
     "funder": "Lung Cancer Research Foundation",
     "funderType": "Foundation",
     "link": "https://www.lungcancerresearchfoundation.org/",
