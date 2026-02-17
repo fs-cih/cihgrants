@@ -405,18 +405,20 @@
   {
     "title": "Native American Research Centers for Health (NARCH) (S06 Clinical Trial Optional)",
     "funderType": "Federal",
-    "federalAgency": "NIH",
+    "agencyName": "NIH",
     "eligibility": "Secondary",
     "amount": 1300000,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
-    "addedDate": "2026-02-12",
+    "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PAR-23-166.html",
     "description": "The purpose of the Native American Research Centers for Health (NARCH) program is to fund federally-recognized American Indian/Alaska Native (AI/AN) Tribes and Tribal colleges or universities, Tribal health programs, or Tribal organizations (collectively, federally-recognized Tribes and Tribal Entities) to support health-related research, research career enhancement, and research infrastructure enhancement activities.",
     "keywords": [
       "General Research"
     ],
+    "pin": false,
+    "letterOfInterest": false,
     "id": "grant_1770916535145_46_qv1hhv15f",
     "deadlines": [
       "2026-07-08"
