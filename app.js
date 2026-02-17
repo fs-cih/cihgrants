@@ -22,6 +22,64 @@ const FEDERAL_AGENCIES = [
   "Other Federal",
   "SAMHSA"
 ];
+
+// NIH Institute/Center abbreviation to full name mapping
+const NIH_ABBREVIATIONS = {
+  "NCI": "National Cancer Institute",
+  "NIAID": "National Institute of Allergy and Infectious Diseases",
+  "NIDCR": "National Institute of Dental and Craniofacial Research",
+  "NIDDK": "National Institute of Diabetes and Digestive and Kidney Diseases",
+  "NHLBI": "National Heart, Lung, and Blood Institute",
+  "NIMH": "National Institute of Mental Health",
+  "NINDS": "National Institute of Neurological Disorders and Stroke",
+  "NLM": "National Library of Medicine",
+  "NICHD": "National Institute of Child Health and Human Development",
+  "NIGMS": "National Institute of General Medical Sciences",
+  "NEI": "National Eye Institute",
+  "NIEHS": "National Institute of Environmental Health Sciences",
+  "NIAAA": "National Institute on Alcohol Abuse and Alcoholism",
+  "NIDA": "National Institute on Drug Abuse",
+  "NIA": "National Institute on Aging",
+  "NIAMS": "National Institute of Arthritis and Musculoskeletal and Skin Diseases",
+  "NINR": "National Institute of Nursing Research",
+  "NIDCD": "National Institute on Deafness and Other Communication Disorders",
+  "NHGRI": "National Human Genome Research Institute",
+  "NIBIB": "National Institute of Biomedical Imaging and Bioengineering",
+  "NIMHD": "National Institute on Minority Health and Health Disparities",
+  "CSR": "Center for Scientific Review",
+  "CC": "Clinical Center",
+  "NCATS": "National Center for Advancing Translational Sciences",
+  "CIT": "Center for Information Technology",
+  "FIC": "John E. Fogarty International Center",
+  "NCCIH": "National Center for Complementary and Integrative Health",
+  "NCMRR": "National Center for Medical Rehabilitation Research",
+  "NCRR": "National Center for Research Resources",
+  "DPCPSI": "Division of Program Coordination, Planning, and Strategic Initiatives",
+  "OER": "Office of Extramural Research",
+  "OIR": "Office of Intramural Research",
+  "OM": "Office of Management",
+  "OA": "Office of Administration",
+  "OAR": "Office of AIDS Research",
+  "OBA": "Office of Biotechnology Activities",
+  "OBSSR": "Office of Behavioral and Social Sciences Research",
+  "OCPL": "Office of Communications and Public Liaison",
+  "OCL": "Office of Community Liaison",
+  "ODS": "Office of Dietary Supplements",
+  "ODP": "Office of Disease Prevention",
+  "OITE": "Office of Intramural Training and Education",
+  "OEPR": "Office of Evaluation, Performance, and Reporting",
+  "OFM": "Office of Financial Management",
+  "OHR": "Office of Human Resources",
+  "OLPA": "Office of Legislative Policy and Analysis",
+  "OPA": "Office of Portfolio Analysis",
+  "ORIP": "Office of Research Infrastructure Programs",
+  "ORWH": "Office of Research on Women's Health",
+  "OSC": "Office of Strategic Coordination",
+  "OTT": "Office of Technology Transfer",
+  "SGMRO": "Sexual and Gender Minority Research Office",
+  "THRO": "Tribal Health Research Office"
+};
+
 const PAT_PERMISSION_HELP = `
 
 Your Personal Access Token (PAT) needs additional permissions:
@@ -264,6 +322,16 @@ function bindEvents() {
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     applyFilters();
   };
+
+  // Toggle filter visibility
+  const toggleFiltersBtn = document.getElementById("toggleFilters");
+  const collapsibleFilters = document.getElementById("collapsibleFilters");
+  if (toggleFiltersBtn && collapsibleFilters) {
+    toggleFiltersBtn.onclick = () => {
+      const isHidden = collapsibleFilters.style.display === "none";
+      collapsibleFilters.style.display = isHidden ? "block" : "none";
+    };
+  }
 
   els.adminPlus.onclick = () => {
     if (currentView === 'grants') {
@@ -819,7 +887,9 @@ function formatAgencyPills(agencyName) {
   // First agency gets medium blue, rest get light blue
   const pills = agencies.map((agency, index) => {
     const className = index === 0 ? 'agency-pill-primary' : 'agency-pill-secondary';
-    return `<span class="${className}">${escapeHtml(agency)}</span>`;
+    // Check if the agency is an NIH abbreviation and add tooltip
+    const tooltip = NIH_ABBREVIATIONS[agency] ? ` title="${NIH_ABBREVIATIONS[agency]}"` : '';
+    return `<span class="${className}"${tooltip}>${escapeHtml(agency)}</span>`;
   }).join('');
   
   return pills;
