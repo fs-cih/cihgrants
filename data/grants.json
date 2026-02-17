@@ -145,9 +145,9 @@
     ]
   },
   {
-    "title": "NICHD Small Research Grant Program (R03 Clinical Trial Required)",
+    "title": "Small Research Grant Program (R03 Clinical Trial Required)",
     "funderType": "Federal",
-    "agencyName": "NIH",
+    "agencyName": "NIH, NICHD",
     "eligibility": "Prime",
     "amount": 50000,
     "amountDetail": "per year",
