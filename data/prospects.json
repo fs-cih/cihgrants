@@ -8,8 +8,16 @@
     "pin": true,
     "hyperlinks": [
       {
+        "text": "Funding Opportunities Home",
+        "url": "https://research.jhu.edu/rdt/funding-opportunities/"
+      },
+      {
         "text": "Internal Awards List",
         "url": "https://research.jhu.edu/rdt/funding-opportunities/internal/"
+      },
+      {
+        "text": "Limited Submissions",
+        "url": "https://research.jhu.edu/rdt/limited-submissions/"
       },
       {
         "text": "Bridge Grants",
