@@ -1,5 +1,36 @@
 [
   {
+    "funder": "Sanford Health Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Michigan",
+      "Minnesota",
+      "North Dakota",
+      "South Dakota",
+      "Wisconsin"
+    ],
+    "link": "https://www.sanfordhealthfoundation.org/",
+    "keywords": [
+      "Adolescent Health",
+      "Disparities",
+      "Early Childhood",
+      "Rural"
+    ],
+    "notes": "Sanford Health invests substantially in initiatives that promote better health for all in the communities we serve. Nonprofits helping to serve a community health need can receive financial support through our Community Dividend Fund. We prioritize funding requests that support demonstrated community health needs, especially for our community investments of more than $20,000.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Community Dividend Fund",
+        "url": "https://www.sanfordhealth.org/about/community-commitment"
+      },
+      {
+        "text": "Request Funding",
+        "url": "https://sanfordhealth.formstack.com/forms/sanford_funding_request_form_2023?_gl=1*y3w5nd*_ga*NjQ0ODIzMjI5LjE3NzE0MjQ0NzY.*_ga_JSE8FM168H*czE3NzE0MjQ0NzUkbzEkZzEkdDE3NzE0MjQ2MTMkajYwJGwwJGgw"
+      }
+    ],
+    "id": "prospect_1771424729032_32_vt06zsuzf"
+  },
+  {
     "funder": "Johns Hopkins University",
     "funderType": "JHU internal",
     "link": "https://research.jhu.edu/rdt/funding-opportunities/internal/",
