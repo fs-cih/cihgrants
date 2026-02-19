@@ -1,5 +1,24 @@
 [
   {
+    "funder": "NDN Foundation (NDN Collective)",
+    "funderType": "Foundation",
+    "link": "https://ndncollective.org/",
+    "keywords": [
+      "Capacity-Building",
+      "Partnership-Building",
+      "Policy & Advocacy"
+    ],
+    "notes": "NDN Foundation’s grantmaking upholds our mission to build the collective power of Indigenous Peoples, communities and Nations to exercise our inherent right to self-determination while fostering a world built on a foundation of justice and equity for all people and Mother Earth.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Grant Opportunities",
+        "url": "https://ndncollective.org/grant-opportunities/"
+      }
+    ],
+    "id": "prospect_1771543689381_39_1raqbxwap"
+  },
+  {
     "funder": "Elevance Health Foundation",
     "funderType": "Foundation",
     "link": "https://elevancehealth.foundation/for-grantseekers",
