@@ -1,5 +1,22 @@
 [
   {
+    "funder": "Joyce Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Michigan",
+      "Minnesota",
+      "Wisconsin"
+    ],
+    "link": "https://www.joycefdn.org/grants",
+    "keywords": [
+      "Culture",
+      "Environmental Health"
+    ],
+    "notes": "The Joyce Foundation accepts grant inquiries online throughout the year. Proposals are considered at meetings of the Foundation’s Board of Directors in April, July, and December. Applicants are strongly encouraged to plan their application and proposal submission process for the April or July meetings, since most grant funds will be distributed at those times.",
+    "pin": false,
+    "id": "prospect_1771527045360_37_ee3ks8tfd"
+  },
+  {
     "funder": "Indian Health Service",
     "funderType": "Federal",
     "link": "https://www.ihs.gov/",
