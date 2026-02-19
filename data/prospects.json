@@ -1,5 +1,23 @@
 [
   {
+    "funder": "Ben & Jerry Foundation",
+    "funderType": "Foundation",
+    "link": "https://benandjerrysfoundation.org/",
+    "keywords": [
+      "Partnership-Building",
+      "Policy & Advocacy"
+    ],
+    "notes": "We support grassroots organizations working in their communities to achieve social and environmental justice and by doing so help create a better future for all. We are especially interested in supporting communities who have historically been denied power. We believe the people most impacted by injustice are in the best position to propose a solution.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "National Grants Program",
+        "url": "https://benandjerrysfoundation.org/national-grants/"
+      }
+    ],
+    "id": "prospect_1771525880872_34_11fpr2tmg"
+  },
+  {
     "funder": "First Nations Development Institute",
     "funderType": "Foundation",
     "link": "https://www.firstnations.org/grantmaking/",
