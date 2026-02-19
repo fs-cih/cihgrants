@@ -1,5 +1,33 @@
 [
   {
+    "funder": "Elevance Health Foundation",
+    "funderType": "Foundation",
+    "link": "https://elevancehealth.foundation/for-grantseekers",
+    "keywords": [
+      "Behavioral Health",
+      "Early Childhood",
+      "Food Sovereignty",
+      "Maternal Health"
+    ],
+    "notes": "As a catalyst for positive change, Elevance Health Foundation drives innovative and scalable solutions to address physical, behavioral, and social needs. Over the next five years, the Foundation will focus our grantmaking efforts on partnerships and programs that can demonstrate measurable and positive change in four key focus areas: Maternal/Infant Health; Food as Medicine; Behavioral Health; and Community Resiliency & Disaster Relief.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Maternal Health RFP (2026)",
+        "url": "https://elevancehealth.foundation/custom_assets/images/pdf/update_06_2025/Maternal-Infant_RFP%E2%80%946-2025.pdf"
+      },
+      {
+        "text": "Food as Medicine RFP (2027)",
+        "url": "https://elevancehealth.foundation/custom_assets/images/pdf/update_06_2025/EHF_FAM%20_%20RFP_6-2025.pdf"
+      },
+      {
+        "text": "Behavioral Health RFP (2027)",
+        "url": "https://elevancehealth.foundation/custom_assets/images/pdf/EHF-Behavioral-Health-RFP-10-25.pdf"
+      }
+    ],
+    "id": "prospect_1771529990446_38_6t2zw37x6"
+  },
+  {
     "funder": "Joyce Foundation",
     "funderType": "Foundation",
     "geography": [
