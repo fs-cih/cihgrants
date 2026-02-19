@@ -12,10 +12,15 @@
       "Healthcare",
       "Infectious Diseases",
       "Maternal Health",
-      "Public Health"
+      "Public Health",
+      "Substance Use",
+      "Suicide Prevention",
+      "Tobacco Control",
+      "Translation & Implementation",
+      "Violence Prevention"
     ],
     "notes": "",
-    "pin": false,
+    "pin": true,
     "hyperlinks": [
       {
         "text": "Funding Opportunities",
