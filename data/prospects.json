@@ -1,5 +1,30 @@
 [
   {
+    "funder": "Indian Health Service",
+    "funderType": "Federal",
+    "link": "https://www.ihs.gov/",
+    "keywords": [
+      "Cancer",
+      "Community Health Workers",
+      "Diabetes",
+      "Early Childhood",
+      "Health Communications",
+      "Healthcare",
+      "Infectious Diseases",
+      "Maternal Health",
+      "Public Health"
+    ],
+    "notes": "",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Funding Opportunities",
+        "url": "https://www.ihs.gov/dgm/funding/"
+      }
+    ],
+    "id": "prospect_1771526194255_36_oewm1hmfq"
+  },
+  {
     "funder": "Clif Family Foundation",
     "funderType": "Foundation",
     "link": "https://cliffamilyfoundation.org/grants-program",
