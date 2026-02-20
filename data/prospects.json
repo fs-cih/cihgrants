@@ -1,5 +1,23 @@
 [
   {
+    "funder": "Bristol Myers Squibb Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html",
+    "keywords": [
+      "Disparities",
+      "Healthcare"
+    ],
+    "notes": "Bristol Myers Squibb is committed to the important work we do to increase health equity for better patient outcomes. We provide funding to support effective solutions with the goal of removing barriers and improving access to quality care for medically underserved and diverse patient populations. As part of our commitment, we accept applications throughout the year to support initiatives focused on our therapeutic areas of interest in one or more of these categories: Disease awareness & education; Access to quality care; Patient support services; and Health equity policy and advocacy support.",
+    "pin": false,
+    "hyperlinks": [
+      {
+        "text": "Funding Opportunities",
+        "url": "https://www.bms.com/about-us/responsibility/corporate-giving/current-funding-opportunities.html"
+      }
+    ],
+    "id": "prospect_1771551750465_40_52vuq24yv"
+  },
+  {
     "funder": "NDN Foundation (NDN Collective)",
     "funderType": "Foundation",
     "link": "https://ndncollective.org/",
