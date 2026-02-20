@@ -11,7 +11,9 @@
     "addedDate": "2026-01-01",
     "link": "https://grants.nih.gov/grants/guide/pa-files/PA-25-080.html",
     "description": "The purpose of the NIH Research Conference Grant (R13) is to support high quality conferences that are relevant to the public health and to the scientific mission of the participating Institutes and Centers.",
-    "keywords": [],
+    "keywords": [
+      "Convening"
+    ],
     "pin": false,
     "letterOfInterest": false,
     "id": "grant_1771539487404_63_a1el3ldd3",
