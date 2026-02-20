@@ -779,6 +779,10 @@ function renderProspect(p) {
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
   }
+  // Add Cold Call Required pill after funder type
+  if (p.coldCall) {
+    keywords.push({ text: "Cold Call Required", className: "kcard-cold-call" });
+  }
   if (p.piRestriction && p.piRestriction !== "None") {
     keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
   }
@@ -933,43 +937,37 @@ function renderGrant(g, selectedKeywords = []) {
   const preview = hasOverflow ? fullDescription.slice(0, previewLimit).trimEnd() : fullDescription;
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
-  // Organize pills into two rows
-  // Row 1: Pinned (if applicable), New (if applicable), Keywords
+  // All pills in one row: Pinned, New, LOI, PI restriction, Geographic restriction, Keywords
   const row1Pills = [];
-  const row2Pills = [];
   
-  // Row 1: Add pin indicator as first pill if pinned
+  // Add pin indicator as first pill if pinned
   if (g.pin) {
     row1Pills.push({ text: "★ Pinned", className: "pin-indicator" });
   }
-  // Row 1: Add "New" badge
+  // Add "New" badge
   if (isNewGrant(g)) {
     row1Pills.push({ text: "New", className: "kcard-new" });
   }
-  // Row 1: Add keywords
-  (g.keywords || []).forEach(kw => {
-    // Check if this keyword matches any selected keyword
-    const isMatched = selectedKeywords.includes(kw);
-    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
-  });
-  
-  // Row 2: LOI, PI restrictions, Geographic restrictions
   // Add Letter of Interest pill if applicable
   if (g.letterOfInterest) {
-    row2Pills.push({ text: "Letter of Interest", className: "kcard-loi" });
+    row1Pills.push({ text: "Letter of Interest", className: "kcard-loi" });
   }
   // Add PI restriction
   if (g.piRestriction && g.piRestriction !== "None") {
-    row2Pills.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
+    row1Pills.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
   }
   // Add geographic restrictions
   if (g.geography && Array.isArray(g.geography) && g.geography.length > 0) {
-    // Sort states alphabetically and add each as a pill
     const sortedStates = [...g.geography].sort();
     sortedStates.forEach(state => {
-      row2Pills.push({ text: state, className: "kcard-state" });
+      row1Pills.push({ text: state, className: "kcard-state" });
     });
   }
+  // Add keywords
+  (g.keywords || []).forEach(kw => {
+    const isMatched = selectedKeywords.includes(kw);
+    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+  });
 
   const formatPills = (pills) => pills
     .map(pill => {
@@ -982,8 +980,7 @@ function renderGrant(g, selectedKeywords = []) {
     .join("");
 
   const row1Markup = row1Pills.length > 0 ? `<div class="grant-pills-row1">${formatPills(row1Pills)}</div>` : "";
-  const row2Markup = row2Pills.length > 0 ? `<div class="grant-pills-row2">${formatPills(row2Pills)}</div>` : "";
-  const pillsMarkup = row1Markup || row2Markup ? `<div class="grant-top">${row1Markup}${row2Markup}</div>` : "";
+  const pillsMarkup = row1Markup ? `<div class="grant-top">${row1Markup}</div>` : "";
 
   const limitations = (g.limitations || []).map(l => `<span class="meta-tag">${l}</span>`).join("");
 
@@ -1081,6 +1078,9 @@ function renderGrant(g, selectedKeywords = []) {
           const nestedKeywords = [];
           if (isNewGrant(ng)) {
             nestedKeywords.push({ text: "New", className: "kcard-new" });
+          }
+          if (ng.letterOfInterest) {
+            nestedKeywords.push({ text: "Letter of Interest", className: "kcard-loi" });
           }
           if (ng.piRestriction && ng.piRestriction !== "None") {
             nestedKeywords.push({ text: ng.piRestriction, className: "kcard-pi-restriction" });
@@ -1418,6 +1418,12 @@ function populateProspectDialog(prospect = {}) {
   document.getElementById("p_invitationOnly_yes").checked = prospect.invitationOnly === true;
   document.getElementById("p_invitationOnly_no").checked = prospect.invitationOnly !== true;
   
+  document.getElementById("p_loi_yes").checked = prospect.letterOfInterest === true;
+  document.getElementById("p_loi_no").checked = prospect.letterOfInterest !== true;
+  
+  document.getElementById("p_coldCall_yes").checked = prospect.coldCall === true;
+  document.getElementById("p_coldCall_no").checked = prospect.coldCall !== true;
+  
   document.getElementById("p_link").value = prospect.link || "";
   [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
   document.getElementById("p_notes").value = prospect.notes || "";
@@ -1639,6 +1645,14 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   // Add invitation only field
   const invitationOnlyValue = document.querySelector('input[name="p_invitationOnly"]:checked').value;
   prospect.invitationOnly = invitationOnlyValue === "yes";
+  
+  // Add Letter of Interest field
+  const loiValue = document.querySelector('input[name="p_loi"]:checked').value;
+  prospect.letterOfInterest = loiValue === "yes";
+  
+  // Add Cold Call Required field
+  const coldCallValue = document.querySelector('input[name="p_coldCall"]:checked').value;
+  prospect.coldCall = coldCallValue === "yes";
   
   // Add hyperlinks
   const hyperlinks = [];
@@ -2107,9 +2121,8 @@ function renderGrantForPopup(g, selectedKeywords = []) {
   const preview = hasOverflow ? fullDescription.slice(0, previewLimit).trimEnd() : fullDescription;
   const rest = hasOverflow ? fullDescription.slice(previewLimit) : "";
 
-  // Organize pills into two rows (same as normal rendering)
+  // All pills in one row: Pinned, New, LOI, PI restriction, Geographic restriction, Keywords (same as normal rendering)
   const row1Pills = [];
-  const row2Pills = [];
   
   if (g.pin) {
     row1Pills.push({ text: "★ Pinned", className: "pin-indicator" });
@@ -2117,23 +2130,22 @@ function renderGrantForPopup(g, selectedKeywords = []) {
   if (isNewGrant(g)) {
     row1Pills.push({ text: "New", className: "kcard-new" });
   }
-  (g.keywords || []).forEach(kw => {
-    const isMatched = selectedKeywords.includes(kw);
-    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
-  });
-  
   if (g.letterOfInterest) {
-    row2Pills.push({ text: "Letter of Interest", className: "kcard-loi" });
+    row1Pills.push({ text: "Letter of Interest", className: "kcard-loi" });
   }
   if (g.piRestriction && g.piRestriction !== "None") {
-    row2Pills.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
+    row1Pills.push({ text: g.piRestriction, className: "kcard-pi-restriction" });
   }
   if (g.geography && Array.isArray(g.geography) && g.geography.length > 0) {
     const sortedStates = [...g.geography].sort();
     sortedStates.forEach(state => {
-      row2Pills.push({ text: state, className: "kcard-state" });
+      row1Pills.push({ text: state, className: "kcard-state" });
     });
   }
+  (g.keywords || []).forEach(kw => {
+    const isMatched = selectedKeywords.includes(kw);
+    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+  });
 
   const formatPills = (pills) => pills
     .map(pill => {
@@ -2145,8 +2157,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
     .join("");
 
   const row1Markup = row1Pills.length > 0 ? `<div class="grant-pills-row1">${formatPills(row1Pills)}</div>` : "";
-  const row2Markup = row2Pills.length > 0 ? `<div class="grant-pills-row2">${formatPills(row2Pills)}</div>` : "";
-  const pillsMarkup = row1Markup || row2Markup ? `<div class="grant-top">${row1Markup}${row2Markup}</div>` : "";
+  const pillsMarkup = row1Markup ? `<div class="grant-top">${row1Markup}</div>` : "";
 
   const funderTypeMarkup = (g.funderType === "Federal" || g.funderType === "Foundation" || g.funderType === "State") && g.agencyName
     ? `${escapeHtml(g.funderType)} ${formatAgencyPills(g.agencyName)}`
