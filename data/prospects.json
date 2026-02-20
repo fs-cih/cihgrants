@@ -1,5 +1,20 @@
 [
   {
+    "funder": "Kalliopeia Foundation",
+    "funderType": "Foundation",
+    "link": "https://kalliopeia.org/grants-program/",
+    "keywords": [
+      "Culture",
+      "Environmental Health"
+    ],
+    "notes": "Our grants are of different sizes and scope, and can be general operating or project support, depending on the particular need. Grant decisions are rooted in trust and guided by our mission to cultivate the connections between ecology, culture, and spirituality.",
+    "pin": false,
+    "invitationOnly": true,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1771592111873_41_7z9bg3qws"
+  },
+  {
     "funder": "Bristol Myers Squibb Foundation",
     "funderType": "Foundation",
     "link": "https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html",
