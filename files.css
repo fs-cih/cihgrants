@@ -415,6 +415,12 @@ h1 {
   color: white;
 }
 
+.kcard-cold-call {
+  background: #b2f5ea;
+  border-color: #81e6d9;
+  color: #1d2a39;
+}
+
 .eligibility-pill {
   display: inline-block;
   border-radius: 999px;
