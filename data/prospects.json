@@ -785,7 +785,6 @@
     "funder": "Arthur M. Blank Family Foundation",
     "funderType": "Foundation",
     "geography": [
-      "Georgia",
       "Montana"
     ],
     "link": "https://blankfoundation.org/",
@@ -796,6 +795,8 @@
     "notes": "",
     "pin": false,
     "invitationOnly": true,
+    "letterOfInterest": false,
+    "coldCall": false,
     "id": "prospect_1770999133089_3_xnibc0zgk"
   },
   {
