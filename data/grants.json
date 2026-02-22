@@ -1,5 +1,27 @@
 [
   {
+    "title": "Engagement Award: Convening Support - Spring 2026 Cycle",
+    "funderType": "Foundation",
+    "agencyName": "PCORI",
+    "eligibility": "Prime",
+    "amount": 125000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "1 year",
+    "addedDate": "2026-01-01",
+    "link": "https://www.pcori.org/funding-opportunities/announcement/engagement-award-convening-support-spring-2026-cycle",
+    "description": "This opportunity supports projects that include multi-party convenings, meetings and conferences which bring together communities of patients, families, caregivers and individuals within the broader healthcare community. These must align with PCORI’s mission and help expand patient-centered comparative clinical effectiveness research (CER). All proposed projects must show how they will expand patient-centered CER. Proposed projects must focus on one of two funding tracks — Convening Around Patient-Centered CER or Convening Around Dissemination of PCORI-Funded Research Findings. Applicants will self-select the focus at the time of LOI submission.",
+    "keywords": [
+      "Convening"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "id": "grant_1771725937195_64_6ddm1recn",
+    "deadlines": [
+      "2026-03-30"
+    ]
+  },
+  {
     "title": "NIH Support for Conferences and Scientific Meetings (Parent R13 Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, NEI, NHGRI, NIAID, NIAMS, NIGMS, NINDS, NLM, NCCIH, NCATS, OSC, NHLBI, NIDCR, NIAAA, NICHD, NIDDK, NIDCD, NCI, NBIB, NIA, NINR, NIDA, NIEHS, NIMHD, SRP, ORIP, ORWH",
