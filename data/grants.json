@@ -1,5 +1,27 @@
 [
   {
+    "title": "Project Concepts",
+    "funderType": "Foundation",
+    "agencyName": "Breakthrough T1D",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "",
+    "duration": "",
+    "addedDate": "2026-01-01",
+    "link": "https://www.breakthrought1d.org/explore-research/funding-opportunities/",
+    "description": "A semi-annual submission for Strategic Research Agreement Letters of Intent that address Breakthrough T1D’s current research strategy. ",
+    "keywords": [
+      "Diabetes"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "id": "grant_1771805911081_65_nqpls0tcs",
+    "deadlines": [
+      "2026-05-07"
+    ]
+  },
+  {
     "title": "Engagement Award: Convening Support - Spring 2026 Cycle",
     "funderType": "Foundation",
     "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
