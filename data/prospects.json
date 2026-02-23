@@ -441,12 +441,15 @@
     "funder": "Kresge Foundation",
     "funderType": "Foundation",
     "geography": [
-      "Minnesota"
+      "Minnesota",
+      "South Dakota"
     ],
     "link": "https://kresge.org/",
     "keywords": [],
-    "notes": "The giving of this foundation focuses on American cities. While the website does not specify what constitutes a city, they have worked with the US Conference of Mayors, which classifies cities as a population center with 30,000 or more residents—so Duluth, Minnesota is likely the only place with a concentration of CIH work that would align with the giving of this foundation. Their focus areas include arts and culture; education; environment; health; human services; and social investments.",
+    "notes": "The giving of this foundation focuses on American cities. While the website does not specify what constitutes a city, they have worked with the US Conference of Mayors, which classifies cities as a population center with 30,000 or more residents—so Duluth and Rapid City are likely the only places with a concentration of CIH work that would align with the giving of this foundation. Their focus areas include arts and culture; education; environment; health; human services; and social investments.",
     "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
     "hyperlinks": [
       {
         "text": "Funding Opportunities",
