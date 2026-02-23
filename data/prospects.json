@@ -1,5 +1,27 @@
 [
   {
+    "funder": "Centene Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.centene.com/who-we-are/centene-foundation.html",
+    "keywords": [
+      "Behavioral Health",
+      "Healthcare",
+      "Mental Health",
+      "Public Health"
+    ],
+    "notes": "In 2026, the Centene Foundation will begin an invitation-only model for grant applications. This new approach allows us to concentrate resources on partnerships that align with our mission and reflect our strategic goals, fostering deeper collaborations and enhancing improved health outcomes for our communities. We are excited about this new direction in our grant-making efforts and appreciate your commitment to advancing community health. Questions? Contact foundation@centene.com. Guidelines, deadlines, or applications are not directly available through our website.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": true,
+    "hyperlinks": [
+      {
+        "text": "Becoming a Partner",
+        "url": "https://www.centene.com/who-we-are/centene-foundation/becoming-a-partner.html"
+      }
+    ],
+    "id": "prospect_1771876115779_46_219ba2jfe"
+  },
+  {
     "funder": "Ardmore Institute of Health",
     "funderType": "Foundation",
     "link": "https://www.ardmoreinstituteofhealth.org/apply",
