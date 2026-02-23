@@ -1,5 +1,19 @@
 [
   {
+    "funder": "Better Way Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.betterwayfoundation.org/",
+    "keywords": [
+      "Culture",
+      "Early Childhood"
+    ],
+    "notes": "Better Way Foundation is honored to partner with Native American leaders and communities to fulfill their vision for high-quality, community-driven, culturally rooted early childhood learning and development.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": true,
+    "id": "prospect_1771879759991_52_5q35lp7vy"
+  },
+  {
     "funder": "MacArthur Foundation",
     "funderType": "Foundation",
     "link": "https://www.macfound.org/grants/info-for-grantseekers",
