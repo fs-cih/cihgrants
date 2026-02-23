@@ -980,7 +980,7 @@
     "funderType": "Federal",
     "agencyName": "NIH, NIMHD, NIDA, NIMH, NCI, NIA, NINR",
     "eligibility": "Prime",
-    "amount": 500000,
+    "amount": 0,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
@@ -990,6 +990,7 @@
     "keywords": [],
     "pin": false,
     "letterOfInterest": false,
+    "nihUnlimitedFunds": true,
     "id": "grant_1770913027761_27_ppv8aq0kn",
     "deadlines": [
       "2026-06-05",
