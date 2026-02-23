@@ -1,5 +1,21 @@
 [
   {
+    "funder": "American Medical Association",
+    "funderType": "Foundation",
+    "link": "https://www.ama-assn.org/topics/ama-grants",
+    "keywords": [
+      "Disparities",
+      "Healthcare",
+      "Public Health",
+      "Rural"
+    ],
+    "notes": "Grants typically require a physician principal investigator.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1771877115020_49_k58gsw6h1"
+  },
+  {
     "funder": "Richard E. & Nancy P. Marriott Foundation",
     "funderType": "Foundation",
     "geography": [
