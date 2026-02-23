@@ -1,5 +1,24 @@
 [
   {
+    "funder": "American Diabetes Association",
+    "funderType": "Foundation",
+    "link": "https://professional.diabetes.org/",
+    "keywords": [
+      "Diabetes"
+    ],
+    "notes": "",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Current Opportunities",
+        "url": "https://professional.diabetes.org/research-grants/current-funding-opportunities"
+      }
+    ],
+    "id": "prospect_1771855643993_44_bpd07zp1m"
+  },
+  {
     "funder": "Breakthrough T1D",
     "funderType": "Foundation",
     "link": "https://www.breakthrought1d.org/",
