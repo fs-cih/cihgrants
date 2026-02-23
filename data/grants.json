@@ -1192,7 +1192,7 @@
     "funderType": "Federal",
     "agencyName": "NIH, NIDCD",
     "eligibility": "Prime",
-    "amount": 500000,
+    "amount": 0,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
@@ -1204,6 +1204,7 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "nihUnlimitedFunds": true,
     "id": "grant_1770909082796_21_z91ja5aaw",
     "deadlines": [
       "2026-06-12",
