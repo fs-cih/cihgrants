@@ -1,5 +1,24 @@
 [
   {
+    "funder": "Breakthrough T1D",
+    "funderType": "Foundation",
+    "link": "https://www.breakthrought1d.org/",
+    "keywords": [
+      "Diabetes"
+    ],
+    "notes": "",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Open Opportunities",
+        "url": "https://www.breakthrought1d.org/explore-research/funding-opportunities/"
+      }
+    ],
+    "id": "prospect_1771805785200_43_qrho3ykph"
+  },
+  {
     "funder": "Montana Community Foundation",
     "funderType": "Foundation",
     "geography": [
