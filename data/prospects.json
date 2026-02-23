@@ -1,5 +1,19 @@
 [
   {
+    "funder": "MacArthur Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.macfound.org/grants/info-for-grantseekers",
+    "keywords": [
+      "Healthcare",
+      "Public Health"
+    ],
+    "notes": "From time to time, we may announce an open call for proposals to advance specific program goals. In such instances, information will be available on our website.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1771879521491_51_3rmd9c0ma"
+  },
+  {
     "funder": "Lilly Endowment",
     "funderType": "Foundation",
     "link": "https://lillyendowment.org/open-initiatives/",
