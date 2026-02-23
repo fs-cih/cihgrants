@@ -1,6 +1,6 @@
 const TODAY = new Date().toISOString().slice(0, 10);
-const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000';
-const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000';
+const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000 per year';
+const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000 per year';
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
