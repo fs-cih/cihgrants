@@ -1311,7 +1311,7 @@
     "funderType": "Federal",
     "agencyName": "NIH, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NIAMS, NIBIB, NICHD, NIDCR, NIDDK, NIDA, NCI, NIEHS, NIGMS, NIMH, NINDS, NINR, NIDCD, NIMHD, NLM, NCCIH, ORIP",
     "eligibility": "Prime",
-    "amount": 500000,
+    "amount": 0,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
@@ -1323,6 +1323,7 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "nihUnlimitedFunds": true,
     "parentGrantId": "grant_1770908015128_15_x7x7pcpf9",
     "id": "grant_1770908535409_16_bzfyhiqq6",
     "deadlines": [
