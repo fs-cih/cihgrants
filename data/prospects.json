@@ -1,5 +1,18 @@
 [
   {
+    "funder": "Lilly Endowment",
+    "funderType": "Foundation",
+    "link": "https://lillyendowment.org/open-initiatives/",
+    "keywords": [
+      "Early Childhood"
+    ],
+    "notes": "",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1771878413721_50_9mc694edg"
+  },
+  {
     "funder": "American Medical Association",
     "funderType": "Foundation",
     "link": "https://www.ama-assn.org/topics/ama-grants",
