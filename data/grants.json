@@ -201,7 +201,7 @@
     "funderType": "Federal",
     "agencyName": "NIH, NIMH",
     "eligibility": "Prime",
-    "amount": 500000,
+    "amount": 0,
     "amountDetail": "per year",
     "amountIdc": "Excluding IDC",
     "duration": "5 years",
@@ -214,6 +214,7 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "nihUnlimitedFunds": true,
     "id": "grant_1771291424923_57_8g3lhraro",
     "deadlines": [
       "2026-06-05",
