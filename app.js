@@ -1,4 +1,6 @@
 const TODAY = new Date().toISOString().slice(0, 10);
+const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000';
+const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000';
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
@@ -459,6 +461,12 @@ function updateAgencyNameField() {
   if (!shouldShow) {
     agencyInput.value = "";
   }
+  const nihLabel = document.getElementById("a_nihUnlimitedFunds_label");
+  const isFederal = funderType === "Federal";
+  nihLabel.style.display = isFederal ? "" : "none";
+  if (!isFederal) {
+    document.getElementById("a_nihUnlimitedFunds_no").checked = true;
+  }
 }
 
 function fillSelect(el, arr, first) {
@@ -537,10 +545,17 @@ function formatAmount(value) {
 }
 
 function formatIdcNote(grant) {
-  if (!grant.amount) {
+  if (!grant.amount && !grant.nihUnlimitedFunds) {
     return "IDC not specified";
   }
   return grant.amountIdc || "Not specified";
+}
+
+function formatGrantAmountHtml(g) {
+  if (g.nihUnlimitedFunds) {
+    return NIH_UNLIMITED_FUNDS_TEXT_HTML;
+  }
+  return formatAmount(g.amount) + (g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : '');
 }
 
 function apply() {
@@ -783,6 +798,10 @@ function renderProspect(p) {
   if (p.coldCall) {
     keywords.push({ text: "Cold Call Required", className: "kcard-cold-call" });
   }
+  // Add Letter of Interest pill if applicable
+  if (p.letterOfInterest) {
+    keywords.push({ text: "Letter of Interest", className: "kcard-loi" });
+  }
   if (p.piRestriction && p.piRestriction !== "None") {
     keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
   }
@@ -1014,7 +1033,7 @@ function renderGrant(g, selectedKeywords = []) {
     <h3><a href="${sanitizeUrl(g.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(g.title)}</a></h3>
     ${funderTypeMarkup}
     ${deadlineMarkup(g)}
-    <p class="meta-row"><strong>Amount:</strong> ${formatAmount(g.amount)}${g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : ""} <span class="muted">(${formatIdcNote(g)})</span></p>
+    <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">(${formatIdcNote(g)})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${escapeHtml(eligibilityText)}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(preview)}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
@@ -1145,7 +1164,7 @@ function renderGrant(g, selectedKeywords = []) {
               </div>
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
-              <p class="meta-row"><strong>Amount:</strong> ${formatAmount(ng.amount)}${ng.amountDetail ? ` ${escapeHtml(ng.amountDetail)}` : ""} <span class="muted">(${formatIdcNote(ng)})</span></p>
+              <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(ng)} <span class="muted">(${formatIdcNote(ng)})</span></p>
               <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(ng.duration || "Not specified")}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${escapeHtml(nestedEligibilityText)}</span></p>
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
@@ -1215,6 +1234,7 @@ function resetAdminForm() {
   document.getElementById("a_token").value = "";
   document.getElementById("a_pin_no").checked = true;
   document.getElementById("a_loi_no").checked = true;
+  document.getElementById("a_nihUnlimitedFunds_no").checked = true;
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
@@ -1310,6 +1330,13 @@ function openAdminDialog(grant = null, index = null) {
     document.getElementById("a_loi_yes").checked = true;
   } else {
     document.getElementById("a_loi_no").checked = true;
+  }
+  
+  // Set NIH Unlimited Funds radio buttons
+  if (grant.nihUnlimitedFunds) {
+    document.getElementById("a_nihUnlimitedFunds_yes").checked = true;
+  } else {
+    document.getElementById("a_nihUnlimitedFunds_no").checked = true;
   }
   
   document.getElementById("a_title").value = grant.title || "";
@@ -1512,6 +1539,10 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   } else {
     grant.letterOfInterest = false;
   }
+  
+  // Add NIH Unlimited Funds field
+  const nihValue = document.querySelector('input[name="nihUnlimitedFunds"]:checked')?.value || 'no';
+  grant.nihUnlimitedFunds = nihValue === "yes";
   
   // Add parent grant ID if selected
   const parentGrantId = document.getElementById("a_parentGrantId").value;
@@ -2021,7 +2052,7 @@ function downloadCurrentViewPdf() {
       subtitle: g.link || '',
       metadata,
       bodyLines: [
-        `Amount: ${formatAmount(g.amount)}`,
+        `Amount: ${g.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(g.amount)}`,
         g.duration && `Duration: ${sanitizeText(g.duration)}`,
         deadlineText,
         g.description && `Description: ${sanitizeText(g.description)}`
@@ -2046,7 +2077,7 @@ function downloadCurrentViewPdf() {
         subtitle: child.link || '',
         metadata: childMetadata,
         bodyLines: [
-          `Amount: ${formatAmount(child.amount)}`,
+          `Amount: ${child.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(child.amount)}`,
           child.duration && `Duration: ${sanitizeText(child.duration)}`,
           child.description && `Description: ${sanitizeText(child.description)}`
         ].filter(Boolean),
@@ -2177,7 +2208,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
       <strong>Funder:</strong> ${funderTypeMarkup} | 
       <strong>Eligibility:</strong> ${eligibilityMarkup}
     </p>
-    ${g.amount ? `<p class="meta-row"><strong>Amount:</strong> $${g.amount.toLocaleString()} ${escapeHtml(g.amountDetail || "")}</p>` : ""}
+    ${(g.nihUnlimitedFunds || g.amount) ? `<p class="meta-row"><strong>Amount:</strong> ${g.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_HTML : `$${g.amount.toLocaleString()} ${escapeHtml(g.amountDetail || "")}`}</p>` : ""}
     ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${hasOverflow ? `<button class="toggle">Show more</button>` : ""}

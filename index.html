@@ -129,6 +129,18 @@
       <label id="a_agencyName_label" style="display: none;">Agency/Funder Name<input id="a_agencyName" class="control" type="text"></label>
       <label>Eligibility<select id="a_eligibility" class="control"></select></label>
       <label>Amount (USD)<input id="a_amount" class="control" type="number" min="0"></label>
+      <label id="a_nihUnlimitedFunds_label" style="display: none;">NIH Unlimited Funds?
+        <div style="display: flex; gap: 12px; padding: 8px 0;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="nihUnlimitedFunds" value="no" id="a_nihUnlimitedFunds_no" checked>
+            <span>No</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="nihUnlimitedFunds" value="yes" id="a_nihUnlimitedFunds_yes">
+            <span>Yes</span>
+          </label>
+        </div>
+      </label>
       <label>Amount Detail<select id="a_amountDetail" class="control"></select></label>
       <label>Indirect Costs<select id="a_amountIdc" class="control"></select></label>
       <label>Duration<input id="a_duration" class="control" placeholder="e.g., 2 years"></label>
