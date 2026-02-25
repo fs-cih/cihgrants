@@ -1,5 +1,16 @@
 [
   {
+    "funder": "Agency Fund",
+    "funderType": "Foundation",
+    "link": "https://www.agency.fund/",
+    "keywords": [],
+    "notes": "This foundation awards funds to promote human agency, by which they mean \"the capacity for self-determination. When you have agency, you envision the future that you want and you consciously chart your path toward it, accounting for the reality of your circumstances as well as your personal interests and values. Agency is closely related to the concepts of capability, freedom, dignity, and flourishing.\"",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1772049074957_53_wf8ockti5"
+  },
+  {
     "funder": "Better Way Foundation",
     "funderType": "Foundation",
     "link": "https://www.betterwayfoundation.org/",
