@@ -1,5 +1,26 @@
 [
   {
+    "funder": "Coefficient Giving",
+    "funderType": "Foundation",
+    "link": "https://coefficientgiving.org/",
+    "keywords": [
+      "Environmental Health",
+      "Healthcare",
+      "Public Health"
+    ],
+    "notes": "As noted on their site, \"We find most of our giving opportunities through proactive research.\" However, they have some funds that seek inquiries, which is linked on this prospect card. ",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Submit Information",
+        "url": "https://coefficientgiving.org/apply-for-funding/"
+      }
+    ],
+    "id": "prospect_1772049325904_54_o31va4yhd"
+  },
+  {
     "funder": "Agency Fund",
     "funderType": "Foundation",
     "link": "https://www.agency.fund/",
