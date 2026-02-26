@@ -2012,7 +2012,12 @@ function downloadCurrentViewPdf() {
     const itemWidth = contentWidth - indent;
     
     // Calculate height needed for this item
+    // Set font before splitTextToSize so jsPDF uses correct metrics for wrapping
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(11);
     const titleLines = pdf.splitTextToSize(title || 'Untitled', itemWidth);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(9);
     const subtitleLines = subtitle ? pdf.splitTextToSize(subtitle, itemWidth) : [];
     const metadataLines = metadata.filter(Boolean).map(m => pdf.splitTextToSize(m, itemWidth));
     const bodySegments = bodyLines.map(line => pdf.splitTextToSize(line, itemWidth));
