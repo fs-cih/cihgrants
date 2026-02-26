@@ -880,6 +880,52 @@ function renderProspect(p) {
   return div;
 }
 
+function buildShareMailto(g) {
+  const title = g.title || "";
+  const subject = encodeURIComponent("Potential Grant: " + title);
+
+  // Funder: first item in comma-separated agencyName/federalAgency
+  const agencyName = g.agencyName || g.federalAgency || "";
+  const funder = agencyName ? agencyName.split(',')[0].trim() : "";
+
+  // Build deadline lines
+  let deadlineLine = "";
+  let additionalDeadlineLine = "";
+  if (g.deadlineOpen) {
+    deadlineLine = "Deadline: Always Open";
+  } else if (g.deadlineRecurring) {
+    deadlineLine = "Deadline: " + g.deadlineRecurring;
+  } else {
+    const deadlines = upcomingDeadlines(g);
+    if (!deadlines.length) {
+      deadlineLine = "Deadline: \u2014";
+    } else if (deadlines.length === 1) {
+      deadlineLine = "Deadline: " + formatDate(deadlines[0]);
+    } else {
+      deadlineLine = "Deadline: " + formatDate(deadlines[0]);
+      additionalDeadlineLine = "Additional Deadlines: " + deadlines.slice(1).map(d => formatDate(d)).join(", ");
+    }
+  }
+
+  const bodyLines = [
+    "Hi! The following grant opportunity is currently open and may align with your work. To explore additional grant opportunities, you can check out the CIH Grant & Prospect Opportunities Database: https://fs-cih.github.io/cihgrants/",
+    "",
+    "Title: " + title,
+    "Funder Type: " + (g.funderType || ""),
+    "Funder: " + funder,
+    deadlineLine,
+  ];
+  if (additionalDeadlineLine) {
+    bodyLines.push(additionalDeadlineLine);
+  }
+  bodyLines.push("Duration: " + (g.duration || "Not specified"));
+  bodyLines.push("Eligibility: " + (g.eligibility || "Not specified"));
+  bodyLines.push("Description: " + (g.description || ""));
+
+  const body = encodeURIComponent(bodyLines.join("\n"));
+  return "mailto:?subject=" + subject + "&body=" + body;
+}
+
 function deadlineMarkup(g) {
   // Handle open deadlines
   if (g.deadlineOpen) {
@@ -1041,8 +1087,13 @@ function renderGrant(g, selectedKeywords = []) {
     ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
     ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
-    <div class="card-actions"><button class="btn edit-btn" type="button">Edit</button></div>
+    <div class="card-actions"><button class="btn btn-share share-btn" type="button">Share</button><button class="btn edit-btn" type="button">Edit</button></div>
   `;
+
+  const shareBtn = div.querySelector(".share-btn");
+  shareBtn.onclick = () => {
+    window.location.href = buildShareMailto(g);
+  };
 
   const editBtn = div.querySelector(".edit-btn");
   editBtn.onclick = () => {
@@ -1170,11 +1221,18 @@ function renderGrant(g, selectedKeywords = []) {
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
-              <div class="card-actions"><button class="btn edit-nested-btn" type="button">Edit</button></div>
+              <div class="card-actions"><button class="btn btn-share share-nested-btn" type="button">Share</button><button class="btn edit-nested-btn" type="button">Edit</button></div>
             </div>
           `;
           nestedItem.dataset.expanded = "true";
           
+          // Add share button functionality for nested grant
+          const shareNestedBtn = nestedItem.querySelector(".share-nested-btn");
+          shareNestedBtn.onclick = (e) => {
+            e.stopPropagation();
+            window.location.href = buildShareMailto(ng);
+          };
+
           // Add edit button functionality for nested grant
           const editNestedBtn = nestedItem.querySelector(".edit-nested-btn");
           editNestedBtn.onclick = (e) => {

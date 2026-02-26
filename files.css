@@ -646,9 +646,16 @@ h1 {
   margin-top: 12px;
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
 }
 
-.deadline-badge {
+.btn.btn-share {
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  color: #1d2a39;
+}
+
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
