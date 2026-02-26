@@ -883,6 +883,7 @@ function renderProspect(p) {
 function buildShareMailto(g) {
   const title = g.title || "";
   const subject = encodeURIComponent("Potential Grant: " + title);
+  const grantUrl = sanitizeUrl(g.link || "");
 
   // Funder: first item in comma-separated agencyName/federalAgency
   const agencyName = g.agencyName || g.federalAgency || "";
@@ -907,22 +908,27 @@ function buildShareMailto(g) {
     }
   }
 
+  const cihDatabaseUrl = "https://fs-cih.github.io/cihgrants/";
+  const titleMarkup = grantUrl
+    ? `<a href="${grantUrl}">${escapeHtml(title)}</a>`
+    : escapeHtml(title);
+
   const bodyLines = [
-    "Hi! The following grant opportunity is currently open and may align with your work. To explore additional grant opportunities, you can check out the CIH Grant & Prospect Opportunities Database: https://fs-cih.github.io/cihgrants/",
+    `Hi! The following grant opportunity is currently open and may align with your work. To explore additional grant opportunities, you can check out the <a href="${cihDatabaseUrl}">CIH Grant & Prospect Opportunities Database</a>.`,
     "",
-    "Title: " + title,
-    "Funder Type: " + (g.funderType || ""),
-    "Funder: " + funder,
-    deadlineLine,
+    `<strong>Title:</strong> ${titleMarkup}`,
+    `<strong>Funder Type:</strong> ${escapeHtml(g.funderType || "")}`,
+    `<strong>Funder:</strong> ${escapeHtml(funder)}`,
+    `<strong>${escapeHtml(deadlineLine.split(":")[0])}:</strong> ${escapeHtml(deadlineLine.split(":").slice(1).join(":").trim())}`,
   ];
   if (additionalDeadlineLine) {
-    bodyLines.push(additionalDeadlineLine);
+    bodyLines.push(`<strong>Additional Deadlines:</strong> ${escapeHtml(additionalDeadlineLine.replace("Additional Deadlines: ", ""))}`);
   }
-  bodyLines.push("Duration: " + (g.duration || "Not specified"));
-  bodyLines.push("Eligibility: " + (g.eligibility || "Not specified"));
-  bodyLines.push("Description: " + (g.description || ""));
+  bodyLines.push(`<strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}`);
+  bodyLines.push(`<strong>Eligibility:</strong> ${escapeHtml(g.eligibility || "Not specified")}`);
+  bodyLines.push(`<strong>Description:</strong> ${escapeHtml(g.description || "")}`);
 
-  const body = encodeURIComponent(bodyLines.join("\n"));
+  const body = encodeURIComponent(bodyLines.join("<br>"));
   return "mailto:?subject=" + subject + "&body=" + body;
 }
 
