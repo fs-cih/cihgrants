@@ -917,6 +917,7 @@ function buildShareMailto(g) {
     `Hi! The following grant opportunity is currently open and may align with your work. To explore additional grant opportunities, you can check out the <a href="${cihDatabaseUrl}">CIH Grant & Prospect Opportunities Database</a>.`,
     "",
     `<strong>Title:</strong> ${titleMarkup}`,
+    grantUrl ? `<strong>Link:</strong> ${escapeHtml(grantUrl)}` : "",
     `<strong>Funder Type:</strong> ${escapeHtml(g.funderType || "")}`,
     `<strong>Funder:</strong> ${escapeHtml(funder)}`,
     `<strong>${escapeHtml(deadlineLine.split(":")[0])}:</strong> ${escapeHtml(deadlineLine.split(":").slice(1).join(":").trim())}`,
@@ -927,6 +928,7 @@ function buildShareMailto(g) {
   bodyLines.push(`<strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}`);
   bodyLines.push(`<strong>Eligibility:</strong> ${escapeHtml(g.eligibility || "Not specified")}`);
   bodyLines.push(`<strong>Description:</strong> ${escapeHtml(g.description || "")}`);
+  bodyLines.push("", "", "");
 
   const body = encodeURIComponent(bodyLines.join("<br>"));
   return "mailto:?subject=" + subject + "&body=" + body;
