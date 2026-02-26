@@ -2145,7 +2145,7 @@ function downloadCurrentViewPdf() {
       if (child.keywords && child.keywords.length > 0) childMetadata.push(`Keywords: ${child.keywords.join(', ')}`);
 
       drawItem({
-        title: `↳ ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
+        title: `>> ${idx + 1}.${childIndex + 1} ${child.title || 'Nested Grant'}`,
         subtitle: child.link || '',
         metadata: childMetadata,
         bodyLines: [
@@ -2153,7 +2153,7 @@ function downloadCurrentViewPdf() {
           child.duration && `Duration: ${sanitizeText(child.duration)}`,
           child.description && `Description: ${sanitizeText(child.description)}`
         ].filter(Boolean),
-        indent: 20
+        indent: 0
       });
     });
   });
