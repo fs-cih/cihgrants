@@ -1,5 +1,23 @@
 [
   {
+    "funder": "Humana Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.humanafoundation.org/grants",
+    "keywords": [
+      "Behavioral Health",
+      "Disparities",
+      "General Research",
+      "Healthcare",
+      "Mental Health"
+    ],
+    "notes": "The Humana Foundation focuses on four primary commitments, all of which have different grant periods and change according to available funds: Connected Healthy Lives, Health Equity Innovation Fund, Disaster Philanthropy, and Research. ",
+    "pin": false,
+    "invitationOnly": true,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1772565779187_58_5oyagcrku"
+  },
+  {
     "funder": "Stavros Niarchos Foundation",
     "funderType": "Foundation",
     "link": "https://www.snf.org/en/apply-now/",
