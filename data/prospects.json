@@ -1,5 +1,28 @@
 [
   {
+    "funder": "Stavros Niarchos Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.snf.org/en/apply-now/",
+    "keywords": [
+      "Arts",
+      "Culture",
+      "Education & Training",
+      "Healthcare",
+      "Public Health"
+    ],
+    "notes": "Please kindly note that as per our processes, SNF cannot evaluate a new grant request from the same organization until one year after the submission of the previous application.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Previous Grants",
+        "url": "https://www.snf.org/en/work/grants/"
+      }
+    ],
+    "id": "prospect_1772563576161_57_d1aswnbia"
+  },
+  {
     "funder": "Cigna Group Foundation",
     "funderType": "Foundation",
     "link": "https://www.thecignagroup.com/our-impact/esg/healthy-society/community/foundation/",
