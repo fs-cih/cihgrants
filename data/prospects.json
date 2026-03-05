@@ -1,5 +1,20 @@
 [
   {
+    "funder": "Indian Land Tenure Foundation",
+    "funderType": "Foundation",
+    "link": "https://iltf.org/grants/",
+    "keywords": [
+      "Culture",
+      "Environmental Health"
+    ],
+    "notes": "ILTF makes grants to Indian nations and nonprofit organizations for land-related initiatives in education, cultural awareness, economic opportunity and legal reform.",
+    "pin": false,
+    "invitationOnly": true,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1772738203197_59_6r8n5rz4u"
+  },
+  {
     "funder": "Humana Foundation",
     "funderType": "Foundation",
     "link": "https://www.humanafoundation.org/grants",
