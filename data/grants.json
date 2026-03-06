@@ -1,5 +1,28 @@
 [
   {
+    "title": "Implementing Zero Suicide in Health Systems",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 400000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-03-06",
+    "link": "https://www.samhsa.gov/grants/grant-announcements/sm-26-008",
+    "description": "The purpose of this program is to provide resources to healthcare systems for implementing the Zero Suicide framework for adults who are at risk of suicide.",
+    "keywords": [
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1772832096815_68_cmhjq0evi",
+    "deadlines": [
+      "2026-04-20"
+    ]
+  },
+  {
     "title": "Children’s Mental Health Initiative",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
