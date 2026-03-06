@@ -1,5 +1,29 @@
 [
   {
+    "title": "Children’s Mental Health Initiative",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 1000000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-03-06",
+    "link": "https://www.samhsa.gov/grants/grant-announcements/sm-26-013",
+    "description": "The purpose of the Children’s Mental Health Initiative program is to provide comprehensive community mental health services to children, youth, and young adults, birth through age 21 with a serious emotional disturbance, which may include efforts to identify and serve children at risk, and their families.",
+    "keywords": [
+      "Adolescent Health",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1772831933197_67_t8g5ovqdu",
+    "deadlines": [
+      "2026-04-20"
+    ]
+  },
+  {
     "title": "BAHI Mid-Year Project Funding Request 2025–2026",
     "funderType": "JHU internal",
     "eligibility": "Prime",
