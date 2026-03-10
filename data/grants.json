@@ -1,5 +1,28 @@
 [
   {
+    "title": "Commonwealth Project",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 75000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "1 year",
+    "addedDate": "2026-02-25",
+    "link": "https://research.jhu.edu/wp-content/uploads/2026/03/2026-Commonwealth-Pilot-Solicitation-Notice.pdf",
+    "description": "The Sidney Kimmel Comprehensive Cancer Center is soliciting research proposals to support a new cycle of the Commonwealth grant pilot projects. Commonwealth funding has been instrumental in supporting some of our most novel and impactful work as well as providing critical support to our shared research infrastructure. Specifically, we are seeking proposals for ambitious one-year team-based translational projects with the potential to impact cancer management. We anticipate being able to fund up to 10 projects for this period. Eligibility: 1 or 2 PIs; at least one must be a Cancer Center Member; the PI must be from Johns Hopkins.",
+    "keywords": [
+      "Cancer",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1773153815282_69_emdcyaw32",
+    "deadlines": [
+      "2026-03-30"
+    ]
+  },
+  {
     "title": "Implementing Zero Suicide in Health Systems",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
