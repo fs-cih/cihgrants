@@ -925,7 +925,8 @@ h1 {
 .kcard-state,
 .kcard-pi-restriction,
 .kcard-loi,
-.kcard-invitation-only {
+.kcard-invitation-only,
+.kcard-cold-call {
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -933,6 +934,7 @@ h1 {
 .kcard-state:hover,
 .kcard-pi-restriction:hover,
 .kcard-loi:hover,
-.kcard-invitation-only:hover {
+.kcard-invitation-only:hover,
+.kcard-cold-call:hover {
   opacity: 0.85;
 }
