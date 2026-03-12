@@ -1,5 +1,18 @@
 [
   {
+    "funder": "Burroughs Wellcome Fund",
+    "funderType": "Foundation",
+    "link": "https://www.bwfund.org/upcoming-deadlines/",
+    "keywords": [
+      "Environmental Health"
+    ],
+    "notes": "The Burroughs Wellcome Fund’s grantmaking strategies support biomedical scientists at the beginning of their careers and areas of science that are poised for significant advancement but are currently undervalued and underfunded. BWF has programs that support primary and secondary students, science and mathematics teachers, institutions, and academic scientists: postdoctoral-faculty bridging awards and faculty awards.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1773343019708_60_rwp1pmoxd"
+  },
+  {
     "funder": "Indian Land Tenure Foundation",
     "funderType": "Foundation",
     "link": "https://iltf.org/grants/",
