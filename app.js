@@ -545,6 +545,9 @@ function formatAmount(value) {
 }
 
 function formatIdcNote(grant) {
+  if (grant.amountIdc === "No IDC Allowed") {
+    return "No IDC Allowed";
+  }
   if (!grant.amount && !grant.nihUnlimitedFunds) {
     return "IDC not specified";
   }
@@ -786,13 +789,13 @@ function renderProspect(p) {
   if (p.pin) {
     keywords.push({ text: "★ Pinned", className: "pin-indicator" });
   }
-  // Add invitation only as maroon pill before other keywords
-  if (p.invitationOnly) {
-    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
-  }
   // Add funder type as blue pill after pin
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
+  }
+  // Add invitation only as maroon pill after funder type
+  if (p.invitationOnly) {
+    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
   }
   // Add Cold Call Required pill after funder type
   if (p.coldCall) {
@@ -874,6 +877,20 @@ function renderProspect(p) {
     pill.addEventListener('click', (e) => {
       e.stopPropagation();
       showPillFilter('invitationOnly', null);
+    });
+  });
+
+  div.querySelectorAll('.kcard-loi').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('letterOfInterest', null);
+    });
+  });
+
+  div.querySelectorAll('.kcard-cold-call').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('coldCall', null);
     });
   });
   
@@ -2425,11 +2442,11 @@ function renderProspectForPopup(p) {
   if (p.pin) {
     keywords.push({ text: "★ Pinned", className: "pin-indicator" });
   }
-  if (p.invitationOnly) {
-    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
-  }
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
+  }
+  if (p.invitationOnly) {
+    keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
   }
   if (p.piRestriction && p.piRestriction !== "None") {
     keywords.push({ text: p.piRestriction, className: "kcard-pi-restriction" });
@@ -2497,38 +2514,23 @@ function showPillFilter(pillType, pillValue) {
         return g.letterOfInterest === true;
       case 'invitationOnly':
         return false; // Grants don't have invitation only
+      case 'coldCall':
+        return false; // Grants don't have cold call required
       default:
         return false;
     }
   });
   
-  // Count nested grants that match the filter criteria
+  // Count all nested grants that are displayed under each parent grant in the popup
   let nestedGrantsCount = 0;
   filteredGrants.forEach(g => {
     const nestedGrants = grants.filter(ng => 
       ng.parentGrantId === g.id && hasActiveDeadline(ng)
     );
-    
-    // Filter nested grants by the same criteria
-    const matchingNested = nestedGrants.filter(ng => {
-      switch(pillType) {
-        case 'state':
-          return ng.geography && ng.geography.includes(pillValue);
-        case 'piRestriction':
-          return ng.piRestriction === pillValue;
-        case 'letterOfInterest':
-          return ng.letterOfInterest === true;
-        case 'invitationOnly':
-          return false; // Grants don't have invitation-only (only prospects do)
-        default:
-          return false;
-      }
-    });
-    
-    nestedGrantsCount += matchingNested.length;
+    nestedGrantsCount += nestedGrants.length;
   });
   
-  // Total count includes parent grants + nested grants that match
+  // Total count includes parent grants + all nested grants shown
   const totalGrantsCount = filteredGrants.length + nestedGrantsCount;
   
   // Filter prospects based on pill type and value
@@ -2539,9 +2541,11 @@ function showPillFilter(pillType, pillValue) {
       case 'piRestriction':
         return p.piRestriction === pillValue;
       case 'letterOfInterest':
-        return false; // Prospects don't have letter of interest
+        return p.letterOfInterest === true;
       case 'invitationOnly':
         return p.invitationOnly === true;
+      case 'coldCall':
+        return p.coldCall === true;
       default:
         return false;
     }
@@ -2597,6 +2601,9 @@ function showPillFilter(pillType, pillValue) {
       break;
     case 'invitationOnly':
       titleText = 'Invitation Only';
+      break;
+    case 'coldCall':
+      titleText = 'Cold Call Required';
       break;
   }
   pillFilterTitle.textContent = titleText;
