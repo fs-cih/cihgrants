@@ -89,6 +89,7 @@
   "amountIdcOptions": [
     "Including IDC",
     "Excluding IDC",
+    "No IDC Allowed",
     "Not specified"
   ]
 }
