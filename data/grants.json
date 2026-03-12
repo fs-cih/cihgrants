@@ -223,7 +223,7 @@
     "eligibility": "Prime",
     "amount": 25000,
     "amountDetail": "over total award period",
-    "amountIdc": "Excluding IDC",
+    "amountIdc": "No IDC Allowed",
     "duration": "1 year",
     "addedDate": "2026-02-18",
     "link": "https://150.jhu.edu/join-the-celebration/awards-program/",
@@ -233,6 +233,7 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
     "id": "grant_1771430438044_60_l0gbf8wt2",
     "deadlines": [
       "2026-04-24"
