@@ -1,5 +1,29 @@
 [
   {
+    "title": "Climate Change and Human Health Seed Grants",
+    "funderType": "Foundation",
+    "agencyName": "Burroughs Wellcome Fund",
+    "eligibility": "Prime",
+    "amount": 50000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "1 year",
+    "addedDate": "2026-03-12",
+    "link": "https://www.bwfund.org/grants/climate-change-and-human-health/climate-change-and-human-health-seed-grants/",
+    "description": "The Burroughs Wellcome Fund aims to stimulate the growth of new connections between thinkers working in largely disconnected fields, who, together, may change the course of climate change’s impact on human health. Between Fall 2023 and Summer 2026, we will dedicate $1 million to supporting small, early-stage grants of $2,500–$50,000 toward achieving this goal. We are primarily, but not exclusively, interested in activities that build connections between basic and early biomedical scientific approaches and ecological, environmental, geological, geographic, and planetary-scale thinking, as well as with population-focused fields, including epidemiology and public health, demography, economics, and urban planning. Also of interest is work piloting new approaches or interactions aimed at reducing the impact of health-centered activities, such as developing more sustainable systems for healthcare, care delivery, and biomedical research.",
+    "keywords": [
+      "Environmental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1773419133610_70_m88iwm2sr",
+    "deadlines": [
+      "2026-04-23",
+      "2026-07-23"
+    ]
+  },
+  {
     "title": "Commonwealth Project",
     "funderType": "JHU internal",
     "eligibility": "Prime",
