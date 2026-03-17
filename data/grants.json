@@ -1,5 +1,30 @@
 [
   {
+    "title": "Development of Collaborative Research Facilities or Research-Resource Facilities (C06 Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, OAR",
+    "eligibility": "Prime",
+    "amount": 8000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-01-01",
+    "link": "https://files.simpler.grants.gov/opportunities/6179eb2c-9239-40ad-9a12-7329291f3509/attachments/d2ae095c-1b62-4a79-a139-02105aa5c68a/PAR-26-106-Full-Announcement.html",
+    "description": "JHU LIMITED SUBMISSION REQUIRED! This Notice of Funding Opportunity (NOFO) solicits applications to develop shared-use research facilities or research-supporting facilities that enable collaborative research and benefit broad research communities at large. The NOFO supports two existing construction programs: the Biomedical Research Facilities (BRF) program and the HIV/AIDS Research Facilities (HRF) program. The BRF program supports the construction or modernization of biomedical research facilities that advance basic, translational, clinical, or behavioral science research in all areas. Intended facilities include shared research spaces, core facilities, biorepositories, or other shared-use resource facilities that serve a broad scientific community with a significant, long-term impact on biomedical research. The HRF program funds the development of HIV/AIDS research or research-supporting resources that the empowered research activities must align with the NIH Office of AIDS Research (OAR) priorities, as outlined at OAR HIV/AIDS Research Priorities, including research focusing on the long-term health consequences of HIV infection.",
+    "keywords": [
+      "Capacity-Building"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1773757346795_71_bs92edi97",
+    "deadlines": [
+      "2026-04-06",
+      "2027-01-25",
+      "2028-01-25"
+    ]
+  },
+  {
     "title": "Climate Change and Human Health Seed Grants",
     "funderType": "Foundation",
     "agencyName": "Burroughs Wellcome Fund",
