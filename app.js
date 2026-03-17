@@ -1010,9 +1010,7 @@ function formatAgencyPills(agencyName) {
   // First agency gets medium blue, rest get light blue
   const pills = agencies.map((agency, index) => {
     const className = index === 0 ? 'agency-pill-primary' : 'agency-pill-secondary';
-    // Check if the agency is an NIH abbreviation and add tooltip
-    const tooltip = NIH_ABBREVIATIONS[agency] ? ` title="${escapeHtml(NIH_ABBREVIATIONS[agency])}"` : '';
-    return `<span class="${className}"${tooltip}>${escapeHtml(agency)}</span>`;
+    return `<span class="${className}">${escapeHtml(agency)}</span>`;
   }).join('');
   
   return pills;
@@ -1057,7 +1055,7 @@ function renderGrant(g, selectedKeywords = []) {
   // Add keywords
   (g.keywords || []).forEach(kw => {
     const isMatched = selectedKeywords.includes(kw);
-    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched kcard-keyword" : "kcard-keyword" });
   });
 
   const formatPills = (pills) => pills
@@ -1191,7 +1189,7 @@ function renderGrant(g, selectedKeywords = []) {
           (ng.keywords || []).forEach(kw => {
             // Check if this keyword matches any selected keyword
             const isMatched = selectedKeywords.includes(kw);
-            nestedKeywords.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+            nestedKeywords.push({ text: kw, className: isMatched ? "kcard-matched kcard-keyword" : "kcard-keyword" });
           });
           
           const nestedKeywordPills = nestedKeywords
@@ -1308,6 +1306,27 @@ function renderGrant(g, selectedKeywords = []) {
     pill.addEventListener('click', (e) => {
       e.stopPropagation();
       showPillFilter('letterOfInterest', null);
+    });
+  });
+
+  div.querySelectorAll('.agency-pill-primary, .agency-pill-secondary').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('agency', pill.textContent);
+    });
+  });
+
+  div.querySelectorAll('.kcard-new').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('isNew', null);
+    });
+  });
+
+  div.querySelectorAll('.kcard-keyword').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('keyword', pill.textContent);
     });
   });
 
@@ -2182,6 +2201,7 @@ function downloadCurrentViewPdf() {
 const pillFilterDialog = document.getElementById('pillFilterDialog');
 const pillFilterClose = document.getElementById('pillFilterClose');
 const pillFilterTitle = document.getElementById('pillFilterTitle');
+const pillFilterSubtitle = document.getElementById('pillFilterSubtitle');
 const grantsSection = document.getElementById('grantsSection');
 const prospectsSection = document.getElementById('prospectsSection');
 const grantsSectionContent = document.getElementById('grantsSectionContent');
@@ -2264,7 +2284,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
   }
   (g.keywords || []).forEach(kw => {
     const isMatched = selectedKeywords.includes(kw);
-    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched" : "" });
+    row1Pills.push({ text: kw, className: isMatched ? "kcard-matched kcard-keyword" : "kcard-keyword" });
   });
 
   const formatPills = (pills) => pills
@@ -2516,6 +2536,12 @@ function showPillFilter(pillType, pillValue) {
         return false; // Grants don't have invitation only
       case 'coldCall':
         return false; // Grants don't have cold call required
+      case 'agency':
+        return g.agencyName && g.agencyName.split(',').map(a => a.trim()).includes(pillValue);
+      case 'isNew':
+        return isNewGrant(g);
+      case 'keyword':
+        return g.keywords && g.keywords.includes(pillValue);
       default:
         return false;
     }
@@ -2546,6 +2572,12 @@ function showPillFilter(pillType, pillValue) {
         return p.invitationOnly === true;
       case 'coldCall':
         return p.coldCall === true;
+      case 'agency':
+        return false; // Prospects don't have agency pills
+      case 'isNew':
+        return false; // Prospects don't have a "New" concept
+      case 'keyword':
+        return p.keywords && p.keywords.includes(pillValue);
       default:
         return false;
     }
@@ -2587,8 +2619,9 @@ function showPillFilter(pillType, pillValue) {
     return (a.funder || "").localeCompare(b.funder || "");
   });
   
-  // Update dialog title
+  // Update dialog title and subtitle
   let titleText = '';
+  let subtitleText = '';
   switch(pillType) {
     case 'state':
       titleText = `${pillValue} Restriction`;
@@ -2605,8 +2638,25 @@ function showPillFilter(pillType, pillValue) {
     case 'coldCall':
       titleText = 'Cold Call Required';
       break;
+    case 'agency':
+      titleText = pillValue;
+      subtitleText = NIH_ABBREVIATIONS[pillValue] || '';
+      break;
+    case 'isNew':
+      titleText = 'New Grants';
+      break;
+    case 'keyword':
+      titleText = `"${pillValue}" Keyword`;
+      break;
   }
   pillFilterTitle.textContent = titleText;
+  if (subtitleText) {
+    pillFilterSubtitle.textContent = subtitleText;
+    pillFilterSubtitle.hidden = false;
+  } else {
+    pillFilterSubtitle.textContent = '';
+    pillFilterSubtitle.hidden = true;
+  }
   
   // Update section labels with counts (include nested grants in total)
   grantsSectionLabel.textContent = `Grants (${totalGrantsCount})`;
