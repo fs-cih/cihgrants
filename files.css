@@ -843,10 +843,23 @@ h1 {
   background: var(--card-soft);
 }
 
+.pill-filter-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .pill-filter-header h2 {
   margin: 0;
   color: #631500;
   font-size: 1.3rem;
+}
+
+.pill-filter-subtitle {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-style: italic;
 }
 
 .pill-filter-close {
@@ -926,7 +939,11 @@ h1 {
 .kcard-pi-restriction,
 .kcard-loi,
 .kcard-invitation-only,
-.kcard-cold-call {
+.kcard-cold-call,
+.agency-pill-primary,
+.agency-pill-secondary,
+.kcard-new,
+.kcard-keyword {
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -935,6 +952,10 @@ h1 {
 .kcard-pi-restriction:hover,
 .kcard-loi:hover,
 .kcard-invitation-only:hover,
-.kcard-cold-call:hover {
+.kcard-cold-call:hover,
+.agency-pill-primary:hover,
+.agency-pill-secondary:hover,
+.kcard-new:hover,
+.kcard-keyword:hover {
   opacity: 0.85;
 }
