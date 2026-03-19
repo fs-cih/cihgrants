@@ -1,5 +1,36 @@
 [
   {
+    "title": "Single-Site Investigator-Initiated Clinical Trials (R61/R33 Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NHLBI",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-03-19",
+    "link": "https://files.simpler.grants.gov/opportunities/2ea3951b-2890-455c-b746-820bf32f7560/attachments/b18fa5c0-b5cc-421e-b8cf-69217678bfbf/PAR-27-011-Full-Announcement.html",
+    "description": "This Notice of Funding Opportunity (NOFO) supports applications to develop and conduct investigator-initiated single site clinical trials including efficacy, comparative effectiveness, pragmatic and/or dissemination and implementation science clinical trials. Trials using innovative designs such as platform trials, adaptive, and Bayesian designs are encouraged. These trials may include ones that test different therapeutic, behavioral, dissemination and implementation science clinical trials and/or prevention strategies. This NOFO will utilize a bi-phasic, milestone-driven mechanism of award. The objective of the application is to present the scientific rationale for the clinical trial and a comprehensive scientific and operational plan that describes it. The application should address project management, participant recruitment and retention, performance milestones, scientific conduct of the trial, and dissemination of results.",
+    "keywords": [
+      "General Research",
+      "Healthcare"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": true,
+    "id": "grant_1773927776738_74_w2s6hahck",
+    "deadlines": [
+      "2026-06-02",
+      "2026-10-02",
+      "2027-02-01",
+      "2027-06-02",
+      "2027-10-01",
+      "2028-02-01",
+      "2028-06-01",
+      "2028-10-02"
+    ]
+  },
+  {
     "title": "Make America Healthy Again – Enhancing Lifestyle and Evaluating Value-based Approaches Through Evidence",
     "funderType": "Federal",
     "agencyName": "Center for Medicare and Medicaid Services",
