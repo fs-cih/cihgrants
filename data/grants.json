@@ -1,5 +1,28 @@
 [
   {
+    "title": "Staff Sergeant Parker Gordon Fox Suicide Prevention Grants",
+    "funderType": "Federal",
+    "agencyName": "Department of Veterans Affairs",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "1 year",
+    "addedDate": "2026-03-19",
+    "link": "https://files.simpler.grants.gov/opportunities/714a5226-af98-4703-a243-b7e4e973d66a/attachments/9e3dcf8b-ed4c-4cbe-ba49-ea483e04689d/VA_FY27_NOFO_SSG_Fox_SPGP.pdf",
+    "description": "The SSG Fox SPGP directs efforts to reduce Veteran suicide by awarding grants to community-based organizations to directly provide or coordinate the provision of primarily non-clinical suicide prevention services to eligible individuals and their families. Veteran suicide risk is reduced by services that improve mental health status, well-being, financial stability, and social support. Services provided by grantees may include case management, peer support, linkage to VA care and benefits, emergency clinical services, faith-based or innovative approaches. Most Veterans who die by suicide were not engaged with VA in the years prior to their deaths. This program addresses a critical gap by engaging and serving Veterans at risk for suicide who were previously out of VA’s reach and their family members.",
+    "keywords": [
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1773927047725_72_g0wdm5iy9",
+    "deadlines": [
+      "2026-06-12"
+    ]
+  },
+  {
     "title": "Development of Collaborative Research Facilities or Research-Resource Facilities (C06 Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, OAR",
