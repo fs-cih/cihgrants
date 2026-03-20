@@ -1,5 +1,32 @@
 [
   {
+    "title": "Media Projects",
+    "funderType": "Federal",
+    "agencyName": "National Endowment for the Humanities",
+    "eligibility": "Prime",
+    "amount": 70000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-03-20",
+    "link": "https://simpler.grants.gov/opportunity/0fa7f446-bb8d-4ef8-8f34-b1e0e36e1dd0",
+    "description": "The National Endowment for the Humanities (NEH) Division of Lifelong Learning is accepting applications for the Media Projects program. The purpose of this program is to support the development, production, and distribution of radio programs, podcasts, and documentary films that engage general audiences with humanities ideas in creative and appealing ways. NEH makes Media Projects awards at two levels: Development (up to $75,000 over 12 months) and Production (up to $700,000 over three years).",
+    "keywords": [
+      "Culture",
+      "Health Communications",
+      "Public Health",
+      "Social Media",
+      "Technology"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1773968015269_75_uxltsttzg",
+    "deadlines": [
+      "2026-06-25"
+    ]
+  },
+  {
     "title": "Single-Site Investigator-Initiated Clinical Trials (R61/R33 Clinical Trial Required)",
     "funderType": "Federal",
     "agencyName": "NIH, NHLBI",
