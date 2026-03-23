@@ -1,5 +1,24 @@
 [
   {
+    "funder": "American Pride Rises",
+    "funderType": "Foundation",
+    "link": "https://aprnetwork.org/",
+    "keywords": [
+      "Disparities"
+    ],
+    "notes": "We work to protect more than 200 years of progress that our nation has made through historic movements that have opened the doors of opportunity for generations of Americans from all backgrounds. Our impact is delivered by collaborating with other organizations to engage communities, educate advocates, and equip allies to respond to legislative and legal attacks on diversity, equity and inclusion (DEI).",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Health Equity Grant (Closed)",
+        "url": "https://healthequity.aprnetwork.org/"
+      }
+    ],
+    "id": "prospect_1774285603594_61_uw7dosidv"
+  },
+  {
     "funder": "Burroughs Wellcome Fund",
     "funderType": "Foundation",
     "link": "https://www.bwfund.org/upcoming-deadlines/",
