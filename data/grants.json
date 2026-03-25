@@ -1,5 +1,30 @@
 [
   {
+    "title": "Advancing Native Research Projects",
+    "funderType": "Federal",
+    "agencyName": "NCREW",
+    "eligibility": "Secondary",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-01-01",
+    "link": "https://www.nih.gov/sites/default/files/2026-03/OTA-26-001_508c.pdf",
+    "description": "The Native Collective Research Effort to Enhance Wellness (N CREW) Program is part of the NIH Helping to End Addiction Long-term (HEAL) Initiative, established to aggressively speed scientific solutions to the opioid public health emergency. Research led by Native communities is essential for enhancing culturally grounded, strengths-based, effective, and sustainable intervention strategies. Thus, N CREW aims to improve wellness for Native Americans by supporting community-driven research focused on reducing opioid/drug overdose through the study of substance use, pain, and related factors such as mental health. Using NIH’s Other Transactions Authority (OTA), N CREW supports innovative, flexible approaches that respond to the urgent, complex, and evolving needs, strengths, and priorities of research led by Tribes and Native Serving Organizations (T/NSOs).",
+    "keywords": [
+      "General Research",
+      "Mental Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1774479300677_76_knnjc03td",
+    "deadlines": [
+      "2026-07-31"
+    ]
+  },
+  {
     "title": "Media Projects",
     "funderType": "Federal",
     "agencyName": "National Endowment for the Humanities",
