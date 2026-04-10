@@ -1,5 +1,32 @@
 [
   {
+    "title": "Mentored Research Scientist Development Award (Parent K01 - Independent Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH",
+    "eligibility": "Prime",
+    "amount": 150000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-01-01",
+    "piRestriction": "Early Stage Investigator",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-24-175.html",
+    "description": "The purpose of the NIH Mentored Research Scientist Development Award (K01) is to provide support and “protected time” (three to five years) for an intensive, supervised career development experience in the biomedical, behavioral, or clinical sciences leading to research independence. Although all of the participating NIH Institutes and Centers (ICs) use this support mechanism to support career development experiences that lead to research independence, some ICs use the K01 award for individuals who propose to train in a new field or for individuals who have had a hiatus in their research career because of illness or pressing family circumstances.",
+    "keywords": [
+      "General Research"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "parentGrantId": "grant_1775846561932_77_cu6dczytc",
+    "id": "grant_1775846774610_78_r01qhvpwv",
+    "deadlines": [
+      "2026-06-12",
+      "2026-10-12",
+      "2027-02-12"
+    ]
+  },
+  {
     "title": "Mentored Research Scientist Development Award (Parent K01 - Independent Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH",
