@@ -1,5 +1,28 @@
 [
   {
+    "title": "OJJDP FY25 Youth Gang Prevention and Intervention Program",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Secondary",
+    "amount": 500000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-04-17",
+    "link": "https://www.ojp.gov/funding/docs/OJJDP-2025-172518.pdf",
+    "description": "This NOFO supports the implementation of intervention and suppression strategies to reduce youth gang crime and violence and promote public safety. These strategies will help to prevent youth from joining gangs, discontinue involvement in gangs, and prevent and reduce additional\nyouth gang violence. \n\n• Category 1: Intervention (Anticipated Award Amount: $500,000). Category 1 will support intervention strategies that can prevent youth from joining gangs and help them discontinue their involvement in gangs. Proposed strategies should assist youth who are experiencing multiple risk factors for gang involvement.\n\n• Category 2: Suppression (Anticipated Award Amount: $500,000). Category 2 will support focused deterrence and suppression strategies aimed at preventing and reducing youth gang violence. Applicant organizations are encouraged to develop and implement a variety of suppression approaches (e.g.., law enforcement partnerships with community agencies to hold youth accountable, and targeted enforcement efforts focused on immediate threats in the areas of the community that are most heavily affected by gang-related crime).",
+    "keywords": [
+      "Adolescent Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1776442462672_81_p4fzc22l3",
+    "deadlines": [
+      "2026-06-01"
+    ]
+  },
+  {
     "title": "Community Health Aide Program: Tribal Planning and Implementation (TPI)",
     "funderType": "Federal",
     "agencyName": "IHS",
