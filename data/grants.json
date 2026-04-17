@@ -1,5 +1,28 @@
 [
   {
+    "title": "Curriculum Development: Western Civilization",
+    "funderType": "Federal",
+    "agencyName": "National Endowment for the Humanities",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-04-17",
+    "link": "https://simpler.grants.gov/opportunity/fa34b2eb-a085-48d9-bc2e-bb4b3eb95ddf",
+    "description": "The National Endowment for the Humanities (NEH) Division of Lifelong Learning is accepting applications for the Curriculum Development: Western Civilization program. The purpose of this program is to support formal education by strengthening the teaching and study of the humanities at institutions of higher education. For 2026, projects must be focused on Western civilization, American history, American government and civics, and/or the Great Books tradition.",
+    "keywords": [
+      "Education & Training"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1776442866055_83_eoe82perb",
+    "deadlines": [
+      "2026-06-25"
+    ]
+  },
+  {
     "title": "BJA FY25 De-escalation and Crisis Response Training Program",
     "funderType": "Federal",
     "agencyName": "DOJ",
