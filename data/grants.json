@@ -1,5 +1,28 @@
 [
   {
+    "title": "Community Health Aide Program: Tribal Planning and Implementation (TPI)",
+    "funderType": "Federal",
+    "agencyName": "IHS",
+    "eligibility": "Secondary",
+    "amount": 666667,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-04-17",
+    "link": "https://files.simpler.grants.gov/opportunities/c5364276-7c88-4369-b18a-ca0dcb326276/attachments/c60fa2fb-5d13-482f-8493-d00fe50a59a0/HHS-2026-IHS-TPI-0001_FINAL_Accepted_with_new_timeline_dates.pdf",
+    "description": "The Community Health Aide Program (CHAP) Tribal Planning and Implementation (TPI) grant empowers Tribes and Tribal Organizations (T/TO) in the contiguous 48 states to plan and implement CHAP by providing regional flexibility, clinical support, tailored healthcare solutions, technological infrastructure, comprehensive training, integration strategies, and addressing social determinants of health.",
+    "keywords": [
+      "Community Health Workers"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1776442235605_80_w3kfpl96k",
+    "deadlines": [
+      "2026-05-15"
+    ]
+  },
+  {
     "title": "Mentored Research Scientist Development Award (Parent K01 Independent Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
     "agencyName": "NIH",
