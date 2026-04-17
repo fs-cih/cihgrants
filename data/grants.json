@@ -1,5 +1,28 @@
 [
   {
+    "title": "BJA FY25 De-escalation and Crisis Response Training Program",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Prime",
+    "amount": 700000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-04-17",
+    "link": "https://www.ojp.gov/funding/docs/bja-2025-172498.pdf",
+    "description": "This NOFO supports state, local, and tribal governments, law enforcement agencies, correctional facilities, probation and parole departments, and sheriff’s departments in developing, implementing, or expanding de-escalation and crisis response training programs that improve law enforcement responses to and outcomes for individuals in crisis who have behavioral health conditions, intellectual and developmental disabilities (I/DDs), physical disabilities, and/or traumatic brain injuries. This program will equip law enforcement and correctional officers with tactical skills, strategies, and technology to effectively de-escalate and handle crisis situations, enhance safety, and protect officer wellbeing.",
+    "keywords": [
+      "Behavioral Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1776442618739_82_mkvj8ir01",
+    "deadlines": [
+      "2026-06-03"
+    ]
+  },
+  {
     "title": "OJJDP FY25 Youth Gang Prevention and Intervention Program",
     "funderType": "Federal",
     "agencyName": "DOJ",
