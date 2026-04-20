@@ -93,6 +93,8 @@ const AGENCY_ABBREVIATION_ALIASES = {
   NIH: ["National Institutes of Health"],
   SAMHSA: ["Substance Abuse and Mental Health Services Administration"]
 };
+// These thresholds treat short 3-5 letter acronyms as whole-word matches only
+// (e.g., NIH, DOJ, CDC) while allowing longer organization names to match by substring.
 const MAX_SHORT_ALIAS_WORDS = 2;
 const MAX_SHORT_ALIAS_LENGTH = 5;
 
@@ -2621,7 +2623,7 @@ function showPillFilter(pillType, pillValue) {
           .split(',')
           .map(a => a.trim())
           .filter(Boolean)
-          .includes(pillValue);
+          .some(agency => matchesAgencyName(agency, pillValue));
       case 'isNew':
         return isNewGrant(g);
       case 'keyword':
