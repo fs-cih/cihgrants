@@ -82,6 +82,18 @@ const NIH_ABBREVIATIONS = {
   "THRO": "Tribal Health Research Office"
 };
 
+const AGENCY_ABBREVIATION_ALIASES = {
+  ACF: ["Administration for Children and Families"],
+  BIA: ["Bureau of Indian Affairs"],
+  CDC: ["Centers for Disease Control and Prevention", "Centers for Disease Control"],
+  CMS: ["Centers for Medicare & Medicaid Services", "Centers for Medicare and Medicaid Services"],
+  DOJ: ["Department of Justice"],
+  HRSA: ["Health Resources and Services Administration"],
+  IHS: ["Indian Health Service"],
+  NIH: ["National Institutes of Health"],
+  SAMHSA: ["Substance Abuse and Mental Health Services Administration"]
+};
+
 const PAT_PERMISSION_HELP = `
 
 Your Personal Access Token (PAT) needs additional permissions:
@@ -952,6 +964,66 @@ function buildShareMailto(g) {
   return "mailto:?subject=" + subject + "&body=" + body;
 }
 
+function openShareMailto(g) {
+  const mailto = buildShareMailto(g);
+  try {
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    window.location.href = mailto;
+  }
+}
+
+function normalizeAgencyText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function getAgencyAliases(agencyValue) {
+  const raw = String(agencyValue || "").trim();
+  if (!raw) return [];
+
+  const upper = raw.toUpperCase();
+  const aliases = new Set([raw]);
+
+  if (NIH_ABBREVIATIONS[raw]) {
+    aliases.add(NIH_ABBREVIATIONS[raw]);
+  }
+  if (NIH_ABBREVIATIONS[upper]) {
+    aliases.add(NIH_ABBREVIATIONS[upper]);
+  }
+
+  (AGENCY_ABBREVIATION_ALIASES[upper] || []).forEach(alias => aliases.add(alias));
+  return [...aliases];
+}
+
+function matchesAgencyName(candidateName, agencyValue) {
+  const candidateRaw = String(candidateName || "").trim();
+  if (!candidateRaw) return false;
+
+  const candidateNormalized = normalizeAgencyText(candidateRaw);
+  const candidateWords = candidateNormalized.split(" ").filter(Boolean);
+
+  return getAgencyAliases(agencyValue).some(alias => {
+    const aliasNormalized = normalizeAgencyText(alias);
+    if (!aliasNormalized) return false;
+    if (candidateNormalized === aliasNormalized) return true;
+
+    const aliasWordCount = aliasNormalized.split(" ").filter(Boolean).length;
+    if (aliasWordCount <= 2 && aliasNormalized.length <= 5) {
+      return candidateWords.includes(aliasNormalized);
+    }
+    return candidateNormalized.includes(aliasNormalized);
+  });
+}
+
 function deadlineMarkup(g) {
   // Handle open deadlines
   if (g.deadlineOpen) {
@@ -1115,8 +1187,10 @@ function renderGrant(g, selectedKeywords = []) {
   `;
 
   const shareBtn = div.querySelector(".share-btn");
-  shareBtn.onclick = () => {
-    window.location.href = buildShareMailto(g);
+  shareBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openShareMailto(g);
   };
 
   const editBtn = div.querySelector(".edit-btn");
@@ -1253,8 +1327,9 @@ function renderGrant(g, selectedKeywords = []) {
           // Add share button functionality for nested grant
           const shareNestedBtn = nestedItem.querySelector(".share-nested-btn");
           shareNestedBtn.onclick = (e) => {
+            e.preventDefault();
             e.stopPropagation();
-            window.location.href = buildShareMailto(ng);
+            openShareMailto(ng);
           };
 
           // Add edit button functionality for nested grant
@@ -2537,7 +2612,11 @@ function showPillFilter(pillType, pillValue) {
       case 'coldCall':
         return false; // Grants don't have cold call required
       case 'agency':
-        return g.agencyName && g.agencyName.split(',').map(a => a.trim()).includes(pillValue);
+        return (g.agencyName || g.federalAgency || "")
+          .split(',')
+          .map(a => a.trim())
+          .filter(Boolean)
+          .includes(pillValue);
       case 'isNew':
         return isNewGrant(g);
       case 'keyword':
@@ -2573,7 +2652,7 @@ function showPillFilter(pillType, pillValue) {
       case 'coldCall':
         return p.coldCall === true;
       case 'agency':
-        return false; // Prospects don't have agency pills
+        return matchesAgencyName(p.funder, pillValue);
       case 'isNew':
         return false; // Prospects don't have a "New" concept
       case 'keyword':

@@ -3,7 +3,7 @@ window.CIH_CONFIG = {
   githubRepo: "cihgrants",
   githubBranch: "main",
   // UI behavior
-  newGrantWindowDays: 29, // Show "New" pill for grants added within the last 29 days
+  newGrantWindowDays: 15, // Show "New" pill for grants added within the last 15 days
   descriptionPreviewChars: 220,
   defaultSort: "deadlineAsc",
 
