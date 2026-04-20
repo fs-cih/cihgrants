@@ -93,6 +93,8 @@ const AGENCY_ABBREVIATION_ALIASES = {
   NIH: ["National Institutes of Health"],
   SAMHSA: ["Substance Abuse and Mental Health Services Administration"]
 };
+const MAX_SHORT_ALIAS_WORDS = 2;
+const MAX_SHORT_ALIAS_LENGTH = 5;
 
 const PAT_PERMISSION_HELP = `
 
@@ -1017,7 +1019,7 @@ function matchesAgencyName(candidateName, agencyValue) {
     if (candidateNormalized === aliasNormalized) return true;
 
     const aliasWordCount = aliasNormalized.split(" ").filter(Boolean).length;
-    if (aliasWordCount <= 2 && aliasNormalized.length <= 5) {
+    if (aliasWordCount <= MAX_SHORT_ALIAS_WORDS && aliasNormalized.length <= MAX_SHORT_ALIAS_LENGTH) {
       return candidateWords.includes(aliasNormalized);
     }
     return candidateNormalized.includes(aliasNormalized);
