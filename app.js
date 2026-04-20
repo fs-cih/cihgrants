@@ -976,6 +976,7 @@ function openShareMailto(g) {
     link.click();
     document.body.removeChild(link);
   } catch (error) {
+    console.warn("Share mailto link click fallback triggered.", error);
     window.location.href = mailto;
   }
 }
@@ -1018,6 +1019,8 @@ function matchesAgencyName(candidateName, agencyValue) {
     if (!aliasNormalized) return false;
     if (candidateNormalized === aliasNormalized) return true;
 
+    // Use both thresholds so short acronyms (e.g., NIH, DOJ) match whole words only,
+    // while longer organization names can match by substring.
     const aliasWordCount = aliasNormalized.split(" ").filter(Boolean).length;
     if (aliasWordCount <= MAX_SHORT_ALIAS_WORDS && aliasNormalized.length <= MAX_SHORT_ALIAS_LENGTH) {
       return candidateWords.includes(aliasNormalized);
