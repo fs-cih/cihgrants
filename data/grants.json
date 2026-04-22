@@ -1,5 +1,32 @@
 [
   {
+    "title": "Independent Scientist Award (Parent K02 Independent Basic Experimental Studies with Humans Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIA, NIAAA, NIDA, NINDS, ORWH, ODSS",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-04-22",
+    "piRestriction": "Early Stage Investigator",
+    "link": "https://grants.nih.gov/grants/guide/pa-files/PA-24-180.html",
+    "description": "The purpose of the NIH Independent Scientist Award (K02) is to foster the development of outstanding scientists and enable them to expand their potential to make significant contributions to their field of research. The K02 award provides three to five years of salary support and \"protected time\" for newly independent scientists who can demonstrate the need for a period of intensive research focus as a means of enhancing their research careers. Each independent scientist career award program must be tailored to meet the individual needs of the candidate.",
+    "keywords": [
+      "General Research"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "unusualFundingCircumstances": "Salary and program expenses",
+    "nihUnlimitedFunds": false,
+    "id": "grant_1776877507434_86_6d663z4d5",
+    "deadlines": [
+      "2026-06-12",
+      "2026-10-12",
+      "2027-02-12"
+    ]
+  },
+  {
     "title": "Midcareer Investigator Award in Patient-Oriented Research (Parent K24 - Independent Basic Experimental Studies with Humans Required)",
     "funderType": "Federal",
     "agencyName": "NIH, NIA, NIAAA, NIDA, NIDCD, NIEHS, NIMH, NINR, NCCIH, ORWH, ODSS",
