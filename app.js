@@ -1,6 +1,8 @@
 const TODAY = new Date().toISOString().slice(0, 10);
 const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000 per year';
 const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000 per year';
+const SALARY_PROGRAM_EXPENSES_TEXT = "Budgets are composed of salary and other program-related expenses, as described in NOFO";
+const UNUSUAL_FUNDING_CIRCUMSTANCES = ["NIH unlimited funding", "Salary and program expenses"];
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
@@ -10,7 +12,7 @@ const US_STATES = [
   "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
   "West Virginia", "Wisconsin", "Wyoming"
 ];
-const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Established Investigator"];
+const PI_RESTRICTIONS = ["None", "New Investigator", "Early Stage Investigator", "Midcareer Investigator", "Established Investigator"];
 const FEDERAL_AGENCIES = [
   "ACF",
   "BIA",
@@ -256,6 +258,7 @@ function initFilters() {
   fillSelect(document.getElementById("a_eligibility"), ["Prime", "Secondary"]);
   fillSelect(document.getElementById("a_amountDetail"), ["per year", "over total award period"]);
   fillSelect(document.getElementById("a_amountIdc"), vocab.amountIdcOptions || ["Not specified"]);
+  fillSelect(document.getElementById("a_unusualFundingCircumstances"), UNUSUAL_FUNDING_CIRCUMSTANCES, "None");
   fillMulti(document.getElementById("a_keywords"), vocab.keywords || []);
   fillMulti(document.getElementById("a_geography"), US_STATES);
   fillSelect(document.getElementById("a_piRestriction"), PI_RESTRICTIONS);
@@ -477,12 +480,31 @@ function updateAgencyNameField() {
   if (!shouldShow) {
     agencyInput.value = "";
   }
-  const nihLabel = document.getElementById("a_nihUnlimitedFunds_label");
+  const unusualFundingLabel = document.getElementById("a_unusualFundingCircumstances_label");
+  const unusualFundingSelect = document.getElementById("a_unusualFundingCircumstances");
   const isFederal = funderType === "Federal";
-  nihLabel.style.display = isFederal ? "" : "none";
+  unusualFundingLabel.style.display = isFederal ? "" : "none";
   if (!isFederal) {
-    document.getElementById("a_nihUnlimitedFunds_no").checked = true;
+    unusualFundingSelect.value = "";
   }
+}
+
+function getUnusualFundingCircumstances(grant) {
+  if (grant.unusualFundingCircumstances) {
+    return grant.unusualFundingCircumstances;
+  }
+  if (grant.nihUnlimitedFunds) {
+    return "NIH unlimited funding";
+  }
+  return "";
+}
+
+function isNihUnlimitedFunding(grant) {
+  return getUnusualFundingCircumstances(grant) === "NIH unlimited funding";
+}
+
+function hasSalaryProgramExpenses(grant) {
+  return getUnusualFundingCircumstances(grant) === "Salary and program expenses";
 }
 
 function fillSelect(el, arr, first) {
@@ -564,14 +586,14 @@ function formatIdcNote(grant) {
   if (grant.amountIdc === "No IDC Allowed") {
     return "No IDC Allowed";
   }
-  if (!grant.amount && !grant.nihUnlimitedFunds) {
+  if (!grant.amount && !isNihUnlimitedFunding(grant)) {
     return "IDC not specified";
   }
   return grant.amountIdc || "Not specified";
 }
 
 function formatGrantAmountHtml(g) {
-  if (g.nihUnlimitedFunds) {
+  if (isNihUnlimitedFunding(g)) {
     return NIH_UNLIMITED_FUNDS_TEXT_HTML;
   }
   return formatAmount(g.amount) + (g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : '');
@@ -1183,6 +1205,7 @@ function renderGrant(g, selectedKeywords = []) {
     ${funderTypeMarkup}
     ${deadlineMarkup(g)}
     <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">(${formatIdcNote(g)})</span></p>
+    ${hasSalaryProgramExpenses(g) ? `<p class="meta-row"><strong>Award info:</strong> ${escapeHtml(SALARY_PROGRAM_EXPENSES_TEXT)}</p>` : ""}
     <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${escapeHtml(eligibilityText)}</span></p>
     <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(preview)}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
@@ -1321,6 +1344,7 @@ function renderGrant(g, selectedKeywords = []) {
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
               <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(ng)} <span class="muted">(${formatIdcNote(ng)})</span></p>
+              ${hasSalaryProgramExpenses(ng) ? `<p class="meta-row"><strong>Award info:</strong> ${escapeHtml(SALARY_PROGRAM_EXPENSES_TEXT)}</p>` : ""}
               <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(ng.duration || "Not specified")}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${escapeHtml(nestedEligibilityText)}</span></p>
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
@@ -1419,7 +1443,7 @@ function resetAdminForm() {
   document.getElementById("a_token").value = "";
   document.getElementById("a_pin_no").checked = true;
   document.getElementById("a_loi_no").checked = true;
-  document.getElementById("a_nihUnlimitedFunds_no").checked = true;
+  document.getElementById("a_unusualFundingCircumstances").value = "";
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
@@ -1517,12 +1541,7 @@ function openAdminDialog(grant = null, index = null) {
     document.getElementById("a_loi_no").checked = true;
   }
   
-  // Set NIH Unlimited Funds radio buttons
-  if (grant.nihUnlimitedFunds) {
-    document.getElementById("a_nihUnlimitedFunds_yes").checked = true;
-  } else {
-    document.getElementById("a_nihUnlimitedFunds_no").checked = true;
-  }
+  document.getElementById("a_unusualFundingCircumstances").value = getUnusualFundingCircumstances(grant);
   
   document.getElementById("a_title").value = grant.title || "";
   document.getElementById("a_funderType").value = grant.funderType || "";
@@ -1725,9 +1744,12 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     grant.letterOfInterest = false;
   }
   
-  // Add NIH Unlimited Funds field
-  const nihValue = document.querySelector('input[name="nihUnlimitedFunds"]:checked')?.value || 'no';
-  grant.nihUnlimitedFunds = nihValue === "yes";
+  // Add Unusual Funding Circumstances field
+  const unusualFunding = document.getElementById("a_unusualFundingCircumstances").value;
+  if (unusualFunding) {
+    grant.unusualFundingCircumstances = unusualFunding;
+  }
+  grant.nihUnlimitedFunds = unusualFunding === "NIH unlimited funding";
   
   // Add parent grant ID if selected
   const parentGrantId = document.getElementById("a_parentGrantId").value;
@@ -2242,7 +2264,8 @@ function downloadCurrentViewPdf() {
       subtitle: g.link || '',
       metadata,
       bodyLines: [
-        `Amount: ${g.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(g.amount)}`,
+        `Amount: ${isNihUnlimitedFunding(g) ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(g.amount)}`,
+        hasSalaryProgramExpenses(g) ? `Award info: ${SALARY_PROGRAM_EXPENSES_TEXT}` : null,
         g.duration && `Duration: ${sanitizeText(g.duration)}`,
         deadlineText,
         g.description && `Description: ${sanitizeText(g.description)}`
@@ -2267,7 +2290,8 @@ function downloadCurrentViewPdf() {
         subtitle: child.link || '',
         metadata: childMetadata,
         bodyLines: [
-          `Amount: ${child.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(child.amount)}`,
+          `Amount: ${isNihUnlimitedFunding(child) ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN : formatAmount(child.amount)}`,
+          hasSalaryProgramExpenses(child) ? `Award info: ${SALARY_PROGRAM_EXPENSES_TEXT}` : null,
           child.duration && `Duration: ${sanitizeText(child.duration)}`,
           child.description && `Description: ${sanitizeText(child.description)}`
         ].filter(Boolean),
@@ -2399,7 +2423,8 @@ function renderGrantForPopup(g, selectedKeywords = []) {
       <strong>Funder:</strong> ${funderTypeMarkup} | 
       <strong>Eligibility:</strong> ${eligibilityMarkup}
     </p>
-    ${(g.nihUnlimitedFunds || g.amount) ? `<p class="meta-row"><strong>Amount:</strong> ${g.nihUnlimitedFunds ? NIH_UNLIMITED_FUNDS_TEXT_HTML : `$${g.amount.toLocaleString()} ${escapeHtml(g.amountDetail || "")}`}</p>` : ""}
+    ${(isNihUnlimitedFunding(g) || g.amount) ? `<p class="meta-row"><strong>Amount:</strong> ${isNihUnlimitedFunding(g) ? NIH_UNLIMITED_FUNDS_TEXT_HTML : `$${g.amount.toLocaleString()} ${escapeHtml(g.amountDetail || "")}`}</p>` : ""}
+    ${hasSalaryProgramExpenses(g) ? `<p class="meta-row"><strong>Award info:</strong> ${escapeHtml(SALARY_PROGRAM_EXPENSES_TEXT)}</p>` : ""}
     ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${hasOverflow ? `<button class="toggle">Show more</button>` : ""}
@@ -2495,7 +2520,8 @@ function renderGrantForPopup(g, selectedKeywords = []) {
               <strong>Funder:</strong> ${nestedFunderTypeMarkup} | 
               <strong>Eligibility:</strong> ${nestedEligibilityMarkup}
             </p>
-            ${nested.amount ? `<p class="meta-row"><strong>Amount:</strong> $${nested.amount.toLocaleString()} ${escapeHtml(nested.amountDetail || "")}</p>` : ""}
+            ${(isNihUnlimitedFunding(nested) || nested.amount) ? `<p class="meta-row"><strong>Amount:</strong> ${isNihUnlimitedFunding(nested) ? NIH_UNLIMITED_FUNDS_TEXT_HTML : `$${nested.amount.toLocaleString()} ${escapeHtml(nested.amountDetail || "")}`}</p>` : ""}
+            ${hasSalaryProgramExpenses(nested) ? `<p class="meta-row"><strong>Award info:</strong> ${escapeHtml(SALARY_PROGRAM_EXPENSES_TEXT)}</p>` : ""}
             ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(nested.duration)}</p>` : ""}
             <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
             ${nestedHasOverflow ? `<button class="toggle">Show more</button>` : ""}
