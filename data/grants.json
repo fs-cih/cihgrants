@@ -1,5 +1,28 @@
 [
   {
+    "title": "Rural Communities Opioid Response Program (RCORP) - Impact",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-05-01",
+    "link": "https://files.simpler.grants.gov/opportunities/142e86af-cca7-40ac-82a0-47b7c6c2faf8/attachments/dabb57aa-1154-4117-8a94-8bfb74ec1762/FOA_Content_of_HRSA-26-037.pdf",
+    "description": "Rural Communities Opioid Response Program (RCORP)-Impact provides funding to drive measurable improvements in access to integrated, coordinated, and sustainable services for substance use disorder (SUD), including opioid use disorder (OUD), in rural areas. Its long-term aim is to reduce risk factors for SUD-related morbidity and mortality and enable sustained recovery and well-being. The program supports: (a) New or expanded evidence-based SUD prevention,treatment, and recovery\nservices in rural areas; (b) Coordination across health and supportive social services to enable sustained, long-term recovery; (c) A larger, more responsive workforce to address SUD-related needs; or (d) Multi-sector community networks to strengthen and sustain local service delivery. This seed funding will help communities fully launch services and strengthen SUD systems that can last long-term.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1777641619193_84_gxwawk8qk",
+    "deadlines": [
+      "2026-05-29"
+    ]
+  },
+  {
     "title": "Rural Communities Opioid Response Program (RCORP) - Planning",
     "funderType": "Federal",
     "agencyName": "HRSA",
