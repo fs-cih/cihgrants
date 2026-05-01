@@ -1,5 +1,28 @@
 [
   {
+    "title": "Rural Communities Opioid Response Program (RCORP) - Planning",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 100000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-05-01",
+    "link": "https://files.simpler.grants.gov/opportunities/791f5389-8cf3-4402-9c5b-2df39ce5a75f/attachments/7437ac8f-dd85-4098-9fd3-315fe883b716/FOA_Content_of_HRSA-26-036.pdf",
+    "description": "Rural CommunitiesOpioid Response Program (RCORP)-Planning helps organizations in rural areas build a partnership network and create a strong base for substance use disorder (SUD) and related services. It also helps build capacity to develop, implement and sustain these services. Funding will serve as a critical first step to creating SUD service systems that make care easy to access, strengthen the behavioral health workforce, gain strong community buy-in, and prepare communities to deliver prevention, treatment, recovery, and other supportive services over the long term. RCORP-Planning grants support planning and preparation activities only and do not support direct service delivery.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1777641184481_83_8t763qfjm",
+    "deadlines": [
+      "2026-05-29"
+    ]
+  },
+  {
     "title": "Rural Health and Safety Education Competitive Grants Program",
     "funderType": "Federal",
     "agencyName": "USDA",
