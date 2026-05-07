@@ -1,5 +1,37 @@
 [
   {
+    "title": "NIAID Investigator Initiated Program Project Applications (P01 Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIAID",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-05-07",
+    "link": "https://files.simpler.grants.gov/opportunities/9b4ae9e9-8f44-494c-9f45-95774b2c84f4/attachments/e81e67fc-153e-4f93-aa41-e751261c6a8e/PAR-27-082-Full-Announcement.html",
+    "description": "This notice of funding opportunity (NOFO) invites submission of investigator-initiated Program Project (P01) applications. The proposed Programs should address scientific areas relevant to the NIAID mission including: biology and pathogenesis of infectious microbes, including HIV; host-microbe interactions; mechanisms regulating immune system development and function across the lifespan, and in response to infectious pathogens; immune dysfunction resulting in allergy, asthma, autoimmunity, immunodeficiency, or transplant rejection; and translational research to develop vaccines, therapeutics, and diagnostics to prevent and treat infectious and immune-mediated diseases. Each application submitted to this NOFO must include at least two related, synergistic Research Projects that share a common central theme, focus, and/or overall objective; and an Administrative Core.",
+    "keywords": [
+      "Infectious Diseases"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
+    "nihUnlimitedFunds": true,
+    "id": "grant_1778183783882_85_3mpfy2rik",
+    "deadlines": [
+      "2026-09-25",
+      "2027-01-25",
+      "2027-05-25",
+      "2027-09-25",
+      "2028-01-25",
+      "2028-05-25",
+      "2028-09-25",
+      "2029-01-25",
+      "2029-05-25"
+    ]
+  },
+  {
     "title": "Rural Communities Opioid Response Program (RCORP) - Impact",
     "funderType": "Federal",
     "agencyName": "HRSA",
