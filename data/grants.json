@@ -1,5 +1,37 @@
 [
   {
+    "title": "Indigenous Tomorrows Fund: 2026",
+    "funderType": "Foundation",
+    "agencyName": "Native Americans in Philanthropy",
+    "eligibility": "Prime",
+    "amount": 100000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "1 year",
+    "addedDate": "2026-05-13",
+    "link": "https://nativephilanthropy.org/blog/upcoming-itf26",
+    "description": "Five bundles identify the ways that existing community strengths can uniquely address community challenges, and they are intentionally interplanted as expressions of a holistic vision for wellbeing. Each bundle carries a shared priority: work where youth are centered as leaders, as participants, or as those whose sustained wellbeing the work is designed to serve. The five bundles are (1) Maintaining the life cycle of balance, (2) Intergenerational knowledge and relationships, (3) Healing, (4) Nurturing that which nourishes us, and (5) Building power and activating abundance.",
+    "keywords": [
+      "Adolescent Health",
+      "Capacity-Building",
+      "Culture",
+      "Elders",
+      "Environmental Health",
+      "Food Sovereignty",
+      "Land-Based Healing",
+      "Policy & Advocacy",
+      "Traditional Knowledge",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1778691303456_86_cca7ted9k",
+    "deadlines": [
+      "2026-07-14"
+    ]
+  },
+  {
     "title": "NIAID Investigator Initiated Program Project Applications (P01 Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, NIAID",
