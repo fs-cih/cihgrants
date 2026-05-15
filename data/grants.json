@@ -1,5 +1,30 @@
 [
   {
+    "title": "Epidemiology Program for American Indian and Alaska Native Tribes and Urban Indian Communities",
+    "funderType": "Federal",
+    "agencyName": "Indian Health Service",
+    "eligibility": "Secondary",
+    "amount": 3500000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-05-15",
+    "link": "https://files.simpler.grants.gov/opportunities/04ac3118-e219-4d7f-bb67-15d2f017c8e7/attachments/43d4c950-cc83-4217-940c-e13b404896c6/66052-1_HHS-2026-IHS-EPI-0001_FINAL_v4_dgm.pdf",
+    "description": "You must conduct activities that address all seven TEC functions, described\nbelow, in relation to the applicable service area. (1) Collect data relating to, and monitor progress made towards meeting, each of the health status objectives of the Indian Health Service, the Indian Tribes, Tribal organizations, and UIOs in the service area. (2) Evaluate existing delivery systems, data systems, and other systems that impact the improvement of Indian health. (3) Assist Indian Tribes, Tribal organizations, and UIOs in identifying the highest-priority health status objectives and the services needed to achieve those objectives, based on epidemiological data. (4) Make recommendations to target services needed by the\npopulations served. (5) Make recommendations to improve health care delivery systems for Indians and Urban Indians. (6) Provide requested technical assistance to Indian Tribes, Tribal organizations, and UIOs to develop local health service priorities and incidence and prevalence rates of disease and other illness in the community. (7) Provide disease surveillance and assist Indian Tribes, Tribal organizations, and Urban Indian communities to promote public health.",
+    "keywords": [
+      "Capacity-Building",
+      "General Research",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1778852819388_87_9n7s3xk8s",
+    "deadlines": [
+      "2026-07-13"
+    ]
+  },
+  {
     "title": "Indigenous Tomorrows Fund: 2026",
     "funderType": "Foundation",
     "agencyName": "Native Americans in Philanthropy",
