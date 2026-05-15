@@ -1,5 +1,30 @@
 [
   {
+    "title": "The LEGO Foundation Fellowship",
+    "funderType": "Foundation",
+    "agencyName": "LEGO Foundation",
+    "eligibility": "Prime",
+    "amount": 300000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-05-15",
+    "link": "https://www.ssrc.org/programs/the-lego-foundation-fellowship/",
+    "description": "The fellowship provides flexible support over a three-year period for researchers pursuing ambitious, rigorous, and practically relevant work. We are looking for fellows with strong research potential, clear ideas for the next phase of their work, and a commitment to building evidence that can inform action for children. We welcome applications from researchers across disciplines, methods, and geographies. Relevant fields may include, but are not limited to, education, psychology, child development, public health, economics, sociology, neuroscience, data science, humanitarian studies, disability studies, human-computer interaction, and implementation science.",
+    "keywords": [
+      "Adolescent Health",
+      "Early Childhood",
+      "General Research"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1778862628055_90_q4qj2m05q",
+    "deadlines": [
+      "2026-07-31"
+    ]
+  },
+  {
     "title": "Garrett Lee Smith State/ Tribal Suicide Prevention and Early Intervention",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
