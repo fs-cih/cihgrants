@@ -1,5 +1,29 @@
 [
   {
+    "title": "Garrett Lee Smith State/ Tribal Suicide Prevention and Early Intervention",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 735000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-05-15",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-gls-sm-26-010.pdf",
+    "description": "The purpose of the program is to support States and Tribes with implementing youth suicide prevention and early intervention strategies for individuals up to age 24. Your organization is expected to: Implement suicide risk screenings in schools, juvenile justice, foster care, and health systems and other child and youth-serving settings; Develop suicide risk response protocols; Provide resources to families and caregivers of youth at risk or who have attempted suicide; and Strengthen community-based prevention, intervention, and postvention strategies. With this program, SAMHSA aims to primarily support capacity building, early identification, referral, care coordination, continuity of care, training, and system-level improvements related to youth suicide prevention and early intervention.",
+    "keywords": [
+      "Adolescent Health",
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1778855793718_89_yya48xluy",
+    "deadlines": [
+      "2026-06-15"
+    ]
+  },
+  {
     "title": "Grants to Support New Investigators in Conducting Research Related to Preventing Interpersonal Violence and Suicide Among Children and Youth (K01)",
     "funderType": "Federal",
     "agencyName": "CDC",
