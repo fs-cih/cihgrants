@@ -1,5 +1,29 @@
 [
   {
+    "title": "Grants to Support New Investigators in Conducting Research Related to Preventing Interpersonal Violence and Suicide Among Children and Youth (K01)",
+    "funderType": "Federal",
+    "agencyName": "CDC",
+    "eligibility": "Prime",
+    "amount": 150000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-05-15",
+    "piRestriction": "New Investigator",
+    "link": "https://files.simpler.grants.gov/opportunities/6c02056b-b726-4d17-a6b3-8cbd61655d4e/attachments/e2f6ae2d-4c9e-438e-8419-ad197b3a4976/rfa-ce-26-021_v8.pdf",
+    "description": "This Centers for Disease Control and Prevention (CDC), National Center for Injury Prevention and Control (NCIPC) Mentored Research Scientist Development Award (K01) helps researchers develop skills in conducting research on interpersonal violence and suicide. The goal is to help scientists become independent researchers in the field. You must propose a research project focused on at least one of the listed NCIPC research priorities related to interpersonal violence, suicide, or both among children and youth, from birth to age 17, as described in the Purpose section. You are encouraged to explore: Multiple forms of interpersonal violence, suicide, or both, among children\nand youth; Community factors that increase the risk of interpersonal violence, or\nsuicide, or both; The practical relevance of the research for prevention and\nintervention efforts. ",
+    "keywords": [
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1778853261637_88_typ0z49nm",
+    "deadlines": [
+      "2026-06-22"
+    ]
+  },
+  {
     "title": "Epidemiology Program for American Indian and Alaska Native Tribes and Urban Indian Communities",
     "funderType": "Federal",
     "agencyName": "Indian Health Service",
