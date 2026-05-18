@@ -990,6 +990,7 @@ function buildShareMailto(g) {
   if (additionalDeadlineLine) {
     bodyLines.push(additionalDeadlineLine);
   }
+  bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
   bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
   bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
   bodyLines.push(`Description: ${plainText(g.description)}`);
