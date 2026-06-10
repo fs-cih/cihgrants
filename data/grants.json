@@ -1,5 +1,36 @@
 [
   {
+    "title": "HEAL Initiative: Translating Addiction Epidemiology, Prevention, Treatment, and Recovery Research into Practice (R61/R33 - Clinical Trial Optional)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIDA, NIA, NIAAA, NCCIH",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "6 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/c33f1e5e-0354-4976-adca-9aa7240778d3/attachments/d20bcf8b-9221-47b2-93d3-2351a3eac1a4/RFA-DA-27-016-Full-Announcement.html",
+    "description": "\nThe goal of this notice of funding opportunity (NOFO) is to address the opioid crisis and/or overdose events by supporting action-oriented research, accelerating the translation of addiction epidemiology, prevention, treatment services, and recovery research to practice. Proposed studies may target the individual, provider, organizational, community, or system level. This initiative prioritizes replicable and scalable approaches for accelerating the routine use of effective, evidence-based prevention, treatment and recovery interventions and services. The translation of research to practice and research relevant to chronic pain comorbid with substance use is also a priority. Research may deploy a variety of methods and approaches, including but not limited to identifying and characterizing malleable factors, developing and testing interventions and implementation strategies, deploying and testing collaborative data science approaches, and/or developing and testing approaches that integrate the collaboration of researchers and decision-makers at any levels (e.g., clinical-, health system-, public health- or policy-level). FUNDING NOTE: Application budgets must reflect the actual needs of the proposed project. The R61 phase is limited to a budget of no more than $350,000 in direct costs per year and the R33 phase is limited to a budget of no more than $750,000 in direct costs per year. The scope of the project should determine the project period for each phase. The maximum period of the combined R61 and R33 phases is 6 years, with a maximum of 2 years for the R61 phase and maximum of 5 years for the R33 phase of the project.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781120819761_96_13z17zovq",
+    "deadlines": [
+      "2026-07-10",
+      "2026-10-09",
+      "2027-02-10",
+      "2027-06-09",
+      "2027-10-13",
+      "2028-02-10",
+      "2028-06-10",
+      "2028-10-10",
+      "2029-02-09"
+    ]
+  },
+  {
     "title": "Research Grants for Preventing Interpersonal Violence and Suicide Among Youth and Young Adults (R01)",
     "funderType": "Federal",
     "agencyName": "CDC",
