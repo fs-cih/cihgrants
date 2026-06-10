@@ -955,6 +955,9 @@ function buildShareMailto(g) {
   const subject = encodeURIComponent("Potential Grant: " + title);
   const rawUrl = g.link || "";
   const grantUrl = rawUrl && rawUrl !== '#' ? sanitizeUrl(rawUrl) : "";
+  const keywordsLine = (g.keywords && g.keywords.length > 0)
+    ? "Keywords: " + g.keywords.join(", ")
+    : "Keywords: —";
 
   // Funder: first item in comma-separated agencyName/federalAgency
   const agencyName = g.agencyName || g.federalAgency || "";
@@ -987,6 +990,7 @@ function buildShareMailto(g) {
     "",
     `Title: ${plainText(title)}`,
     `Link: ${grantUrl}`,
+    keywordsLine,
     `Funder Type: ${plainText(g.funderType)}`,
     `Funder: ${plainText(funder)}`,
     deadlineLine,
@@ -1076,6 +1080,7 @@ function buildShareMailtoMultiple(grantList) {
     bodyLines.push("");
     bodyLines.push(`Title: ${plainText(title)}`);
     bodyLines.push(`Link: ${grantUrl}`);
+    bodyLines.push(keywordsLine);
     bodyLines.push(`Funder Type: ${plainText(g.funderType)}`);
     bodyLines.push(`Funder: ${plainText(funder)}`);
     bodyLines.push(deadlineLine);
@@ -1085,7 +1090,6 @@ function buildShareMailtoMultiple(grantList) {
     bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
     bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
     bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
-    bodyLines.push(keywordsLine);
     bodyLines.push(`Description: ${plainText(g.description)}`);
   });
 
@@ -1453,6 +1457,7 @@ function renderGrant(g, selectedKeywords = []) {
           const nestedHasOverflow = nestedFullDescription.length > nestedPreviewLimit;
           const nestedPreview = nestedHasOverflow ? nestedFullDescription.slice(0, nestedPreviewLimit).trimEnd() : nestedFullDescription;
           const nestedRest = nestedHasOverflow ? nestedFullDescription.slice(nestedPreviewLimit) : "";
+          const nestedIsSelected = selectedGrantIds.has(ng.id);
           
           nestedItem.innerHTML = `
             <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
@@ -1469,7 +1474,7 @@ function renderGrant(g, selectedKeywords = []) {
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
-              <div class="card-actions"><button class="btn btn-share share-nested-btn" type="button">Share</button><button class="btn edit-nested-btn" type="button">Edit</button></div>
+              <div class="card-actions"><button class="btn btn-share share-nested-btn" type="button">Share</button><button class="btn select-btn nested-select-btn ${nestedIsSelected ? "btn-select-active" : ""}" type="button" aria-label="Select grant" aria-pressed="${nestedIsSelected ? "true" : "false"}">${nestedIsSelected ? "&#9745;" : "&#9744;"}</button><button class="btn edit-nested-btn" type="button">Edit</button></div>
             </div>
           `;
           nestedItem.dataset.expanded = "true";
@@ -1480,6 +1485,25 @@ function renderGrant(g, selectedKeywords = []) {
             e.preventDefault();
             e.stopPropagation();
             openShareMailto(ng);
+          };
+          
+          const selectNestedBtn = nestedItem.querySelector(".nested-select-btn");
+          selectNestedBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isSelected = selectedGrantIds.has(ng.id);
+            if (isSelected) {
+              selectedGrantIds.delete(ng.id);
+              selectNestedBtn.classList.remove("btn-select-active");
+              selectNestedBtn.setAttribute("aria-pressed", "false");
+              selectNestedBtn.innerHTML = "&#9744;";
+            } else {
+              selectedGrantIds.add(ng.id);
+              selectNestedBtn.classList.add("btn-select-active");
+              selectNestedBtn.setAttribute("aria-pressed", "true");
+              selectNestedBtn.innerHTML = "&#9745;";
+            }
+            updateBulkActionsBar();
           };
 
           // Add edit button functionality for nested grant
