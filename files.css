@@ -655,6 +655,30 @@ h1 {
   color: #1d2a39;
 }
 
+.btn.btn-select {
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  color: #1d2a39;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 9px 12px;
+}
+
+.btn.btn-select.btn-select-active {
+  background: #0369a1;
+  border-color: #0369a1;
+  color: white;
+}
+
+.bulk-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--border);
+}
+
 .deadline-badge {
   display: inline-flex;
   align-items: center;

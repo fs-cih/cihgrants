@@ -129,6 +129,7 @@ let prospectEditIndex = null;
 let currentView = 'grants'; // 'grants' or 'prospects'
 let mutationQueue = Promise.resolve();
 let queuedMutations = 0;
+let selectedGrantIds = new Set();
 
 const els = {
   list: document.getElementById("list"),
@@ -151,7 +152,8 @@ const els = {
   prospectStatus: document.getElementById("prospectStatus"),
   toggleGrants: document.getElementById("toggleGrants"),
   toggleProspects: document.getElementById("toggleProspects"),
-  downloadBtn: document.getElementById("downloadBtn")
+  downloadBtn: document.getElementById("downloadBtn"),
+  bulkActions: document.getElementById("bulkActions")
 };
 
 async function enqueueMutation(task, statusEl) {
@@ -782,6 +784,8 @@ function updateToggleSlider() {
 
 function render(list, selectedKeywords = []) {
   els.list.innerHTML = "";
+  selectedGrantIds.clear();
+  updateBulkActionsBar();
   
   // Pre-compute nested grant counts for better performance
   const nestedCountMap = new Map();
@@ -1017,6 +1021,92 @@ function openShareMailto(g) {
   }
 }
 
+function buildShareMailtoMultiple(grantList) {
+  const plainText = (s) => (s || "").replace(/[\r\n]/g, " ");
+  const cihDatabaseUrl = "https://fs-cih.github.io/cihgrants/";
+
+  // Sort by next deadline: soonest first, open/recurring at end
+  const sorted = [...grantList].sort((a, b) => {
+    const aNext = nextDeadline(a);
+    const bNext = nextDeadline(b);
+    if (aNext && bNext) return aNext.localeCompare(bNext);
+    if (aNext) return -1;
+    if (bNext) return 1;
+    return 0;
+  });
+
+  const count = sorted.length;
+  const subject = encodeURIComponent(`Potential Grants: ${count} ${pluralize(count, 'opportunity', 'opportunities')}`);
+
+  const bodyLines = [
+    `Hi! The following ${count} grant ${pluralize(count, 'opportunity', 'opportunities')} ${count === 1 ? 'is' : 'are'} currently open and may align with your work. To explore additional grant opportunities, you can check out the CIH Grant & Prospect Opportunities Database: ${cihDatabaseUrl}`,
+  ];
+
+  sorted.forEach(g => {
+    const title = g.title || "";
+    const rawUrl = g.link || "";
+    const grantUrl = rawUrl && rawUrl !== '#' ? sanitizeUrl(rawUrl) : "";
+    const agencyName = g.agencyName || g.federalAgency || "";
+    const funder = agencyName ? agencyName.split(',')[0].trim() : "";
+
+    let deadlineLine = "";
+    let additionalDeadlineLine = "";
+    if (g.deadlineOpen) {
+      deadlineLine = "Deadline: Always Open";
+    } else if (g.deadlineRecurring) {
+      deadlineLine = "Deadline: " + g.deadlineRecurring;
+    } else {
+      const deadlines = upcomingDeadlines(g);
+      if (!deadlines.length) {
+        deadlineLine = "Deadline: \u2014";
+      } else if (deadlines.length === 1) {
+        deadlineLine = "Deadline: " + formatDate(deadlines[0]);
+      } else {
+        deadlineLine = "Deadline: " + formatDate(deadlines[0]);
+        additionalDeadlineLine = "Additional Deadlines: " + deadlines.slice(1).map(d => formatDate(d)).join(", ");
+      }
+    }
+
+    const keywordsLine = (g.keywords && g.keywords.length > 0)
+      ? "Keywords: " + g.keywords.join(", ")
+      : "Keywords: —";
+
+    bodyLines.push("");
+    bodyLines.push("---");
+    bodyLines.push("");
+    bodyLines.push(`Title: ${plainText(title)}`);
+    bodyLines.push(`Link: ${grantUrl}`);
+    bodyLines.push(`Funder Type: ${plainText(g.funderType)}`);
+    bodyLines.push(`Funder: ${plainText(funder)}`);
+    bodyLines.push(deadlineLine);
+    if (additionalDeadlineLine) {
+      bodyLines.push(additionalDeadlineLine);
+    }
+    bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
+    bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
+    bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
+    bodyLines.push(keywordsLine);
+    bodyLines.push(`Description: ${plainText(g.description)}`);
+  });
+
+  bodyLines.push("");
+  bodyLines.push("");
+  bodyLines.push("");
+
+  const body = encodeURIComponent(bodyLines.join("\n"));
+  return "mailto:?subject=" + subject + "&body=" + body;
+}
+
+function updateBulkActionsBar() {
+  if (!els.bulkActions) return;
+  const count = selectedGrantIds.size;
+  if (count === 0) {
+    els.bulkActions.hidden = true;
+    return;
+  }
+  els.bulkActions.hidden = false;
+}
+
 function normalizeAgencyText(value) {
   return String(value || "")
     .toLowerCase()
@@ -1224,7 +1314,7 @@ function renderGrant(g, selectedKeywords = []) {
     ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
     ${nestedGrants.length > 0 ? '<div class="nested-grants"></div>' : ''}
     ${limitations ? `<div class="tag-row">${limitations}</div>` : ""}
-    <div class="card-actions"><button class="btn btn-share share-btn" type="button">Share</button><button class="btn edit-btn" type="button">Edit</button></div>
+    <div class="card-actions"><button class="btn btn-share share-btn" type="button">Share</button><button class="btn btn-select select-btn" type="button" aria-label="Select grant" aria-pressed="false">&#9744;</button><button class="btn edit-btn" type="button">Edit</button></div>
   `;
 
   const shareBtn = div.querySelector(".share-btn");
@@ -1232,6 +1322,25 @@ function renderGrant(g, selectedKeywords = []) {
     e.preventDefault();
     e.stopPropagation();
     openShareMailto(g);
+  };
+
+  const selectBtn = div.querySelector(".select-btn");
+  selectBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isSelected = selectedGrantIds.has(g.id);
+    if (isSelected) {
+      selectedGrantIds.delete(g.id);
+      selectBtn.classList.remove("btn-select-active");
+      selectBtn.setAttribute("aria-pressed", "false");
+      selectBtn.innerHTML = "&#9744;";
+    } else {
+      selectedGrantIds.add(g.id);
+      selectBtn.classList.add("btn-select-active");
+      selectBtn.setAttribute("aria-pressed", "true");
+      selectBtn.innerHTML = "&#9745;";
+    }
+    updateBulkActionsBar();
   };
 
   const editBtn = div.querySelector(".edit-btn");
@@ -2806,5 +2915,33 @@ function showPillFilter(pillType, pillValue) {
   pillFilterDialog.showModal();
 }
 
+// Bulk actions bar
+document.getElementById("deselectAllBtn").addEventListener("click", () => {
+  selectedGrantIds.clear();
+  // Remove selected state from all select buttons
+  document.querySelectorAll(".select-btn.btn-select-active").forEach(btn => {
+    btn.classList.remove("btn-select-active");
+    btn.setAttribute("aria-pressed", "false");
+    btn.innerHTML = "&#9744;";
+  });
+  updateBulkActionsBar();
+});
+
+document.getElementById("shareAllBtn").addEventListener("click", () => {
+  const selectedGrants = grants.filter(g => selectedGrantIds.has(g.id));
+  if (selectedGrants.length === 0) return;
+  const mailto = buildShareMailtoMultiple(selectedGrants);
+  try {
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.warn("Share All mailto link click fallback triggered.", error);
+    window.location.href = mailto;
+  }
+});
 
 loadData({ skipBindEvents: false });
