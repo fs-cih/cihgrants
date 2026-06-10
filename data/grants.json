@@ -1,5 +1,29 @@
 [
   {
+    "title": "Rural Health Research Dissemination Program",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 230000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/d63e1af0-f226-4c54-837f-034c0d3ade99/attachments/2e1b5835-28fa-40a0-8382-23c4f3071c71/hrsa-26-049_final.pdf",
+    "description": "This notice announces the opportunity to apply for funding under the Rural Health Research Dissemination Program. The purpose of this program is to disseminate health research, including rural mental health, rural infant mortality prevention, and rural occupational safety and preventive health research focused on rural health care to rural stakeholders at national, state, and community levels. FORHP funds health research through the Rural Health Research Center (RHRC) Program and other cooperative agreements. The successful applicant for this program will disseminate research so that it is easily and freely accessible to the public. The successful applicant will also develop and maintain strategies to disseminate this research through a website, an e-mail listserv presentations, and webinars.",
+    "keywords": [
+      "Health Communications",
+      "Rural"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781122010778_98_l3wzc5ulg",
+    "deadlines": [
+      "2026-07-08"
+    ]
+  },
+  {
     "title": "Rural Communities Opioid Response Program (RCORP) - Impact",
     "funderType": "Federal",
     "agencyName": "HRSA",
