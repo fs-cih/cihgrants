@@ -1,5 +1,29 @@
 [
   {
+    "title": "Pediatric Mental Health Care Access Program (PMHCA)",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 445000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/b98c80e2-ed80-41d2-8a16-9c2fb9751a69/attachments/55a31519-5d91-49aa-94ea-2045bbab0fa6/FOA_Content_HRSA-26-058_Final.pdf",
+    "description": "The Pediatric Mental Health Care Access Program (PMHCA) helps improve mental and behavioral health for children and youth by funding programs that give pediatric primary care providers quick access to teleconsultation, training, and case\ncoordination support (referred to as care coordination and care coordinator after this point). The program aims to remove barriers to care, focusing on rural areas and areas experiencing health professional shortages. Recipients implement mental health care access programs that increase regular screening and assessment, diagnosis, treatment, and referral of behavioral health conditions in children and youth, within primary care settings. You may set up a new program or build upon, expand, or enhance an existing program. Recipients should provide a 20% non-federal contribution (a statutory match requirement) for every year of the five year performance period.",
+    "keywords": [
+      "Early Childhood",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781185062809_103_7zw1t8axl",
+    "deadlines": [
+      "2026-07-10"
+    ]
+  },
+  {
     "title": "Rural Communities Opioid Response Program (RCORP) - Planning",
     "funderType": "Federal",
     "agencyName": "HRSA",
