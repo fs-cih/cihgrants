@@ -1,5 +1,29 @@
 [
   {
+    "title": "Rural Communities Opioid Response Program (RCORP) - Planning",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 100000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/e779b908-4f8c-48ce-9485-1345475cdbaf/attachments/66618d4b-c5b2-4b3e-a53d-58dca2d62e01/HRSA-26-036_FINAL.pdf",
+    "description": "Rural CommunitiesOpioid Response Program (RCORP)-Planning helps organizations in rural areas build a partnership network and create a strong base for substance use disorder (SUD) and related services. It also helps build capacity to develop, implement and sustain these services. Funding will serve as a critical first step to creating SUD service systems that make care easy to access, strengthen the behavioral health workforce, gain strong community buy-in, and prepare communities to deliver prevention, treatment, recovery, and other supportive services over the long term. RCORP-Planning grants support planning and preparation activities only and do not support direct service delivery.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "parentGrantId": "grant_1781121105006_97_dv2wz86zx",
+    "id": "grant_1781184868105_102_l2aewkdf6",
+    "deadlines": [
+      "2026-07-08"
+    ]
+  },
+  {
     "title": "NIH Research Education Program - Courses, Curriculum & Methods (Parent R25 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, OD, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NICHD, NIDCD, NIDCR, NIDDK, NIDA, NIEHS, NIGMS, NIMH, NINDS, NINR, NLM, NCI, THRO, ORWH, ODSS",
