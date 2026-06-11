@@ -1,5 +1,31 @@
 [
   {
+    "title": "FY 2026 COPS School Violence Prevention Program",
+    "funderType": "Federal",
+    "agencyName": "Department of Justice",
+    "eligibility": "Secondary",
+    "amount": 500000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-06-10",
+    "link": "https://cops.usdoj.gov/pdf/2026ProgramDocs/svpp/nofo.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the FY26 School Violence Prevention Program (SVPP). This funding opportunity seeks to provide competitive funding directly to states, units of local government, Indian tribes, and their public agencies to improve security at schools and on school grounds in the recipient’s jurisdiction through evidence-based school safety programs.",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Consulting",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781185974050_106_8qdul55qb",
+    "deadlines": [
+      "2026-08-04"
+    ]
+  },
+  {
     "title": "NIH Research Education Program - Research Experiences (Parent R25 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, OD, NEI, NHLBI, NGRI, NIA, NIAAA, NIAID, NICHD, NIDCD, NIDCR, NIDDK, NIDA, NIEHS, NIGMS, NIMH, NINDS, NINR, NLM, NCI, THRO, ORWH, ODSS",
