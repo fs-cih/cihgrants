@@ -1387,14 +1387,10 @@ function renderGrant(g, selectedKeywords = []) {
     };
 
     const renderNestedCollapsedMarkup = (nestedGrant) => {
-      const nestedIsSelected = selectedGrantIds.has(nestedGrant.id);
       return `
         <div class="nested-grant-title">${escapeHtml(nestedGrant.title)}</div>
         <div class="nested-grant-pills">
           ${rfaPillHtml(nestedGrant, true)}
-        </div>
-        <div class="card-actions">
-          <button class="btn btn-select select-btn nested-select-btn ${nestedIsSelected ? "btn-select-active" : ""}" type="button" aria-label="Select grant" aria-pressed="${nestedIsSelected ? "true" : "false"}">${nestedIsSelected ? "&#9745;" : "&#9744;"}</button>
         </div>
       `;
     };
@@ -1406,12 +1402,6 @@ function renderGrant(g, selectedKeywords = []) {
       
       // Initial collapsed view
       nestedItem.innerHTML = renderNestedCollapsedMarkup(ng);
-      const initialNestedSelectBtn = nestedItem.querySelector(".nested-select-btn");
-      initialNestedSelectBtn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleNestedSelection(ng.id, initialNestedSelectBtn);
-      };
       
       nestedItem.onclick = () => {
         const isExpanded = nestedItem.dataset.expanded === "true";
@@ -1419,12 +1409,6 @@ function renderGrant(g, selectedKeywords = []) {
         if (isExpanded) {
           // Collapse: show summary
           nestedItem.innerHTML = renderNestedCollapsedMarkup(ng);
-          const collapsedSelectBtn = nestedItem.querySelector(".nested-select-btn");
-          collapsedSelectBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleNestedSelection(ng.id, collapsedSelectBtn);
-          };
           nestedItem.dataset.expanded = "false";
         } else {
           // Expand: show full details
