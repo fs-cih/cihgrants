@@ -1,5 +1,37 @@
 [
   {
+    "title": "NIH Research Education Program - Research Experiences (Parent R25 - Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, OD, NEI, NHLBI, NGRI, NIA, NIAAA, NIAID, NICHD, NIDCD, NIDCR, NIDDK, NIDA, NIEHS, NIGMS, NIMH, NINDS, NINR, NLM, NCI, THRO, ORWH, ODSS",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/5d178606-a977-4ffe-bddf-bfe72eeb4c43/attachments/ccd4f491-c61d-4227-b6cf-176d666c5ad1/PA-27-036-Full-Announcement.html",
+    "description": "The National Institutes of Health (NIH) Research Education Program supports research education activities in the mission areas of the NIH. The overarching goal of the Research Education program is to: Support educational activities that complement and/or enhance training of a workforce to meet the natinoal biomedical, behavioral and clinical research needs; Help recruit individuals with specific specialty or disciplinary backgrounds to research careers in biomedical, behavioral and clinical sciences; and  Foster a better understanding of biomedical, behavioral and clinical research and its implications. To accomplish the stated over-arching goal, this NOFO will support educational activities with a primary focus on: Research Experiences",
+    "keywords": [
+      "Education & Training"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "parentGrantId": "grant_1781184434152_100_96xcbe76g",
+    "id": "grant_1781185641678_105_9sh42fvxb",
+    "deadlines": [
+      "2026-09-25",
+      "2027-01-25",
+      "2027-05-25",
+      "2027-09-25",
+      "2028-01-25",
+      "2028-05-25",
+      "2028-09-25",
+      "2029-01-25",
+      "2029-05-25"
+    ]
+  },
+  {
     "title": "FY26 Law Enforcement Mental Health and Wellness Act Program",
     "funderType": "Federal",
     "agencyName": "Department of Justice",
