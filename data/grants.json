@@ -1,5 +1,36 @@
 [
   {
+    "title": "NIH Research Education Program - Courses, Curriculum & Methods (Parent R25 - Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, OD, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NICHD, NIDCD, NIDCR, NIDDK, NIDA, NIEHS, NIGMS, NIMH, NINDS, NINR, NLM, NCI, THRO, ORWH, ODSS",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/fdca0af8-d051-432f-b28d-7747ec0e5496/attachments/3051c2cb-cb99-4401-a282-42934b689f56/PA-27-034-Full-Announcement.html",
+    "description": "The National Institutes of Health (NIH) Research Education Program supports research education activities in the mission areas of the NIH. The overarching goal of the Research Education program is to: Support educational activities that complement and/or enhance training of a workforce to meet the national biomedical, behavioral and clinical research needs; Help recruit individuals with specific specialty or disciplinary backgrounds to research careers in biomedical, behavioral and clinical sciences; and Foster a better understanding of biomedical, behavioral and clinical research and its implications. To accomplish the stated over-arching goal, this NOFO will support educational activities with a primary focus on: Courses for Skills Development; Curriculum or Methods Development",
+    "keywords": [
+      "Education & Training"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781184695737_101_7ad1voohr",
+    "deadlines": [
+      "2026-09-25",
+      "2027-01-25",
+      "2027-05-25",
+      "2027-09-25",
+      "2028-01-25",
+      "2028-05-25",
+      "2028-09-25",
+      "2029-01-25",
+      "2029-05-25"
+    ]
+  },
+  {
     "title": "NIH Research Educational Program - Mentoring Activities & Networks (Parent R25/UE5 - Clinical Trial Not Allowed)",
     "funderType": "Federal",
     "agencyName": "NIH, OD, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NIDCD, NIDCR, NIDDK, NIDA, NIGMS, NIMH, NINDS, NINR, NCI, ORWH",
