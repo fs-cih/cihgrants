@@ -1,5 +1,28 @@
 [
   {
+    "title": "FY26 Law Enforcement Mental Health and Wellness Act Program",
+    "funderType": "Federal",
+    "agencyName": "Department of Justice",
+    "eligibility": "Prime",
+    "amount": 250000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-06-10",
+    "link": "https://cops.usdoj.gov/pdf/2026ProgramDocs/lemhwa/nofo.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the FY26 Law Enforcement\nMental Health and Wellness Act (LEMHWA) Program. The mental health and\nwellness of law enforcement officers and their families is a priority of the\nAdministration. Through the LEMHWA program, the Department of Justice\nsupports this priority by providing funding directly to state, local, tribal, and\nterritorial (SLTT) law enforcement agencies to implement new or enhance\nexisting programs that offer training and services to support officers’ emotional\nand mental health, including counseling programs, peer mentoring, suicide\nprevention, stress reduction, and police officer family services",
+    "keywords": [
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781185423662_104_8n1i535ii",
+    "deadlines": [
+      "2026-07-30"
+    ]
+  },
+  {
     "title": "Pediatric Mental Health Care Access Program (PMHCA)",
     "funderType": "Federal",
     "agencyName": "HRSA",
