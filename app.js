@@ -1371,29 +1371,60 @@ function renderGrant(g, selectedKeywords = []) {
   if (nestedGrants.length > 0) {
     const nestedContainer = div.querySelector(".nested-grants");
     nestedGrants.forEach(ng => {
+      const toggleNestedSelection = (selectButton) => {
+        const isSelected = selectedGrantIds.has(ng.id);
+        if (isSelected) {
+          selectedGrantIds.delete(ng.id);
+          selectButton.classList.remove("btn-select-active");
+          selectButton.setAttribute("aria-pressed", "false");
+          selectButton.innerHTML = "&#9744;";
+        } else {
+          selectedGrantIds.add(ng.id);
+          selectButton.classList.add("btn-select-active");
+          selectButton.setAttribute("aria-pressed", "true");
+          selectButton.innerHTML = "&#9745;";
+        }
+        updateBulkActionsBar();
+      };
+
+      const renderNestedCollapsedMarkup = () => {
+        const nestedIsSelected = selectedGrantIds.has(ng.id);
+        return `
+          <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
+          <div class="nested-grant-pills">
+            ${rfaPillHtml(ng, true)}
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-select select-btn nested-select-btn ${nestedIsSelected ? "btn-select-active" : ""}" type="button" aria-label="Select grant" aria-pressed="${nestedIsSelected ? "true" : "false"}">${nestedIsSelected ? "&#9745;" : "&#9744;"}</button>
+          </div>
+        `;
+      };
+
       const nestedItem = document.createElement("div");
       nestedItem.className = "nested-grant-item";
       nestedItem.dataset.expanded = "false";
       
-      // Initial collapsed view - just title
-      nestedItem.innerHTML = `
-        <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
-        <div class="nested-grant-pills">
-          ${rfaPillHtml(ng, true)}
-        </div>
-      `;
+      // Initial collapsed view
+      nestedItem.innerHTML = renderNestedCollapsedMarkup();
+      const initialNestedSelectBtn = nestedItem.querySelector(".nested-select-btn");
+      initialNestedSelectBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleNestedSelection(initialNestedSelectBtn);
+      };
       
       nestedItem.onclick = () => {
         const isExpanded = nestedItem.dataset.expanded === "true";
         
         if (isExpanded) {
-          // Collapse: show only title
-          nestedItem.innerHTML = `
-            <div class="nested-grant-title">${escapeHtml(ng.title)}</div>
-            <div class="nested-grant-pills">
-              ${rfaPillHtml(ng, true)}
-            </div>
-          `;
+          // Collapse: show summary
+          nestedItem.innerHTML = renderNestedCollapsedMarkup();
+          const collapsedSelectBtn = nestedItem.querySelector(".nested-select-btn");
+          collapsedSelectBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleNestedSelection(collapsedSelectBtn);
+          };
           nestedItem.dataset.expanded = "false";
         } else {
           // Expand: show full details
@@ -1474,7 +1505,7 @@ function renderGrant(g, selectedKeywords = []) {
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
-              <div class="card-actions"><button class="btn btn-share share-nested-btn" type="button">Share</button><button class="btn select-btn nested-select-btn ${nestedIsSelected ? "btn-select-active" : ""}" type="button" aria-label="Select grant" aria-pressed="${nestedIsSelected ? "true" : "false"}">${nestedIsSelected ? "&#9745;" : "&#9744;"}</button><button class="btn edit-nested-btn" type="button">Edit</button></div>
+              <div class="card-actions"><button class="btn btn-share share-nested-btn" type="button">Share</button><button class="btn btn-select select-btn nested-select-btn ${nestedIsSelected ? "btn-select-active" : ""}" type="button" aria-label="Select grant" aria-pressed="${nestedIsSelected ? "true" : "false"}">${nestedIsSelected ? "&#9745;" : "&#9744;"}</button><button class="btn edit-nested-btn" type="button">Edit</button></div>
             </div>
           `;
           nestedItem.dataset.expanded = "true";
@@ -1491,19 +1522,7 @@ function renderGrant(g, selectedKeywords = []) {
           selectNestedBtn.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
-            const isSelected = selectedGrantIds.has(ng.id);
-            if (isSelected) {
-              selectedGrantIds.delete(ng.id);
-              selectNestedBtn.classList.remove("btn-select-active");
-              selectNestedBtn.setAttribute("aria-pressed", "false");
-              selectNestedBtn.innerHTML = "&#9744;";
-            } else {
-              selectedGrantIds.add(ng.id);
-              selectNestedBtn.classList.add("btn-select-active");
-              selectNestedBtn.setAttribute("aria-pressed", "true");
-              selectNestedBtn.innerHTML = "&#9745;";
-            }
-            updateBulkActionsBar();
+            toggleNestedSelection(selectNestedBtn);
           };
 
           // Add edit button functionality for nested grant
