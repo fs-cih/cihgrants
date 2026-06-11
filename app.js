@@ -1372,7 +1372,7 @@ function renderGrant(g, selectedKeywords = []) {
     const nestedContainer = div.querySelector(".nested-grants");
     const toggleNestedSelection = (grantId, selectButton) => {
       const isSelected = selectedGrantIds.has(grantId);
-      if (isExpanded) {
+      if (isSelected) {
         selectedGrantIds.delete(grantId);
         selectButton.classList.remove("btn-select-active");
         selectButton.setAttribute("aria-pressed", "false");
