@@ -1,5 +1,36 @@
 [
   {
+    "title": "NIH Research Educational Program - Mentoring Activities & Networks (Parent R25/UE5 - Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, OD, NEI, NHLBI, NHGRI, NIA, NIAAA, NIAID, NIDCD, NIDCR, NIDDK, NIDA, NIGMS, NIMH, NINDS, NINR, NCI, ORWH",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "",
+    "addedDate": "2026-06-10",
+    "link": "https://files.simpler.grants.gov/opportunities/cabf2507-f32e-467b-ba74-ca8b853ad972/attachments/bfcc44f8-715c-4a40-96da-015966b178a2/PA-27-035-Full-Announcement.html",
+    "description": "The National Institutes of Health (NIH) Research Education Program supports research education activities in the mission areas of the NIH. The overarching goal of the Research Education program is to: Support educational activities that complement and/or enhance training of a workforce to meet national biomedical, behavioral and clinical research needs; Help recruit individuals with specific specialty or disciplinary backgrounds to research careers in biomedical, behavioral and clinical sciences; and Foster a better understanding of biomedical, behavioral and clinical research and its implications. \n\nTo accomplish the stated over-arching goal, this NOFO will support educational activities with a primary focus on: Mentoring Activities",
+    "keywords": [
+      "Education & Training"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781184434152_100_96xcbe76g",
+    "deadlines": [
+      "2026-09-25",
+      "2027-01-25",
+      "2027-05-25",
+      "2027-09-25",
+      "2028-01-25",
+      "2028-05-25",
+      "2028-09-25",
+      "2029-01-25",
+      "2029-05-25"
+    ]
+  },
+  {
     "title": "Early Childhood Comprehensive Systems SEED Project: Scaling Effective Early Childhood Systems Development (ECCS SEED)",
     "funderType": "Federal",
     "agencyName": "HRSA",
