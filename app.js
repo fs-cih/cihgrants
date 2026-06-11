@@ -1333,7 +1333,7 @@ function renderGrant(g, selectedKeywords = []) {
     e.preventDefault();
     e.stopPropagation();
     const isSelected = selectedGrantIds.has(g.id);
-    if (isExpanded) {
+    if (isSelected) {
       selectedGrantIds.delete(g.id);
       selectBtn.classList.remove("btn-select-active");
       selectBtn.setAttribute("aria-pressed", "false");
@@ -1372,7 +1372,7 @@ function renderGrant(g, selectedKeywords = []) {
     const nestedContainer = div.querySelector(".nested-grants");
     const toggleNestedSelection = (grantId, selectButton) => {
       const isSelected = selectedGrantIds.has(grantId);
-      if (isSelected) {
+      if (isExpanded) {
         selectedGrantIds.delete(grantId);
         selectButton.classList.remove("btn-select-active");
         selectButton.setAttribute("aria-pressed", "false");
@@ -1416,7 +1416,7 @@ function renderGrant(g, selectedKeywords = []) {
       nestedItem.onclick = () => {
         const isExpanded = nestedItem.dataset.expanded === "true";
         
-        if (isSelected) {
+        if (isExpanded) {
           // Collapse: show summary
           nestedItem.innerHTML = renderNestedCollapsedMarkup(ng);
           const collapsedSelectBtn = nestedItem.querySelector(".nested-select-btn");
