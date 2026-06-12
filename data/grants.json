@@ -1,5 +1,29 @@
 [
   {
+    "title": "Tribal Behavioral Health Substance Use Prevention",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 350000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-12",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-tbh-sp-26-004.pdf",
+    "description": "The purpose of this program is to prevent and reduce substance use and overdose among American Indian and Alaska Native (AI/AN) youth and young adults through age 24 by building community-driven prevention systems, services, and partnerships. Your organization will use evidence-based and locally tailored strategies. These strategies will strengthen protective factors, reduce risk factors, and build sustainable prevention capacity. Your organization will complete the following major program components: Community engagement, planning, and support; Strategic planning; Strengthen workforce capacity; Deliver prevention education to youth and young adults; and Establish overdose response protocols. ",
+    "keywords": [
+      "Behavioral Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781280379116_108_sh5gynf4j",
+    "deadlines": [
+      "2026-07-13"
+    ]
+  },
+  {
     "title": "Behavioral Health and Community Safety Partnerships",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
