@@ -1,5 +1,28 @@
 [
   {
+    "title": "Behavioral Health and Community Safety Partnerships",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-12",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-bh-csp-sm-26-023.pdf",
+    "description": "The purpose of Behavioral Health and Community Safety Partnerships (BHCSP) is to support communities in reducing the behavioral health impacts of crime, violence, and disorder; strengthening community safety; and improving outcomes for youth, families, and other individuals affected by crime, violence, and disorder. With this program, SAMHSA aims to support both individual recovery and community-level prevention and resilience, while contributing to broader goals of reducing the impacts of crime, violence, and disorder and improving behavioral health outcomes for individuals and families",
+    "keywords": [
+      "Behavioral Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781277122270_107_gv0u6qvku",
+    "deadlines": [
+      "2026-07-13"
+    ]
+  },
+  {
     "title": "FY 2026 COPS School Violence Prevention Program",
     "funderType": "Federal",
     "agencyName": "Department of Justice",
