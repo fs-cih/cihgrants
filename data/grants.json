@@ -1,5 +1,29 @@
 [
   {
+    "title": "Screening, Brief Intervention, and Referral to Treatment",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 995000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-12",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-sbirt-ti-26-005.pdf",
+    "description": "The purpose of this program is to implement the Screening, Brief Intervention, and Referral to Treatment (SBIRT) public health model for children, adolescents, and/or adults in primary care and community health settings (e.g., health centers, hospital systems, health maintenance organizations (HMOs), preferred-provider organizations (PPOs), health plans, Federally Qualified Health Centers (FQHCs), behavioral health centers, pediatric health care provider offices, children’s hospitals) and schools, with a focus on screening for underage drinking, opioid use, and other substance use. SBIRT services are intended to be integrated into routine care delivery and may be implemented within primary care settings that provide ongoing care to children and adolescents, including those with chronic or complex health conditions. For the purpose of this funding announcement, pediatric providers include providers serving youth ages 12 to 21. Your organization is expected to: Deliver early screening and intervention for alcohol and drug use for all patients, starting at 12 years old; and Provide timely referral to more intensive treatment for those who have substance use disorders. ",
+    "keywords": [
+      "Behavioral Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781286558022_109_ak841rx0x",
+    "deadlines": [
+      "2026-07-13"
+    ]
+  },
+  {
     "title": "Tribal Behavioral Health Substance Use Prevention",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
