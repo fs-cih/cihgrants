@@ -1,5 +1,28 @@
 [
   {
+    "title": "Strategic Prevention Framework (SPF) - Partnerships for Success (PFS) for Communities and Tribes",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 600000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-16",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-spf-pfs-sp-26-002.pdf",
+    "description": "The purpose of this program is to: Help prevent and reduce the initiation and progression of substance use and its related problems by supporting the development and delivery of community-based substance use prevention services that  strengthen protective factors, reduce risk factors, build resilience, and promote well-being; and Expand and strengthen the capacity of prevention providers serving communities and tribes to implement evidence-based and evidence-informed prevention strategies. NOTE 1: Depending on population of community served, funding may be up to $250,000, $425,000, or $600,000 per year. NOTE 2: Because JHU already has an SPF grant, a new one must serve a different community.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781612081035_113_hjppny4xk",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Public Health Training Centers (PHTC) Program",
     "funderType": "Federal",
     "agencyName": "HRSA",
