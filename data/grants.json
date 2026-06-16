@@ -1,5 +1,30 @@
 [
   {
+    "title": "Behavioral Health Partnerships for Early Diversion of Adults and Youth",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 650000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-16",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-early-diversion-sm-26-025.pdf",
+    "description": "The purpose of this program is to develop and implement a program to divert youth and/or adults with mental health or co-occurring disorders who are at risk of criminal and/or juvenile justice involvement to community-based services before arrest or booking. Working with community partners, the program identifies where help is needed to provide early diversion services to stabilize the individual. Services could include outreach, screening, crisis evaluation, brief counseling or support, and connecting the person to longer-term care in the community.",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781612231866_114_jqn5irjut",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Strategic Prevention Framework (SPF) - Partnerships for Success (PFS) for Communities and Tribes",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
