@@ -1,5 +1,28 @@
 [
   {
+    "title": "Behavioral Health Mobile Crisis Team Partnerships",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-06-16",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-mctp-sm-26-029.pdf",
+    "description": "The purpose of this program is to establish new, or enhance existing, mobile crisis teams (MCTs) that serve children, youth, and adults experiencing mental health or substance use disorder crises. Its focus is the expansion of behavioral health crisis response capacity and the development of structured partnerships that reduce reliance on law enforcement and emergency departments for behavioral health crises. ",
+    "keywords": [
+      "Behavioral Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781612472030_116_1fvprxs7k",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Circles of Care for American Indian/Alaska Natives (AI/AN)",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
