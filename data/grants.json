@@ -1,5 +1,30 @@
 [
   {
+    "title": "Circles of Care for American Indian/Alaska Natives (AI/AN)",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 350000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-06-16",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-circles-of-care-sm-26-026.pdf",
+    "description": "he purpose of this program is to support American Indian and Alaska Native (AI/AN) tribes in planning and developing a comprehensive, community-based system of care (SOC). A SOC is defined as a coordinated network of effective mental health and essential supportive services organized to address and meet the varied needs of children, youth, and young adults (birth through age 25), and their families. The SOC approach strives to ensure that mental health services are family-driven and youth-guided, and community-based.",
+    "keywords": [
+      "Adolescent Health",
+      "Mental Health",
+      "Public Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781612372131_115_xguzlponh",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Behavioral Health Partnerships for Early Diversion of Adults and Youth",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
