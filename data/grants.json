@@ -1,5 +1,29 @@
 [
   {
+    "title": "Public Health Training Centers (PHTC) Program",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 910000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-06-16",
+    "link": "https://files.simpler.grants.gov/opportunities/8e69f41a-209f-4cd7-9ab8-c0f57358c37b/attachments/693de1ef-a607-49dc-b07a-b1d34f3cd405/HRSA-26-078_Final.pdf",
+    "description": "The goal of the PHTC Program is to increase the supply of a high-quality public health workforce for rural and medically vulnerable communities. It will do this by achieving the following objectives: Objective 1 - Expand and enhance the public health workforce; Objective 2 - Increase community-based training partnerships in rural and medically vulnerable areas; Objective 3 - Provide tailored, quality training to address current and emerging public health needs including chronic disease management and improving health and nutrition.",
+    "keywords": [
+      "Education & Training",
+      "Public Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781608919504_112_57k0t4an3",
+    "deadlines": [
+      "2026-07-17"
+    ]
+  },
+  {
     "title": "Center for Indigenous Innovation and Health",
     "funderType": "Federal",
     "agencyName": "HHS, OMH",
