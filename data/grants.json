@@ -1,5 +1,30 @@
 [
   {
+    "title": "Center for Indigenous Innovation and Health",
+    "funderType": "Federal",
+    "agencyName": "HHS, OMH",
+    "eligibility": "Prime",
+    "amount": 1000000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-06-16",
+    "link": "https://files.simpler.grants.gov/opportunities/f6d48452-18f9-469f-8010-611c11a99065/attachments/cd6bd429-2289-47fd-99b5-55f5b0979f36/FY2026_CIIH_NOFO_clean_version_6.12.26_FINAL.pdf",
+    "description": "This notice solicits applications for projects under the Center for Indigenous Innovation and Health (CIIH) initiative. CIIH will support efforts, including research, education, service, partnership development and technical assistance, to address the documented chronic disease burden and health care access gaps experienced by American Indian and Alaska Natives and Native Hawaiian and Pacific Islander populations. Funded projects should implement evidence-based frameworks and community-based strategies to prevent and improve chronic disease outcomes, including obesity, hypertension, diabetes, and related conditions, within one Indigenous population of focus. ",
+    "keywords": [
+      "Disparities",
+      "Public Health",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1781608758122_111_1hlmq8jgw",
+    "deadlines": [
+      "2026-07-13"
+    ]
+  },
+  {
     "title": "Adult Suicide Prevention",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
