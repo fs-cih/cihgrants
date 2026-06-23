@@ -496,6 +496,7 @@ function updateAgencyNameField() {
 }
 
 function getUnusualFundingCircumstances(grant) {
+  // Legacy grants only persisted nihUnlimitedFunds, and that older single option always implied authorization.
   const authorizationRequired = grant.nihUnlimitedFundingAuthorizationRequired === true
     || (grant.nihUnlimitedFundingAuthorizationRequired === undefined && grant.nihUnlimitedFunds);
   if (grant.unusualFundingCircumstances) {
