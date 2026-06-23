@@ -1,5 +1,30 @@
 [
   {
+    "title": "Trauma-Informed Services in Schools",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 970000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-06-23",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-tiss-sm-26-006.pdf",
+    "description": "The purpose of this program is to increase student access to evidence-based support services and mental health care by developing innovative initiatives, activities, and programs to link local school systems with local trauma support and mental health services.",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782236072377_123_f8plej0v7",
+    "deadlines": [
+      "2026-07-16"
+    ]
+  },
+  {
     "title": "Tribal Behavioral Health: Suicide Prevention",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
