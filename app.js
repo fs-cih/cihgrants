@@ -6,7 +6,6 @@ const NIH_UNLIMITED_FUNDS_AUTH_TEXT_PLAIN = 'Budgets not limited; authorization 
 const SALARY_PROGRAM_EXPENSES_TEXT = "Budgets are composed of salary and other program-related expenses, as described in NOFO";
 const NIH_UNLIMITED_FUNDS_OPTION = "NIH unlimited funding";
 const NIH_UNLIMITED_FUNDS_AUTH_OPTION = "NIH unlimited funding (authorization over $500,000)";
-const LEGACY_NIH_UNLIMITED_FUNDS_OPTION = "NIH unlimited funding";
 const UNUSUAL_FUNDING_CIRCUMSTANCES = [NIH_UNLIMITED_FUNDS_OPTION, NIH_UNLIMITED_FUNDS_AUTH_OPTION, "Salary and program expenses"];
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -498,7 +497,7 @@ function updateAgencyNameField() {
 
 function getUnusualFundingCircumstances(grant) {
   if (grant.unusualFundingCircumstances) {
-    if (grant.unusualFundingCircumstances === LEGACY_NIH_UNLIMITED_FUNDS_OPTION && grant.nihUnlimitedFunds) {
+    if (grant.unusualFundingCircumstances === NIH_UNLIMITED_FUNDS_OPTION && grant.nihUnlimitedFunds) {
       return NIH_UNLIMITED_FUNDS_AUTH_OPTION;
     }
     return grant.unusualFundingCircumstances;
