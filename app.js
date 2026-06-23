@@ -1,8 +1,13 @@
 const TODAY = new Date().toISOString().slice(0, 10);
-const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000 per year';
-const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000 per year';
+const NIH_UNLIMITED_FUNDS_TEXT_HTML = 'Budgets not limited';
+const NIH_UNLIMITED_FUNDS_TEXT_PLAIN = 'Budgets not limited';
+const NIH_UNLIMITED_FUNDS_AUTH_TEXT_HTML = 'Budgets not limited; authorization required for &gt;$500,000 per year';
+const NIH_UNLIMITED_FUNDS_AUTH_TEXT_PLAIN = 'Budgets not limited; authorization required for >$500,000 per year';
 const SALARY_PROGRAM_EXPENSES_TEXT = "Budgets are composed of salary and other program-related expenses, as described in NOFO";
-const UNUSUAL_FUNDING_CIRCUMSTANCES = ["NIH unlimited funding", "Salary and program expenses"];
+const NIH_UNLIMITED_FUNDS_OPTION = "NIH unlimited funding";
+const NIH_UNLIMITED_FUNDS_AUTH_OPTION = "NIH unlimited funding (authorization over $500,000)";
+const LEGACY_NIH_UNLIMITED_FUNDS_OPTION = "NIH unlimited funding";
+const UNUSUAL_FUNDING_CIRCUMSTANCES = [NIH_UNLIMITED_FUNDS_OPTION, NIH_UNLIMITED_FUNDS_AUTH_OPTION, "Salary and program expenses"];
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
@@ -493,16 +498,24 @@ function updateAgencyNameField() {
 
 function getUnusualFundingCircumstances(grant) {
   if (grant.unusualFundingCircumstances) {
+    if (grant.unusualFundingCircumstances === LEGACY_NIH_UNLIMITED_FUNDS_OPTION && grant.nihUnlimitedFunds) {
+      return NIH_UNLIMITED_FUNDS_AUTH_OPTION;
+    }
     return grant.unusualFundingCircumstances;
   }
   if (grant.nihUnlimitedFunds) {
-    return "NIH unlimited funding";
+    return NIH_UNLIMITED_FUNDS_AUTH_OPTION;
   }
   return "";
 }
 
 function isNihUnlimitedFunding(grant) {
-  return getUnusualFundingCircumstances(grant) === "NIH unlimited funding";
+  const unusualFunding = getUnusualFundingCircumstances(grant);
+  return unusualFunding === NIH_UNLIMITED_FUNDS_OPTION || unusualFunding === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
+}
+
+function requiresNihUnlimitedFundingAuthorization(grant) {
+  return getUnusualFundingCircumstances(grant) === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
 }
 
 function hasSalaryProgramExpenses(grant) {
@@ -595,18 +608,22 @@ function formatIdcNote(grant) {
 }
 
 function formatGrantAmountHtml(g) {
-  const baseAmount = isNihUnlimitedFunding(g)
-    ? NIH_UNLIMITED_FUNDS_TEXT_HTML
-    : formatAmount(g.amount) + (g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : '');
+  const baseAmount = requiresNihUnlimitedFundingAuthorization(g)
+    ? NIH_UNLIMITED_FUNDS_AUTH_TEXT_HTML
+    : isNihUnlimitedFunding(g)
+      ? NIH_UNLIMITED_FUNDS_TEXT_HTML
+      : formatAmount(g.amount) + (g.amountDetail ? ` ${escapeHtml(g.amountDetail)}` : '');
   return hasSalaryProgramExpenses(g)
     ? `${baseAmount}; ${escapeHtml(SALARY_PROGRAM_EXPENSES_TEXT)}`
     : baseAmount;
 }
 
 function formatGrantAmountPlain(g) {
-  const baseAmount = isNihUnlimitedFunding(g)
-    ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN
-    : formatAmount(g.amount);
+  const baseAmount = requiresNihUnlimitedFundingAuthorization(g)
+    ? NIH_UNLIMITED_FUNDS_AUTH_TEXT_PLAIN
+    : isNihUnlimitedFunding(g)
+      ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN
+      : formatAmount(g.amount);
   return hasSalaryProgramExpenses(g)
     ? `${baseAmount}; ${SALARY_PROGRAM_EXPENSES_TEXT}`
     : baseAmount;
@@ -1895,7 +1912,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   if (unusualFunding) {
     grant.unusualFundingCircumstances = unusualFunding;
   }
-  grant.nihUnlimitedFunds = unusualFunding === "NIH unlimited funding";
+  grant.nihUnlimitedFunds = unusualFunding === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
   
   // Add parent grant ID if selected
   const parentGrantId = document.getElementById("a_parentGrantId").value;
