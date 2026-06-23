@@ -1,5 +1,28 @@
 [
   {
+    "title": "Treatment and Recovery Services",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 545000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-23",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-yftree-ti-26-011.pdf",
+    "description": "The purpose of this program is to enhance comprehensive treatment and recovery services for children (ages 11 and under), adolescents (ages 12-17) and young adults (ages 18-25) with substance use disorders (SUD) and/or co-occurring substance use and mental disorders (COD) and their families/primary caregivers. Your organization is expected to provide direct SUD and/or COD treatment and recovery activities that are grounded in family-centered, trauma-informed, evidence-based, and cost-effective practices",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782235827342_121_uog1c20ti",
+    "deadlines": [
+      "2026-07-16"
+    ]
+  },
+  {
     "title": "Tribal Opioid Response Grants",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
