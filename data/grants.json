@@ -1,5 +1,28 @@
 [
   {
+    "title": "Tribal Opioid Response Grants",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 1750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-23",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-tor-ti-26-012.pdf",
+    "description": "NOTE: Base award per year depends on IHS service population; lowest rate is $250,000 per year. The purpose of the TOR program is to assist in addressing the opioid overdose crisis in Tribal communities by increasing access to FDA-approved medications for the treatment of opioid use disorder (MOUD), and supporting the continuum of prevention, treatment, and recovery support services for opioid use disorder (OUD) and co-occurring substance use disorders. This program also supports prevention, treatment, and recovery support services for stimulant misuse and use disorders, including those involving cocaine and methamphetamine. ",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782235719490_120_x0nekq753",
+    "deadlines": [
+      "2026-07-16"
+    ]
+  },
+  {
     "title": "Rural Opioid Technical Assistance Centers",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
