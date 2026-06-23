@@ -1,5 +1,28 @@
 [
   {
+    "title": "Preventing Youth Overdose: Treatment, Recovery, Education, Awareness and Training",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 450000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-06-23",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-pyo-treat-ti-26-017.pdf",
+    "description": "The purpose of this program is to improve local awareness among youth and young adults of the risks associated with fentanyl and provide youth and young adults with opioid use disorder (OUD) and other substance use disorder (SUD) prevention, treatment and recovery support services. This includes the following services for youth and young adults: the primary prevention of substance misuse including education on synthetic opioids and emerging drugs; expanding screening and diagnosis for OUD and other SUD; delivery of treatment or referrals to\ntreatment for OUD and other SUDs, which may include the use of medications for opioid use disorder (MOUD) and other medications for substance use disorder (MSUD); provision of recovery support services; and training of healthcare providers, families, and school personnel on best practices for supporting youth with OUD and other SUD including those taking MOUD and other MSUD. ",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782235007162_118_ck0sr69m7",
+    "deadlines": [
+      "2026-07-16"
+    ]
+  },
+  {
     "title": "Replicating Effective Teen Pregnancy Prevention (TPP) Programs",
     "funderType": "Federal",
     "agencyName": "HHS",
