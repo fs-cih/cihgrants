@@ -1,5 +1,37 @@
 [
   {
+    "title": "NIAID Clinical Trial Implementation Cooperative Agreement (U01 Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIAID",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "Excluding IDC",
+    "duration": "7 years",
+    "addedDate": "2026-06-23",
+    "link": "https://files.simpler.grants.gov/opportunities/81895450-caf7-48ab-bab4-b80f0d74e3b1/attachments/89fd3002-0a0a-43ff-9a18-a94ede94778d/PAR-27-064-Full-Announcement.html",
+    "description": "This notice of funding opportunity (NOFO) encourages applications for implementation of investigator-initiated, milestone driven clinical trials that need enhanced oversight, and as applicable, include mechanistic studies. Mechanistic work in clinical trials may be of great value because it promotes the understanding of human diseases and the development of future therapeutic modalities. Support is available for clinical trials up to 5 years, as well as for extended clinical trials of 6- or 7-years. Only one clinical trial may be proposed in each NIAID Clinical Trial Implementation Cooperative Agreement (U01) application. In accordance with NIH standard peer-review processes, the applications will be peer-reviewed, and only meritorious applications will be considered.",
+    "keywords": [
+      "Infectious Diseases"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
+    "nihUnlimitedFunds": true,
+    "id": "grant_1782236699616_124_canujvb41",
+    "deadlines": [
+      "2026-10-05",
+      "2027-02-05",
+      "2027-06-05",
+      "2027-10-05",
+      "2028-02-05",
+      "2028-06-05",
+      "2028-10-05",
+      "2029-02-05",
+      "2029-06-05"
+    ]
+  },
+  {
     "title": "Trauma-Informed Services in Schools",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
