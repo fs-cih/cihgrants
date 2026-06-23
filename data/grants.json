@@ -1,5 +1,29 @@
 [
   {
+    "title": "Rural Opioid Technical Assistance Centers",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 650000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-06-23",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-rota-ti-26-021.pdf",
+    "description": "The purpose of this program is to develop and disseminate training and technical assistance to address the high prevalence of opioid and stimulant use and misuse affecting rural communities. It is comprised of ten (10) Regional Centers and one (1) National Coordinating Office (NCO), which work together to provide high-quality training and technical assistance on prevention, including overdose prevention, treatment, and recovery support service activities for substance use disorders, including polysubstance use. ",
+    "keywords": [
+      "Partnership-Building",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782235584441_119_qptorw316",
+    "deadlines": [
+      "2026-07-16"
+    ]
+  },
+  {
     "title": "Preventing Youth Overdose: Treatment, Recovery, Education, Awareness and Training",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
