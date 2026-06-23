@@ -496,13 +496,15 @@ function updateAgencyNameField() {
 }
 
 function getUnusualFundingCircumstances(grant) {
+  const authorizationRequired = grant.nihUnlimitedFundingAuthorizationRequired === true
+    || (grant.nihUnlimitedFundingAuthorizationRequired === undefined && grant.nihUnlimitedFunds);
   if (grant.unusualFundingCircumstances) {
-    if (grant.unusualFundingCircumstances === NIH_UNLIMITED_FUNDS_OPTION && grant.nihUnlimitedFunds) {
+    if (grant.unusualFundingCircumstances === NIH_UNLIMITED_FUNDS_OPTION && authorizationRequired) {
       return NIH_UNLIMITED_FUNDS_AUTH_OPTION;
     }
     return grant.unusualFundingCircumstances;
   }
-  if (grant.nihUnlimitedFunds) {
+  if (authorizationRequired) {
     return NIH_UNLIMITED_FUNDS_AUTH_OPTION;
   }
   return "";
@@ -1911,7 +1913,8 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   if (unusualFunding) {
     grant.unusualFundingCircumstances = unusualFunding;
   }
-  grant.nihUnlimitedFunds = unusualFunding === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
+  grant.nihUnlimitedFunds = unusualFunding === NIH_UNLIMITED_FUNDS_OPTION || unusualFunding === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
+  grant.nihUnlimitedFundingAuthorizationRequired = unusualFunding === NIH_UNLIMITED_FUNDS_AUTH_OPTION;
   
   // Add parent grant ID if selected
   const parentGrantId = document.getElementById("a_parentGrantId").value;
