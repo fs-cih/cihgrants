@@ -1,5 +1,30 @@
 [
   {
+    "title": "Replicating Effective Teen Pregnancy Prevention (TPP) Programs",
+    "funderType": "Federal",
+    "agencyName": "HHS",
+    "eligibility": "Prime",
+    "amount": 2000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-06-23",
+    "link": "https://files.simpler.grants.gov/opportunities/e20d082c-6b5d-4f4e-bfb5-01cf2b0d70fd/attachments/273fd6c8-b66c-46d9-bdf8-52b5b67d730b/AH-TP1-26-001_TPP_Tier_1_Replication.pdf",
+    "description": "This notice solicits applications for projects that provide medically accurate and age appropriate programs that reduce teen pregnancy and advance adolescent health by strengthening body literacy, informed consent, and optimal health through the replication of effective teen pregnancy prevention (TPP) programs. Effective TPP programs are those programs that have been proven effective through rigorous evaluation to reduce teenage pregnancy, behavioral risk factors underlying teenage pregnancy, or other associated risk factors. ",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Public Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "id": "grant_1782234868354_117_d4u5g6e8j",
+    "deadlines": [
+      "2026-07-23"
+    ]
+  },
+  {
     "title": "Behavioral Health Mobile Crisis Team Partnerships",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
