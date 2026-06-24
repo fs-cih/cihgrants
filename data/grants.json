@@ -801,6 +801,7 @@
     "letterOfInterest": false,
     "unusualFundingCircumstances": "NIH unlimited funding",
     "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "parentGrantId": "grant_1779473368251_91_d2t9wk77y",
     "id": "grant_1779473655308_93_jj74bvjpa",
     "deadlines": [
