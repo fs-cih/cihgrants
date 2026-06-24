@@ -18,6 +18,7 @@
     "letterOfInterest": false,
     "unusualFundingCircumstances": "NIH unlimited funding",
     "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1782236699616_124_canujvb41",
     "deadlines": [
       "2026-10-05",
