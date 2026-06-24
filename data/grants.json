@@ -1008,6 +1008,7 @@
     "letterOfInterest": false,
     "unusualFundingCircumstances": "NIH unlimited funding",
     "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1778183783882_85_3mpfy2rik",
     "deadlines": [
       "2026-09-25",
