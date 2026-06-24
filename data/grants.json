@@ -2945,7 +2945,9 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
     "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "parentGrantId": "grant_1770906117374_5_37gqe037n",
     "id": "grant_1770905854209_4_81wljo1uf",
     "deadlines": [
