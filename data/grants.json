@@ -2338,7 +2338,9 @@
     ],
     "pin": false,
     "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
     "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1770914667684_34_m419unj6b",
     "deadlines": [
       "2026-06-05",
