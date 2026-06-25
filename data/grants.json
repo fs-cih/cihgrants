@@ -327,7 +327,7 @@
     "agencyName": "HRSA",
     "eligibility": "Prime",
     "amount": 910000,
-    "amountDetail": "per year",
+    "amountDetail": "over total award period",
     "amountIdc": "Including IDC",
     "duration": "4 years",
     "addedDate": "2026-06-16",
@@ -340,6 +340,7 @@
     "pin": false,
     "letterOfInterest": false,
     "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1781608919504_112_57k0t4an3",
     "deadlines": [
       "2026-07-17"
