@@ -1,5 +1,30 @@
 [
   {
+    "title": "Rural Communities Opioid Response Program (RCORP) - Technical Assistance",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Prime",
+    "amount": 10000000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-06-26",
+    "link": "https://files.simpler.grants.gov/opportunities/984cafa0-22fd-4551-955c-6670d7bd3815/attachments/4faf183b-ce94-4962-b9c6-54fdebca632e/HRSA-26-038_Final.pdf",
+    "description": "The purpose of the Rural Communities Opioid Response Program-Technical Assistance (RCORP-TA) is to connect rural communities with high-quality, comprehensive, and tailored resources and supports to implement and sustain behavioral health care, including prevention, treatment, and recovery services, to address the opioid epidemic and related substance use concerns in rural areas. RCORP-TA supports and complements other RCORP investments to address the crisis of substance use disorder, including opioid use disorder, in rural areas; prevent substance misuse and its effects; and promote long-term, sustained well-being. RCORP’s focus is on opioid misuse and its impact on rural America. However, people who misuse opioids often struggle with other substance use, including alcohol, and behavioral health or social needs. The complex nature of SUD, including OUD, requires comprehensive systems and lifespan approach to prevent future problems, address barriers to care, and encourage long-term recovery. This program provides TA for a range of SUD-related behavioral health needs across individual, family, organizational, and community levels. ",
+    "keywords": [
+      "Rural",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782480817841_125_j41hu4guz",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Advancing Research on the Application of Digital Health Technology to the Management of Type 2 Diabetes (R01- Clinical Trail Required)",
     "funderType": "Federal",
     "agencyName": "NIH, NIDDK",
