@@ -1,5 +1,20 @@
 [
   {
+    "funder": "Northwest Area Foundation",
+    "funderType": "Foundation",
+    "geography": [
+      "Minnesota"
+    ],
+    "link": "https://www.nwaf.org/our-grantmaking/grant-listing/",
+    "keywords": [],
+    "notes": "",
+    "pin": false,
+    "invitationOnly": true,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1782603813352_62_68cbyhstz"
+  },
+  {
     "funder": "American Pride Rises",
     "funderType": "Foundation",
     "link": "https://aprnetwork.org/",
