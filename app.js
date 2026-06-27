@@ -246,6 +246,24 @@ function initFilters() {
     eligibilityContainer.appendChild(label);
   });
 
+  // Create Recent checkboxes
+  const recentContainer = document.getElementById("recentCheckboxes");
+  recentContainer.innerHTML = "";
+  [
+    { label: "All Grants", value: "all", checked: true },
+    { label: "Recently Added", value: "recent", checked: false }
+  ].forEach(option => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "recent";
+    checkbox.value = option.value;
+    checkbox.checked = option.checked;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(option.label));
+    recentContainer.appendChild(label);
+  });
+
   // Create Keyword pills in alphabetical order
   const keywordContainer = document.getElementById("keywordPills");
   keywordContainer.innerHTML = "";
@@ -329,6 +347,26 @@ function bindEvents() {
     cb.addEventListener("change", applyFilters);
   });
 
+  // Recent checkboxes
+  document.querySelectorAll('input[name="recent"]').forEach(cb => {
+    cb.addEventListener("change", () => {
+      const allCheckbox = document.querySelector('input[name="recent"][value="all"]');
+      const recentCheckbox = document.querySelector('input[name="recent"][value="recent"]');
+
+      if (cb.value === "recent" && cb.checked) {
+        allCheckbox.checked = false;
+      } else if (cb.value === "all" && cb.checked) {
+        recentCheckbox.checked = false;
+      }
+
+      if (!allCheckbox.checked && !recentCheckbox.checked) {
+        allCheckbox.checked = true;
+      }
+
+      applyFilters();
+    });
+  });
+
   // Keyword pills
   document.querySelectorAll('.keyword-pill').forEach(pill => {
     pill.addEventListener("click", () => {
@@ -346,6 +384,9 @@ function bindEvents() {
     document.querySelectorAll('input[name="funderType"]').forEach(cb => { cb.checked = false; });
     document.querySelectorAll('input[name="eligibility"]').forEach(cb => { 
       cb.checked = false;
+    });
+    document.querySelectorAll('input[name="recent"]').forEach(cb => {
+      cb.checked = cb.value === "all";
     });
     document.querySelectorAll('.keyword-pill').forEach(pill => { pill.classList.remove("selected"); });
     applyFilters();
@@ -642,12 +683,15 @@ function apply() {
   const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
     .map(cb => cb.value);
   
+  // Get selected recent option
+  const showRecentlyAdded = !!document.querySelector('input[name="recent"][value="recent"]:checked');
+
   // Get selected keywords from pills
   const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
     .map(pill => pill.dataset.keyword);
 
   // Check if any filters are active
-  const hasActiveFilters = q || byFunder.length || byEligibility.length || byKeywords.length;
+  const hasActiveFilters = q || byFunder.length || byEligibility.length || showRecentlyAdded || byKeywords.length;
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
@@ -660,6 +704,7 @@ function apply() {
     })
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
+    .filter(g => !showRecentlyAdded || isNewGrant(g))
     .filter(g => !byKeywords.length || byKeywords.some(k => (g.keywords || []).includes(k)))
     .filter(g => {
       if (!q) {
@@ -669,7 +714,7 @@ function apply() {
       return hay.includes(q);
     });
 
-  // Sort: Pinned grants first (when no filters), then new grants, then by deadline proximity, then recurring, then always open
+  // Sort: Pinned grants first (when no filters), then by deadline proximity, then recurring, then always open
   filtered.sort((a, b) => {
     // Note: Nested grants are already filtered out, so we don't need to check for nesting here
     
@@ -690,14 +735,7 @@ function apply() {
       if (!aPinned && bPinned) return 1;
     }
     
-    const aIsNew = isNewGrant(a);
-    const bIsNew = isNewGrant(b);
-    
-    // New grants come first
-    if (aIsNew && !bIsNew) return -1;
-    if (!aIsNew && bIsNew) return 1;
-    
-    // Within same new/not-new category, sort by deadline type
+    // Sort by deadline type
     const aNextDeadline = nextDeadline(a);
     const bNextDeadline = nextDeadline(b);
     
@@ -760,14 +798,18 @@ function switchView(view) {
   currentView = view;
   const toggleContainer = document.querySelector('.toggle-container');
   const eligibilityFilterRow = document.getElementById('eligibilityFilterRow');
+  const recentFilterRow = document.getElementById('recentFilterRow');
   
   if (view === 'prospects') {
     toggleContainer.classList.add('prospects');
     els.toggleGrants.classList.remove('active');
     els.toggleProspects.classList.add('active');
-    // Hide eligibility filter for prospects
+    // Hide grant-only filters for prospects
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = 'none';
+    }
+    if (recentFilterRow) {
+      recentFilterRow.style.display = 'none';
     }
     updateKeywordPillStates();
     applyProspectFilters();
@@ -776,9 +818,12 @@ function switchView(view) {
     toggleContainer.classList.remove('prospects');
     els.toggleGrants.classList.add('active');
     els.toggleProspects.classList.remove('active');
-    // Show eligibility filter for grants
+    // Show grant-only filters for grants
     if (eligibilityFilterRow) {
       eligibilityFilterRow.style.display = '';
+    }
+    if (recentFilterRow) {
+      recentFilterRow.style.display = '';
     }
     updateKeywordPillStates();
     apply();
