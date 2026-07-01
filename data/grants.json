@@ -1,5 +1,31 @@
 [
   {
+    "title": "Statewide Family Network",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 150000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-sfn-sm-26-028.pdf",
+    "description": "The purpose of this program is to enhance the capacity of statewide, mental health family controlled organizations to support, train, and mentor family members/primary caregivers. The focus of this program is on family members/primary caregivers who are raising children, youth, and young adults with serious emotional disturbance (SED) or co-occurring disorders (COD). Your organization is expected to: Provide individual family advocacy, coaching, and support; Provide training to caregivers and child-serving systems; Enhance family empowerment; Build partnerships with community-based organizations, and state and local administrations; Provide leadership development and mentorship opportunities; and Participate in and inform the implementation of state-wide processes addressing\npeer support services for families/primary caregivers.",
+    "keywords": [
+      "Adolescent Health",
+      "Early Childhood",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782918995010_126_sa9q7fwwn",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Rural Communities Opioid Response Program (RCORP) - Technical Assistance",
     "funderType": "Federal",
     "agencyName": "HRSA",
