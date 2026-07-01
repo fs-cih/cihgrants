@@ -1,5 +1,29 @@
 [
   {
+    "title": "Preventing Drug Overdoses: Community Prevention and Response",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 850000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-pdo-ti-26-019.pdf",
+    "description": "The purpose of this program is to develop and implement a community-wide prevention program to prevent and reduce drug overdose deaths by expanding access to FDA-approved opioid overdose reversal medications (OORMs). Your organization is expected to collaborate with local and community partners to identify populations and communities of greatest need and strengthen local prevention capacity through education, training, and OORMs distribution. ",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925491329_133_nk34xieif",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Recovery Community Services Program – Statewide Network",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
