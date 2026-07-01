@@ -1,5 +1,29 @@
 [
   {
+    "title": "Medication Assisted Treatment – Prescription Drug and Opioid Addiction",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-mat-pdoa-ti-26-008.pdf",
+    "description": "The purpose of this program is to expand and enhance access to Medications for Opioid Use Disorder (MOUD), increasing access to treatment and recovery for individuals with Opioid Use Disorder (OUD) and decreasing illicit opioid use, prescription opioid misuse and overdose. The program is designed to increase treatment availability for individuals with OUD while simultaneously reducing both illicit opioid use and prescription opioid misuse and overdose across communities.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925710647_135_fn8gwtvms",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "National Child Traumatic Stress Initiative – Category III Community Treatment and Service Centers",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
