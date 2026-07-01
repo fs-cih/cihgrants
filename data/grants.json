@@ -1,5 +1,33 @@
 [
   {
+    "title": "GLS Campus Suicide Prevention Grant Program",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 125000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-gls-campus-sm-26-009.pdf",
+    "description": "With this program, SAMHSA aims to identify college students who are at risk for suicide and suicide attempts, increase protective factors that promote mental health, reduce risk factors for substance use disorders and suicide, and ultimately reduce suicides and suicide attempts. This program is designed to advance SAMHSA’s Strategic Priorities and the Make America Healthy Again agenda",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Mental Health",
+      "Substance Use",
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925119256_129_5zymr9l0z",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Project AWARE (Advancing Wellness and Resiliency in Education)",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
