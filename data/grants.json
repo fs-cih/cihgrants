@@ -1,5 +1,30 @@
 [
   {
+    "title": "Recovery Community Services Program",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 300000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-rcsp-ti-26-003.pdf",
+    "description": "The purpose of this program is to strengthen recovery communities by expanding access to recovery support services (RSS), including peer recovery support services (PRSS), for individuals living with substance use disorders (SUD) and co-occurring substance use and mental disorders (COD), including those in recovery. This program is designed to advance SAMHSA Strategic Priorities and the Make America Healthy Again agenda.",
+    "keywords": [
+      "Mental Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925310351_131_xpb80rtmv",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "First Responders-Comprehensive Addiction and Recovery Act",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
