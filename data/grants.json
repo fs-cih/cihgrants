@@ -1,5 +1,29 @@
 [
   {
+    "title": "Mental Health Awareness Training Grants",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 200000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-mhat-sm-26-030.pdf",
+    "description": "The purpose of this program is to facilitate the implementation of mental health awareness and literacy training. Your organization is expected to: Train key individuals, such as school staff, emergency responders (paramedics, firefighters, emergency medical technicians (EMTs)), law enforcement, veterans, armed service members, families and caregivers, to: Recognize the signs and symptoms of mental illness; Safely de-escalate crisis situations involving individuals with mental health challenges AND Provide education on: Community resources available for individuals with mental illness; How to connect individuals to appropriate services, including local mental health agencies.",
+    "keywords": [
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782919122995_127_p9gd9bnx6",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Statewide Family Network",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
