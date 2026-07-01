@@ -1,5 +1,31 @@
 [
   {
+    "title": "Project AWARE (Advancing Wellness and Resiliency in Education)",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 1500000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-aware-sm-26-005.pdf",
+    "description": "The purpose of Project AWARE is to develop a sustainable framework to address mental health, substance use, and co-occurring disorders and promote the social and emotional well-being for school-aged youth in local or tribal education agency settings. Award recipients should build collaborative partnerships with the State Education Agency (SEA), Local Education Agency (LEA), Tribal Education Agency (TEA), the State Mental Health Agency (SMHA), community-based providers of behavioral health care services, school personnel, community organizations, families and school-aged youth.",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782924967153_128_2hpem1xj0",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Mental Health Awareness Training Grants",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
