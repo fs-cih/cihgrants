@@ -1,5 +1,29 @@
 [
   {
+    "title": "First Responders-Comprehensive Addiction and Recovery Act",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Secondary",
+    "amount": 800000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-fr-cara-ti-26-006.pdf",
+    "description": "The purpose of the FR-CARA program is to train first responders and communities in\nadministering and distributing opioid overdose reversal medications (OORM). Your organization is expected to provide overdose prevention training and education, engage with communities and partners, and implement activities aligned with evidence-based practices. Additionally, recipients must establish processes for post-overdose support and referrals to support services. ",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925205797_130_pc6e2hrhq",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "GLS Campus Suicide Prevention Grant Program",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
