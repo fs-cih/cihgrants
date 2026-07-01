@@ -251,7 +251,8 @@ function initFilters() {
   recentContainer.innerHTML = "";
   [
     { label: "All Grants", value: "all", checked: true },
-    { label: "Recently Added", value: "recent", checked: false }
+    { label: "Recently Added", value: "recent", checked: false },
+    { label: "Added Today", value: "today", checked: false }
   ].forEach(option => {
     const label = document.createElement("label");
     const checkbox = document.createElement("input");
@@ -613,6 +614,10 @@ function isNewGrant(g) {
   return days >= 0 && days <= (CIH_CONFIG.newGrantWindowDays || 30);
 }
 
+function isAddedTodayGrant(g) {
+  return g.addedDate === TODAY;
+}
+
 function daysBetween(from, to) {
   const ms = new Date(to).getTime() - new Date(from).getTime();
   return Math.ceil(ms / (1000 * 60 * 60 * 24));
@@ -683,15 +688,16 @@ function apply() {
   const byEligibility = Array.from(document.querySelectorAll('input[name="eligibility"]:checked'))
     .map(cb => cb.value);
   
-  // Get selected recent option
+  // Get selected recent options
   const showRecentlyAdded = !!document.querySelector('input[name="recent"][value="recent"]:checked');
+  const showAddedToday = !!document.querySelector('input[name="recent"][value="today"]:checked');
 
   // Get selected keywords from pills
   const byKeywords = Array.from(document.querySelectorAll('.keyword-pill.selected'))
     .map(pill => pill.dataset.keyword);
 
   // Check if any filters are active
-  const hasActiveFilters = q || byFunder.length || byEligibility.length || showRecentlyAdded || byKeywords.length;
+  const hasActiveFilters = q || byFunder.length || byEligibility.length || showRecentlyAdded || showAddedToday || byKeywords.length;
 
   // Note: Limitations and Sort filters were removed per UI redesign requirements
   let filtered = grants
@@ -705,6 +711,7 @@ function apply() {
     .filter(g => !byFunder.length || byFunder.includes(g.funderType))
     .filter(g => !byEligibility.length || byEligibility.includes(g.eligibility))
     .filter(g => !showRecentlyAdded || isNewGrant(g))
+    .filter(g => !showAddedToday || isAddedTodayGrant(g))
     .filter(g => !byKeywords.length || byKeywords.some(k => (g.keywords || []).includes(k)))
     .filter(g => {
       if (!q) {
@@ -2622,16 +2629,14 @@ function renderGrantForPopup(g, selectedKeywords = []) {
 
   const eligibilityMarkup = g.eligibility === "Prime"
     ? `<span class="eligibility-primary">Prime</span>`
-    : `<span class="eligibility-secondary">${g.eligibility}</span>`;
+    : `<span class="eligibility-secondary">${escapeHtml(g.eligibility || "Not specified")}</span>`;
 
   div.innerHTML = `
     <h3><a href="${sanitizeUrl(g.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(g.title)}</a></h3>
     ${pillsMarkup}
     ${deadlineMarkup(g)}
-    <p class="meta-row">
-      <strong>Funder:</strong> ${funderTypeMarkup} | 
-      <strong>Eligibility:</strong> ${eligibilityMarkup}
-    </p>
+    <p class="meta-row"><strong>Funder:</strong> ${funderTypeMarkup}</p>
+    <p class="meta-row"><strong>Eligibility:</strong> ${eligibilityMarkup}</p>
     ${(isNihUnlimitedFunding(g) || g.amount || hasSalaryProgramExpenses(g)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)}</p>` : ""}
     ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
@@ -2721,13 +2726,11 @@ function renderGrantForPopup(g, selectedKeywords = []) {
           
           const nestedEligibilityMarkup = nested.eligibility === "Prime"
             ? `<span class="eligibility-primary">Prime</span>`
-            : `<span class="eligibility-secondary">${escapeHtml(nested.eligibility)}</span>`;
+            : `<span class="eligibility-secondary">${escapeHtml(nested.eligibility || "Not specified")}</span>`;
           
           expandedDiv.innerHTML = `
-            <p class="meta-row">
-              <strong>Funder:</strong> ${nestedFunderTypeMarkup} | 
-              <strong>Eligibility:</strong> ${nestedEligibilityMarkup}
-            </p>
+            <p class="meta-row"><strong>Funder:</strong> ${nestedFunderTypeMarkup}</p>
+            <p class="meta-row"><strong>Eligibility:</strong> ${nestedEligibilityMarkup}</p>
             ${(isNihUnlimitedFunding(nested) || nested.amount || hasSalaryProgramExpenses(nested)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(nested)}</p>` : ""}
             ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(nested.duration)}</p>` : ""}
             <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
