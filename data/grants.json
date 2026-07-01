@@ -1,5 +1,32 @@
 [
   {
+    "title": "National Child Traumatic Stress Initiative – Category III Community Treatment and Service Centers",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 600000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-nctsi-category-3-sm-26-004.pdf",
+    "description": "The purpose of the NCTSI-III program is to create and operate Community Treatment and Service (CTS) Centers to increase and deliver access to effective childhood trauma treatment services for children, youth, and their families who experience traumatic events. Your organization is expected to deliver direct services to children and families facing trauma, with an emphasis on early screening, accessible care, and local partnerships. With this program, SAMHSA aims to raise the standard of care and increase access to evidence-based services for children and youth experiencing trauma. By expanding access to evidence-informed and evidence-based treatment, day-to-day functioning of children improves, and families are supported with practical, trauma-informed strategies. ",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Early Childhood",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925630546_134_g1twl4yie",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Preventing Drug Overdoses: Community Prevention and Response",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
