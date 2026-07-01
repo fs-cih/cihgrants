@@ -1,5 +1,29 @@
 [
   {
+    "title": "Recovery Community Services Program – Statewide Network",
+    "funderType": "Federal",
+    "agencyName": "SAMHSA",
+    "eligibility": "Prime",
+    "amount": 300000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-01",
+    "link": "https://www.samhsa.gov/sites/default/files/grants/pdf/fy-2026-rcsp-sn-ti-26-007.pdf",
+    "description": "The purpose of this program is to strengthen recovery organizations, their statewide recovery networks, and healthcare systems to improve the delivery of recovery support services (RSS). This is accomplished through structured collaboration, systems improvement, public health messaging, and targeted training for key recovery partners. ",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1782925417925_132_43snm1mok",
+    "deadlines": [
+      "2026-07-27"
+    ]
+  },
+  {
     "title": "Recovery Community Services Program",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
