@@ -1,5 +1,29 @@
 [
   {
+    "title": "Life Sciences Research Initiative: High-Impact Individual Awards",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 500000,
+    "amountDetail": "over total award period",
+    "amountIdc": "No IDC Allowed",
+    "duration": "2 years",
+    "addedDate": "2026-07-02",
+    "link": "https://research.jhu.edu/lifesciences/",
+    "description": "High‑Impact Individual Awards will support faculty working on emergent research projects addressing specific challenges and opportunities across the life and health sciences. For the next two years, we will allocate up to $40 million each year in individual awards. Designed for higher-risk, high-reward projects–both basic and applied–proposed by individual faculty or small teams, these awards will provide between $200,000 and $500,000 to fuel a broad pipeline of innovative research focused on the advancement of human health. Flexible use may include data needs, equipment, and staffing, and faculty recipients will receive support for financial management and research development, including the pursuit of external follow-on funding.",
+    "keywords": [
+      "General Research",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783007504527_138_1kb9yp6vc",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Life Sciences Research Initiative: Transformational Science Team Awards",
     "funderType": "JHU internal",
     "eligibility": "Prime",
