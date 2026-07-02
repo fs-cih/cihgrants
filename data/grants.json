@@ -699,7 +699,7 @@
     "agencyName": "HHS, OMH",
     "eligibility": "Prime",
     "amount": 1000000,
-    "amountDetail": "per year",
+    "amountDetail": "over total award period",
     "amountIdc": "Including IDC",
     "duration": "2 years",
     "addedDate": "2026-06-16",
@@ -713,6 +713,7 @@
     "pin": false,
     "letterOfInterest": false,
     "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1781608758122_111_1hlmq8jgw",
     "deadlines": [
       "2026-07-13"
