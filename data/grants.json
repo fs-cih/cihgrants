@@ -1,5 +1,29 @@
 [
   {
+    "title": "Life Sciences Research Initiative: Transformational Science Team Awards",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 10000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "No IDC Allowed",
+    "duration": "4 years",
+    "addedDate": "2026-07-02",
+    "link": "https://research.jhu.edu/lifesciences/",
+    "description": "Transformational Science Team Awards will provide up to four years of flagship support for cross-disciplinary teams pursuing large-scale, milestone-driven initiatives designed to transform critical fields and sustain momentum toward novel discoveries. For the next two years, we will allocate up to $40 million each year to large-scale, multi-PI research projects, with awards starting at $10 million per project. The awards will reflect our strategic research priorities and flexibly support our people and projects, as well as cutting-edge instrumentation and critical research infrastructure, such as lab space, datasets, and computational resources. Priority will be given to research projects that offer comparatively near-term opportunities to change lives and create impact through translation, commercialization, clinical trials, or other direct implementation.",
+    "keywords": [
+      "General Research",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783007420534_137_yaipb54g0",
+    "deadlines": [
+      "2026-07-15"
+    ]
+  },
+  {
     "title": "Research Resilience Fund",
     "funderType": "JHU internal",
     "eligibility": "Prime",
