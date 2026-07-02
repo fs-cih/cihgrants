@@ -1,5 +1,27 @@
 [
   {
+    "title": "Research Resilience Fund",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 250000,
+    "amountDetail": "over total award period",
+    "amountIdc": "No IDC Allowed",
+    "duration": "1 year",
+    "addedDate": "2026-07-02",
+    "link": "https://research.jhu.edu/research-resilience-fund/",
+    "description": "The Research Resilience Fund is designed to support research continuity, recovery, and strategic momentum across all disciplines. The program provides flexible funding to address research disruptions, funding gaps, faculty salary support needs, strategic pivots, and emerging opportunities that strengthen pathways to future external funding and long-term sustainability. The fund supports both existing research programs and new research initiatives. Proposals may seek to sustain ongoing research activities, provide temporary faculty salary support, respond to changing funding conditions, pursue emerging opportunities, or launch new lines of inquiry that demonstrate strong potential for future external support. Awards may be used to: Maintain essential research capacity during funding gaps; Enable strategic pivots in research direction or funding strategy; Support time-sensitive opportunities that strengthen pathways to future external funding; Advance new research directions, collaborations, or projects that position investigators for future external support; and Provide temporary faculty salary support to sustain research programs, personnel, and scholarly momentum during periods of funding uncertainty or transition. Applicants are not required to have a delayed, terminated, or disrupted federal award.",
+    "keywords": [
+      "General Research",
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783007184067_136_4qz442i7d",
+    "deadlineOpen": true
+  },
+  {
     "title": "Medication Assisted Treatment – Prescription Drug and Opioid Addiction",
     "funderType": "Federal",
     "agencyName": "SAMHSA",
