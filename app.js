@@ -677,6 +677,18 @@ function formatGrantAmountPlain(g) {
     : baseAmount;
 }
 
+
+function formatExpectedAwardsRow(g) {
+  const expectedAwards = (g.expectedAwards || "").trim();
+  return expectedAwards
+    ? `<p class="meta-row"><strong>Expected Awards:</strong> ${escapeHtml(expectedAwards)}</p>`
+    : "";
+}
+
+function formatExpectedAwardsPlain(g) {
+  return (g.expectedAwards || "").trim();
+}
+
 function apply() {
   const q = els.q.value.trim().toLowerCase();
   
@@ -1072,6 +1084,9 @@ function buildShareMailto(g) {
   bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
   bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
   bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
+  if (formatExpectedAwardsPlain(g)) {
+    bodyLines.push(`Expected Awards: ${plainText(formatExpectedAwardsPlain(g))}`);
+  }
   bodyLines.push(`Description: ${plainText(g.description)}`);
   bodyLines.push("");
   bodyLines.push("");
@@ -1161,6 +1176,9 @@ function buildShareMailtoMultiple(grantList) {
     bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
     bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
     bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
+    if (formatExpectedAwardsPlain(g)) {
+      bodyLines.push(`Expected Awards: ${plainText(formatExpectedAwardsPlain(g))}`);
+    }
     bodyLines.push(`Description: ${plainText(g.description)}`);
   });
 
@@ -1384,6 +1402,7 @@ function renderGrant(g, selectedKeywords = []) {
     <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">(${formatIdcNote(g)})</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${escapeHtml(eligibilityText)}</span></p>
+    ${formatExpectedAwardsRow(g)}
     <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(preview)}${rest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${rest ? `<button class="toggle">▼ Expand</button>` : ""}
     ${nestedGrants.length > 0 ? '<p class="meta-row"><strong>Related Grants:</strong></p>' : ''}
@@ -1557,6 +1576,7 @@ function renderGrant(g, selectedKeywords = []) {
               <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(ng)} <span class="muted">(${formatIdcNote(ng)})</span></p>
               <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(ng.duration || "Not specified")}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${escapeHtml(nestedEligibilityText)}</span></p>
+              ${formatExpectedAwardsRow(ng)}
               <p class="meta-row desc-preview"><strong>Description:</strong> ${escapeHtml(nestedPreview)}${nestedRest ? `<span class="ellipsis">...</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
               ${nestedRest ? `<button class="toggle">▼ Expand</button>` : ""}
               ${nestedLimitations ? `<div class="tag-row">${nestedLimitations}</div>` : ""}
@@ -1664,6 +1684,7 @@ function resetAdminForm() {
   document.getElementById("a_title").value = "";
   document.getElementById("a_funderType").value = "";
   document.getElementById("a_eligibility").value = "";
+  document.getElementById("a_expectedAwards").value = "";
   document.getElementById("a_agencyName").value = "";
   document.getElementById("a_amount").value = "";
   document.getElementById("a_amountDetail").value = "";
@@ -1765,6 +1786,7 @@ function openAdminDialog(grant = null, index = null) {
   // Support both old (federalAgency) and new (agencyName) field names
   document.getElementById("a_agencyName").value = grant.agencyName || grant.federalAgency || "";
   document.getElementById("a_eligibility").value = grant.eligibility || "";
+  document.getElementById("a_expectedAwards").value = grant.expectedAwards || "";
   document.getElementById("a_amount").value = grant.amount || "";
   document.getElementById("a_amountDetail").value = grant.amountDetail || "";
   document.getElementById("a_amountIdc").value = grant.amountIdc || "";
@@ -1933,6 +1955,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     funderType: document.getElementById("a_funderType").value,
     agencyName: document.getElementById("a_agencyName").value,
     eligibility: document.getElementById("a_eligibility").value,
+    expectedAwards: document.getElementById("a_expectedAwards").value.trim(),
     amount: Number(document.getElementById("a_amount").value || 0),
     amountDetail: document.getElementById("a_amountDetail").value,
     amountIdc: document.getElementById("a_amountIdc").value,
@@ -1975,6 +1998,11 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     grant.parentGrantId = parentGrantId;
     // Nesting overrides pin (but we preserve the pin value)
     // The pin won't be applied while nested, but will be preserved if un-nested later
+  }
+
+  // Clean up empty optional text fields
+  if (!grant.expectedAwards) {
+    delete grant.expectedAwards;
   }
 
   // Clean up empty agency name
@@ -2484,6 +2512,7 @@ function downloadCurrentViewPdf() {
       bodyLines: [
         `Amount: ${formatGrantAmountPlain(g)}`,
         g.duration && `Duration: ${sanitizeText(g.duration)}`,
+        formatExpectedAwardsPlain(g) && `Expected Awards: ${sanitizeText(formatExpectedAwardsPlain(g))}`,
         deadlineText,
         g.description && `Description: ${sanitizeText(g.description)}`
       ].filter(Boolean)
@@ -2509,6 +2538,7 @@ function downloadCurrentViewPdf() {
         bodyLines: [
           `Amount: ${formatGrantAmountPlain(child)}`,
           child.duration && `Duration: ${sanitizeText(child.duration)}`,
+          formatExpectedAwardsPlain(child) && `Expected Awards: ${sanitizeText(formatExpectedAwardsPlain(child))}`,
           child.description && `Description: ${sanitizeText(child.description)}`
         ].filter(Boolean),
         indent: 0
@@ -2637,6 +2667,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
     ${deadlineMarkup(g)}
     <p class="meta-row"><strong>Funder:</strong> ${funderTypeMarkup}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${eligibilityMarkup}</p>
+    ${formatExpectedAwardsRow(g)}
     ${(isNihUnlimitedFunding(g) || g.amount || hasSalaryProgramExpenses(g)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)}</p>` : ""}
     ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
@@ -2731,6 +2762,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
           expandedDiv.innerHTML = `
             <p class="meta-row"><strong>Funder:</strong> ${nestedFunderTypeMarkup}</p>
             <p class="meta-row"><strong>Eligibility:</strong> ${nestedEligibilityMarkup}</p>
+            ${formatExpectedAwardsRow(nested)}
             ${(isNihUnlimitedFunding(nested) || nested.amount || hasSalaryProgramExpenses(nested)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(nested)}</p>` : ""}
             ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(nested.duration)}</p>` : ""}
             <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
