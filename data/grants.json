@@ -1,5 +1,30 @@
 [
   {
+    "title": "Small Health Care Provider Quality Improvement Program",
+    "funderType": "Federal",
+    "agencyName": "HRSA",
+    "eligibility": "Secondary",
+    "expectedAwards": "20",
+    "amount": 250000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "4 years",
+    "addedDate": "2026-07-06",
+    "link": "https://files.simpler.grants.gov/opportunities/960d439a-2b5f-4a04-b541-687c22adaed4/attachments/e83e0d73-ba4a-49f3-9b6c-f8a035e4a2ed/HRSA-26-046_Final.pdf",
+    "description": "The purpose of the Small Health Care Provider Quality Improvement Program is to improve the delivery of cost-effective, coordinated, high-quality health care services in rural primary care settings. Program objectives include increasing care coordination, enhancing chronic disease management, and improving health outcomes for patients. Program funding supports rural health care providers in strengthening their capacity for quality improvement and value-based care. This program will help rural health care providers improve health outcomes, expand capacity for essential healthcare services and increase operational and financial sustainability by the end of the four-year performance period. Additionally, improved outcomes may lead to reduced hospital readmissions so prospective payment hospitals could achieve savings by avoiding readmissions penalties. And reducing readmissions for all hospitals increases savings in valuebased care and shared savings models.",
+    "keywords": [
+      "Healthcare"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783345362568_140_qvy1puck2",
+    "deadlines": [
+      "2026-08-06"
+    ]
+  },
+  {
     "title": "Teenage Pregnancy Prevention Evaluation Grants",
     "funderType": "Federal",
     "agencyName": "HHS",
