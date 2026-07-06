@@ -1,5 +1,31 @@
 [
   {
+    "title": "Teenage Pregnancy Prevention Evaluation Grants",
+    "funderType": "Federal",
+    "agencyName": "HHS",
+    "eligibility": "Prime",
+    "expectedAwards": "7",
+    "amount": 1100000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-06",
+    "link": "https://files.simpler.grants.gov/opportunities/61103c8e-f8e4-4671-bb94-7216776726a0/attachments/a5c1dacf-d2a0-4b10-abf6-296af20cab9c/PA-PHE-26-001_TPP_Evaluation_Research.pdf",
+    "description": "This notice solicits applications for projects to carry out evaluations of teen pregnancy prevention (TPP) approaches that would make significant contributions to preventing teen pregnancy. OPA will consider evaluation projects that explore new questions in teen pregnancy prevention and improve the efficiency, effectiveness, and quality of programs and services. These grants are for projects that can be conducted within two to three years, such as secondary data analyses or research using existing program, evaluation, research, or administrative data. Evaluations of teen pregnancy approaches must include one or more approach which (1) strengthens adolescent body and health literacy, supports informed consent, promotes optimal health, and prevents teen pregnancy through medically accurate, age-appropriate programming; (2) builds the capacity of local community organizations to implement programs with fidelity, quality, and transparency, consistent with OASH Priorities; (3) equips young people with the knowledge, skills, and decision-making capabilities necessary to support lifelong optimal health and healthy relationships while reducing risk behaviors associated with teen pregnancy through reproductive goals counseling; (4) upholds parental rights by providing advance notice of program content and meaningful opportunities for parental review and opt-out participation procedures, consistent with applicable law and program requirements; or (5) incorporates sexual risk avoidance education. ",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783345193071_139_9473bunzr",
+    "deadlines": [
+      "2026-08-05"
+    ]
+  },
+  {
     "title": "Life Sciences Research Initiative: High-Impact Individual Awards",
     "funderType": "JHU internal",
     "eligibility": "Prime",
