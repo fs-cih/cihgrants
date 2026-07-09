@@ -1,5 +1,34 @@
 [
   {
+    "title": "Mid Year Project Funding Request 2026-2027",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 30000,
+    "amountDetail": "over total award period",
+    "amountIdc": "No IDC Allowed",
+    "duration": "1 year",
+    "addedDate": "2026-07-09",
+    "link": "https://my.publichealth.jhu.edu/ResearchCenters/BloombergInitiative/Pages/default.aspx?RootFolder=%2FResearchCenters%2FBloombergInitiative%2FDocuments%2FMid-Year%20Project%20Funding&FolderCTID=0x012000A45BF54618F64A4E861E554EB01D58B8&View=%7B26E2EA95-CDFD-4791-990C-ADA52B1BFABD%7D",
+    "description": "The Bloomberg American Health Initiative is providing up to $30,000 for projects led by full-time BSPH faculty related to one or more of the five focus areas of addiction and overdose, violence, environmental challenges, adolescent health, and food systems for health.",
+    "keywords": [
+      "Adolescent Health",
+      "Environmental Health",
+      "Food Sovereignty",
+      "Substance Use",
+      "Suicide Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783625934320_142_qiv1zmsaa",
+    "deadlines": [
+      "2026-10-05",
+      "2026-12-07",
+      "2027-04-05"
+    ]
+  },
+  {
     "title": "Child Abuse Prevention in Migrant and Tribal Communities",
     "funderType": "Federal",
     "agencyName": "Administration for Children and Families",
