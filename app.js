@@ -246,7 +246,7 @@ function initFilters() {
     eligibilityContainer.appendChild(label);
   });
 
-  // Create Recent checkboxes
+  // Create Recent filter radios
   const recentContainer = document.getElementById("recentCheckboxes");
   recentContainer.innerHTML = "";
   [
@@ -255,12 +255,12 @@ function initFilters() {
     { label: "Added Today", value: "today", checked: false }
   ].forEach(option => {
     const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "recent";
-    checkbox.value = option.value;
-    checkbox.checked = option.checked;
-    label.appendChild(checkbox);
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "recent";
+    radio.value = option.value;
+    radio.checked = option.checked;
+    label.appendChild(radio);
     label.appendChild(document.createTextNode(option.label));
     recentContainer.appendChild(label);
   });
@@ -348,24 +348,9 @@ function bindEvents() {
     cb.addEventListener("change", applyFilters);
   });
 
-  // Recent checkboxes
-  document.querySelectorAll('input[name="recent"]').forEach(cb => {
-    cb.addEventListener("change", () => {
-      const allCheckbox = document.querySelector('input[name="recent"][value="all"]');
-      const recentCheckbox = document.querySelector('input[name="recent"][value="recent"]');
-
-      if (cb.value === "recent" && cb.checked) {
-        allCheckbox.checked = false;
-      } else if (cb.value === "all" && cb.checked) {
-        recentCheckbox.checked = false;
-      }
-
-      if (!allCheckbox.checked && !recentCheckbox.checked) {
-        allCheckbox.checked = true;
-      }
-
-      applyFilters();
-    });
+  // Recent filter radios
+  document.querySelectorAll('input[name="recent"]').forEach(radio => {
+    radio.addEventListener("change", applyFilters);
   });
 
   // Keyword pills
@@ -653,6 +638,22 @@ function formatIdcNote(grant) {
     return "IDC not specified";
   }
   return grant.amountIdc || "Not specified";
+}
+
+function isCostShareRequired(grant) {
+  return grant.costShareRequired === true || grant.costShareRequired === "yes" || grant.costShareRequired === "Yes";
+}
+
+function formatFundingNotesPlain(grant) {
+  const notes = [`(${formatIdcNote(grant)})`];
+  if (isCostShareRequired(grant)) {
+    notes.push("(Cost Share Required)");
+  }
+  return notes.join(" ");
+}
+
+function formatFundingNotesHtml(grant) {
+  return escapeHtml(formatFundingNotesPlain(grant));
 }
 
 function formatGrantAmountHtml(g) {
@@ -1033,6 +1034,14 @@ function renderProspect(p) {
   return div;
 }
 
+function getEmailFunderName(grant) {
+  if (grant.funderType === "JHU Internal") {
+    return "Johns Hopkins University";
+  }
+  const agencyName = grant.agencyName || grant.federalAgency || "";
+  return agencyName ? agencyName.split(',')[0].trim() : "";
+}
+
 function buildShareMailto(g) {
   const title = g.title || "";
   const subject = encodeURIComponent("Potential Grant: " + title);
@@ -1042,9 +1051,7 @@ function buildShareMailto(g) {
     ? "Keywords: " + g.keywords.join(", ")
     : "Keywords: —";
 
-  // Funder: first item in comma-separated agencyName/federalAgency
-  const agencyName = g.agencyName || g.federalAgency || "";
-  const funder = agencyName ? agencyName.split(',')[0].trim() : "";
+  const funder = getEmailFunderName(g);
 
   // Build deadline lines
   let deadlineLine = "";
@@ -1081,7 +1088,7 @@ function buildShareMailto(g) {
   if (additionalDeadlineLine) {
     bodyLines.push(additionalDeadlineLine);
   }
-  bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
+  bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} ${plainText(formatFundingNotesPlain(g))}`);
   bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
   bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
   if (formatExpectedAwardsPlain(g)) {
@@ -1136,8 +1143,7 @@ function buildShareMailtoMultiple(grantList) {
     const title = g.title || "";
     const rawUrl = g.link || "";
     const grantUrl = rawUrl && rawUrl !== '#' ? sanitizeUrl(rawUrl) : "";
-    const agencyName = g.agencyName || g.federalAgency || "";
-    const funder = agencyName ? agencyName.split(',')[0].trim() : "";
+    const funder = getEmailFunderName(g);
 
     let deadlineLine = "";
     let additionalDeadlineLine = "";
@@ -1173,7 +1179,7 @@ function buildShareMailtoMultiple(grantList) {
     if (additionalDeadlineLine) {
       bodyLines.push(additionalDeadlineLine);
     }
-    bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} (${plainText(formatIdcNote(g))})`);
+    bodyLines.push(`Amount: ${plainText(formatGrantAmountPlain(g))} ${plainText(formatFundingNotesPlain(g))}`);
     bodyLines.push(`Duration: ${plainText(g.duration) || "Not specified"}`);
     bodyLines.push(`Eligibility: ${plainText(g.eligibility) || "Not specified"}`);
     if (formatExpectedAwardsPlain(g)) {
@@ -1399,7 +1405,7 @@ function renderGrant(g, selectedKeywords = []) {
     <h3><a href="${sanitizeUrl(g.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(g.title)}</a></h3>
     ${funderTypeMarkup}
     ${deadlineMarkup(g)}
-    <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">(${formatIdcNote(g)})</span></p>
+    <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">${formatFundingNotesHtml(g)}</span></p>
     <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration || "Not specified")}</p>
     <p class="meta-row"><strong>Eligibility:</strong> <span class="${eligibilityClass}">${escapeHtml(eligibilityText)}</span></p>
     ${formatExpectedAwardsRow(g)}
@@ -1573,7 +1579,7 @@ function renderGrant(g, selectedKeywords = []) {
               </div>
               ${nestedFunderTypeMarkup}
               ${deadlineMarkup(ng)}
-              <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(ng)} <span class="muted">(${formatIdcNote(ng)})</span></p>
+              <p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(ng)} <span class="muted">${formatFundingNotesHtml(ng)}</span></p>
               <p class="meta-row"><strong>Duration:</strong> ${escapeHtml(ng.duration || "Not specified")}</p>
               <p class="meta-row"><strong>Eligibility:</strong> <span class="${nestedEligibilityClass}">${escapeHtml(nestedEligibilityText)}</span></p>
               ${formatExpectedAwardsRow(ng)}
@@ -1689,6 +1695,7 @@ function resetAdminForm() {
   document.getElementById("a_amount").value = "";
   document.getElementById("a_amountDetail").value = "";
   document.getElementById("a_amountIdc").value = "";
+  document.getElementById("a_costShareRequired_yes").checked = false;
   document.getElementById("a_duration").value = "";
   document.getElementById("a_addedDate").value = TODAY;
   document.getElementById("a_deadlineType_deadline").checked = true;
@@ -1790,6 +1797,11 @@ function openAdminDialog(grant = null, index = null) {
   document.getElementById("a_amount").value = grant.amount || "";
   document.getElementById("a_amountDetail").value = grant.amountDetail || "";
   document.getElementById("a_amountIdc").value = grant.amountIdc || "";
+  if (isCostShareRequired(grant)) {
+    document.getElementById("a_costShareRequired_yes").checked = true;
+  } else {
+    document.getElementById("a_costShareRequired_yes").checked = false;
+  }
   document.getElementById("a_duration").value = grant.duration || "";
   document.getElementById("a_addedDate").value = grant.addedDate || TODAY;
   
@@ -1967,6 +1979,10 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
     description: document.getElementById("a_description").value,
     keywords: [...document.getElementById("a_keywords").selectedOptions].map(o => o.value)
   };
+
+  if (document.getElementById("a_costShareRequired_yes").checked) {
+    grant.costShareRequired = true;
+  }
 
   // Add pin field
   const pinValue = document.querySelector('input[name="pin"]:checked').value;
@@ -2668,7 +2684,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
     <p class="meta-row"><strong>Funder:</strong> ${funderTypeMarkup}</p>
     <p class="meta-row"><strong>Eligibility:</strong> ${eligibilityMarkup}</p>
     ${formatExpectedAwardsRow(g)}
-    ${(isNihUnlimitedFunding(g) || g.amount || hasSalaryProgramExpenses(g)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)}</p>` : ""}
+    ${(isNihUnlimitedFunding(g) || g.amount || hasSalaryProgramExpenses(g)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(g)} <span class="muted">${formatFundingNotesHtml(g)}</span></p>` : ""}
     ${g.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(g.duration)}</p>` : ""}
     <p class="desc-preview meta-row">${escapeHtml(preview)}${hasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(rest)}</span>` : ""}</p>
     ${hasOverflow ? `<button class="toggle">Show more</button>` : ""}
@@ -2763,7 +2779,7 @@ function renderGrantForPopup(g, selectedKeywords = []) {
             <p class="meta-row"><strong>Funder:</strong> ${nestedFunderTypeMarkup}</p>
             <p class="meta-row"><strong>Eligibility:</strong> ${nestedEligibilityMarkup}</p>
             ${formatExpectedAwardsRow(nested)}
-            ${(isNihUnlimitedFunding(nested) || nested.amount || hasSalaryProgramExpenses(nested)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(nested)}</p>` : ""}
+            ${(isNihUnlimitedFunding(nested) || nested.amount || hasSalaryProgramExpenses(nested)) ? `<p class="meta-row"><strong>Amount:</strong> ${formatGrantAmountHtml(nested)} <span class="muted">${formatFundingNotesHtml(nested)}</span></p>` : ""}
             ${nested.duration ? `<p class="meta-row"><strong>Duration:</strong> ${escapeHtml(nested.duration)}</p>` : ""}
             <p class="desc-preview meta-row">${escapeHtml(nestedPreview)}${nestedHasOverflow ? `<span class="ellipsis">…</span><span class="desc-rest">${escapeHtml(nestedRest)}</span>` : ""}</p>
             ${nestedHasOverflow ? `<button class="toggle">Show more</button>` : ""}
