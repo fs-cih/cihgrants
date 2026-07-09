@@ -1,5 +1,32 @@
 [
   {
+    "title": "Child Abuse Prevention in Migrant and Tribal Communities",
+    "funderType": "Federal",
+    "agencyName": "Administration for Children and Families",
+    "eligibility": "Prime",
+    "expectedAwards": "3",
+    "amount": 235000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-09",
+    "link": "https://files.simpler.grants.gov/opportunities/cbca1c38-01a6-4c01-bd3a-d17765987a7e/attachments/2214b5c1-13ee-4bcb-9890-2098bdd09764/Full_Announcement_hhs-2026-acf-acyf-ca-0018.pdf",
+    "description": "This program supports community-based efforts in tribal and migrant communities to prevent child abuse and neglect and to strengthen and support families. Funded projects will develop, operate, expand, enhance, and coordinate initiatives, programs, and activities to reduce the likelihood of child abuse and neglect. ",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Early Childhood"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1783612286938_141_wrpkzdf1k",
+    "deadlines": [
+      "2026-08-07"
+    ]
+  },
+  {
     "title": "Small Health Care Provider Quality Improvement Program",
     "funderType": "Federal",
     "agencyName": "HRSA",
