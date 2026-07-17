@@ -1205,9 +1205,10 @@
     "pin": false,
     "letterOfInterest": false,
     "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
     "id": "grant_1781121105006_97_dv2wz86zx",
     "deadlines": [
-      "2026-07-8"
+      "2026-07-08"
     ]
   },
   {
