@@ -1,5 +1,22 @@
 [
   {
+    "funder": "John Templeton Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.templeton.org/grants/apply-for-grant",
+    "keywords": [
+      "Ceremony-Assisted Treatment",
+      "Culture",
+      "General Research",
+      "Mind-Body Medicine",
+      "Traditional Knowledge"
+    ],
+    "notes": "The John Templeton Foundation supports interdisciplinary research and catalyzes conversations that inspire awe and wonder. The six areas of funding are: character virtue development; individual freedom and free markets; life sciences; public engagement; mathematical and physical sciences; and religion, science, and society.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1784320100554_64_jwd558f1k"
+  },
+  {
     "funder": "Notah Begay III (NB3) Foundation",
     "funderType": "Foundation",
     "link": "https://www.nb3foundation.org/community-empowerment/",
