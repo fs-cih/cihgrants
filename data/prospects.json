@@ -1,5 +1,21 @@
 [
   {
+    "funder": "Spencer Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.spencer.org/why-we-grant",
+    "keywords": [
+      "Adolescent Health",
+      "Early Childhood",
+      "Education & Training",
+      "General Research"
+    ],
+    "notes": "We support high-quality, innovative research on education, broadly conceived. Our programs provide funding for education-focused research projects, research training fellowships, and additional field-building initiatives. ",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1784294856582_63_0h671f6q7"
+  },
+  {
     "funder": "Northwest Area Foundation",
     "funderType": "Foundation",
     "geography": [
