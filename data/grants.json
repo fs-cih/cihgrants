@@ -1,5 +1,31 @@
 [
   {
+    "title": "Tribal Personal Responsibility Education Program (Tribal PREP)",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Secondary",
+    "expectedAwards": "8",
+    "amount": 600000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-20",
+    "link": "https://files.simpler.grants.gov/opportunities/b4f5b5f3-605b-4391-9abe-3e667ab24122/attachments/1aed7c0c-3337-458f-b252-71897502d559/HHS-2026-ACF-ACYF-AT-0015.pdf",
+    "description": "The Tribal Personal Responsibility Education Program (Tribal PREP) funds American Indian and Alaska Native (AI/AN) tribes and tribal organizations to implement culturally appropriate youth pregnancy prevention education programs. The program serves AI/AN youth ages 10 to 19 and pregnant youth and parenting mothers under the age of 21, with a focus on: Personal responsibility; Behavior change; and Positive youth development. Award funds support projects that: Replicate evidence-based effective programs, incorporate elements of effective programs, or carry out promising practices tailored to AI/AN communities; Provide medically accurate and complete education on abstinence and contraception; Address delaying sexual activity, use of contraception, and increasing the prevention of unintended pregnancy and sexually transmitted infections (STIs), including HIV/AIDS; and Educate youth on at least three of the six congressionally mandated Adulthood Preparation Subjects. ",
+    "keywords": [
+      "Adolescent Health",
+      "Sexual & Reproductive Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1784554059275_144_kboapecyy",
+    "deadlines": [
+      "2026-08-17"
+    ]
+  },
+  {
     "title": "FY 2026 Consolidated Grant Program to Assist Children and Youth Affected by and to Engage Men and Youth in Preventing Domestic Violence, Dating Violence, Sexual Assault, and Stalking",
     "funderType": "Federal",
     "agencyName": "DOJ, OVW",
