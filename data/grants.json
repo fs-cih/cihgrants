@@ -1,5 +1,31 @@
 [
   {
+    "title": "Competitive Personal Responsibility Education Program",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Prime",
+    "expectedAwards": "11",
+    "amount": 750000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-20",
+    "link": "https://files.simpler.grants.gov/opportunities/4d574990-cdad-42eb-aae7-8927c692ddf1/attachments/26a6705f-2af5-4851-a27c-1c04a773b513/HHS-2026-ACF-ACYF-AK-0014.pdf",
+    "description": "The Competitive Personal Responsibility Education Program (Competitive PREP) funds projects to educate youth and young adults on both abstinence and contraception to prevent pregnancy and sexually transmitted infections (STIs), including HIV/AIDS, and promote successful transition of youth to adulthood through education on key subjects. This opportunity supports the development and implementation of such projects in states that did not accept Fiscal Year (FY) 2026 allotments for State PREP. Projects funded under this opportunity educate youth between the ages of 10 and 19 years (and, in the case of pregnant and parenting youth, under the age of 21) on the following topics: Abstinence; Contraception; and At least three of the six Congressionally mandated adulthood preparation subjects ",
+    "keywords": [
+      "Adolescent Health",
+      "Sexual & Reproductive Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1784554176083_145_0jwr3q5nr",
+    "deadlines": [
+      "2026-08-17"
+    ]
+  },
+  {
     "title": "Tribal Personal Responsibility Education Program (Tribal PREP)",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
