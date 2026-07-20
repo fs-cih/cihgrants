@@ -1,5 +1,35 @@
 [
   {
+    "title": "Title IV-E Prevention Accelerator Grants",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Secondary",
+    "expectedAwards": "10",
+    "amount": 750000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "18 months",
+    "addedDate": "2026-07-20",
+    "link": "https://files.simpler.grants.gov/opportunities/ea2df025-71cb-442b-918b-865abb30560b/attachments/02832a91-59ea-4a47-bc30-731c42b2ba0c/hhs-2026-acf-acyf-ca-0061_Full_Announcement.pdf",
+    "description": "Despite expanded authority under the Family First Prevention Services Act, title IV-E prevention services account for less than 2% of total program claims. Many title IV-E agencies face implementation barriers including limited infrastructure, provider readiness, evaluation capacity, and complex claiming requirements. The title IV-E prevention program offers a critical opportunity for states to provide in-home parent skills, mental health, and substance use prevention and treatment programs — strengthening families and reducing the need for foster care removals; however, child welfare systems face barriers to fulfilling the program’s promise. There is an urgent need for jurisdictions to efficiently build the infrastructure required to implement and claim title IV-E prevention services. Awards under this funding opportunity will support the design, implementation, and evaluation of system-level solutions that strengthen agency capacity and address implementation challenges. Funding is intended to accelerate agency implementation of one or more title IV-E eligible prevention services. Recipients will also disseminate tools, best practices, and lessons learned, and will collaborate nationally to promote shared learning. ",
+    "keywords": [
+      "Behavioral Health",
+      "Community Health Workers",
+      "Early Childhood",
+      "Maternal Health",
+      "Mental Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1784554694985_148_lujfpgxec",
+    "deadlines": [
+      "2026-08-17"
+    ]
+  },
+  {
     "title": "Tribal Management Grant (TMG) Program",
     "funderType": "Federal",
     "agencyName": "IHS",
