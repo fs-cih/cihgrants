@@ -1,5 +1,31 @@
 [
   {
+    "title": "FY2026 Personal Responsibility Education Program Innovative Strategies (PREIS)",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Prime",
+    "expectedAwards": "12",
+    "amount": 900000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-07-20",
+    "link": "https://files.simpler.grants.gov/opportunities/0f7454eb-e5b6-458a-86eb-4d874a9f9d8f/attachments/167e0da6-e84c-4926-a781-df69a181e37d/HHS-2026-ACF-ACYF-AP-0003.pdf",
+    "description": "The Personal Responsibility Education Program Innovative Strategies (PREIS) supports cooperative agreement projects with funding to implement and test the effectiveness of innovative, adolescent pregnancy prevention strategies and interventions among the target population. Eligible projects must: Conduct rigorous impact evaluations for treatment and control groups using randomized controlled trial (RCT) or quasi-experimental design (QED); Evaluations must be conducted by an independent, third-party evaluator. A minimum of 20 percent of funding per year must be allocated to an independent, third-party evaluator; Educate adolescents on both abstinence and contraception to help prevent pregnancy and sexually transmitted infections (STIs), including HIV/AIDS; Carry out at least three of six Adulthood Preparation Subjects (APS); and more.",
+    "keywords": [
+      "Adolescent Health",
+      "Sexual & Reproductive Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1784554453655_146_rroetp33o",
+    "deadlines": [
+      "2026-08-18"
+    ]
+  },
+  {
     "title": "Competitive Personal Responsibility Education Program",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
