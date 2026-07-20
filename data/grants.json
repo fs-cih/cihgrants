@@ -1,5 +1,31 @@
 [
   {
+    "title": "Tribal Management Grant (TMG) Program",
+    "funderType": "Federal",
+    "agencyName": "IHS",
+    "eligibility": "Secondary",
+    "expectedAwards": "14–16",
+    "amount": 150000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-20",
+    "link": "https://files.simpler.grants.gov/opportunities/7a3b7476-06bb-4877-97f1-eefa8deacc5a/attachments/48a25b9c-744e-49c0-810e-8a9110fb945b/hhs-2026-ihs-tmd-0001_v5.pdf",
+    "description": "The TMG Program offers capacity building and developmental support for federally recognized Indian Tribes and Tribal Organizations (T/TOs). The program helps T/TOs prepare to assume some or all of the existing IHS programs, functions, services, and activities and further develop and improve Tribal health management capabilities. ",
+    "keywords": [
+      "Capacity-Building",
+      "Partnership-Building"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1784554558520_147_74w0ewn9p",
+    "deadlines": [
+      "2026-08-28"
+    ]
+  },
+  {
     "title": "FY2026 Personal Responsibility Education Program Innovative Strategies (PREIS)",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
