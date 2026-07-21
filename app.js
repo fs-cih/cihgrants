@@ -94,6 +94,7 @@ const AGENCY_ABBREVIATION_ALIASES = {
   CDC: ["Centers for Disease Control and Prevention", "Centers for Disease Control"],
   CMS: ["Centers for Medicare & Medicaid Services", "Centers for Medicare and Medicaid Services"],
   DOJ: ["Department of Justice"],
+  HHS: ["U.S. Department of Health and Human Services"],
   HRSA: ["Health Resources and Services Administration"],
   IHS: ["Indian Health Service"],
   NIH: ["National Institutes of Health"],
@@ -1230,6 +1231,11 @@ function getAgencyAliases(agencyValue) {
 
   (AGENCY_ABBREVIATION_ALIASES[upper] || []).forEach(alias => aliases.add(alias));
   return [...aliases];
+}
+
+function getAgencyDisplayName(agencyValue) {
+  const abbreviation = String(agencyValue || "").trim().toUpperCase();
+  return NIH_ABBREVIATIONS[abbreviation] || AGENCY_ABBREVIATION_ALIASES[abbreviation]?.[0] || '';
 }
 
 function matchesAgencyName(candidateName, agencyValue) {
@@ -3010,7 +3016,7 @@ function showPillFilter(pillType, pillValue) {
       break;
     case 'agency':
       titleText = pillValue;
-      subtitleText = NIH_ABBREVIATIONS[pillValue] || '';
+      subtitleText = getAgencyDisplayName(pillValue);
       break;
     case 'isNew':
       titleText = 'New Grants';
