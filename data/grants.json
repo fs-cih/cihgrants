@@ -1,5 +1,32 @@
 [
   {
+    "title": "FY 26 The Primary Prevention Youth Homelessness Demonstration Program",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Secondary",
+    "expectedAwards": "14",
+    "amount": 500000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-07-30",
+    "link": "https://files.simpler.grants.gov/opportunities/ac6f1f13-944b-4709-833c-0cc3c46877c6/attachments/87eeea4d-4887-44d6-9db9-b8ba2d275b02/hhs-2026-acf-acyf-yy-0119.pdf",
+    "description": "The Primary Prevention Youth Homelessness Demonstration Program (PPYHDP) provides funding to identify and implement strategies and services to prevent homelessness for youth between the ages of 12 and 26. This funding includes strategies for youth who are more likely to experience homelessness and housing instability, such as: Youth at risk of human trafficking; Youth struggling with substance abuse or mental health issues; and/or Youth transitioning out of foster care, the juvenile justice system, or a residential behavioral health system.",
+    "keywords": [
+      "Adolescent Health",
+      "Substance Use"
+    ],
+    "costShareRequired": true,
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785430329309_149_9xuehrukq",
+    "deadlines": [
+      "2026-08-17"
+    ]
+  },
+  {
     "title": "Title IV-E Prevention Accelerator Grants",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
