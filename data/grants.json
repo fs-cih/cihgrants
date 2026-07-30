@@ -1,5 +1,30 @@
 [
   {
+    "title": "Community Services Block Grant (CSBG) Tribal Capacity Building Training and Technical Assistance (TCBTTA)",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Prime",
+    "expectedAwards": "1",
+    "amount": 500000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-07-30",
+    "link": "https://files.simpler.grants.gov/opportunities/3ce9aff2-1ad9-4f82-abbf-3c44732640d8/attachments/0f28fbfb-586c-4511-bf65-2abd7581100f/HHS-2026-ACF-OCS-ET-0028.pdf",
+    "description": "The Community Services Block Grant (CSBG) Tribal Capacity Building Training and Technical Assistance (TCBTTA) addresses the absence of training and technical assistance specifically tailored to the unique needs, governance structures, and operational contexts of tribal CSBG recipients (including PL 102-477 tribes). Tribal CSBG recipients face distinct administrative challenges, and this cooperative agreement is designed to provide support, while upholding tribal sovereignty and honoring government‑to‑government relationships. The selected organization will provide comprehensive training and technical assistance tailored to tribal contexts. ",
+    "keywords": [
+      "Capacity-Building"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785430472133_150_26me6cezf",
+    "deadlines": [
+      "2026-08-24"
+    ]
+  },
+  {
     "title": "FY 26 The Primary Prevention Youth Homelessness Demonstration Program",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
