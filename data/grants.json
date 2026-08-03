@@ -1,5 +1,30 @@
 [
   {
+    "title": "National Center for Native Training and Technical Assistance",
+    "funderType": "Federal",
+    "agencyName": "HHS, ANA",
+    "eligibility": "Prime",
+    "expectedAwards": "1",
+    "amount": 3100000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-08-03",
+    "link": "https://files.simpler.grants.gov/opportunities/f27fc5ef-408f-47c3-a928-6e21523645a2/attachments/bddc2c10-988f-4a84-a887-a5d36fd1cab5/Full_Annoucement_hhs-2026-acf-ana-nta-0038.pdf",
+    "description": "This funding opportunity from the Administration of Native Americans (ANA) will create a National Center for Native Training and Technical Assistance (the Center) to support ANA recipients, applicants, and eligible entities. The Center will focus on: Delivering expert, high-quality training and technical assistance (TTA) that strengthens project implementation and performance; Building knowledge, skills, and organizational capacity to support sustainable outcomes for ANA-funded projects; Building awareness, accessibility, and utilization of TTA resources across ANA communities and stakeholders; Fostering collaboration, peer learning, and strategic partnerships to enhance project success and shared impact; and Assessing and continuously improving TTA activities through data-driven evaluation and feedback. The Center will also provide services in alignment with ANA’s mission, which includes strengthening the economic resiliency, sustainability, and self-determination of Native American communities.",
+    "keywords": [
+      "Capacity-Building"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785781616395_153_imwmrhagf",
+    "deadlines": [
+      "2026-08-27"
+    ]
+  },
+  {
     "title": "Economic Advancement Grants for Local Empowerment (EAGLE)",
     "funderType": "Federal",
     "agencyName": "HHS, ANA",
