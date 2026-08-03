@@ -90,6 +90,7 @@ const NIH_ABBREVIATIONS = {
 
 const AGENCY_ABBREVIATION_ALIASES = {
   ACF: ["Administration for Children and Families"],
+  ANA: ["Administration for Native Americans"],
   BIA: ["Bureau of Indian Affairs"],
   CDC: ["Centers for Disease Control and Prevention", "Centers for Disease Control"],
   CMS: ["Centers for Medicare & Medicaid Services", "Centers for Medicare and Medicaid Services"],
@@ -431,6 +432,7 @@ function bindEvents() {
   });
 
   document.getElementById("a_funderType").addEventListener("change", updateAgencyNameField);
+  document.getElementById("a_costShareRequired_yes").addEventListener("change", updateCostShareDetailsField);
   
   // Set up apostrophe highlighting for admin form fields
   APOSTROPHE_CHECK_FIELDS.forEach(fieldId => {
@@ -475,6 +477,15 @@ function updateDeadlineFields() {
     recurringLabel.style.display = '';
     recurringInput.required = true;
   }
+}
+
+function updateCostShareDetailsField() {
+  const isRequired = document.getElementById("a_costShareRequired_yes").checked;
+  const detailsLabel = document.getElementById("a_costShareDetails_label");
+  const detailsInput = document.getElementById("a_costShareDetails");
+  detailsLabel.hidden = !isRequired;
+  detailsInput.required = isRequired;
+  if (!isRequired) detailsInput.value = "";
 }
 
 function escapeHtml(text) {
@@ -648,7 +659,8 @@ function isCostShareRequired(grant) {
 function formatFundingNotesPlain(grant) {
   const notes = [`(${formatIdcNote(grant)})`];
   if (isCostShareRequired(grant)) {
-    notes.push("(Cost Share Required)");
+    const details = String(grant.costShareDetails || "").trim();
+    notes.push(details ? `(Cost Share Required: ${details})` : "(Cost Share Required)");
   }
   return notes.join(" ");
 }
@@ -1702,6 +1714,8 @@ function resetAdminForm() {
   document.getElementById("a_amountDetail").value = "";
   document.getElementById("a_amountIdc").value = "";
   document.getElementById("a_costShareRequired_yes").checked = false;
+  document.getElementById("a_costShareDetails").value = "";
+  updateCostShareDetailsField();
   document.getElementById("a_duration").value = "";
   document.getElementById("a_addedDate").value = TODAY;
   document.getElementById("a_deadlineType_deadline").checked = true;
@@ -1808,6 +1822,8 @@ function openAdminDialog(grant = null, index = null) {
   } else {
     document.getElementById("a_costShareRequired_yes").checked = false;
   }
+  document.getElementById("a_costShareDetails").value = grant.costShareDetails || "";
+  updateCostShareDetailsField();
   document.getElementById("a_duration").value = grant.duration || "";
   document.getElementById("a_addedDate").value = grant.addedDate || TODAY;
   
@@ -1988,6 +2004,11 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
 
   if (document.getElementById("a_costShareRequired_yes").checked) {
     grant.costShareRequired = true;
+    grant.costShareDetails = document.getElementById("a_costShareDetails").value.trim();
+    if (!grant.costShareDetails) {
+      els.adminStatus.textContent = "Cost Share Details are required when cost share is required.";
+      return;
+    }
   }
 
   // Add pin field

@@ -243,6 +243,39 @@ h1 {
   min-width: 180px;
 }
 
+.cost-share-fields {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.cost-share-fields > label {
+  flex: 1 1 0;
+}
+
+.cost-share-fields > label[hidden] {
+  display: none;
+}
+
+.cost-share-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .cost-share-fields {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .cost-share-fields > label {
+    width: 100%;
+  }
+}
+
 .control-grow {
   flex: 1;
   min-width: 280px;

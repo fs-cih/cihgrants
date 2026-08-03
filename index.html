@@ -146,14 +146,17 @@
       </label>
       <label>Amount Detail<select id="a_amountDetail" class="control"></select></label>
       <label>Indirect Costs<select id="a_amountIdc" class="control"></select></label>
-      <label>Cost Share Required
-        <div style="display: flex; gap: 12px; padding: 8px 0;">
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+      <div class="cost-share-fields">
+        <label>Cost Share Required
+          <span class="cost-share-checkbox">
             <input type="checkbox" id="a_costShareRequired_yes">
             <span>Yes</span>
-          </label>
-        </div>
-      </label>
+          </span>
+        </label>
+        <label id="a_costShareDetails_label" hidden>Cost Share Details
+          <input id="a_costShareDetails" class="control" type="text">
+        </label>
+      </div>
       <label>Duration<input id="a_duration" class="control" placeholder="e.g., 2 years"></label>
       <label>Added Date<input id="a_addedDate" class="control" type="date"></label>
       
