@@ -1,5 +1,32 @@
 [
   {
+    "title": "Economic Advancement Grants for Local Empowerment (EAGLE)",
+    "funderType": "Federal",
+    "agencyName": "HHS, ANA",
+    "eligibility": "Secondary",
+    "expectedAwards": "31",
+    "amount": 1000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "36 months",
+    "addedDate": "2026-08-03",
+    "link": "https://files.simpler.grants.gov/opportunities/bb965470-bd8d-4529-b30b-39efe6f81147/attachments/d95f94bc-8bf3-4d4a-a4ac-18964f088d57/hhs-2026-acf-ana-neg-0120_PA_2_Microgrids_Full_Announcement_7.28.26.pdf",
+    "description": "The Administration for Native Americans (ANA) is providing funding in five project areas to: Grow local economies; Support community-based businesses; Strengthen Native American families; Preserve Native American cultures; Improve infrastructure in Native American communities; and Unleash Native American prosperity. ",
+    "keywords": [
+      "General Research"
+    ],
+    "costShareRequired": true,
+    "costShareDetails": "20%",
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785781467984_152_i8cry5xpr",
+    "deadlines": [
+      "2026-08-27"
+    ]
+  },
+  {
     "title": "Reflective Supervision in Home Visiting Research Awards",
     "funderType": "Federal",
     "agencyName": "HHS, ACF",
