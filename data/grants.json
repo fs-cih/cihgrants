@@ -1,5 +1,32 @@
 [
   {
+    "title": "Broad Pragmatic Studies PCORI Funding Announcement -- Cycle 3 2026",
+    "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
+    "eligibility": "Prime",
+    "amount": 12000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-08-04",
+    "link": "https://www.pcori.org/funding-opportunities/announcement/broad-pragmatic-studies-pcori-funding-announcement-cycle-3-2026",
+    "description": "This PCORI Funding Announcement (PFA) invites applications for high-impact patient-centered comparative clinical effectiveness research (CER) projects. Applicants are strongly encouraged to propose individual or cluster randomized controlled trials; however, well-specified natural experiments and well-designed observational studies will also be considered. Special areas of influence for this cycle include: (1) Improving Mental Health and Substance Use Outcomes for Pregnant and Postpartum Populations, (2) Cancer Survivorship, (3) Diabetes Prevention, Care and Treatment, (4) Management of Neuropathic Pain, and (5) Management of Pain in Individuals Living With Intellectual and Developmental Disabilities or Alzheimers Disease and Related Dementias ",
+    "keywords": [
+      "Cancer",
+      "Diabetes",
+      "General Research",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785862246122_155_m4896qm6q",
+    "deadlines": [
+      "2026-09-09"
+    ]
+  },
+  {
     "title": "Addressing Substance Use PCORI Funding Announcement -- Cycle 3 2026",
     "funderType": "Foundation",
     "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
