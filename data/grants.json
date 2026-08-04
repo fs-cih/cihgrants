@@ -1,5 +1,30 @@
 [
   {
+    "title": "Advancing the Science of Engagement in Research PCORI Funding Announcement -- Cycle 3 2026",
+    "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute",
+    "eligibility": "Prime",
+    "expectedAwards": "30",
+    "amount": 1500000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-08-04",
+    "link": "https://www.pcori.org/funding-opportunities/announcement/advancing-science-engagement-research-pcori-funding-announcement-cycle-3-2026",
+    "description": "This PCORI Funding Announcement (PFA) seeks to fund studies that build an evidence base on engagement in research, including: (1) Measures to capture structure/context, process, and outcomes of engagement in research, (2) Techniques that lead to effective engagement in research, and (3) How effective engagement techniques should be modified and resourced for different contexts, settings, and communities.",
+    "keywords": [
+      "Translation & Implementation"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785862411126_156_qqggzdbem",
+    "deadlines": [
+      "2026-09-09"
+    ]
+  },
+  {
     "title": "Broad Pragmatic Studies PCORI Funding Announcement -- Cycle 3 2026",
     "funderType": "Foundation",
     "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
