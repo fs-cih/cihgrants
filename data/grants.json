@@ -1,5 +1,30 @@
 [
   {
+    "title": "Addressing Substance Use PCORI Funding Announcement -- Cycle 3 2026",
+    "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute (PCORI)",
+    "eligibility": "Prime",
+    "expectedAwards": "5",
+    "amount": 12000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-08-04",
+    "link": "https://www.pcori.org/funding-opportunities/announcement/addressing-substance-use-pcori-funding-announcement-cycle-3-2026",
+    "description": "This PCORI Funding Announcement (PFA) invites applications for high-quality, patient-centered comparative clinical effectiveness research (CER) projects that focus on substance use/misuse and substance use disorders. Allowable areas of work include: (1) Evidence-Based Strategies To Advance Prevention and Treatment of Substance Use Disorders, (2) Evidence-Based Interventions for Overdose Prevention, (3) Strategies To Reduce Nicotine and Tobacco Use, and (4) Treatment Strategies Addressing the Intersection of Poor Sleep and Substance Misuse/Substance Use Disorder.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785861939120_154_0zk5wfgpw",
+    "deadlines": [
+      "2026-09-09"
+    ]
+  },
+  {
     "title": "National Center for Native Training and Technical Assistance",
     "funderType": "Federal",
     "agencyName": "HHS, ANA",
