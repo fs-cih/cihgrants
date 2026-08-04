@@ -1,5 +1,30 @@
 [
   {
+    "title": "Engagement Award: Capacity Building -- Fall 2026 Cycle",
+    "funderType": "Foundation",
+    "agencyName": "Patient-Centered Outcomes Research Institute",
+    "eligibility": "Prime",
+    "expectedAwards": "80",
+    "amount": 300000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-08-04",
+    "link": "https://www.pcori.org/funding-opportunities/announcement/engagement-award-capacity-building-fall-2026-cycle",
+    "description": "The Eugene Washington PCORI Engagement Award Program is accepting Letters of Intent (LOIs) for the Engagement Award: Capacity Building funding opportunity. This opportunity aims to build the capacity and skills of patients, families, caregivers and the broader healthcare community to engage in all phases of patient-centered comparative clinical effectiveness research (CER). All proposed projects must show how they will help to build capacity for patient-centered CER.",
+    "keywords": [
+      "Capacity-Building"
+    ],
+    "pin": false,
+    "letterOfInterest": true,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1785862775865_158_rs322skn9",
+    "deadlines": [
+      "2026-09-09"
+    ]
+  },
+  {
     "title": "Improving Methods for Conducting Patient-Centered Comparative Clinical Effectiveness Research PCORI Funding Announcement -- Cycle 3 2026",
     "funderType": "Foundation",
     "agencyName": "Patient-Centered Outcomes Research Institute",
