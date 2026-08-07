@@ -116,6 +116,9 @@ Please create a new token at: https://github.com/settings/tokens`;
 const PAT_INVALID_HELP = `
 
 Your token may be invalid or expired. Please verify it at: https://github.com/settings/tokens`;
+const WORKFLOW_POLL_INTERVAL_MS = 3000;
+const WORKFLOW_START_TIMEOUT_MS = 60000;
+const WORKFLOW_COMPLETE_TIMEOUT_MS = 5 * 60 * 1000;
 
 // Fields that should be highlighted if they contain apostrophes
 const APOSTROPHE_CHECK_FIELDS = [
@@ -159,8 +162,35 @@ const els = {
   toggleGrants: document.getElementById("toggleGrants"),
   toggleProspects: document.getElementById("toggleProspects"),
   downloadBtn: document.getElementById("downloadBtn"),
-  bulkActions: document.getElementById("bulkActions")
+  bulkActions: document.getElementById("bulkActions"),
+  publicationStatus: document.getElementById("publicationStatus")
 };
+
+function showPublicationStatus(type, message, runUrl = "") {
+  const status = els.publicationStatus;
+  status.className = `publication-status ${type}`;
+  status.replaceChildren();
+
+  const text = document.createElement("strong");
+  text.textContent = message;
+  status.appendChild(text);
+
+  if (runUrl) {
+    const link = document.createElement("a");
+    link.href = runUrl;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = " View the GitHub Actions log.";
+    status.appendChild(link);
+  }
+
+  status.hidden = false;
+  status.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function publicationErrorMessage(error) {
+  return `Publishing failed. The change was not confirmed on GitHub. ${error.message}`;
+}
 
 async function enqueueMutation(task, statusEl) {
   const queuePosition = ++queuedMutations;
@@ -2090,7 +2120,7 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
   els.adminStatus.textContent = "Saving…";
 
   try {
-    await saveGrant(mode, payload, token);
+    const result = await saveGrant(mode, payload, token);
 
     if (editIndex === null) {
       grants.push(localGrant);
@@ -2100,8 +2130,10 @@ els.saveBtn.onclick = async () => enqueueMutation(async () => {
 
     apply();
     closeAdminDialog();
+    showPublicationStatus("success", "Published successfully. The change is committed to GitHub.", result.html_url);
   } catch (error) {
     els.adminStatus.textContent = `Save failed: ${error.message}`;
+    showPublicationStatus("error", publicationErrorMessage(error), error.runUrl);
   }
 }, els.adminStatus);
 
@@ -2126,12 +2158,14 @@ async function deleteCurrentGrant() {
   els.adminStatus.textContent = "Deleting…";
 
   try {
-    await saveGrant("delete", { editIndex, id: grants[editIndex]?.id }, token);
+    const result = await saveGrant("delete", { editIndex, id: grants[editIndex]?.id }, token);
     grants.splice(editIndex, 1);
     apply();
     closeAdminDialog();
+    showPublicationStatus("success", "Published successfully. The change is committed to GitHub.", result.html_url);
   } catch (error) {
     els.adminStatus.textContent = `Delete failed: ${error.message}`;
+    showPublicationStatus("error", publicationErrorMessage(error), error.runUrl);
   }
 }, els.adminStatus);
 }
@@ -2224,7 +2258,7 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   els.prospectStatus.textContent = "Saving…";
 
   try {
-    await saveProspect(mode, payload, token);
+    const result = await saveProspect(mode, payload, token);
 
     if (prospectEditIndex === null) {
       prospects.push(localProspect);
@@ -2234,8 +2268,10 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
 
     renderProspects();
     closeProspectDialog();
+    showPublicationStatus("success", "Published successfully. The change is committed to GitHub.", result.html_url);
   } catch (error) {
     els.prospectStatus.textContent = `Save failed: ${error.message}`;
+    showPublicationStatus("error", publicationErrorMessage(error), error.runUrl);
   }
 }, els.prospectStatus);
 
@@ -2259,74 +2295,40 @@ async function deleteCurrentProspect() {
   els.prospectStatus.textContent = "Deleting…";
 
   try {
-    await saveProspect("delete", { editIndex: prospectEditIndex, id: prospects[prospectEditIndex]?.id, funder: prospects[prospectEditIndex]?.funder }, token);
+    const result = await saveProspect("delete", { editIndex: prospectEditIndex, id: prospects[prospectEditIndex]?.id, funder: prospects[prospectEditIndex]?.funder }, token);
     prospects.splice(prospectEditIndex, 1);
     renderProspects();
     closeProspectDialog();
+    showPublicationStatus("success", "Published successfully. The change is committed to GitHub.", result.html_url);
   } catch (error) {
     els.prospectStatus.textContent = `Delete failed: ${error.message}`;
+    showPublicationStatus("error", publicationErrorMessage(error), error.runUrl);
   }
 }, els.prospectStatus);
 }
 
 async function saveGrant(mode, payload, tokenInput) {
-  const owner = CIH_CONFIG.githubOwner;
-  const repo = CIH_CONFIG.githubRepo;
-  const branch = CIH_CONFIG.githubBranch || "main";
-  const token = (tokenInput || "").trim();
-
-  if (!owner || !repo || owner === "YOUR_GITHUB_ORG" || repo === "YOUR_REPO_NAME") {
-    throw new Error("GitHub repository is not configured. Set githubOwner and githubRepo in config.js.");
-  }
-
-  if (!token) {
-    throw new Error("GitHub token is missing. Enter a PAT in the admin dialog.");
-  }
-
-  const response = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-grant.yml/dispatches`,
-    {
-      method: "POST",
-      headers: {
-        "Accept": "application/vnd.github+json",
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ref: branch,
-        inputs: {
-          mode,
-          payload: JSON.stringify(payload)
-        }
-      })
-    }
-  );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    let errorMessage = `GitHub dispatch failed (${response.status}): ${errorText || "Unknown error"}`;
-    
-    // Provide helpful guidance for common authentication errors
-    if (response.status === 403) {
-      let needsPermissionHelp = false;
-      try {
-        const errorData = JSON.parse(errorText);
-        needsPermissionHelp = errorData.message && errorData.message.includes("Resource not accessible by personal access token");
-      } catch (e) {
-        needsPermissionHelp = errorText.includes("Resource not accessible by personal access token");
-      }
-      if (needsPermissionHelp) {
-        errorMessage += PAT_PERMISSION_HELP;
-      }
-    } else if (response.status === 401) {
-      errorMessage += PAT_INVALID_HELP;
-    }
-    
-    throw new Error(errorMessage);
-  }
+  return dispatchAndConfirmWorkflow("add-grant.yml", mode, payload, tokenInput);
 }
 
 async function saveProspect(mode, payload, tokenInput) {
+  return dispatchAndConfirmWorkflow("add-prospect.yml", mode, payload, tokenInput);
+}
+
+function githubHeaders(token) {
+  return {
+    "Accept": "application/vnd.github+json",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json",
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+}
+
+function delay(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+async function dispatchAndConfirmWorkflow(workflow, mode, payload, tokenInput) {
   const owner = CIH_CONFIG.githubOwner;
   const repo = CIH_CONFIG.githubRepo;
   const branch = CIH_CONFIG.githubBranch || "main";
@@ -2337,23 +2339,22 @@ async function saveProspect(mode, payload, tokenInput) {
   }
 
   if (!token) {
-    throw new Error("GitHub token is missing. Enter a PAT in the prospect dialog.");
+    throw new Error("GitHub token is missing. Enter a PAT in the dialog.");
   }
 
+  const requestId = `${Date.now()}-${crypto.randomUUID()}`;
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}`;
   const response = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/add-prospect.yml/dispatches`,
+    `${apiUrl}/actions/workflows/${workflow}/dispatches`,
     {
       method: "POST",
-      headers: {
-        "Accept": "application/vnd.github+json",
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
+      headers: githubHeaders(token),
       body: JSON.stringify({
         ref: branch,
         inputs: {
           mode,
-          payload: JSON.stringify(payload)
+          payload: JSON.stringify(payload),
+          request_id: requestId
         }
       })
     }
@@ -2381,6 +2382,58 @@ async function saveProspect(mode, payload, tokenInput) {
     
     throw new Error(errorMessage);
   }
+
+  const run = await waitForWorkflowRun(apiUrl, workflow, branch, requestId, token);
+  return waitForWorkflowCompletion(apiUrl, run, token);
+}
+
+async function waitForWorkflowRun(apiUrl, workflow, branch, requestId, token) {
+  const deadline = Date.now() + WORKFLOW_START_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    const response = await fetch(
+      `${apiUrl}/actions/workflows/${workflow}/runs?event=workflow_dispatch&branch=${encodeURIComponent(branch)}&per_page=30`,
+      { headers: githubHeaders(token), cache: "no-store" }
+    );
+    if (!response.ok) {
+      throw new Error(`GitHub accepted the change but its workflow status could not be checked (${response.status}).`);
+    }
+    const data = await response.json();
+    const run = (data.workflow_runs || []).find(candidate => candidate.display_title?.includes(requestId));
+    if (run) return run;
+    await delay(WORKFLOW_POLL_INTERVAL_MS);
+  }
+
+  throw new Error("GitHub accepted the change, but the publishing workflow did not start within one minute.");
+}
+
+async function waitForWorkflowCompletion(apiUrl, initialRun, token) {
+  const deadline = Date.now() + WORKFLOW_COMPLETE_TIMEOUT_MS;
+  let run = initialRun;
+
+  while (Date.now() < deadline) {
+    const response = await fetch(`${apiUrl}/actions/runs/${run.id}`, {
+      headers: githubHeaders(token),
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      const error = new Error(`The publishing workflow started, but its status could not be checked (${response.status}).`);
+      error.runUrl = run.html_url;
+      throw error;
+    }
+    run = await response.json();
+    if (run.status === "completed") {
+      if (run.conclusion === "success") return run;
+      const error = new Error(`GitHub Actions finished with status “${run.conclusion || "unknown"}”.`);
+      error.runUrl = run.html_url;
+      throw error;
+    }
+    await delay(WORKFLOW_POLL_INTERVAL_MS);
+  }
+
+  const error = new Error("Publishing is still running after five minutes; check the GitHub Actions log.");
+  error.runUrl = run.html_url;
+  throw error;
 }
 
 
