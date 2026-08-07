@@ -1,4 +1,5 @@
 name: Add prospect
+run-name: "Publish prospect · ${{ inputs.request_id }}"
 
 on:
   workflow_dispatch:
@@ -14,9 +15,12 @@ on:
       payload:
         required: true
         description: 'Prospect data as JSON string'
+      request_id:
+        required: true
+        description: 'Unique request identifier used to confirm this publication'
 
 concurrency:
-  group: prospect-modifications
+  group: cih-database-modifications
   cancel-in-progress: false
 
 permissions:
@@ -28,6 +32,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Update checkout
+        run: git pull --ff-only origin "$GITHUB_REF_NAME"
 
       - name: Add, edit, or delete prospect
         run: |
@@ -99,28 +108,7 @@ jobs:
             git commit -m "Add prospect: $FUNDER"
           fi
           
-          # Use merge instead of rebase to handle concurrent edits more gracefully
-          # Retry up to 3 times with exponential backoff if push fails
-          for i in 1 2 3; do
-            git pull --no-rebase origin main && git push && break || {
-              if [ $i -eq 3 ]; then
-                echo "Failed to push after 3 attempts due to concurrent modifications"
-                exit 1
-              fi
-              echo "Push failed, retrying in $((2**i)) seconds..."
-              sleep $((2**i))
-              git reset --soft HEAD~1
-              git pull --no-rebase origin main
-              git add data/prospects.json
-              if [ "$MODE" = "edit" ]; then
-                git commit -m "Edit prospect: $FUNDER"
-              elif [ "$MODE" = "delete" ]; then
-                git commit -m "Delete prospect: $FUNDER"
-              else
-                git commit -m "Add prospect: $FUNDER"
-              fi
-            }
-          done
+          git push origin "HEAD:$GITHUB_REF_NAME"
         env:
           MODE: ${{ github.event.inputs.mode }}
           PAYLOAD: ${{ github.event.inputs.payload }}

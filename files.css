@@ -350,6 +350,37 @@ h1 {
   gap: 14px;
 }
 
+.publication-status {
+  margin: 0 0 18px;
+  padding: 13px 16px;
+  border: 1px solid;
+  border-radius: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  animation: publication-status-in 180ms ease-out;
+}
+
+.publication-status.success {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.publication-status.error {
+  color: #991b1b;
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.publication-status a {
+  color: inherit;
+}
+
+@keyframes publication-status-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .grant {
   background: var(--card);
   border: 1px solid var(--border);

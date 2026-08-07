@@ -8,6 +8,7 @@ A web-based tool for tracking and managing grant opportunities for the Center fo
 - Sort by deadline, amount, or title
 - Add and edit grant information through an admin interface
 - Automatic GitHub-based data persistence
+- On-page confirmation only after GitHub Actions successfully commits a change
 
 ## Setup
 
@@ -54,7 +55,7 @@ The token needs permission to trigger GitHub Actions workflows:
 3. Fill in the grant details
 4. Click **Save**
 
-The app will use your token to trigger a GitHub Actions workflow that commits the changes to your repository.
+The app uses your token to trigger a GitHub Actions workflow, follows that specific workflow run, and reports success only after GitHub confirms that the commit completed. If publishing fails, the red status message links to the relevant Actions log when one is available.
 
 ### Troubleshooting Authentication Errors
 
@@ -99,8 +100,9 @@ Grant data is stored in `data/grants.json`. Each grant includes:
 
 1. The frontend (`index.html` + `app.js`) provides the user interface
 2. When saving a grant, the app calls the GitHub API to trigger a workflow dispatch
-3. The GitHub Actions workflow (`add-grant.yml`) runs and commits the changes
-4. The updated data becomes available when the page is refreshed
+3. The GitHub Actions workflow (`add-grant.yml`) updates the configured branch and commits the change
+4. The frontend polls that uniquely identified workflow run and displays its confirmed success or failure above the first result card
+5. Grant and prospect writes share one workflow concurrency group so they cannot race while pushing commits
 
 ## License
 
