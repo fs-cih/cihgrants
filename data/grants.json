@@ -1,5 +1,32 @@
 [
   {
+    "title": "National Resource Centers",
+    "funderType": "Federal",
+    "agencyName": "HHS, ACF",
+    "eligibility": "Prime",
+    "expectedAwards": "17",
+    "amount": 2000000,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "5 years",
+    "addedDate": "2026-08-13",
+    "link": "https://files.simpler.grants.gov/opportunities/df6b37bc-f6bc-4038-8386-de74f85cbb10/attachments/3f124c2e-99e6-400f-a48d-fb3310ac9eb7/hhs-2026-acf-ofvps-ev-0010.pdf",
+    "description": "The purpose of the Resource Centers is to provide resource information, training, and technical assistance to improve the capacity of individuals, organizations, \ngovernmental entities, and communities to prevent family violence, domestic violence, and dating violence and to provide effective intervention services. Applicants must select the appropriate Resource Center and the priority area for which they are applying. ",
+    "keywords": [
+      "Adolescent Health",
+      "Sexual & Reproductive Health",
+      "Violence Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1786634022924_161_qt84u9syi",
+    "deadlines": [
+      "2026-09-08"
+    ]
+  },
+  {
     "title": "Connecting Champions for Diversity, Equity, Inclusion, and Belonging in the Health Professions",
     "funderType": "Foundation",
     "agencyName": "Robert Wood Johnson Foundation",
