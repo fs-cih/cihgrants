@@ -1,5 +1,18 @@
 [
   {
+    "funder": "Nike N7 Fund",
+    "funderType": "Foundation",
+    "link": "https://about.nike.com/en/mission/initiatives/n7-fund",
+    "keywords": [
+      "Adolescent Health"
+    ],
+    "notes": "Nike supports nonprofit organizations that elevate Indigenous communities in North America by taking action to create a culture of belonging in sport that welcomes all Indigenous youth (ages 7 to 17) to play. Since 2022, Nike has invested $625,000 in grants annually through the N7 Fund, administered by CAF America, to nonprofits that are powering the future of youth sport.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "id": "prospect_1786644623780_67_sqzoqunb3"
+  },
+  {
     "funder": "Lever for Change",
     "funderType": "Foundation",
     "link": "https://leverforchange.org/",
