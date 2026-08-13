@@ -1,5 +1,22 @@
 [
   {
+    "funder": "Lever for Change",
+    "funderType": "Foundation",
+    "link": "https://leverforchange.org/",
+    "keywords": [],
+    "notes": "",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Swift Gifts",
+        "url": "https://leverforchange.org/swift-gifts/"
+      }
+    ],
+    "id": "prospect_1786642022140_66_5o3ksjy9u"
+  },
+  {
     "funder": "John Templeton Foundation",
     "funderType": "Foundation",
     "link": "https://www.templeton.org/grants/apply-for-grant",
