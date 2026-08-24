@@ -1,5 +1,33 @@
 [
   {
+    "title": "BJA FY 2026 Public Safety and Mental Health Initiative",
+    "funderType": "Federal",
+    "agencyName": "Department of Justice",
+    "eligibility": "Prime",
+    "expectedAwards": "13",
+    "amount": 3000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "36 months",
+    "addedDate": "2026-08-24",
+    "link": "https://www.ojp.gov/funding/docs/bja-2026-172676.pdf",
+    "description": "This opportunity supports comprehensive service networks addressing untreated mental illness and substance use to reduce the burden of on law enforcement and the justice system; restore order in communities affected by homelessness, mental illness, and substance use; decrease recidivism; reduce crime; and improve overall public safety and restore confidence in public spaces. This initiative supports coordinated, direct intervention efforts across public safety, justice, mental health, and substance use agencies to increase access to mental health and substance \nuse treatment through civil commitment, institutional treatment, and step-down approaches from pre-arrest through reentry, using accountability measures that ensure compliance with treatment plans. This program moves beyond temporary interventions by supporting appropriate institutional care and civil commitment processes, when appropriate, for individuals unable to care for themselves.  \n\nSpecifically, this NOFO provides funding to enhance an entity or network of entities providing services in three core areas:\n\n(1) Crisis Stabilization Centers: 24/7 crisis receiving/drop-off centers with dedicated law enforcement access and protocols, no-refusal policies, and capacity for rapid assessment, stabilization, and civil commitment evaluations for individuals who pose a danger to themselves or others or demonstrate a grave disability. \n\n(2) Treatment Services: Comprehensive mental health and substance use treatment, \nincluding clinically appropriate medications, therapy and counseling, overdose prevention, recovery support, extended observation beds for stabilization, medication bridging services, and reentry services. Programs must prioritize treatment approaches that demonstrably reduce homelessness. \n\n(3) Electronic Health Record (EHR) Systems and Technology Modernization: Funding \nmay be used to enhance EHR systems and other related technology (e.g., telehealth) in and across correctional and crisis to improve data collection, coordinated service provision, data sharing, and continuity of care during incarceration, prior to release, and through reentry in the community. ",
+    "keywords": [
+      "Mental Health",
+      "Substance Use"
+    ],
+    "costShareRequired": true,
+    "costShareDetails": "This funding opportunity requires cost sharing (match) from the award recipient. Read the DOJ Grants Financial Guide for additional definitions and requirements of cost sharing (match), including the allowable sources of both in-kind and cash cost sharing. Recipients must satisfy this cost sharing (match) requirement with cash and/or in-kind contributions.",
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1787606200459_164_bwluiii3q",
+    "deadlines": [
+      "2026-10-02"
+    ]
+  },
+  {
     "title": "OVC FY 2026 Preventing Trafficking of Girls",
     "funderType": "Federal",
     "agencyName": "Department of Justice",
