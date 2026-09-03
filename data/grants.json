@@ -1,5 +1,30 @@
 [
   {
+    "title": "Infectious Diseases Clinical Trials Network (IDCTN) (UM1 Clinical Trial Required)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIAID",
+    "eligibility": "Prime",
+    "expectedAwards": "7–11",
+    "amount": 450000,
+    "amountDetail": "per year",
+    "amountIdc": "Excluding IDC",
+    "duration": "7 years",
+    "addedDate": "2026-09-03",
+    "link": "https://files.simpler.grants.gov/opportunities/493ea282-9ea7-48d4-9567-8495dceb20d4/attachments/8b4b4ac6-e2bf-4c90-8689-aa99677dfdf3/RFA-AI-27-002-Full-Announcement.html",
+    "description": "To assist public and private nonprofit institutions and individuals to establish, expand and improve biomedical research and research training in infectious diseases and related areas; to conduct developmental research, to produce and test research materials. To assist public, private and commercial institutions to conduct developmental research, to produce and test research materials, to provide research services as required by the agency for programs in infectious diseases, and controlling disease caused by infectious or parasitic agents, allergic and immunologic diseases and related areas. Projects range from studies of microbial physiology and antigenic structure to collaborative trials of experimental drugs and vaccines, mechanisms of resistance to antibiotics as well as research dealing with epidemiological observations in hospitalized patients or community populations and progress in allergic and immunologic diseases. Because of this dual focus, the program encompasses both basic research and clinical research.",
+    "keywords": [
+      "Infectious Diseases"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1788461444346_165_50y4u181n",
+    "deadlines": [
+      "2026-11-10"
+    ]
+  },
+  {
     "title": "BJA FY 2026 Public Safety and Mental Health Initiative",
     "funderType": "Federal",
     "agencyName": "Department of Justice",
