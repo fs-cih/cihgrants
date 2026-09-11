@@ -715,7 +715,7 @@ function formatGrantAmountPlain(g) {
     ? NIH_UNLIMITED_FUNDS_AUTH_TEXT_PLAIN
     : isNihUnlimitedFunding(g)
       ? NIH_UNLIMITED_FUNDS_TEXT_PLAIN
-      : formatAmount(g.amount);
+      : formatAmount(g.amount) + (g.amountDetail ? ` ${g.amountDetail}` : '');
   return hasSalaryProgramExpenses(g)
     ? `${baseAmount}; ${SALARY_PROGRAM_EXPENSES_TEXT}`
     : baseAmount;
