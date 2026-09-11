@@ -1,5 +1,30 @@
 [
   {
+    "title": "National Indian Health Outreach and Education",
+    "funderType": "Federal",
+    "agencyName": "IHS",
+    "eligibility": "Prime",
+    "expectedAwards": "1",
+    "amount": 1101311,
+    "amountDetail": "per year",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-09-11",
+    "link": "https://files.simpler.grants.gov/opportunities/77b51e1b-4047-41fc-85d5-a6ac7ca20dc3/attachments/46bbae67-68ea-408e-a40c-600510490497/HHS-2026-IHS-NIHOE-0001-v6_Final.pdf",
+    "description": "The purpose of this NOFO is to further the IHS mission and goals related to providing quality healthcare to the AI/AN community through outreach and education. Our focus is on promoting awareness, visibility, training, technical assistance, and education in the following components: Health education and outreach; Rural Health Transformation review and outreach and education on the\nIndian Health Care Improvement Act; Substance abuse and suicide prevention; Domestic violence prevention; Special diabetes program for American Indians; Tribal budget formulation activities; and Tribal youth health advisory activities. ",
+    "keywords": [
+      "Health Communications"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1789132560380_167_s51vf37io",
+    "deadlines": [
+      "2026-11-02"
+    ]
+  },
+  {
     "title": "Improving the Capacity of Tribal Communities to Identify Emerging Drug Threats",
     "funderType": "Federal",
     "agencyName": "Office of National Drug Control Policy",
