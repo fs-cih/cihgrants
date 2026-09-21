@@ -1,5 +1,22 @@
 [
   {
+    "funder": "Alfred P. Sloan Foundation",
+    "funderType": "Foundation",
+    "link": "https://sloan.org/grants/apply",
+    "keywords": [],
+    "notes": "In selecting projects for funding, the Foundation seeks proposals for original initiatives led by outstanding individuals or teams.  We are interested in projects that have a high expected return to society, exhibit a high degree of methodological rigor, and for which funding from the private sector, government, or other foundations is not yet widely available.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "hyperlinks": [
+      {
+        "text": "Books Strategy",
+        "url": "https://sloan.org/programs/public-understanding/books#strategy"
+      }
+    ],
+    "id": "prospect_1790004892009_68_kikj7dgh3"
+  },
+  {
     "funder": "Nike N7 Fund",
     "funderType": "Foundation",
     "link": "https://about.nike.com/en/mission/initiatives/n7-fund",
