@@ -61,6 +61,7 @@
     "pin": false,
     "letterOfInterest": false,
     "coldCall": false,
+    "centrallyManaged": true,
     "id": "prospect_1784320100554_64_jwd558f1k"
   },
   {
