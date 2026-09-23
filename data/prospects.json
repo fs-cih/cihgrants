@@ -136,6 +136,7 @@
     "pin": false,
     "letterOfInterest": false,
     "coldCall": false,
+    "centrallyManaged": true,
     "id": "prospect_1773343019708_60_rwp1pmoxd"
   },
   {
