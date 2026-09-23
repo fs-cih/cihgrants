@@ -861,6 +861,9 @@
     ],
     "notes": "Our giving is focused on evidence-based solutions to some of the biggest challenges in Criminal Justice, Health Care, Infrastructure, Public Finance, Higher Education, Journalism, Affordable Housing, Climate and Energy, and Democracy.",
     "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "centrallyManaged": true,
     "hyperlinks": [
       {
         "text": "Requests for Proposals",
