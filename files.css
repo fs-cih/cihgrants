@@ -485,6 +485,12 @@ h1 {
   color: #1d2a39;
 }
 
+.kcard-centrally-managed {
+  background: #b8860b;
+  border-color: #b8860b;
+  color: white;
+}
+
 .eligibility-pill {
   display: inline-block;
   border-radius: 999px;
@@ -1028,6 +1034,7 @@ h1 {
 .kcard-loi,
 .kcard-invitation-only,
 .kcard-cold-call,
+.kcard-centrally-managed,
 .agency-pill-primary,
 .agency-pill-secondary,
 .kcard-new,
@@ -1041,6 +1048,7 @@ h1 {
 .kcard-loi:hover,
 .kcard-invitation-only:hover,
 .kcard-cold-call:hover,
+.kcard-centrally-managed:hover,
 .agency-pill-primary:hover,
 .agency-pill-secondary:hover,
 .kcard-new:hover,

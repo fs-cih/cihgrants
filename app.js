@@ -973,6 +973,10 @@ function renderProspect(p) {
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
   }
+  // Centrally managed status is prominent and precedes all remaining category pills.
+  if (p.centrallyManaged) {
+    keywords.push({ text: "Centrally Managed", className: "kcard-centrally-managed" });
+  }
   // Add invitation only as maroon pill after funder type
   if (p.invitationOnly) {
     keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
@@ -1071,6 +1075,13 @@ function renderProspect(p) {
     pill.addEventListener('click', (e) => {
       e.stopPropagation();
       showPillFilter('coldCall', null);
+    });
+  });
+
+  div.querySelectorAll('.kcard-centrally-managed').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPillFilter('centrallyManaged', null);
     });
   });
   
@@ -1957,6 +1968,9 @@ function populateProspectDialog(prospect = {}) {
   
   document.getElementById("p_coldCall_yes").checked = prospect.coldCall === true;
   document.getElementById("p_coldCall_no").checked = prospect.coldCall !== true;
+
+  document.getElementById("p_centrallyManaged_yes").checked = prospect.centrallyManaged === true;
+  document.getElementById("p_centrallyManaged_no").checked = prospect.centrallyManaged !== true;
   
   document.getElementById("p_link").value = prospect.link || "";
   [...document.getElementById("p_keywords").options].forEach(o => { o.selected = (prospect.keywords || []).includes(o.value); });
@@ -2214,6 +2228,10 @@ els.prospectSaveBtn.onclick = async () => enqueueMutation(async () => {
   // Add Cold Call Required field
   const coldCallValue = document.querySelector('input[name="p_coldCall"]:checked').value;
   prospect.coldCall = coldCallValue === "yes";
+
+  // Add JHU centrally-managed foundation field
+  const centrallyManagedValue = document.querySelector('input[name="p_centrallyManaged"]:checked').value;
+  prospect.centrallyManaged = centrallyManagedValue === "yes";
   
   // Add hyperlinks
   const hyperlinks = [];
@@ -2911,6 +2929,9 @@ function renderProspectForPopup(p) {
   if (p.funderType) {
     keywords.push({ text: p.funderType, className: "kcard-funder-type" });
   }
+  if (p.centrallyManaged) {
+    keywords.push({ text: "Centrally Managed", className: "kcard-centrally-managed" });
+  }
   if (p.invitationOnly) {
     keywords.push({ text: "Invitation Only", className: "kcard-invitation-only" });
   }
@@ -2982,6 +3003,8 @@ function showPillFilter(pillType, pillValue) {
         return false; // Grants don't have invitation only
       case 'coldCall':
         return false; // Grants don't have cold call required
+      case 'centrallyManaged':
+        return false; // Grants don't have centrally managed status
       case 'agency':
         return (g.agencyName || g.federalAgency || "")
           .split(',')
@@ -3022,6 +3045,8 @@ function showPillFilter(pillType, pillValue) {
         return p.invitationOnly === true;
       case 'coldCall':
         return p.coldCall === true;
+      case 'centrallyManaged':
+        return p.centrallyManaged === true;
       case 'agency':
         return matchesAgencyName(p.funder, pillValue);
       case 'isNew':
@@ -3088,6 +3113,9 @@ function showPillFilter(pillType, pillValue) {
     case 'coldCall':
       titleText = 'Cold Call Required';
       break;
+    case 'centrallyManaged':
+      titleText = 'JHU Centrally-Managed Foundation';
+      break;
     case 'agency':
       titleText = pillValue;
       subtitleText = getAgencyDisplayName(pillValue);
@@ -3100,7 +3128,10 @@ function showPillFilter(pillType, pillValue) {
       break;
   }
   pillFilterTitle.textContent = titleText;
-  if (subtitleText) {
+  if (pillType === 'centrallyManaged') {
+    pillFilterSubtitle.innerHTML = 'Johns Hopkins and the Bloomberg School identify some foundations and grantors as being centrally managed. This means that faculty and staff, or the Center for Indigenous Health, cannot independently apply for open opportunities or reach out to pitch funding ideas. Before doing so, a member of the CIH development team must work with the office of Donor and Alumni Relations to determine whether and how to proceed. More information about centrally-managed foundations is available <a href="https://research.jhu.edu/rdt/funding-resources/foundationrelations/managedfoundations/" target="_blank" rel="noopener noreferrer">on this website</a>.';
+    pillFilterSubtitle.hidden = false;
+  } else if (subtitleText) {
     pillFilterSubtitle.textContent = subtitleText;
     pillFilterSubtitle.hidden = false;
   } else {
