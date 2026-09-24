@@ -1,5 +1,30 @@
 [
   {
+    "title": "OJJDP FY 2026 Community and Schools Youth Drug Prevention Program",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Secondary",
+    "expectedAwards": "16",
+    "amount": 750000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-09-24",
+    "link": "https://www.ojp.gov/funding/docs/ojjdp-2026-172734.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the OJJDP FY 2026 Community and Schools Youth Drug Prevention Program. This opportunity supports states, units of local government, federally recognized Native American Tribal governments and nonprofit organizations to deliver substance use prevention programs for youth in schools and extracurricular settings in coordination with law enforcement and community coalitions. This includes building community-based capacity and implementing a continuum of prevention strategies that address youth substance use, such as education, early intervention, mentoring, referral to treatment, and investigations in coordination with local law enforcement and community coalitions.",
+    "keywords": [
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1790260356358_168_0ts68wuwj",
+    "deadlines": [
+      "2026-11-05"
+    ]
+  },
+  {
     "title": "National Indian Health Outreach and Education",
     "funderType": "Federal",
     "agencyName": "IHS",
