@@ -1,5 +1,32 @@
 [
   {
+    "title": "OJJDP FY 2026 Multistate Mentoring Programs",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Prime",
+    "expectedAwards": "15",
+    "amount": 4000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-09-24",
+    "link": "https://www.ojp.gov/funding/docs/ojjdp-2026-172745.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the OJJDP FY 2026 Multistate Mentoring Programs. This opportunity supports the implementation and delivery of mentoring services to youth populations that are at risk or high risk for delinquency, victimization, and going into the juvenile justice system. Mentoring services can be one-onone, group, peer, or a combination of these types. Funding will support: Mentoring services to youth who are 17 years old or younger at the time of admission to the program. Mentors must be an adult (age 18 or older), or in cases where peer mentoring models are being implemented, an older peer under adult supervision; Mentoring services to youth who demonstrate need but have not participated in mentoring services due to limited or lack of mentoring programs in their community or a shortage of trained and screened mentors, new mentoring matches, as well as existing mentoring matches through program completion.",
+    "keywords": [
+      "Adolescent Health",
+      "Behavioral Health",
+      "Mental Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1790260930214_171_4dlb4cso2",
+    "deadlines": [
+      "2026-11-05"
+    ]
+  },
+  {
     "title": "BJA FY 2026 Students, Teachers, and Officers Preventing (STOP) School Violence Program",
     "funderType": "Federal",
     "agencyName": "DOJ",
