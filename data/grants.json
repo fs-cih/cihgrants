@@ -1,5 +1,30 @@
 [
   {
+    "title": "BJA FY 2026 Students, Teachers, and Officers Preventing (STOP) School Violence Program",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Prime",
+    "expectedAwards": "95",
+    "amount": 2000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-09-24",
+    "link": "https://www.ojp.gov/funding/docs/bja-2026-172709.pdf",
+    "description": "To help meet its mission, OJP may give priority consideration to applications proposing (as applicable within the scope of this NOFO) projects designed to advance the goals listed below: (a) Directly supporting law enforcement operations (including immigration law enforcement operations); (b) Combatting violent crime; (c) Supporting services to American citizens; (d) Protecting American children; and (e) Supporting American victims of trafficking and sexual assault.",
+    "keywords": [
+      "Violence Prevention"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1790260742023_170_nlcht2wy6",
+    "deadlines": [
+      "2026-11-06"
+    ]
+  },
+  {
     "title": "BJA FY 2026 Comprehensive Opioid, Stimulant, and Substance Use Program (COSSUP) Training and Technical Assistance (TTA)",
     "funderType": "Federal",
     "agencyName": "DOJ",
