@@ -1,5 +1,30 @@
 [
   {
+    "title": "BJA FY 2026 Comprehensive Opioid, Stimulant, and Substance Use Program (COSSUP) Training and Technical Assistance (TTA)",
+    "funderType": "Federal",
+    "agencyName": "DOJ",
+    "eligibility": "Prime",
+    "expectedAwards": "1",
+    "amount": 2000000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "2 years",
+    "addedDate": "2026-09-24",
+    "link": "https://www.ojp.gov/funding/docs/bja-2026-172724.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the Comprehensive Opioid Stimulant and Substance Use Program (COSSUP) Training and Technical Assistance (TTA). This opportunity will provide training and technical assistance to BJA COSSUP grantees to address technical operational challenges to improve responses to overdose deaths, illicit opioids, stimulants, and other substances. TTA will be provided in four core areas: (1) Pre-Booking Operations; (2) Correctional Facility Operations and External Provider Coordination; (3) Privacy-Compliant Information Sharing; and (4) Performance Measurement Infrastructure.",
+    "keywords": [
+      "Consulting"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1790260537438_169_d1t4o1pch",
+    "deadlines": [
+      "2026-11-09"
+    ]
+  },
+  {
     "title": "OJJDP FY 2026 Community and Schools Youth Drug Prevention Program",
     "funderType": "Federal",
     "agencyName": "DOJ",
