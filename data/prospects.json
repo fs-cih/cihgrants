@@ -1,5 +1,27 @@
 [
   {
+    "funder": "Gerber Foundation",
+    "funderType": "Foundation",
+    "link": "https://www.gerberfoundation.org/research-grants/",
+    "keywords": [
+      "Early Childhood",
+      "General Research",
+      "Healthcare"
+    ],
+    "notes": "The Gerber Foundation supports innovative pediatric research that improves the health and well-being of infants and children. Through its research programs, the Foundation invests in scientific discovery, clinical advancement, and the development of future leaders in child health research.",
+    "pin": false,
+    "letterOfInterest": false,
+    "coldCall": false,
+    "centrallyManaged": false,
+    "hyperlinks": [
+      {
+        "text": "Pediatric Research Focus Areas",
+        "url": "https://www.gerberfoundation.org/pediatric-research/"
+      }
+    ],
+    "id": "prospect_1790860955798_69_pcwmoh6z4"
+  },
+  {
     "funder": "Alfred P. Sloan Foundation",
     "funderType": "Foundation",
     "link": "https://sloan.org/grants/apply",
