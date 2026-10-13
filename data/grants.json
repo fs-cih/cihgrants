@@ -1,5 +1,31 @@
 [
   {
+    "title": "OJJDP FY 2026 Opioid Affected Youth Initiative",
+    "funderType": "Federal",
+    "agencyName": "DOJ, OJJDP",
+    "eligibility": "Secondary",
+    "expectedAwards": "12",
+    "amount": 750000,
+    "amountDetail": "over total award period",
+    "amountIdc": "Including IDC",
+    "duration": "3 years",
+    "addedDate": "2026-10-13",
+    "link": "https://www.ojp.gov/funding/docs/ojjdp-2026-172748.pdf",
+    "description": "This is a notice of funding opportunity (NOFO) for the OJJDP FY 2026 Opioid Affected Youth Initiative. This NOFO supports states, localities, Tribal jurisdictions, and nonprofit organizations in addressing violent crime and reducing overdose deaths through prevention, intervention, and treatment strategies to support children, youth, and families affected by opioid, stimulant, and other substance use disorders. Applicants are expected to collaborate with law enforcement, juvenile and criminal justice agencies, schools, mental health and child welfare providers, community health agencies, and community-based organizations to address the needs of children, youth, and families who are at risk for or already in the child welfare or justice systems. ",
+    "keywords": [
+      "Adolescent Health",
+      "Substance Use"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1791911393778_174_4aqz4tf7p",
+    "deadlines": [
+      "2026-11-23"
+    ]
+  },
+  {
     "title": "OJJDP FY 2026 Mentoring for Youth Impacted by Opioids and Other Substance Use",
     "funderType": "Federal",
     "agencyName": "DOJ, OJJDP",
