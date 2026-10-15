@@ -1,5 +1,38 @@
 [
   {
+    "title": "NIH Research Program Projects (Parent P01 Clinical Trial Optional)",
+    "funderType": "Federal",
+    "agencyName": "NIH, OD, NHLBI, NHGRI, NIA, NIAAA, NIAID, NIDA, NIEHS, NIMHD, NLM, NCI, ORWH",
+    "eligibility": "Prime",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "",
+    "duration": "5 years",
+    "addedDate": "2026-10-15",
+    "link": "https://files.simpler.grants.gov/opportunities/b6747a33-2447-4eba-819d-29a36983a0a0/attachments/392fbbfa-66c0-4afd-a7f6-2984720e80f4/PA-27-061-Full-Announcement.html",
+    "description": "This NOFO supports multi-project applications. In the context of a multi-project application, synergy entails cooperative interaction of multiple projects, teams, or resources to produce a combined effect greater than the sum of their separate parts for enhancement of scientific knowledge, ideas, and outcomes. The proposed merger of complementary skills, perspectives, and resources has the potential to produce outcomes greater than would otherwise be achieved. The outcomes resulting from conducting the proposed research as a Program will exceed the outcomes from conducting separate research activities as a single project application. Resources and tools that can help facilitate synergy include, but are not limited to sharing research data, samples, reagents, pathogens, human subject cohort(s), technologies, research approaches, data management/analytical tools, and model organisms.",
+    "keywords": [
+      "General Research"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
+    "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1792077675077_175_e6vl17j71",
+    "deadlines": [
+      "2026-11-20",
+      "2027-01-25",
+      "2027-05-25",
+      "2027-09-25",
+      "2028-01-25",
+      "2028-05-25",
+      "2028-09-25",
+      "2029-01-25",
+      "2029-05-25"
+    ]
+  },
+  {
     "title": "OJJDP FY 2026 Opioid Affected Youth Initiative",
     "funderType": "Federal",
     "agencyName": "DOJ, OJJDP",
