@@ -101,8 +101,11 @@ Grant data is stored in `data/grants.json`. Each grant includes:
 1. The frontend (`index.html` + `app.js`) provides the user interface
 2. When saving a grant, the app calls the GitHub API to trigger a workflow dispatch
 3. The GitHub Actions workflow (`add-grant.yml`) updates the configured branch and commits the change
-4. The frontend polls that uniquely identified workflow run and displays its confirmed success or failure above the first result card
-5. Grant and prospect writes share one workflow concurrency group so they cannot race while pushing commits
+4. The frontend polls that uniquely identified workflow run. Confirmed success appears in a green overlay at the top for ten seconds, fading during seconds 7–10; errors stay visible with a workflow log link when available.
+5. Form controls and dismissal are locked while a submission is waiting or publishing, preventing duplicate clicks and edits to an in-flight submission.
+6. Each workflow reads the latest branch data and retries the complete update up to five times if a push fails. Independent runs use GitHub’s runner queue rather than an Actions concurrency group, whose single pending slot can replace waiting submissions. A supplied record ID must match; it never falls back to a different row. Unchanged saves succeed without creating an empty commit.
+
+The browser queue lasts only while the page is open. Once GitHub accepts a dispatch, its workflow continues even if the page closes. If status checking fails or times out, check the Actions log before submitting again: the write may still complete. Conflict retries are bounded; persistent failures appear in the workflow log. Simultaneous edits to the same record use the last successfully committed edit.
 
 ## License
 

@@ -361,6 +361,17 @@ h1 {
 }
 
 .publication-status.success {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  box-shadow: 0 6px 24px #0002;
+  pointer-events: none;
+  animation: publication-success-out 10s linear forwards;
   color: #166534;
   background: #dcfce7;
   border-color: #86efac;
@@ -1054,4 +1065,9 @@ h1 {
 .kcard-new:hover,
 .kcard-keyword:hover {
   opacity: 0.85;
+}
+
+@keyframes publication-success-out {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
 }
