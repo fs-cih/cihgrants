@@ -95,6 +95,10 @@ const AGENCY_ABBREVIATION_ALIASES = {
   CDC: ["Centers for Disease Control and Prevention", "Centers for Disease Control"],
   CMS: ["Centers for Medicare & Medicaid Services", "Centers for Medicare and Medicaid Services"],
   DOJ: ["Department of Justice"],
+  OJJDP: ["Office of Juvenile Justice and Delinquency Prevention"],
+  OJP: ["Office of Justice Programs"],
+  OVW: ["Office on Violence Against Women"],
+  COPS: ["Office of Community Oriented Policing Services"],
   HHS: ["U.S. Department of Health and Human Services"],
   HRSA: ["Health Resources and Services Administration"],
   IHS: ["Indian Health Service"],
@@ -166,16 +170,19 @@ const els = {
   publicationStatus: document.getElementById("publicationStatus")
 };
 
+let publicationStatusTimer;
+
 function showPublicationStatus(type, message, runUrl = "") {
+  clearTimeout(publicationStatusTimer);
   const status = els.publicationStatus;
   status.className = `publication-status ${type}`;
   status.replaceChildren();
 
   const text = document.createElement("strong");
-  text.textContent = message;
+  text.textContent = type === "success" ? "Published successfully." : message;
   status.appendChild(text);
 
-  if (runUrl) {
+  if (runUrl && type !== "success") {
     const link = document.createElement("a");
     link.href = runUrl;
     link.target = "_blank";
@@ -185,14 +192,34 @@ function showPublicationStatus(type, message, runUrl = "") {
   }
 
   status.hidden = false;
-  status.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  if (type === "success") {
+    // Restart the animation even when two publications succeed close together.
+    status.style.animation = "none";
+    void status.offsetWidth;
+    status.style.animation = "";
+    publicationStatusTimer = setTimeout(() => { status.hidden = true; }, 10000);
+  }
 }
 
 function publicationErrorMessage(error) {
   return `Publishing failed. The change was not confirmed on GitHub. ${error.message}`;
 }
 
+const busyDialogs = new Set();
+for (const dialog of [els.adminDialog, els.prospectDialog]) {
+  dialog.addEventListener("cancel", event => {
+    if (busyDialogs.has(dialog)) event.preventDefault();
+  });
+}
+
 async function enqueueMutation(task, statusEl) {
+  const dialog = statusEl.closest("dialog");
+  if (busyDialogs.has(dialog)) return;
+  busyDialogs.add(dialog);
+  const controls = [...dialog.querySelectorAll("input, select, textarea, button")];
+  const disabledStates = controls.map(control => control.disabled);
+  controls.forEach(control => { control.disabled = true; });
+  dialog.setAttribute("aria-busy", "true");
   const queuePosition = ++queuedMutations;
   if (statusEl && queuePosition > 1) {
     statusEl.textContent = `Queued (#${queuePosition - 1} ahead)…`;
@@ -202,6 +229,9 @@ async function enqueueMutation(task, statusEl) {
 
   mutationQueue = nextTask.catch(() => {}).finally(() => {
     queuedMutations = Math.max(queuedMutations - 1, 0);
+    controls.forEach((control, index) => { control.disabled = disabledStates[index]; });
+    dialog.removeAttribute("aria-busy");
+    busyDialogs.delete(dialog);
   });
 
   return nextTask;

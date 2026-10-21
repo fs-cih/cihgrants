@@ -19,10 +19,6 @@ on:
         required: true
         description: 'Unique request identifier used to confirm this publication'
 
-concurrency:
-  group: cih-database-modifications
-  cancel-in-progress: false
-
 permissions:
   contents: write
 
@@ -35,11 +31,17 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Update checkout
-        run: git pull --ff-only origin "$GITHUB_REF_NAME"
-
-      - name: Add, edit, or delete grant
+      - name: Publish with conflict retries
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          PAYLOAD: ${{ github.event.inputs.payload }}
         run: |
+          set -euo pipefail
+          git config user.name "cih-grants-bot"
+          git config user.email "cih-grants-bot@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git reset --hard FETCH_HEAD
           node <<'EOF'
           const fs = require('fs');
           const payload = JSON.parse(process.env.PAYLOAD);
@@ -49,10 +51,7 @@ jobs:
           
           const findIndexForPayload = () => {
             if (payload.id) {
-              const indexById = grants.findIndex(grant => grant.id === payload.id);
-              if (indexById !== -1) {
-                return indexById;
-              }
+              return grants.findIndex(grant => grant.id === payload.id);
             }
             const editIndex = payload.editIndex;
             if (editIndex !== undefined && typeof editIndex === 'number' && editIndex >= 0 && editIndex < grants.length) {
@@ -79,36 +78,27 @@ jobs:
               console.error('Could not find grant to delete using id/editIndex:', payload.id, payload.editIndex);
               process.exit(1);
             }
-          } else {
+          } else if (mode === 'add') {
+            if (!payload.id || grants.some(item => item.id === payload.id)) {
+              throw new Error('A new entry must have a unique ID.');
+            }
             // mode === 'add'
             // Defensively remove editIndex if present (shouldn't be, but ensures clean data)
             const { editIndex: _removed, ...grant } = payload;
             grants.unshift(grant);
+          } else {
+            throw new Error('Unknown operation mode.');
           }
           
           fs.writeFileSync(path, JSON.stringify(grants, null, 2));
           EOF
-        env:
-          MODE: ${{ github.event.inputs.mode }}
-          PAYLOAD: ${{ github.event.inputs.payload }}
-
-      - name: Commit
-        run: |
-          git config user.name "cih-grants-bot"
-          git config user.email "cih-grants-bot@users.noreply.github.com"
-          git add data/grants.json
-          
-          TITLE=$(jq -r .title <<< "$PAYLOAD")
-          
-          if [ "$MODE" = "edit" ]; then
-            git commit -m "Edit grant: $TITLE"
-          elif [ "$MODE" = "delete" ]; then
-            git commit -m "Delete grant at index: $(jq -r .editIndex <<< "$PAYLOAD")"
-          else
-            git commit -m "Add grant: $TITLE"
-          fi
-          
-          git push origin "HEAD:$GITHUB_REF_NAME"
-        env:
-          MODE: ${{ github.event.inputs.mode }}
-          PAYLOAD: ${{ github.event.inputs.payload }}
+            git add data/grants.json
+            # Saving an unchanged entry is already successful.
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Publish grant: $MODE"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            echo "Branch advanced or push failed; retrying publication ($attempt/5)."
+            sleep "$attempt"
+          done
+          echo "Publication could not be committed after five attempts." >&2
+          exit 1
