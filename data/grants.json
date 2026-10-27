@@ -1,5 +1,29 @@
 [
   {
+    "title": "Innovation Fund for Community-Academic Partnerships: Community-Based Project and Research Grants",
+    "funderType": "JHU internal",
+    "eligibility": "Prime",
+    "amount": 80000,
+    "amountDetail": "over total award period",
+    "amountIdc": "No IDC Allowed",
+    "duration": "2 years",
+    "addedDate": "2026-10-27",
+    "link": "https://communityimpact.jhu.edu/community-partnerships/innovation-fund/",
+    "description": "Community-Based Project/Research Grants are designed to support the bidirectional exchange of community-based and university-based knowledge, values, and expertise, with the goal of addressing specific community needs through collaborative efforts. The proposal may or may not result in traditional academic output, such as a research article, and we encourage partners to be creative in how they envision and measure the outcomes of their collaborative work. ",
+    "keywords": [
+      "Partnership-Building",
+      "Public Health"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "nihUnlimitedFunds": false,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1793143078726_177_swlxfn699",
+    "deadlines": [
+      "2027-01-31"
+    ]
+  },
+  {
     "title": "Pilot and Feasibility Studies in Preparation for Substance Use and HIV Prevention Intervention and Services Research Trials (R34 Clinical Trial Optional)",
     "funderType": "Federal",
     "agencyName": "NIH, NIDA, OAR",
