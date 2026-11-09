@@ -1,5 +1,31 @@
 [
   {
+    "title": "Systems Biology of Infection and Inflammation in Chronic Diseases (U19 Clinical Trial Not Allowed)",
+    "funderType": "Federal",
+    "agencyName": "NIH, NIAID, NEI, NHLBI, NHGRI, NIA, NIAMS, NIDCR, ORWH, ODSS",
+    "eligibility": "Prime",
+    "expectedAwards": "6",
+    "amount": 0,
+    "amountDetail": "",
+    "amountIdc": "Excluding IDC",
+    "duration": "5 years",
+    "addedDate": "2026-11-08",
+    "link": "https://files.simpler.grants.gov/opportunities/0cbb2b4f-c123-48cf-bdc4-6d5666ce73d9/attachments/b1476992-e80b-4e44-8dfa-12a09a439957/RFA-AI-28-014-Full-Announcement.html",
+    "description": "The purpose of this notice of funding opportunity (NOFO) is to support the advancement of systems-level understanding of the link between infectious pathogens and inflammatory pathways that result in predisposition, onset and progression of chronic diseases. The NOFO will stimulate integration of clinical and patient data, large-scale omics datasets, advanced Artificial Intelligence (AI) and computational modeling to prevent, treat, and mitigate the combined impact of chronic diseases, inflammation, and infections.",
+    "keywords": [
+      "Infectious Diseases"
+    ],
+    "pin": false,
+    "letterOfInterest": false,
+    "unusualFundingCircumstances": "NIH unlimited funding",
+    "nihUnlimitedFunds": true,
+    "nihUnlimitedFundingAuthorizationRequired": false,
+    "id": "grant_1794245897250_179_0xdm9kkf6",
+    "deadlines": [
+      "2027-02-17"
+    ]
+  },
+  {
     "title": "Research on System Support and Tools for Provider Training and Quality Monitoring for Suicide Preventive Care (RP1- Clinical Trial Optional)",
     "funderType": "Federal",
     "agencyName": "NIH, NIMH",
